@@ -33,3 +33,6 @@
 
 # Build files
 build
+
+# VScode config
+.vscode

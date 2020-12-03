@@ -1,19 +1,16 @@
-#include "gtest/gtest.h"
 #include "../src/example.h"
-#include <utility>
+#include "gtest/gtest.h"
 #include <sstream>
- 
-TEST( TestNombre, TestNombreVide )
-{
-    Nombre n;
-    std::ostringstream os;
-    os << n;
-    EXPECT_EQ( os.str(), "0" );
+#include <utility>
+
+TEST(TestNombre, TestNombreVide) {
+  Nombre n;
+  std::ostringstream os;
+  os << n;
+  EXPECT_EQ(os.str(), "0");
 }
 
-int main( int argc, char * argv[] )
-{
-    ::testing::InitGoogleTest( &argc, argv );
-    return RUN_ALL_TESTS();
+int main(int argc, char *argv[]) {
+  ::testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
 }
- 
