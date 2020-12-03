@@ -12,7 +12,8 @@ jobs:
       - run: mkdir build; cd build; cmake ..; make
       - persist_to_workspace:
           root: ~/
-          paths: /build
+          paths: 
+            - build
   test:
     docker:
       - image: gcc:9.3
