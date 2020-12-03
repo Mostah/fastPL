@@ -1,28 +1,19 @@
 #include "gtest/gtest.h"
 #include "../src/example.h"
-
-namespace {
-
-class MyIntTest : public ::testing::Test{};
-
-TEST_F(MyIntTest, isOdd)
+#include <utility>
+#include <sstream>
+ 
+TEST( TestNombre, TestNombreVide )
 {
-  MyInt mi1 = MyInt(10);
-  EXPECT_EQ(false, mi1.isOdd());
-
-  MyInt mi2 = MyInt(13);
-  EXPECT_EQ(true, mi2.isOdd());
+    Nombre n;
+    std::ostringstream os;
+    os << n;
+    EXPECT_EQ( os.str(), "0" );
 }
 
-
-TEST_F(MyIntTest, isEven)
+int main( int argc, char * argv[] )
 {
-  MyInt mi1 = MyInt(10);
-  EXPECT_EQ(true, mi1.isEven());
-
-  MyInt mi2 = MyInt(13);
-  EXPECT_EQ(false, mi2.isEven());
+    ::testing::InitGoogleTest( &argc, argv );
+    return RUN_ALL_TESTS();
 }
-
-} // namespace
-
+ 
