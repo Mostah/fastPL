@@ -8,13 +8,11 @@ jobs:
       - checkout
       # command to build all files
       - run: apt-get update && apt-get -y install cmake
-      - run: git submodule init
-      - run: git submodule update
-      - run: mkdir build
-      - run: cd build; cmake ..; make
+      - run: git submodule init; git submodule update
+      - run: mkdir build; cd build; cmake ..; make
       - persist_to_workspace:
           root: ~/
-          paths: build
+          paths: /build
   test:
     docker:
       - image: gcc:9.3
