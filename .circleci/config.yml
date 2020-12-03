@@ -20,7 +20,7 @@ jobs:
     steps:
       # instead of checking out, restore workspace (will merge all parallel containers from previous job)
       - attach_workspace:
-          at: ~/
+          at: build
       - run: cd build; ./Test
 
 
