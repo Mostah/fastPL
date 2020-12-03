@@ -1,6 +1,7 @@
 # Get the GCC preinstalled image from Docker Hub
 FROM gcc:9.3
 
+RUN apt-get update && apt-get -y install cmake
 # Copy the current folder which contains C++ source code to the Docker image under /usr/src
 #COPY <src> … <dest> 
 COPY . /usr/src/fastpl
