@@ -7,10 +7,10 @@ RUN apt-get update && apt-get -y install cmake
 COPY . /usr/src/fastpl
 
 # Specify the working directory
-WORKDIR /usr/src/fastpl/dockertest
+WORKDIR /usr/src/fastpl/test
 
 # Use GCC to compile the Test.cpp source file
-RUN g++ -o Test Test.cpp
+RUN g++ -o Test test_example.cpp
 
 # Run the program output from the previous step
 CMD ["./Test"]
