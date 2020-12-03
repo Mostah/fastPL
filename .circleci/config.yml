@@ -7,24 +7,13 @@ jobs:
     steps:
       - checkout
       # command to build all files
-      - run: touch file.o
-      # move compiled files to specific folder and persist to workspace
-      - run: mkdir output && mv *.o output
-      - persist_to_workspace:
-          root: output
-          paths:
-            - "*.o"
+      - run: make build
   test:
     docker:
       - image: gcc:8.2
     steps:
-      # instead of checking out, restore workspace (will merge all parallel containers from previous job)
-      - attach_workspace:
-          at: output
-      - run: ls -la output
-      - run: mv output/* .
-      # command to run all tests
-      - run: echo "this is the test job"
+      - checkout
+      - run: make test
 
 
 # Orchestrate our job run sequence
