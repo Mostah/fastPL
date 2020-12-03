@@ -7,13 +7,22 @@ jobs:
     steps:
       - checkout
       # command to build all files
-      - run: make build
+      - run: mkdir build
+      - run: cd build
+      - run: cmake ..
+      - run: make
+      - persist_to_workspace:
+          root: ~/
+          paths: build
   test:
     docker:
       - image: gcc:8.2
     steps:
-      - checkout
-      - run: make test
+      # instead of checking out, restore workspace (will merge all parallel containers from previous job)
+      - attach_workspace:
+          at: ~/
+      - run: cd build
+      - run: ./Test
 
 
 # Orchestrate our job run sequence
