@@ -3,22 +3,29 @@ version: 2.1
 jobs:
   compile:
     docker:
-      - image: cimg/base:2020.01
-        # auth:
-        #   username: mydockerhub-user
-        #   password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+      - image: gcc:8.2
     steps:
       - checkout
-      - run: echo "this is the build job"
+      # command to build all files
+      - run: touch file.o
+      # move compiled files to specific folder and persist to workspace
+      - run: mkdir output && mv *.o output
+      - persist_to_workspace:
+          root: output
+          paths:
+            - "*.o"
   test:
     docker:
-      - image: cimg/base:2020.01
-        # auth:
-        #   username: mydockerhub-user
-        #   password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+      - image: gcc:8.2
     steps:
-      - checkout
+      # instead of checking out, restore workspace (will merge all parallel containers from previous job)
+      - attach_workspace:
+          at: output
+      - run: ls -la output
+      - run: mv output/* .
+      # command to run all tests
       - run: echo "this is the test job"
+
 
 # Orchestrate our job run sequence
 workflows:
