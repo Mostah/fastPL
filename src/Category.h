@@ -1,6 +1,6 @@
 #include <iostream>
 
-class Category {
+class Category : public AtomicMCDAObject{
     public : 
 
     Category(std::string category_id, int cat_rank);
