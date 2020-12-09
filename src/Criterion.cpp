@@ -6,15 +6,13 @@
 Criterion::Criterion(std::string id){
     id_ = id;
     name_ = "";
-    disabled_ = false;
     direction_ = 1;
-    weight_ = 0;
+    weight_ = 0.;
 }
 
-Criterion::Criterion(std::string id, std::string name, bool disabled, int direction, float weight){
+Criterion::Criterion(std::string id, std::string name, int direction, float weight){
     id_ = id;
     name_ = name;
-    disabled_ = disabled;
     direction_ = direction;
     weight_ = weight;
 }
@@ -22,7 +20,6 @@ Criterion::Criterion(std::string id, std::string name, bool disabled, int direct
 Criterion::Criterion(const Criterion &crit){ 
     id_ = crit.getId();
     name_ = crit.getName();
-    disabled_ = crit.getDisabled();
     direction_ = crit.getDirection();
     weight_ = crit.getWeight();
 }
@@ -35,10 +32,6 @@ std::string Criterion::getName() const { return name_; }
 
 void Criterion::setName(std::string name) { name_ = name; }
 
-bool Criterion::getDisabled() const { return disabled_; }
-
-void Criterion::setDisabled(bool disabled) { disabled_ = disabled; }
-
 int Criterion::getDirection() const { return direction_; }
 
 void Criterion::setDirection(int direction) { direction_ = direction; }
@@ -46,7 +39,6 @@ void Criterion::setDirection(int direction) { direction_ = direction; }
 float Criterion::getWeight() const { return weight_; }
 
 void Criterion::setWeight(float weight) { weight_ = weight; }
-
 
 
 std::ostream & operator <<( std::ostream & out, const Criterion & crit ){
@@ -59,7 +51,7 @@ std::ostream & operator <<( std::ostream & out, const Criterion & crit ){
     {
         dir = "-";
     }
-    out << "Criterion(" << crit.id_ << ":" << dir  << ")";
+    out << "Criterion(id : " << crit.id_ << ", name : " << crit.name_ << ", direction : " << dir << ", weight : " << crit.weight_ << ")";
     return out;
 }
 

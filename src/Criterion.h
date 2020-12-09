@@ -2,11 +2,35 @@
 #include <string>
 #include <vector>
 
-class Criterion {
+#include "AtomicMCDAObject.h"
+
+class Criterion : public AtomicMCDAObject  {
 public:
+
+    /**
+     * Criterion standard constructor
+     *
+     * @param id Identifier of the criterion
+     * @param name Friendly name of the criterion
+     * @param direction Equal to -1 if criterion is to minimize, 1 if the criterion is to maximize
+     * @param weight Weight of the criterion
+     */
+    Criterion(std::string id, std::string name, int direction, float weight);
+
+    /**
+     * Criterion constructor without specification
+     *
+     * @param id Identifier of the criterion
+     */
     Criterion(std::string id);
-    Criterion(std::string id, std::string name, bool disabled, int direction, float weight);
-    Criterion(const Criterion &crit); // Constructeur de copie
+
+    /**
+     * Criterion constructor by copy
+     *
+     * @param crit Based criterion to copy
+     */
+    Criterion(const Criterion &crit);
+
     ~Criterion();
     friend std::ostream & operator <<( std::ostream & out, const Criterion & crit );
 
@@ -39,20 +63,6 @@ public:
     void setName(std::string name);
 
     /**
-     * getDisabled getter of disabled parameter
-     *
-     * @return disabled
-     */
-    bool getDisabled() const;
-
-    /**
-     * setDisabled setter of disabled parameter
-     *
-     * @param disabled
-     */
-    void setDisabled(bool disabled);
-
-    /**
      * getDirection getter of direction parameter
      *
      * @return direction
@@ -83,19 +93,9 @@ public:
 
 
 private:
-    /**
-     * Kwargs:
-     * id (str): Identifier of the criterion
-     * name (str): A friendly name for the criterion
-     * disabled (bool): Whether or not this criterion is disabled
-     * direction (integer): Equal to -1 if criterion is to minimize,
-     * 1 if the criterion is to maximize
-     * weight (float): Deprecated
-     * thresholds (list): List of threshold associated to the criterion
-    */
+
     std::string id_;
     std::string name_;
-    bool disabled_;
     int direction_;
     float weight_;
 };
