@@ -3,8 +3,6 @@
 #include <sstream>
 #include <utility>
 
-int AtomicMCDAObject::nb_instances_{0};
-
 TEST(TestCriterion, TestBaseConstructorWithoutSpec) {
   std::string id = "test_no_spec";
   Criterion crit = Criterion(id);
@@ -38,7 +36,7 @@ TEST(TestCriterion, TestConstructorByCopy) {
   EXPECT_EQ(os.str(), "Criterion(id : test_copy, name : criterion_by_copy, direction : +, weight : 0.3)");
 }
 
-TEST(TestCriterion, TestAllInstancesDestroyed) {
+TEST(TestCriterion, TestAllCriterionInstancesDestroyed) {
   EXPECT_EQ(AtomicMCDAObject::get_nb_instances(), 0);
 }
 
