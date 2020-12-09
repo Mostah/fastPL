@@ -3,6 +3,7 @@
 #include <sstream>
 #include <utility>
 
+int AtomicMCDAObject::nb_instances_{0};
 
 TEST(TestCategory, TestCategory) {
   Category category1("cat0", 0);
@@ -17,7 +18,6 @@ TEST(TestCategory, TestCategory2) {
   os << category1;
   EXPECT_EQ(os.str(), "Category(cat12:12)");
 }
-
 
 TEST(TestCategory, TestConstructorByCopy) {
   Category category1("cat1", 13);
