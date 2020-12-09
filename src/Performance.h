@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 
 #include "AtomicMCDAObject.h"
 
@@ -31,7 +32,7 @@ public:
 
   ~Performance();
 
-  friend std::ostream &operator<<(std::ostream &out, const Performance &cv);
+  friend std::ostream &operator<<(std::ostream &out, const Performance &p);
 
   /**
    * getId getter of id parameter
@@ -52,12 +53,12 @@ public:
    *
    * @return perf
    */
-  std::pair<std::string, float> getPerf() const;
+  std::vector<std::pair<std::string, float>> *getPerf() const;
 
 private:
   std::string id_;
 
   // Performance on each criteria represented as a pair of criteria name and
   // perf value
-  std::pair<std::string, float> *perf_[];
+  std::vector<std::pair<std::string, float>> *perf_;
 };
