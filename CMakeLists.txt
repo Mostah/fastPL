@@ -6,14 +6,18 @@ add_subdirectory(extsrc/googletest) # add googletest subdirectory
 
 set(Headers 
     src/Criterion.h
+    src/CriterionValue.h
+    src/AtomicMCDAObject.h
     )
 
 set(Sources 
     src/Criterion.cpp
+    src/CriterionValue.cpp
+    src/AtomicMCDAObject.cpp
     )
 
 add_library(Core ${Headers} ${Sources})   # build a library with our header and source files
 
-add_executable(Test test/TestCriterion.cpp) # add the executable
+add_executable(Test test/TestMain.cpp) # add the executable
 
 target_link_libraries(Test Core gtest) # link librairies to the executable
