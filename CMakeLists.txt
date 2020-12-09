@@ -7,11 +7,13 @@ add_subdirectory(extsrc/googletest) # add googletest subdirectory
 set(Headers 
     src/CriterionValue.h
     src/AtomicMCDAObject.h
+    src/Category.h
     )
 
 set(Sources 
     src/CriterionValue.cpp
     src/AtomicMCDAObject.cpp
+    src/Category.cpp
     )
 
 add_library(Core ${Headers} ${Sources})   # build a library with our header and source files
