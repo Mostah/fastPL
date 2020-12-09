@@ -1,3 +1,7 @@
+#ifndef ATOMIC_H
+#define ATOMIC_H
+
+
 class AtomicMCDAObject {
 public:
   AtomicMCDAObject();
@@ -9,3 +13,5 @@ public:
 private:
   static int nb_instances_;
 };
+
+#endif
