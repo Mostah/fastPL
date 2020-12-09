@@ -54,6 +54,6 @@ std::ostream &operator<<(std::ostream &out, const Category &cat) {
    * @param set_rank
    *
    */
-  out << "Category(" << cat.category_id_ << ": " << cat.rank_ << ")";
+  out << "Category(id : " << cat.category_id_ << ", rank : " << cat.rank_ << ")";
   return out;
 }

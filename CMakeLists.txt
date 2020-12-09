@@ -5,13 +5,13 @@ project(fastPL) #name of your project
 add_subdirectory(extsrc/googletest) # add googletest subdirectory
 
 set(Headers 
-    src/CriterionValue.h
+    src/Criterion.h
     src/AtomicMCDAObject.h
     src/Category.h
     )
 
 set(Sources 
-    src/CriterionValue.cpp
+    src/Criterion.cpp
     src/AtomicMCDAObject.cpp
     src/Category.cpp
     )
