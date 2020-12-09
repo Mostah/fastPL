@@ -1,4 +1,4 @@
-#include "TestCriterionValue.cpp"
+#include "TestCriterion.cpp"
 #include "gtest/gtest.h"
 #include <sstream>
 #include <utility>
