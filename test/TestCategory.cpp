@@ -3,20 +3,18 @@
 #include <sstream>
 #include <utility>
 
-int AtomicMCDAObject::nb_instances_{0};
-
 TEST(TestCategory, TestCategory) {
   Category category1("cat0", 0);
   std::ostringstream os;
   os << category1;
-  EXPECT_EQ(os.str(), "Category(cat0:0)");
+  EXPECT_EQ(os.str(), "Category(id : cat0, rank : 0)");
 }
 
 TEST(TestCategory, TestCategory2) {
   Category category1("cat12", 12);
   std::ostringstream os;
   os << category1;
-  EXPECT_EQ(os.str(), "Category(cat12:12)");
+  EXPECT_EQ(os.str(), "Category(id : cat12, rank : 12)");
 }
 
 TEST(TestCategory, TestConstructorByCopy) {
@@ -26,9 +24,9 @@ TEST(TestCategory, TestConstructorByCopy) {
 
   std::ostringstream os;
   os << catCopied;
-  EXPECT_EQ(os.str(), "Category(cat1:13)");
+  EXPECT_EQ(os.str(), "Category(id : cat1, rank : 13)");
 }
 
-TEST(TestCategory, TestAllInstancesDestroyed) {
+TEST(TestCategory, TestAllCategoryInstancesDestroyed) {
   EXPECT_EQ(AtomicMCDAObject::get_nb_instances(), 0);
 }
