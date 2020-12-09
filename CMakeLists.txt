@@ -5,15 +5,15 @@ project(fastPL) #name of your project
 add_subdirectory(extsrc/googletest) # add googletest subdirectory
 
 set(Headers 
-    src/example.h
+    src/Criterion.h
     )
 
 set(Sources 
-    src/example.cpp
+    src/Criterion.cpp
     )
 
 add_library(Core ${Headers} ${Sources})   # build a library with our header and source files
 
-add_executable(Test test/test_example.cpp) # add the executable
+add_executable(Test test/TestCriterion.cpp) # add the executable
 
 target_link_libraries(Test Core gtest) # link librairies to the executable
