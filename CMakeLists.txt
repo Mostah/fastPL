@@ -8,6 +8,7 @@ set(Headers
     src/Criterion.h
     src/Criteria.h
     src/Performance.h
+    src/PerformanceTable.h
     src/AtomicMCDAObject.h
     src/Category.h
     )
@@ -16,6 +17,7 @@ set(Sources
     src/Criterion.cpp
     src/Criteria.cpp
     src/Performance.cpp
+    src/PerformanceTable.cpp
     src/AtomicMCDAObject.cpp
     src/Category.cpp
     )
