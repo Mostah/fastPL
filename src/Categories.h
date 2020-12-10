@@ -18,6 +18,14 @@ public:
   /**
    * Categories standard constructor 2
    *
+   * @param vect_category_ids vector of category ids
+   *
+   */
+  Categories(std::vector<std::string> vect_category_ids);
+
+  /**
+   * Categories standard constructor 3
+   *
    * @param number_of_categories number of categories wanted
    */
   Categories(int number_of_categories);

@@ -31,6 +31,16 @@ TEST(TestCategories, TestCategoriesconstructor2) {
                       "cat1, rank : 1), Category(id : cat2, rank : 2))");
 }
 
+TEST(TestCategories, TestCategoriesconstructor3) {
+  std::vector<std::string> vect_cat_ids = {"hello0", "hello1", "hello2"};
+  Categories categories1 = Categories(vect_cat_ids);
+  std::ostringstream os;
+  os << categories1;
+  EXPECT_EQ(os.str(),
+            "Categories(Category(id : hello0, rank : 0), Category(id : "
+            "hello1, rank : 1), Category(id : hello2, rank : 2))");
+}
+
 TEST(TestCategories, TestConstructorByCopy) {
   Categories categories1 = Categories(4, "cat");
 
