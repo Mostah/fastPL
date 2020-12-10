@@ -37,13 +37,6 @@ public:
                                   const PerformanceTable &perfs);
 
   /**
-   * setPerformanceTable setter of performance table parameter
-   *
-   * @param performance_table
-   */
-  void setPerformanceTable(std::vector<Performance> &performance_table);
-
-  /**
    * setPerformanceTable getter of performance table parameter
    *
    * @return performance_table
