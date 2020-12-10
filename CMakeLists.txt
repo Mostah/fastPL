@@ -9,6 +9,8 @@ set(Headers
     src/Criteria.h
     src/AtomicMCDAObject.h
     src/Category.h
+    src/Categories.h
+    src/utils.h
     )
 
 set(Sources 
@@ -16,6 +18,7 @@ set(Sources
     src/Criteria.cpp
     src/AtomicMCDAObject.cpp
     src/Category.cpp
+    src/Categories.cpp
     )
 
 add_library(Core ${Headers} ${Sources})   # build a library with our header and source files
