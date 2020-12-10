@@ -118,3 +118,7 @@ TEST(TestCriteria, TestGetSumWeight) {
   sum_weight = crits.getSumWeight();
   EXPECT_FLOAT_EQ(1, sum_weight);
 }
+
+TEST(TestCriteria, TestAllInstancesDestroyed) {
+  EXPECT_EQ(AtomicMCDAObject::get_nb_instances(), 0);
+}
