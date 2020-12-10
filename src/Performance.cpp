@@ -1,46 +1,41 @@
 #include "Performance.h"
+#include "Criteria.h"
 #include <iostream>
 #include <string>
 #include <vector>
 
-Performance::Performance(std::string id, Criteria criteria) {
+Performance::Performance(std::string id, Criteria &criteria) {
   id_ = id;
-  unsigned int len = criteria.size();
-  std::pair<std::string, float> perf[len];
-  for (int i = 0; i < len; i++) {
-    perf[i] = std::make_pair(criteria[i].getId(), 0);
+  std::vector<Criterion> criterion_vect = criteria.getCriterionVect();
+  for (int i = 0; i < criterion_vect.size(); i++) {
+    perf_.push_back(std::make_pair(criterion_vect[i].getId(), 0));
   }
-  std::copy(perf, perf + len, perf_);
 }
 
-Performance::Performance(std::string id, Criteria criteria, float perf[]) {
+Performance::Performance(std::string id, Criteria &criteria,
+                         std::vector<float> &given_perf) {
   id_ = id;
-  unsigned int len = criteria.size();
-  std::pair<std::string, float> perf[len];
-  for (int i = 0; i < len; i++) {
-    perf[i] = std::make_pair(criteria[i].getId(), perf[i]);
+  std::vector<Criterion> criterion_vect = criteria.getCriterionVect();
+  for (int i = 0; i < criterion_vect.size(); i++) {
+    perf_.push_back(std::make_pair(criterion_vect[i].getId(), given_perf[i]));
   }
-  std::copy(perf, perf + len, perf_);
 }
 
 Performance::Performance(const Performance &p) {
   id_ = p.getId();
-  std::vector<std::pair<std::string, float>> *pperf = &p.getPerf();
-  unsigned int len = pperf.size();
-  std::pair<std::string, float> perf[len];
-  for (int i = 0; i < len; i++) {
-    perf[i] = std::make_pair(pperf[i].first, pperf[i].second);
+  std::vector<std::pair<std::string, float>> pperf = p.getPerf();
+  for (int i = 0; i < pperf.size(); i++) {
+    perf_.push_back(std::make_pair(pperf[i].first, pperf[i].second));
   }
-  std::copy(perf, perf + len, perf_);
 }
 
-Performance::~Performance() { delete perf_; }
+Performance::~Performance() {}
 
 std::string Performance::getId() const { return id_; }
 
 void Performance::setId(std::string id) { id_ = id; }
 
-std::vector<std::pair<std::string, float>> *Performance::getPerf() const {
+std::vector<std::pair<std::string, float>> Performance::getPerf() const {
   return perf_;
 }
 

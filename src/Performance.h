@@ -1,8 +1,8 @@
+#include "AtomicMCDAObject.h"
+#include "Criteria.h"
 #include <iostream>
 #include <string>
 #include <vector>
-
-#include "AtomicMCDAObject.h"
 
 class Performance : public AtomicMCDAObject {
 public:
@@ -12,7 +12,7 @@ public:
    * @param id Id name of the performance
    * @param criteria Array of criterion to compute performance over
    */
-  Performance(std::string id, Criteria criteria);
+  Performance(std::string id, Criteria &criteria);
 
   /**
    * Performance standard constructor
@@ -21,7 +21,7 @@ public:
    * @param criteria Array of criterion to compute performance over
    * @param perf[] Array of performance to set
    */
-  Performance(std::string id, Criteria criteria, float perf[]);
+  Performance(std::string id, Criteria &criteria, std::vector<float> &perf);
 
   /**
    * Performance constructor by copy
@@ -53,12 +53,12 @@ public:
    *
    * @return perf
    */
-  std::vector<std::pair<std::string, float>> *getPerf() const;
+  std::vector<std::pair<std::string, float>> getPerf() const;
 
 private:
   std::string id_;
 
   // Performance on each criteria represented as a pair of criteria name and
   // perf value
-  std::vector<std::pair<std::string, float>> *perf_;
+  std::vector<std::pair<std::string, float>> perf_;
 };
