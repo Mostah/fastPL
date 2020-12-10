@@ -1,3 +1,6 @@
+#ifndef PERFORMANCE_H
+#define PERFORMANCE_H
+
 #include "AtomicMCDAObject.h"
 #include "Criteria.h"
 #include <iostream>
@@ -62,3 +65,5 @@ private:
   // perf value
   std::vector<std::pair<std::string, float>> perf_;
 };
+
+#endif

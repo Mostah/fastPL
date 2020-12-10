@@ -38,3 +38,7 @@ TEST(TestPerformance, TestConstructorByCopy) {
   EXPECT_EQ(os.str(), "Performance({ cat : test0, perf : 0.4 }, { cat : test1, "
                       "perf : 0.6 }, )");
 }
+
+TEST(TestPerformance, TestAllInstancesDestroyed) {
+  EXPECT_EQ(AtomicMCDAObject::get_nb_instances(), 0);
+}
