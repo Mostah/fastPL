@@ -9,6 +9,7 @@ set(Headers
     src/AtomicMCDAObject.h
     src/Category.h
     src/Categories.h
+    src/utils.h
     )
 
 set(Sources 

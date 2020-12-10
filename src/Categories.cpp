@@ -1,12 +1,15 @@
 #include "Categories.h"
+#include "utils.h"
 #include <iostream>
+#include <ostream>
 #include <string.h>
+#include <vector>
 
 Categories::Categories(int number_of_categories, std::string prefix) {
   for (int i = 0; i < number_of_categories; i++) {
     std::string id = prefix + std::to_string(i);
     Category tmp_cat = Category(id, i);
-    categories_vector_[i] = tmp_cat;
+    categories_vector_.push_back(tmp_cat);
   }
 }
 
@@ -14,13 +17,14 @@ Categories::Categories(int number_of_categories) {
   for (int i = 0; i < number_of_categories; i++) {
     std::string id = "cat" + std::to_string(i);
     Category tmp_cat = Category(id, i);
-    categories_vector_[i] = tmp_cat;
+    categories_vector_.push_back(tmp_cat);
   }
 }
 
 Categories::Categories(const Categories &categories) {
-  for (int i = 0; i < categories_vector_.size(); i++) {
-    categories_vector_[i] = categories[i];
+  for (int i = 0; i < categories.categories_vector_.size(); i++) {
+    Category tmp_cat = categories.categories_vector_[i];
+    categories_vector_.push_back(tmp_cat);
   }
 }
 
@@ -38,7 +42,7 @@ Categories::~Categories() {
 std::vector<int> Categories::getRankCategories() {
   std::vector<int> rank_categories;
   for (int i = 0; i < categories_vector_.size(); i++) {
-    rank_categories[i] = categories_vector_[i].getCategoryRank();
+    rank_categories.push_back(categories_vector_[i].getCategoryRank());
   }
   return rank_categories;
 }
@@ -62,7 +66,7 @@ void Categories::setRankCategories() {
 std::vector<std::string> Categories::getIdCategories() {
   std::vector<std::string> categories_ids;
   for (int i = 0; i < categories_vector_.size(); i++) {
-    categories_ids[i] = categories_vector_[i].getCategoryId();
+    categories_ids.push_back(categories_vector_[i].getCategoryId());
   }
   return categories_ids;
 }
@@ -84,48 +88,14 @@ void Categories::setIdCategories(std::vector<std::string> &set_category_ids) {
 }
 
 std::ostream &operator<<(std::ostream &out, const Categories &cats) {
-  /**
-   * Overloading << operator for Categories class
-   *
-   * @param cats
-   *
-   */
-  out << "Categories( ";
+  out << "Categories(";
   for (int i = 0; i < cats.categories_vector_.size(); i++) {
-    out << "" << cats[i] << ",";
+    if (i == cats.categories_vector_.size() - 1) {
+      out << cats[i];
+    } else {
+      out << cats[i] << ", ";
+    }
   }
-  out << " )";
-  return out;
-}
-
-std::ostream &operator<<(std::ostream &out, const std::vector<int> &vec) {
-  /**
-   * Overloading << operator for Categories class
-   *
-   * @param cats
-   *
-   */
-  out << '[';
-  for (std::vector<int>::const_iterator i = vec.begin(); i != vec.end(); ++i) {
-    out << *i << ' ';
-  }
-  out << ']';
-  return out;
-}
-
-std::ostream &operator<<(std::ostream &out,
-                         const std::vector<std::string> &vec) {
-  /**
-   * Overloading << operator for Categories class
-   *
-   * @param vec
-   *
-   */
-  out << '[';
-  for (std::vector<std::string>::const_iterator i = vec.begin(); i != vec.end();
-       ++i) {
-    out << *i << ' ';
-  }
-  out << ']';
+  out << ")";
   return out;
 }

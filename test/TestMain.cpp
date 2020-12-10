@@ -1,7 +1,6 @@
 #include "TestCategories.cpp"
 #include "TestCategory.cpp"
 #include "TestCriterion.cpp"
-#include "TestCriterionValue.cpp"
 #include "gtest/gtest.h"
 #include <sstream>
 #include <utility>
