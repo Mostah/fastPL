@@ -41,8 +41,8 @@ std::vector<std::pair<std::string, float>> Performance::getPerf() const {
 
 std::ostream &operator<<(std::ostream &out, const Performance &p) {
   out << "Performance(";
-  for (auto cat : p.perf_) {
-    out << "{ cat : " << cat.first << " perf : " << cat.second << " } ";
+  for (std::pair<std::string, float> cat : p.perf_) {
+    out << "{ cat : " << cat.first << ", perf : " << cat.second << " }, ";
   }
   out << ")";
   return out;

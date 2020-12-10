@@ -37,3 +37,4 @@ build
 # VScode config
 .vscode
 fastPL.code-workspace
+.clang-format
