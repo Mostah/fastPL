@@ -1,3 +1,6 @@
+#ifndef CRITERION_H
+#define CRITERION_H
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -99,3 +102,5 @@ private:
     int direction_;
     float weight_;
 };
+
+#endif
