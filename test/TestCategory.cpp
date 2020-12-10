@@ -9,14 +9,14 @@ TEST(TestCategory, TestCategory) {
   Category category1("cat0", 0);
   std::ostringstream os;
   os << category1;
-  EXPECT_EQ(os.str(), "Category(cat0:0)");
+  EXPECT_EQ(os.str(), "Category(cat0: 0)");
 }
 
 TEST(TestCategory, TestCategory2) {
   Category category1("cat12", 12);
   std::ostringstream os;
   os << category1;
-  EXPECT_EQ(os.str(), "Category(cat12:12)");
+  EXPECT_EQ(os.str(), "Category(cat12: 12)");
 }
 
 TEST(TestCategory, TestConstructorByCopy) {
@@ -26,7 +26,7 @@ TEST(TestCategory, TestConstructorByCopy) {
 
   std::ostringstream os;
   os << catCopied;
-  EXPECT_EQ(os.str(), "Category(cat1:13)");
+  EXPECT_EQ(os.str(), "Category(cat1: 13)");
 }
 
 TEST(TestCategory, TestAllInstancesDestroyed) {

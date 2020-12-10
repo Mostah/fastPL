@@ -1,3 +1,4 @@
+#include "TestCategories.cpp"
 #include "TestCriterionValue.cpp"
 #include "gtest/gtest.h"
 #include <sstream>
