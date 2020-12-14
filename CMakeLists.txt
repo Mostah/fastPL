@@ -12,6 +12,8 @@ set(Headers
     src/PerformanceTable.h
     src/AtomicMCDAObject.h
     src/Category.h
+    src/Categories.h
+    src/utils.h
     )
 
 set(Sources 
@@ -22,6 +24,7 @@ set(Sources
     src/PerformanceTable.cpp
     src/AtomicMCDAObject.cpp
     src/Category.cpp
+    src/Categories.cpp
     )
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17" )
