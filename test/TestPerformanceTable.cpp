@@ -6,36 +6,38 @@
 #include <utility>
 
 TEST(TestPerformanceTable, TestBaseConstructor) {
-  Criteria crit = Criteria(2, "test");
-  PerformanceTable perf_table = PerformanceTable("", 2, crit);
+  Criteria crit = Criteria(2, "a");
+  PerformanceTable perf_table = PerformanceTable("test", 2, crit);
   std::ostringstream os;
   os << perf_table;
-  EXPECT_EQ(os.str(), "PerformanceTable(Performance({ cat : test0, perf : 0 }, "
-                      "{ cat : test1, perf : 0 }, ), Performance({ cat : "
-                      "test0, perf : 0 }, { cat : test1, perf : 0 }, ), )");
+  EXPECT_EQ(os.str(),
+            "PerformanceTable(Performance(Perf( name : test0, crit : a0, value "
+            ": 0 ), Perf( name : test0, crit : a1, value : 0 ), ), "
+            "Performance(Perf( name : test1, crit : a0, value : 0 ), Perf( "
+            "name : test1, crit : a1, value : 0 ), ), )");
 }
 
 TEST(TestPerformanceTable, TestConstructorWithPerfVect) {
   std::vector<Performance> perf_vect;
-  Criteria crit = Criteria(2, "test");
-  perf_vect.push_back(Performance("", crit));
-  perf_vect.push_back(Performance("", crit));
+  Criteria crit = Criteria(2, "a");
+  perf_vect.push_back(Performance("test0", crit));
+  perf_vect.push_back(Performance("test1", crit));
   PerformanceTable perf_table = PerformanceTable(perf_vect);
 
   std::ostringstream os;
   os << perf_table;
-  EXPECT_EQ(
-      os.str(),
-      "PerformanceTable(Performance({ cat : test0, perf : 0 }, { cat : test1, "
-      "perf : 0 }, ), Performance({ cat : test0, perf : 0 }, { cat : test1, "
-      "perf : 0 }, ), )");
+  EXPECT_EQ(os.str(),
+            "PerformanceTable(Performance(Perf( name : test0, crit : a0, value "
+            ": 0 ), Perf( name : test0, crit : a1, value : 0 ), ), "
+            "Performance(Perf( name : test1, crit : a0, value : 0 ), Perf( "
+            "name : test1, crit : a1, value : 0 ), ), )");
 }
 
 TEST(TestPerformanceTable, TestConstructorByCopy) {
   std::vector<Performance> perf_vect;
-  Criteria crit = Criteria(2, "test");
-  perf_vect.push_back(Performance("", crit));
-  perf_vect.push_back(Performance("", crit));
+  Criteria crit = Criteria(2, "a");
+  perf_vect.push_back(Performance("test0", crit));
+  perf_vect.push_back(Performance("test1", crit));
   PerformanceTable perf_table = PerformanceTable(perf_vect);
 
   std::ostringstream os;
@@ -44,9 +46,10 @@ TEST(TestPerformanceTable, TestConstructorByCopy) {
   os << perf_table2;
   EXPECT_EQ(
       os.str(),
-      "PerformanceTable(Performance({ cat : test0, perf : 0 }, { cat : test1, "
-      "perf : 0 }, ), Performance({ cat : test0, perf : 0 }, { cat : test1, "
-      "perf : 0 }, ), )");
+      "PerformanceTable(Performance(Perf( name : test0, crit : a0, value : 0 "
+      "), Perf( name : test0, crit : a1, value : 0 ), ), Performance(Perf( "
+      "name : test1, crit : a0, value : 0 ), Perf( name : test1, crit : a1, "
+      "value : 0 ), ), )");
 }
 
 TEST(TestPerformanceTable, TestAllInstancesDestroyed) {

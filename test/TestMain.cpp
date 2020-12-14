@@ -1,6 +1,7 @@
 #include "TestCategory.cpp"
 #include "TestCriteria.cpp"
 #include "TestCriterion.cpp"
+#include "TestPerf.cpp"
 #include "TestPerformance.cpp"
 #include "TestPerformanceTable.cpp"
 #include "gtest/gtest.h"

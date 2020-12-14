@@ -6,37 +6,38 @@
 
 TEST(TestPerformance, TestBaseConstructor) {
   std::string id = "test";
-  Criteria crit = Criteria(2, "test");
+  Criteria crit = Criteria(2, "a");
   Performance perf = Performance(id, crit);
   std::ostringstream os;
   os << perf;
-  EXPECT_EQ(
-      os.str(),
-      "Performance({ cat : test0, perf : 0 }, { cat : test1, perf : 0 }, )");
+  EXPECT_EQ(os.str(), "Performance(Perf( name : test, crit : a0, value : 0 ), "
+                      "Perf( name : test, crit : a1, value : 0 ), )");
 }
 
 TEST(TestPerformance, TestConstructorWithPerfVect) {
   std::string id = "test";
-  Criteria crit = Criteria(2, "test");
+  Criteria crit = Criteria(2, "a");
   std::vector<float> given_perf = {0.4, 0.6};
   Performance perf = Performance(id, crit, given_perf);
   std::ostringstream os;
   os << perf;
-  EXPECT_EQ(os.str(), "Performance({ cat : test0, perf : 0.4 }, { cat : test1, "
-                      "perf : 0.6 }, )");
+  EXPECT_EQ(os.str(),
+            "Performance(Perf( name : test, crit : a0, value : 0.4 ), "
+            "Perf( name : test, crit : a1, value : 0.6 ), )");
 }
 
 TEST(TestPerformance, TestConstructorByCopy) {
   std::string id = "test";
-  Criteria crit = Criteria(2, "test");
+  Criteria crit = Criteria(2, "a");
   std::vector<float> given_perf = {0.4, 0.6};
   Performance perf = Performance(id, crit, given_perf);
 
   Performance perf_copied = Performance(perf);
   std::ostringstream os;
   os << perf_copied;
-  EXPECT_EQ(os.str(), "Performance({ cat : test0, perf : 0.4 }, { cat : test1, "
-                      "perf : 0.6 }, )");
+  EXPECT_EQ(os.str(),
+            "Performance(Perf( name : test, crit : a0, value : 0.4 ), "
+            "Perf( name : test, crit : a1, value : 0.6 ), )");
 }
 
 TEST(TestPerformance, TestAllInstancesDestroyed) {

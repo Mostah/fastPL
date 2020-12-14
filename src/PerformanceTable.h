@@ -43,6 +43,16 @@ public:
    */
   std::vector<Performance> getPerformanceTable() const;
 
+  // TODO
+  // Sort (build index?)
+  // get middle
+  // get best ap, get worst ap
+  // display
+  // changer Performance:
+  // Perf = {name: .. crit: .. , val: .. }
+  // Performance = Vector<Perf>
+  // PerformanceTable = Vector<Performance>
+
 private:
   std::vector<Performance> performance_table_;
 };

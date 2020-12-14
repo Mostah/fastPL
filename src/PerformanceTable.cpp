@@ -13,7 +13,8 @@ PerformanceTable::PerformanceTable(std::vector<Performance> &perf_vect) {
 PerformanceTable::PerformanceTable(std::string prefix, int nb_of_perfs,
                                    Criteria crits) {
   for (int i = 0; i < nb_of_perfs; i++) {
-    performance_table_.push_back(Performance(prefix, crits));
+    performance_table_.push_back(
+        Performance(prefix + std::to_string(i), crits));
   }
 }
 

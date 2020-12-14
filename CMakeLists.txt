@@ -7,6 +7,7 @@ add_subdirectory(extsrc/googletest) # add googletest subdirectory
 set(Headers 
     src/Criterion.h
     src/Criteria.h
+    src/Perf.h
     src/Performance.h
     src/PerformanceTable.h
     src/AtomicMCDAObject.h
@@ -16,6 +17,7 @@ set(Headers
 set(Sources 
     src/Criterion.cpp
     src/Criteria.cpp
+    src/Perf.cpp
     src/Performance.cpp
     src/PerformanceTable.cpp
     src/AtomicMCDAObject.cpp
