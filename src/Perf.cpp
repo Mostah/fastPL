@@ -8,6 +8,12 @@ Perf::Perf(std::string name, std::string criterion, float value) {
   value_ = value;
 }
 
+Perf::Perf(std::string name, std::string criterion) {
+  name_ = name;
+  crit_ = criterion;
+  value_ = 0;
+}
+
 Perf::Perf(const Perf &perf) {
   name_ = perf.getName();
   crit_ = perf.getCrit();
