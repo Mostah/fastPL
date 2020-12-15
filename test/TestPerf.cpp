@@ -8,6 +8,11 @@ TEST(TestPerf, TestBaseConstructor) {
   std::ostringstream os;
   os << perf;
   EXPECT_EQ(os.str(), "Perf( name : test, crit : a, value : 0.6 )");
+
+  perf = Perf("test", "b");
+  std::ostringstream os2;
+  os2 << perf;
+  EXPECT_EQ(os2.str(), "Perf( name : test, crit : b, value : 0 )");
 }
 
 TEST(TestPerf, TestConstructorByCopy) {

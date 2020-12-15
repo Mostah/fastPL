@@ -17,6 +17,14 @@ public:
   Perf(std::string name, std::string criterion, float value);
 
   /**
+   * Perf standard constructor
+   *
+   * @param name name of the performance (ex: name of profile or alternative)
+   * @param criterion criterion id on which the performance in based on
+   */
+  Perf(std::string name, std::string criterion);
+
+  /**
    * Performance constructor by copy
    *
    * @param perf Based performance to copy

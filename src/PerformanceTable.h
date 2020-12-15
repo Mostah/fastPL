@@ -43,18 +43,28 @@ public:
    */
   std::vector<Performance> getPerformanceTable() const;
 
+  /**
+   * Overloading [] operator for PerformanceTable
+   *
+   * @param name name of the alt or profile we want
+   *
+   *@return Performance object with associated criterion
+   */
+  Performance operator[](std::string name) const;
+
   // TODO
   // Sort (build index?)
   // get middle
   // get best ap, get worst ap
   // display
-  // changer Performance:
-  // Perf = {name: .. crit: .. , val: .. }
-  // Performance = Vector<Perf>
-  // PerformanceTable = Vector<Performance>
+  // ensure consistency of [][] operator: a performance table should ensure that
+  // there is no row initially with different name, at most one row per name, a
+  // row cannot have two Perf with the same criteria, and a column is alway set
+  // on the same criteria (initially) and throw error at creation if something
+  // is wrong.
 
 private:
-  std::vector<Performance> performance_table_;
+  std::vector<Performance> pt_;
 };
 
 #endif
