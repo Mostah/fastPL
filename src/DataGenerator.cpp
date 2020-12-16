@@ -174,33 +174,48 @@ int DataGenerator::getNumberOfCriteria(std::string fileName) const {
   std::string path = "../data/" + fileName;
   if (!doc.load_file(path.c_str()))
     return -1;
-  // if we have a model
-  try {
-    pugi::xml_node node_criteria = doc.child("model").child("criteria");
 
-    std::stringstream strValue;
-    strValue << node_criteria.child_value();
+  std::stringstream strValue;
+  unsigned int nb_crit;
 
-    unsigned int nb_crit;
+  // if we have a model xml
+  pugi::xml_node node_criteria = doc.child("model").child("criteria");
+
+  if (!*node_criteria.child_value()) {
+    // if we have a dataset xml
+    pugi::xml_node node_criteria2 = doc.child("dataset").child("criteria");
+
+    strValue << node_criteria2.child_value();
     strValue >> nb_crit;
-
     return nb_crit;
-  } catch (const std::exception &e) {
   }
 
-  // if we have a dataset
-  try {
-    pugi::xml_node node_criteria = doc.child("dataset").child("criteria");
+  strValue << node_criteria.child_value();
+  strValue >> nb_crit;
+  return nb_crit;
+}
 
-    std::stringstream strValue;
-    strValue << node_criteria.child_value();
+int DataGenerator::getNumberOfCategories(std::string fileName) const {
+  pugi::xml_document doc;
+  std::string path = "../data/" + fileName;
+  if (!doc.load_file(path.c_str()))
+    return -1;
+  std::stringstream strValue;
+  unsigned int nb_categories;
 
-    unsigned int nb_crit;
-    strValue >> nb_crit;
+  // if we have a model xml
+  pugi::xml_node node_cat = doc.child("model").child("categories");
 
-    return nb_crit;
+  if (!*node_cat.child_value()) {
+    // if we have a dataset xml
+    pugi::xml_node node_cat2 = doc.child("dataset").child("categories");
 
-  } catch (const std::exception &e) {
+    strValue << node_cat2.child_value();
+    strValue >> nb_categories;
+    return nb_categories;
   }
-  return 0;
+
+  strValue << node_cat.child_value();
+  strValue >> nb_categories;
+  return nb_categories;
 }

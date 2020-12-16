@@ -20,3 +20,27 @@ TEST(TestDataGenerator, TestNumberOfCriteriaForModels) {
   os2 << crit;
   EXPECT_EQ(os2.str(), "2");
 }
+
+TEST(TestDataGenerator, TestNumberOfCriteriaForData) {
+  DataGenerator data = DataGenerator();
+  int crit = data.getNumberOfCriteria("test.xml");
+  std::ostringstream os2;
+  os2 << crit;
+  EXPECT_EQ(os2.str(), "3");
+}
+
+TEST(TestDataGenerator, TestNumberOfCategoriesForModels) {
+  DataGenerator data = DataGenerator();
+  int crit = data.getNumberOfCategories("test_model.xml");
+  std::ostringstream os2;
+  os2 << crit;
+  EXPECT_EQ(os2.str(), "3");
+}
+
+TEST(TestDataGenerator, TestNumberOfCategoriesForData) {
+  DataGenerator data = DataGenerator();
+  int crit = data.getNumberOfCategories("test.xml");
+  std::ostringstream os2;
+  os2 << crit;
+  EXPECT_EQ(os2.str(), "4");
+}

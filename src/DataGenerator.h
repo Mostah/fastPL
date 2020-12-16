@@ -61,6 +61,7 @@ public:
    *
    */
   int getNumberOfCriteria(std::string fileName) const;
+  int getNumberOfCategories(std::string fileName) const;
 };
 
 #endif
