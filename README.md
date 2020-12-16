@@ -33,3 +33,14 @@ make
 cd build
 ./Test
 ```
+
+### Run test using the docker image
+```
+docker-compose up --build
+```
+
+### ssh connect to the docker image (just in case)
+# replace container_id with the current container id
+```
+docker run -it <container_id> /bin/bash 
+```

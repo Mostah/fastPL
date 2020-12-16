@@ -37,3 +37,16 @@ build
 # VScode config
 .vscode
 fastPL.code-workspace
+
+# CMake.gitignore from github
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps
