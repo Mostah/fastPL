@@ -38,3 +38,16 @@ build
 .vscode
 fastPL.code-workspace
 .clang-format
+
+# CMake.gitignore from github
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps
