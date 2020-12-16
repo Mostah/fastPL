@@ -38,19 +38,39 @@ cmake ..
 make
 ```
 
-### Run test
+### Run test manually
 
+#### Run all tests
 ```
 cd build
-./Test
+./Test  // runs every tests in the test directory
 ```
+
+#### Run specific tests
+
+Run the exectuable using the filter option of gtest:
+```
+--gtest_filter=POSTIVE_PATTERNS[-NEGATIVE_PATTERNS]
+    Run only the tests whose name matches one of the positive patterns but
+    none of the negative patterns. '?' matches any single character; '*'
+    matches any substring; ':' separates two patterns.
+
+    The name of TEST(Foo, Bar) is "Foo.Bar"
+```
+
+Example:
+```
+./Test --gtest_filter=TestGeneralName.TestPreciseName
+```
+
+## Docker image
 
 ### Run test using the docker image
 ```
 docker-compose up --build
 ```
 
-### ssh connect to the docker image (just in case)
+### SSH connect to the docker image (just in case)
 # replace container_id with the current container id
 ```
 docker run -it <container_id> /bin/bash 
