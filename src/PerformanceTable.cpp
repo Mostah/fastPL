@@ -1,5 +1,6 @@
 #include "PerformanceTable.h"
 #include <iostream>
+#include <map>
 #include <string>
 #include <vector>
 
@@ -125,3 +126,68 @@ std::vector<std::vector<Perf>> PerformanceTable::getPerformanceTable() const {
 }
 
 std::string PerformanceTable::getMode() const { return mode_; }
+
+void PerformanceTable::changeMode(std::string mode) {
+  if (mode != "alt" && mode != "crit") {
+    throw std::invalid_argument("Mode must be alt or crit.");
+  }
+  // this operation cannot be done in place, should not be an issue as we should
+  // not call this methods often.
+  std::vector<std::vector<Perf>> new_pt;
+  std::map<std::string, int> index;
+  if (mode == "crit") {
+    for (std::vector<Perf> pv : pt_) {
+      for (Perf p : pv) {
+        if (index.count(p.getCrit()) > 0) {
+          new_pt[index[p.getCrit()]].push_back(p);
+        } else {
+          std::vector<Perf> v = {p};
+          new_pt.push_back(v);
+          index[p.getCrit()] = new_pt.size() - 1; // index of crit in the new_pt
+        }
+      }
+    }
+  } else {
+    for (std::vector<Perf> pv : pt_) {
+      for (Perf p : pv) {
+        if (index.count(p.getName()) > 0) {
+          new_pt[index[p.getName()]].push_back(p);
+        } else {
+          std::vector<Perf> v = {p};
+          new_pt.push_back(v);
+          index[p.getName()] = new_pt.size() - 1; // index of crit in the new_pt
+        }
+      }
+    }
+  }
+
+  pt_ = new_pt;
+  mode_ = mode;
+}
+
+// OPTI could be optimized by using other sort methods if necessary
+void PerformanceTable::sort(std::string mode) {
+  if (mode != "alt" && mode != "crit") {
+    throw std::invalid_argument("Mode must be alt or crit.");
+  }
+  if (mode == "alt" && mode_ != "alt") {
+    this->changeMode("alt");
+  } else if (mode == "crit" && mode_ != "crit") {
+    this->changeMode("crit");
+  }
+
+  for (std::vector<Perf> &pv : pt_) {
+    std::sort(pv.begin(), pv.end(), [](const Perf &a, const Perf &b) {
+      return a.getValue() < b.getValue();
+    });
+  }
+}
+
+/*
+  for (std::vector<Perf> v : new_pt) {
+    for (Perf e : v) {
+      std::cout << e.getName() << " " << e.getCrit() << " ";
+    }
+    std::cout << std::endl;
+  }
+  */

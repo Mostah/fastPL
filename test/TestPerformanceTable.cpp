@@ -166,6 +166,87 @@ TEST(TestPerformanceTable, TestGetPerf) {
   }
 }
 
+TEST(TestPerformanceTable, TestChangeMode) {
+  std::vector<Performance> perf_vect;
+  Criteria crit = Criteria(2, "a");
+  perf_vect.push_back(Performance("test0", crit));
+  perf_vect.push_back(Performance("test1", crit));
+  PerformanceTable perf_table = PerformanceTable(perf_vect);
+
+  perf_table.changeMode("crit");
+  std::ostringstream os;
+  os << perf_table;
+  EXPECT_EQ(
+      os.str(),
+      "PerformanceTable(Performance(Perf( name : test0, crit : a0, value : 0 "
+      "), Perf( name : test1, crit : a0, value : 0 ), ), Performance(Perf( "
+      "name : test0, crit : a1, value : 0 ), Perf( name : test1, crit : a1, "
+      "value : 0 ), ), )");
+  EXPECT_EQ(perf_table.getMode(), "crit");
+
+  perf_table.changeMode("alt");
+  std::ostringstream os2;
+  os2 << perf_table;
+  EXPECT_EQ(
+      os2.str(),
+      "PerformanceTable(Performance(Perf( name : test0, crit : a0, value : 0 "
+      "), Perf( name : test0, crit : a1, value : 0 ), ), Performance(Perf( "
+      "name : test1, crit : a0, value : 0 ), Perf( name : test1, crit : a1, "
+      "value : 0 ), ), )");
+  EXPECT_EQ(perf_table.getMode(), "alt");
+
+  try {
+    perf_table.changeMode("zzz");
+    FAIL() << "should have throw invalid argument.";
+  } catch (std::invalid_argument const &err) {
+    EXPECT_EQ(err.what(), std::string("Mode must be alt or crit."));
+  } catch (...) {
+    FAIL() << "should have throw invalid argument.";
+  }
+}
+
+TEST(TestPerformanceTable, TestSort) {
+  std::vector<Performance> perf_vect;
+  Criteria crit = Criteria(2, "a");
+  std::vector<float> given_perf0 = {0.8, 0.4};
+  std::vector<float> given_perf1 = {0.2, 0.6};
+  perf_vect.push_back(Performance("test0", crit, given_perf0));
+  perf_vect.push_back(Performance("test1", crit, given_perf1));
+  PerformanceTable perf_table = PerformanceTable(perf_vect);
+
+  perf_table.sort("alt");
+  std::ostringstream os;
+  os << perf_table;
+  EXPECT_EQ(
+      os.str(),
+      "PerformanceTable(Performance(Perf( name : test0, crit : a1, value : 0.4 "
+      "), Perf( name : test0, crit : a0, value : 0.8 ), ), Performance(Perf( "
+      "name : test1, crit : a0, value : 0.2 ), Perf( name : test1, crit : a1, "
+      "value : 0.6 ), ), )");
+  EXPECT_EQ(perf_table.getMode(), "alt");
+
+  perf_table = PerformanceTable(perf_vect);
+  perf_table.sort("crit");
+  std::ostringstream os2;
+  os2 << perf_table;
+  EXPECT_EQ(
+      os2.str(),
+      "PerformanceTable(Performance(Perf( name : test1, crit : a0, value : 0.2 "
+      "), Perf( name : test0, crit : a0, value : 0.8 ), ), Performance(Perf( "
+      "name : test0, crit : a1, value : 0.4 ), Perf( name : test1, crit : a1, "
+      "value : 0.6 ), ), )");
+  EXPECT_EQ(perf_table.getMode(), "crit");
+
+  try {
+    perf_table.changeMode("zzz");
+    FAIL() << "should have throw invalid argument.";
+  } catch (std::invalid_argument const &err) {
+    EXPECT_EQ(err.what(), std::string("Mode must be alt or crit."));
+  } catch (...) {
+    FAIL() << "should have throw invalid argument.";
+  }
+}
+
 TEST(TestPerformanceTable, TestAllInstancesDestroyed) {
   EXPECT_EQ(AtomicMCDAObject::get_nb_instances(), 0);
 }

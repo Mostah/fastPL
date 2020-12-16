@@ -70,10 +70,25 @@ public:
   Perf getPerf(std::string name, std::string crit) const;
 
   // TODO
-  // Sort (build index?)
+  // Sort
   // get middle
   // get best ap, get worst ap
-  // display
+
+  /**
+   * sort Sort the performance table given the selected mode: alt or crit.
+   * Sorted by alt will assign the first dimension to alt and sort the second by
+   * crit. Sorting by crit will assign the first dimension by crit and sort the
+   * second dimension by alt.
+   */
+  void sort(std::string mode);
+
+  /**
+   * changeMode Change the assigned mode to the performance table given the
+   * selected one: alt or crit. alt mode will assign the first dimension to alt
+   * and second to crit. crit mode will assign the first dimension to crit and
+   * the second dimension to alt.
+   */
+  void changeMode(std::string mode);
 
 private:
   std::vector<std::vector<Perf>> pt_;
