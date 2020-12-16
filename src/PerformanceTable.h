@@ -77,7 +77,7 @@ public:
   /**
    * sort Sort the performance table given the selected mode: alt or crit.
    * Sorted by alt will assign the first dimension to alt and sort the second by
-   * crit. Sorting by crit will assign the first dimension by crit and sort the
+   * crit. Sorting by crit will assign the first dimension to crit and sort the
    * second dimension by alt.
    */
   void sort(std::string mode);
@@ -92,7 +92,8 @@ public:
 
 private:
   std::vector<std::vector<Perf>> pt_;
-  // indicate what represented by rows: (alt or profiles) or criterias
+
+  // indicates what is represented by rows: (alt or profiles) or criterias
   std::string mode_; // takes its value in {"crit", "alt"}
 };
 

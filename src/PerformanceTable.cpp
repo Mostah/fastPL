@@ -1,4 +1,5 @@
 #include "PerformanceTable.h"
+#include <algorithm>
 #include <iostream>
 #include <map>
 #include <string>
@@ -65,7 +66,7 @@ std::ostream &operator<<(std::ostream &out, const PerformanceTable &perfs) {
 }
 
 std::vector<Perf> PerformanceTable::operator[](std::string name) const {
-  // suppose the pt is consistent:
+  // supposing the pt is consistent:
   // if in mode alt, each row contains 1 and only 1 (alternative or profile)
   // if in mode crit, each row contains 1 and only 1 criterion
   if (mode_ == "alt") {
@@ -88,7 +89,7 @@ std::vector<Perf> PerformanceTable::operator[](std::string name) const {
 }
 
 Perf PerformanceTable::getPerf(std::string name, std::string crit) const {
-  // suppose the pt is consistent:
+  // supposing the pt is consistent:
   // if in mode alt, each row contains 1 and only 1 (alternative or profile)
   // if in mode crit, each row contains 1 and only 1 criterion
   if (mode_ == "alt") {
@@ -132,15 +133,17 @@ void PerformanceTable::changeMode(std::string mode) {
     throw std::invalid_argument("Mode must be alt or crit.");
   }
   // this operation cannot be done in place, should not be an issue as we should
-  // not call this methods often.
+  // not call this method often.
   std::vector<std::vector<Perf>> new_pt;
   std::map<std::string, int> index;
   if (mode == "crit") {
     for (std::vector<Perf> pv : pt_) {
       for (Perf p : pv) {
         if (index.count(p.getCrit()) > 0) {
+          // if criterion already seen, add Perf to the right row
           new_pt[index[p.getCrit()]].push_back(p);
         } else {
+          // create a new row for this criterion and add Perf
           std::vector<Perf> v = {p};
           new_pt.push_back(v);
           index[p.getCrit()] = new_pt.size() - 1; // index of crit in the new_pt
@@ -151,8 +154,10 @@ void PerformanceTable::changeMode(std::string mode) {
     for (std::vector<Perf> pv : pt_) {
       for (Perf p : pv) {
         if (index.count(p.getName()) > 0) {
+          // if alternative (or profile) already seen, add Perf to the right row
           new_pt[index[p.getName()]].push_back(p);
         } else {
+          // if alternative (or profile) already seen, add Perf to the right row
           std::vector<Perf> v = {p};
           new_pt.push_back(v);
           index[p.getName()] = new_pt.size() - 1; // index of crit in the new_pt
