@@ -55,12 +55,13 @@ Run the exectuable using the filter option of gtest:
     none of the negative patterns. '?' matches any single character; '*'
     matches any substring; ':' separates two patterns.
 
-    The name of TEST(Foo, Bar) is "Foo.Bar"
+    The name of TEST(Name1, Name2) is "Name1.Name2"
 ```
 
 Example:
 ```
-./Test --gtest_filter=TestGeneralName.TestPreciseName
+./Test --gtest_filter=TestGeneralName.TestPreciseName   // One specific Test
+./Test --gtest_filter=TestGeneralName.*                 // All tests of Name1 = GeneralName 
 ```
 
 ## Docker image
