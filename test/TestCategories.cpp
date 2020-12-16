@@ -73,8 +73,6 @@ TEST(TestCategories, TestOperatorConstantSubscript) {
 }
 
 TEST(TestCategories, TestGetRank) {
-  std::cout << "hello2";
-
   Categories categories1 = Categories(10);
   std::vector<int> rank_categories = categories1.getRankCategories();
 
