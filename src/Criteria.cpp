@@ -1,12 +1,20 @@
 #include "Criteria.h"
 #include "Criterion.h"
+#include <algorithm>
 #include <iostream>
 #include <string>
 #include <vector>
 
 Criteria::Criteria(std::vector<Criterion> &criterion_vect) {
-  // deep copy
+  std::vector<std::string> crit_id_vect;
   for (int i = 0; i < criterion_vect.size(); i++) {
+    // ensure there is no criterion with dupplicated name
+    if (std::find(crit_id_vect.begin(), crit_id_vect.end(),
+                  criterion_vect[i].getId()) != crit_id_vect.end()) {
+      throw std::invalid_argument("Each criterion must have different ids.");
+    }
+    crit_id_vect.push_back(criterion_vect[i].getId());
+
     criterion_vect_.push_back(Criterion(criterion_vect[i]));
   }
 }

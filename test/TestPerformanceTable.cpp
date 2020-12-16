@@ -33,6 +33,62 @@ TEST(TestPerformanceTable, TestConstructorWithPerfVect) {
             "name : test1, crit : a1, value : 0 ), ), )");
 }
 
+TEST(TestPerformanceTable, TestConstructorWithPerfVectErrors) {
+  std::vector<Performance> perf_vect;
+
+  try {
+    PerformanceTable perf_table_0 = PerformanceTable(perf_vect);
+    FAIL() << "should have throw invalid argument.";
+  } catch (std::invalid_argument const &err) {
+    EXPECT_EQ(err.what(), std::string("The vector must contain performances."));
+  } catch (...) {
+    FAIL() << "should have throw invalid argument.";
+  }
+
+  Criteria crit_a = Criteria(2, "a");
+  Criteria crit_b = Criteria(2, "b");
+  perf_vect.push_back(Performance("test0", crit_a));
+  perf_vect.push_back(Performance("test1", crit_b));
+
+  try {
+    PerformanceTable perf_table_1 = PerformanceTable(perf_vect);
+    FAIL() << "should have throw invalid argument.";
+  } catch (std::invalid_argument const &err) {
+    EXPECT_EQ(err.what(),
+              std::string("Each performance must be based on the same set of "
+                          "criterion, in the same order."));
+  } catch (...) {
+    FAIL() << "should have throw invalid argument.";
+  }
+
+  Criteria crit_c = Criteria(1, "c");
+  perf_vect[1] = Performance("test2", crit_c);
+  try {
+    PerformanceTable perf_table_2 = PerformanceTable(perf_vect);
+    FAIL() << "should have throw invalid argument.";
+  } catch (std::invalid_argument const &err) {
+    EXPECT_EQ(err.what(),
+              std::string("Each performance must be based on the same set of "
+                          "criterion, in the same order."));
+  } catch (...) {
+    FAIL() << "should have throw invalid argument.";
+  }
+
+  std::vector<Performance> perf_vect_err;
+  perf_vect_err.push_back(Performance("test0", crit_c));
+  perf_vect_err.push_back(Performance("test0", crit_c));
+
+  try {
+    PerformanceTable pt_err = PerformanceTable(perf_vect_err);
+    FAIL() << "should have throw invalid argument.";
+  } catch (std::invalid_argument const &err) {
+    EXPECT_EQ(err.what(),
+              std::string("Each performance must have different ids."));
+  } catch (...) {
+    FAIL() << "should have throw invalid argument.";
+  }
+}
+
 TEST(TestPerformanceTable, TestConstructorByCopy) {
   std::vector<Performance> perf_vect;
   Criteria crit = Criteria(2, "a");

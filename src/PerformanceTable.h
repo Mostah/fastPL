@@ -9,7 +9,8 @@
 class PerformanceTable {
 public:
   /**
-   * Performances constructor with defined vector of performance
+   * Performances constructor with defined vector of performance. All
+   * Performance should have the same criteria to be based on.
    *
    * @param perf_vect Vector of performance
    */

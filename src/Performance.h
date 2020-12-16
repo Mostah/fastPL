@@ -66,6 +66,14 @@ public:
   void setId(std::string id);
 
   /**
+   * getCriteria get of the criteria name used in the performance
+   *
+   * @return crit_vect string vector containing the criterion names used in this
+   * performance.
+   */
+  std::vector<std::string> getCriteria();
+
+  /**
    * Overloading [] operator for Performance
    *
    * @param criteria criterion name of the Perf we want

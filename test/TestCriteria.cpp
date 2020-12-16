@@ -30,6 +30,20 @@ TEST(TestCriteria, TestCriterionVectConstructor) {
   os << crits;
   EXPECT_EQ(os.str(), "Criteria(Criterion(id : test, name : criterion_test, "
                       "direction : -, weight : 0.4), )");
+
+  std::vector<Criterion> crit_vect_err;
+  crit_vect_err.push_back(Criterion("a", "", -1, 0.4));
+  crit_vect_err.push_back(Criterion("a", "", -1, 0));
+
+  try {
+    Criteria crits_err = Criteria(crit_vect_err);
+    FAIL() << "should have throw invalid argument.";
+  } catch (std::invalid_argument const &err) {
+    EXPECT_EQ(err.what(),
+              std::string("Each criterion must have different ids."));
+  } catch (...) {
+    FAIL() << "should have throw invalid argument.";
+  }
 }
 
 TEST(TestCriteria, TestCopyConstructor) {

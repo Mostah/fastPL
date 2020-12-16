@@ -74,6 +74,13 @@ TEST(TestPerformance, TestAccessOperator) {
   }
 }
 
+TEST(TestPerformance, TestGetCriteriaVect) {
+  Criteria crit = Criteria(2, "a");
+  Performance perf = Performance("test", crit);
+  std::vector<std::string> crit_vect = {"a0", "a1"};
+  EXPECT_EQ(perf.getCriteria(), crit_vect);
+}
+
 TEST(TestPerformance, TestAllInstancesDestroyed) {
   EXPECT_EQ(AtomicMCDAObject::get_nb_instances(), 0);
 }

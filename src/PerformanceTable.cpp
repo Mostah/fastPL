@@ -4,8 +4,25 @@
 #include <vector>
 
 PerformanceTable::PerformanceTable(std::vector<Performance> &perf_vect) {
-  // deep copy
+  if (perf_vect.size() == 0) {
+    throw std::invalid_argument("The vector must contain performances.");
+  }
+  std::vector<std::string> perf_id_vect;
+  std::vector<std::string> crit_vect = perf_vect[0].getCriteria();
+
   for (int i = 0; i < perf_vect.size(); i++) {
+    // ensure there is no performance with dupplicated name
+    if (std::find(perf_id_vect.begin(), perf_id_vect.end(),
+                  perf_vect[i].getId()) != perf_id_vect.end()) {
+      throw std::invalid_argument("Each performance must have different ids.");
+    }
+    perf_id_vect.push_back(perf_vect[i].getId());
+
+    // ensure all the performance are based on the same set of criterion
+    if (perf_vect[i].getCriteria() != crit_vect) {
+      throw std::invalid_argument("Each performance must be based on the same "
+                                  "set of criterion, in the same order.");
+    }
     pt_.push_back(Performance(perf_vect[i]));
   }
 }
