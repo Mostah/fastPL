@@ -37,6 +37,7 @@ build
 # VScode config
 .vscode
 fastPL.code-workspace
+.clang-format
 
 # CMake.gitignore from github
 CMakeLists.txt.user
