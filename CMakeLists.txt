@@ -14,6 +14,7 @@ set(Headers
     src/Category.h
     src/Categories.h
     src/utils.h
+    src/DataGenerator.h
     )
 
 set(Sources 
@@ -25,6 +26,7 @@ set(Sources
     src/AtomicMCDAObject.cpp
     src/Category.cpp
     src/Categories.cpp
+    src/DataGenerator.cpp
     )
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17" )

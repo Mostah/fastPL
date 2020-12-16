@@ -1,9 +1,9 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+#include "../pugixml/src/pugixml.hpp"
 #include <iostream>
 #include <vector>
-
 /**
  * Overloading << operator for std::vector object
  *
@@ -20,5 +20,31 @@ std::ostream &operator<<(std::ostream &out, const std::vector<T> &vec) {
   out << "]";
   return out;
 }
+
+/**
+ * Pugy XML Tree walker viewer
+ *
+ * @param node xml_node
+ *
+ */
+struct simple_walker : pugi::xml_tree_walker {
+  virtual bool for_each(pugi::xml_node &node) {
+    for (int i = 0; i < depth(); ++i)
+      std::cout << "  "; // indentation
+
+    std::cout << node.type() << ": name='" << node.name() << "', value='"
+              << node.value() << "'\n";
+
+    return true; // continue traversal
+  }
+};
+
+//   HOW TO USE
+//   pugi::xml_document doc;
+//   std::string path = "../data/" + fileName;
+//   pugi::xml_parse_result result = doc.load_file(path.c_str());
+
+//   simple_walker walker;
+//   doc.traverse(walker);
 
 #endif
