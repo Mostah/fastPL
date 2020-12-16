@@ -5,23 +5,19 @@ The  objective of this repository is to translate the previous code (py-mcda) in
 
 # Repository structure
 
-* [src](https://github.com/Mostah/fastPL/tree/master/src)
-Sources files (headers and classes)
+* [src](https://github.com/Mostah/fastPL/tree/master/src) : Sources files (headers and classes)
 
-* [test](https://github.com/Mostah/fastPL/tree/master/test)
-Test files
+* [test](https://github.com/Mostah/fastPL/tree/master/test) : Test files
 
-* [extsrc](https://github.com/Mostah/fastPL/tree/master/extsrc)
-External sources, here googletest
+* [extsrc](https://github.com/Mostah/fastPL/tree/master/extsrc) : External sources, here googletest
 
-* [.circleci](https://github.com/Mostah/fastPL/tree/master/.circleci)
-CircleCi configuration
+* [.circleci](https://github.com/Mostah/fastPL/tree/master/.circleci) : CircleCi configuration
 
 # Tests environment configuration
 
 ## Test C++ code on Circle CI
 
-see .circle/config.yml 
+See [Circle CI configuration file](https://github.com/Mostah/fastPL/blob/master/.circleci/config.yml)
 
 ## Manual test with google-test
 
