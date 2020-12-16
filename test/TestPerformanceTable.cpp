@@ -15,6 +15,7 @@ TEST(TestPerformanceTable, TestBaseConstructor) {
             ": 0 ), Perf( name : test0, crit : a1, value : 0 ), ), "
             "Performance(Perf( name : test1, crit : a0, value : 0 ), Perf( "
             "name : test1, crit : a1, value : 0 ), ), )");
+  EXPECT_EQ(perf_table.getMode(), "alt");
 }
 
 TEST(TestPerformanceTable, TestConstructorWithPerfVect) {
@@ -31,6 +32,7 @@ TEST(TestPerformanceTable, TestConstructorWithPerfVect) {
             ": 0 ), Perf( name : test0, crit : a1, value : 0 ), ), "
             "Performance(Perf( name : test1, crit : a0, value : 0 ), Perf( "
             "name : test1, crit : a1, value : 0 ), ), )");
+  EXPECT_EQ(perf_table.getMode(), "alt");
 }
 
 TEST(TestPerformanceTable, TestConstructorWithPerfVectErrors) {
@@ -106,6 +108,7 @@ TEST(TestPerformanceTable, TestConstructorByCopy) {
       "), Perf( name : test0, crit : a1, value : 0 ), ), Performance(Perf( "
       "name : test1, crit : a0, value : 0 ), Perf( name : test1, crit : a1, "
       "value : 0 ), ), )");
+  EXPECT_EQ(perf_table.getMode(), "alt");
 }
 
 TEST(TestPerformanceTable, TestAccessOperator) {
@@ -115,17 +118,51 @@ TEST(TestPerformanceTable, TestAccessOperator) {
   perf_vect.push_back(Performance("test1", crit));
   PerformanceTable perf_table = PerformanceTable(perf_vect);
 
-  Performance p0 = perf_table["test0"];
+  std::vector<Perf> p0 = perf_table["test0"];
   std::ostringstream os;
-  os << p0;
+  os << Performance(p0);
   EXPECT_EQ(os.str(), "Performance(Perf( name : test0, crit : a0, value : 0 "
                       "), Perf( name : test0, crit : a1, value : 0 ), )");
 
   try {
-    Performance p_z = perf_table["z"];
-    FAIL();
+    std::vector<Perf> p_z = perf_table["z"];
+    FAIL() << "should have throw invalid argument.";
   } catch (std::invalid_argument const &err) {
     EXPECT_EQ(err.what(), std::string("Row not found in performance table"));
+  } catch (...) {
+    FAIL() << "should have throw invalid argument.";
+  }
+}
+
+TEST(TestPerformanceTable, TestGetPerf) {
+  std::vector<Performance> perf_vect;
+  Criteria crit = Criteria(2, "a");
+  perf_vect.push_back(Performance("test0", crit));
+  perf_vect.push_back(Performance("test1", crit));
+  PerformanceTable perf_table = PerformanceTable(perf_vect);
+
+  Perf p = perf_table.getPerf("test1", "a0");
+  std::ostringstream os;
+  os << p;
+  EXPECT_EQ(os.str(), "Perf( name : test1, crit : a0, value : 0 )");
+
+  try {
+    Perf p = perf_table.getPerf("test", "a0");
+    FAIL() << "should have throw invalid argument.";
+  } catch (std::invalid_argument const &err) {
+    EXPECT_EQ(err.what(), std::string("Name not found in performance table"));
+  } catch (...) {
+    FAIL() << "should have throw invalid argument.";
+  }
+
+  try {
+    Perf p = perf_table.getPerf("test0", "a");
+    FAIL() << "should have throw invalid argument.";
+  } catch (std::invalid_argument const &err) {
+    EXPECT_EQ(err.what(),
+              std::string("Criterion not found in performance table"));
+  } catch (...) {
+    FAIL() << "should have throw invalid argument.";
   }
 }
 

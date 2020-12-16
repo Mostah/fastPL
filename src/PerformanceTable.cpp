@@ -23,44 +23,105 @@ PerformanceTable::PerformanceTable(std::vector<Performance> &perf_vect) {
       throw std::invalid_argument("Each performance must be based on the same "
                                   "set of criterion, in the same order.");
     }
-    pt_.push_back(Performance(perf_vect[i]));
+    pt_.push_back(Performance(perf_vect[i]).getPerf());
   }
+  mode_ = "alt";
 }
 
 PerformanceTable::PerformanceTable(std::string prefix, int nb_of_perfs,
                                    Criteria crits) {
   for (int i = 0; i < nb_of_perfs; i++) {
-    pt_.push_back(Performance(prefix + std::to_string(i), crits));
+    pt_.push_back(Performance(prefix + std::to_string(i), crits).getPerf());
   }
+  mode_ = "alt";
 }
 
 PerformanceTable::PerformanceTable(const PerformanceTable &perfs) {
   // deep copy
-  for (int i = 0; i < perfs.pt_.size(); i++) {
-    pt_.push_back(Performance(perfs.pt_[i]));
+  for (std::vector<Perf> p : perfs.pt_) {
+    std::vector<Perf> perf_vect;
+    for (Perf perf : p) {
+      perf_vect.push_back(Perf(perf));
+    }
+    pt_.push_back(perf_vect);
   }
+  mode_ = "alt";
 }
 
 PerformanceTable::~PerformanceTable() {}
 
 std::ostream &operator<<(std::ostream &out, const PerformanceTable &perfs) {
   out << "PerformanceTable(";
-  for (Performance perf : perfs.pt_) {
-    out << perf << ", ";
+  for (std::vector<Perf> p : perfs.pt_) {
+    out << "Performance(";
+    for (Perf perf : p) {
+      out << perf << ", ";
+    }
+    out << "), ";
   }
   out << ")";
   return out;
 }
 
-Performance PerformanceTable::operator[](std::string name) const {
-  for (Performance p : pt_) {
-    if (p.getId() == name) {
-      return p;
+std::vector<Perf> PerformanceTable::operator[](std::string name) const {
+  // suppose the pt is consistent:
+  // if in mode alt, each row contains 1 and only 1 (alternative or profile)
+  // if in mode crit, each row contains 1 and only 1 criterion
+  if (mode_ == "alt") {
+    for (std::vector<Perf> p : pt_) {
+      if (p[0].getName() == name) {
+        return p;
+      }
     }
+    throw std::invalid_argument("Row not found in performance table");
+  } else if (mode_ == "crit") {
+    for (std::vector<Perf> p : pt_) {
+      if (p[0].getCrit() == name) {
+        return p;
+      }
+    }
+    throw std::invalid_argument("Row not found in performance table");
+  } else {
+    throw std::domain_error("Performance table mode corrupted.");
   }
-  throw std::invalid_argument("Row not found in performance table");
 }
 
-std::vector<Performance> PerformanceTable::getPerformanceTable() const {
+Perf PerformanceTable::getPerf(std::string name, std::string crit) const {
+  // suppose the pt is consistent:
+  // if in mode alt, each row contains 1 and only 1 (alternative or profile)
+  // if in mode crit, each row contains 1 and only 1 criterion
+  if (mode_ == "alt") {
+    for (std::vector<Perf> p : pt_) {
+      if (p[0].getName() == name) {
+        for (Perf perf : p) {
+          if (perf.getCrit() == crit) {
+            return perf;
+          }
+        }
+        throw std::invalid_argument("Criterion not found in performance table");
+      }
+    }
+    throw std::invalid_argument("Name not found in performance table");
+  }
+  if (mode_ == "crit") {
+    for (std::vector<Perf> p : pt_) {
+      if (p[0].getCrit() == crit) {
+        for (Perf perf : p) {
+          if (perf.getName() == name) {
+            return perf;
+          }
+        }
+        throw std::invalid_argument("Name not found in performance table");
+      }
+    }
+    throw std::invalid_argument("Criterion not found in performance table");
+  } else {
+    throw std::domain_error("Performance table mode corrupted.");
+  }
+}
+
+std::vector<std::vector<Perf>> PerformanceTable::getPerformanceTable() const {
   return pt_;
 }
+
+std::string PerformanceTable::getMode() const { return mode_; }

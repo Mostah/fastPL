@@ -20,6 +20,7 @@ public:
    * Criteria constructor without perf values but set of criteria to evaluate
    * performance over
    *
+   * @param prefix Prefix to use for the name of each Performance created
    * @param nb_of_perfs Number of performance
    * @param crits Criteria to evaluate performance over
    */
@@ -38,34 +39,46 @@ public:
                                   const PerformanceTable &perfs);
 
   /**
-   * setPerformanceTable getter of performance table parameter
+   * getPerformanceTable getter of performance table parameter
    *
    * @return performance_table
    */
-  std::vector<Performance> getPerformanceTable() const;
+  std::vector<std::vector<Perf>> getPerformanceTable() const;
+
+  /**
+   * getMode getter of the mode of the performance table
+   *
+   * @return mode
+   */
+  std::string getMode() const;
 
   /**
    * Overloading [] operator for PerformanceTable
    *
-   * @param name name of the alt or profile we want
+   * @param name name of the row we want to search
    *
    *@return Performance object with associated criterion
    */
-  Performance operator[](std::string name) const;
+  std::vector<Perf> operator[](std::string name) const;
+
+  /**
+   * getPerf getter of a specific Perf in the performance table
+   *
+   * @param name name of the alt or profile we want
+   * @param crit name of the crit we want
+   */
+  Perf getPerf(std::string name, std::string crit) const;
 
   // TODO
   // Sort (build index?)
   // get middle
   // get best ap, get worst ap
   // display
-  // ensure consistency of [][] operator: a performance table should ensure that
-  // there is no row initially with different name, at most one row per name, a
-  // row cannot have two Perf with the same criteria, and a column is alway set
-  // on the same criteria (initially) and throw error at creation if something
-  // is wrong.
 
 private:
-  std::vector<Performance> pt_;
+  std::vector<std::vector<Perf>> pt_;
+  // indicate what represented by rows: (alt or profiles) or criterias
+  std::string mode_; // takes its value in {"crit", "alt"}
 };
 
 #endif
