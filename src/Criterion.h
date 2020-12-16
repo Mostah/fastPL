@@ -38,6 +38,21 @@ public:
     friend std::ostream & operator <<( std::ostream & out, const Criterion & crit );
 
     /**
+     * generateDirection generator of random direction
+     * can also be used as reinitialisation for direction
+     * 
+     */
+    void generateDirection(unsigned long int seed = time(NULL));
+
+    /**
+     * generateWeight generator of random weight
+     * can also be used as reinitialisation for weight
+     * 
+     */
+    // void generateWeight(unsigned long int seed = std::random_device());
+    void generateWeight(unsigned long int seed = time(NULL));
+
+    /**
      * getId getter of id parameter
      *
      * @return id
