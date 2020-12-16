@@ -247,6 +247,55 @@ TEST(TestPerformanceTable, TestSort) {
   }
 }
 
+TEST(TestPerformanceTable, TestGetAltBetween) {
+  std::vector<Performance> perf_vect;
+  Criteria crit = Criteria(2, "a");
+  std::vector<float> given_perf0 = {0.2, 0};
+  std::vector<float> given_perf1 = {0.8, 1};
+  std::vector<float> given_perf2 = {0.4, 0.4};
+  std::vector<float> given_perf3 = {0.6, 0.6};
+  perf_vect.push_back(Performance("test0", crit, given_perf0));
+  perf_vect.push_back(Performance("test1", crit, given_perf1));
+  perf_vect.push_back(Performance("test2", crit, given_perf2));
+  perf_vect.push_back(Performance("test3", crit, given_perf3));
+  PerformanceTable perf_table = PerformanceTable(perf_vect);
+
+  try {
+    perf_table.getAltBetween("a0", 0, 1);
+    FAIL() << "should have throw domain error.";
+  } catch (std::domain_error const &err) {
+    EXPECT_EQ(err.what(),
+              std::string("Mode must be crit but is currently set to alt."));
+  } catch (...) {
+    FAIL() << "should have throw domain error.";
+  }
+
+  perf_table.sort("crit");
+  try {
+    perf_table.getAltBetween("a0", 1, 0);
+    FAIL() << "should have throw invalid argument.";
+  } catch (std::invalid_argument const &err) {
+    EXPECT_EQ(err.what(), std::string("Sup must be greater (>) than inf"));
+  } catch (...) {
+    FAIL() << "should have throw invalid argument.";
+  }
+
+  EXPECT_EQ(0, perf_table.getAltBetween("a0", 0.25, 0.3).size());
+  EXPECT_EQ(0, perf_table.getAltBetween("a0", 0.81, 1).size());
+
+  std::ostringstream os;
+  std::vector<Perf> p0 = perf_table.getAltBetween("a0", 0.1, 0.5);
+  os << p0;
+  EXPECT_EQ(os.str(), "[Perf( name : test0, crit : a0, value : 0.2 "
+                      "),Perf( name : test2, crit : a0, value : 0.4 )]");
+
+  std::ostringstream os2;
+  std::vector<Perf> p1 = perf_table.getAltBetween("a1", 0.5, 1);
+  os2 << p1;
+  EXPECT_EQ(os2.str(), "[Perf( name : test3, crit : a1, value : 0.6 "
+                       "),Perf( name : test1, crit : a1, value : 1 )]");
+}
+
 TEST(TestPerformanceTable, TestAllInstancesDestroyed) {
   EXPECT_EQ(AtomicMCDAObject::get_nb_instances(), 0);
 }

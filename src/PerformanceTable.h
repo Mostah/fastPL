@@ -70,7 +70,6 @@ public:
   Perf getPerf(std::string name, std::string crit) const;
 
   // TODO
-  // Sort
   // get middle
   // get best ap, get worst ap
 
@@ -79,6 +78,8 @@ public:
    * Sorted by alt will assign the first dimension to alt and sort the second by
    * crit. Sorting by crit will assign the first dimension to crit and sort the
    * second dimension by alt.
+   *
+   * @param mode selected pt mode (alt or crit)
    */
   void sort(std::string mode);
 
@@ -87,8 +88,19 @@ public:
    * selected one: alt or crit. alt mode will assign the first dimension to alt
    * and second to crit. crit mode will assign the first dimension to crit and
    * the second dimension to alt.
+   *
+   * @param mode selected pt mode (alt or crit)
    */
   void changeMode(std::string mode);
+
+  /**
+   * getAltBetween return all the alternatives / profiles that have a
+   * performance (value) between inf and sup on criterion crit. The performance
+   * table must have been sorted before calling this function.
+   *
+   * @return sub_vect
+   */
+  std::vector<Perf> getAltBetween(std::string crit, float inf, float sup);
 
 private:
   std::vector<std::vector<Perf>> pt_;

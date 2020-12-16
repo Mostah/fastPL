@@ -1,4 +1,5 @@
 #include "PerformanceTable.h"
+#include "utils.h"
 #include <algorithm>
 #include <iostream>
 #include <map>
@@ -185,6 +186,37 @@ void PerformanceTable::sort(std::string mode) {
     std::sort(pv.begin(), pv.end(), [](const Perf &a, const Perf &b) {
       return a.getValue() < b.getValue();
     });
+  }
+}
+
+std::vector<Perf> PerformanceTable::getAltBetween(std::string crit, float inf,
+                                                  float sup) {
+  if (mode_ != "crit") {
+    throw std::domain_error("Mode must be crit but is currently set to " +
+                            mode_ + ".");
+  }
+  if (inf >= sup) {
+    throw std::invalid_argument("Sup must be greater (>) than inf");
+  }
+
+  std::vector<Perf> pv = this->operator[](crit);
+  auto lower_b = std::lower_bound(
+      pv.begin(), pv.end(), inf,
+      [](const Perf &a, const float b) { return a.getValue() < b; });
+  // find the first index that have a value above sup
+  auto upper_b = std::upper_bound(
+      pv.begin(), pv.end(), sup,
+      [](const float a, const Perf &b) { return a < b.getValue(); });
+
+  if (lower_b != pv.end() && upper_b != pv.end()) {
+    return subVector(pv, std::distance(pv.begin(), lower_b),
+                     std::distance(pv.begin(), upper_b) - 1);
+  } else if (upper_b == pv.end()) {
+    return subVector(pv, std::distance(pv.begin(), lower_b), pv.size() - 1);
+  } else {
+    // return empty perf vect
+    std::vector<Perf> v;
+    return v;
   }
 }
 
