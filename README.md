@@ -5,11 +5,17 @@ The  objective of this repository is to translate the previous code (py-mcda) in
 
 # Repository structure
 
-* src
+* [src](https://github.com/Mostah/fastPL/tree/master/src)
+Sources files (headers and classes)
 
-* test
+* [test](https://github.com/Mostah/fastPL/tree/master/test)
+Test files
 
-* extsrc
+* [extsrc](https://github.com/Mostah/fastPL/tree/master/extsrc)
+External sources, here googletest
+
+* [.circleci](https://github.com/Mostah/fastPL/tree/master/.circleci)
+CircleCi configuration
 
 # Tests environment configuration
 
@@ -40,10 +46,14 @@ make
 
 ### Run test manually
 
-#### Run all tests
+First, move to build folder
 ```
 cd build
-./Test  // runs every tests in the test directory
+```
+
+#### Run all tests
+```
+./Test  
 ```
 
 #### Run specific tests
@@ -60,8 +70,8 @@ Run the exectuable using the filter option of gtest:
 
 Example:
 ```
-./Test --gtest_filter=TestGeneralName.TestPreciseName   // One specific Test
-./Test --gtest_filter=TestGeneralName.*                 // All tests of Name1 = GeneralName 
+./Test --gtest_filter=TestGeneralName.TestPreciseName   # One specific Test
+./Test --gtest_filter=TestGeneralName.*                 # All tests of Name1 = GeneralName 
 ```
 
 ## Docker image
@@ -71,8 +81,9 @@ Example:
 docker-compose up --build
 ```
 
-### SSH connect to the docker image (just in case)
-# replace container_id with the current container id
+SSH connect to the docker image (just in case)
+
+### Replace container_id with the current container id
 ```
 docker run -it <container_id> /bin/bash 
 ```
