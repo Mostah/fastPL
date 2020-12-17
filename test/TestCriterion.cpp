@@ -63,29 +63,50 @@ TEST(TestCriterion, TestDirectionGenerator) {
   std::string id = "test_direction";
   Criterion crit = Criterion(id);
   unsigned long int seed = time(0);
+
+  std::string id2 = "test_direction2";
+  Criterion crit2 = Criterion(id2);
+  unsigned long int seed2 = 40;
   // generating a direction to compare to the one generated in generateDirection
   // should be the same since we are using the same seed 
   srand(seed);
   int direction = 1;
   if ( ((float) rand() / RAND_MAX) < 0.5){ direction = -1; }
-
   crit.generateDirection(seed);
 
+  srand(seed2);
+  int direction2 = 1;
+  if ( ((float) rand() / RAND_MAX) < 0.5){ direction2 = -1; }
+  crit2.generateDirection(seed2);
+
   EXPECT_FLOAT_EQ(direction, crit.getDirection());
+  EXPECT_FLOAT_EQ(direction2, crit2.getDirection());
 }
 
 TEST(TestCriterion, TestWeightGenerator) {
   std::string id = "test_weight";
   Criterion crit = Criterion(id);
   unsigned long int seed = time(0);
+
+  // generate another criterion with another seed
+  std::string id2 = "test_weight2";
+  Criterion crit2 = Criterion(id2);
+  unsigned long int seed2 = 42;
   // generating a weight to compare to the one generated in generateWeight
   // should be the same since we are using the same seed 
   srand(seed); 
   float weight = ((float) rand() / RAND_MAX);
-
   crit.generateWeight(seed);
+
+  srand(seed2); 
+  float weight2 = ((float) rand() / RAND_MAX);
+  crit2.generateWeight(seed2);
+
+  float weight3 = ((float) rand() / RAND_MAX);
   
   EXPECT_FLOAT_EQ(weight, crit.getWeight());
+  EXPECT_FLOAT_EQ(weight2, crit2.getWeight());
+  EXPECT_FLOAT_EQ(weight3, weight2);
 }
 
 TEST(TestCriterion, TestAllCriterionInstancesDestroyed) {
