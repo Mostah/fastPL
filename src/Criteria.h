@@ -68,6 +68,15 @@ public:
    */
   float getSumWeight();
 
+  /**
+   * Overloading [] dict operator for Performance
+   *
+   * @param criteria criterion name of the Perf we want
+   *
+   *@return Perf object with associated criterion
+   */
+  Criterion operator[](std::string name) const;
+
 private:
   std::vector<Criterion> criterion_vect_;
 };

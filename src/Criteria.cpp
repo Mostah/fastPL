@@ -87,3 +87,12 @@ float Criteria::getSumWeight() {
   }
   return sum;
 }
+
+Criterion Criteria::operator[](std::string name) const {
+  for (Criterion c : criterion_vect_) {
+    if (c.getId() == name) {
+      return c;
+    }
+  }
+  throw std::invalid_argument("Criterion not found in this Criteria vector");
+}
