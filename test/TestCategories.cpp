@@ -7,7 +7,7 @@
 #include <utility>
 #include <vector>
 
-TEST(TestCategories, TestCategoriesconstructor1) {
+TEST(TestCategories, TestCategoriesconstructor1Plural) {
   Categories categories1 = Categories(3, "hello");
   std::ostringstream os;
   os << categories1;
@@ -16,14 +16,14 @@ TEST(TestCategories, TestCategoriesconstructor1) {
             "rank : 1), Category(id : hello2, rank : 2))");
 }
 
-TEST(TestCategories, TestCategoriesconstructor1_2) {
+TEST(TestCategories, TestCategoriesconstructor1WithNumbersAndIds) {
   Categories categories1 = Categories(1, "hello");
   std::ostringstream os;
   os << categories1;
   EXPECT_EQ(os.str(), "Categories(Category(id : hello0, rank : 0))");
 }
 
-TEST(TestCategories, TestCategoriesconstructor2) {
+TEST(TestCategories, TestCategoriesconstructor1WithoutId) {
   Categories categories1 = Categories(3);
   std::ostringstream os;
   os << categories1;
@@ -31,7 +31,7 @@ TEST(TestCategories, TestCategoriesconstructor2) {
                       "cat1, rank : 1), Category(id : cat2, rank : 2))");
 }
 
-TEST(TestCategories, TestCategoriesconstructor3) {
+TEST(TestCategories, TestCategoriesconstructor2) {
   std::vector<std::string> vect_cat_ids = {"hello0", "hello1", "hello2"};
   Categories categories1 = Categories(vect_cat_ids);
   std::ostringstream os;
