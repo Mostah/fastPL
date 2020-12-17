@@ -9,6 +9,7 @@
 
 #include "../pugixml/src/pugixml.hpp"
 #include "AtomicMCDAObject.h"
+#include "Performance.h"
 #include <iostream>
 
 class DataGenerator : public AtomicMCDAObject {
@@ -50,9 +51,18 @@ public:
    * @return a type for model usage
    *
    */
-  void loadDataset(std::string fileName);
+  // void loadDataset(std::string fileName);
 
   // void saveDataset(new type, std::string datasetName);
+
+  /**
+   * Gets the xml file type
+   * returns either "model" for model xml file types or "dataset" for data xml
+   * files.
+   * @param fileName filename
+   *
+   */
+  std::string getXmlFileType(std::string fileName);
 
   /**
    * Get number of criterias found in xml file
@@ -60,8 +70,80 @@ public:
    * @param fileName filename
    *
    */
-  int getNumberOfCriteria(std::string fileName) const;
-  int getNumberOfCategories(std::string fileName) const;
+  int getNumberOfCriteria(std::string fileName);
+
+  /**
+   * Get number of categories found in xml file
+   *
+   * @param fileName filename
+   *
+   */
+  int getNumberOfCategories(std::string fileName);
+
+  /**
+   * Get lambda threshold value found in xml file if it exists
+   *
+   * @param fileName filename
+   *
+   */
+  float getThresholdValue(std::string fileName);
+
+  /**
+   * Get number of alternatives found in dataset xml file if it exists
+   *
+   * @param fileName filename
+   *
+   */
+  int getNumberOfAlternatives(std::string fileName);
+
+  /**
+   * Get performance of alternative
+   *
+   * @param fileName filename
+   * @param alt_id Alternative id
+   */
+  Performance getAlternativePerformance(std::string fileName,
+                                        std::string alt_id);
+  /**
+   * Get all of alternative ids if they exists
+   *
+   * @param fileName filename
+   *
+   */
+  std::vector<std::string> getAlternativeIds(std::string fileName);
+
+  /**
+   * Get all of criteria ids
+   *
+   * @param fileName filename
+   *
+   */
+  std::vector<std::string> getCriteriaIds(std::string fileName);
+
+  /**
+   * Get weight for one specific criterion id
+   *
+   * @param fileName filename
+   * @param crit_id Criterion id
+   */
+  Criterion getCriterion(std::string fileName, std::string crit_id);
+
+  /**
+   * Get alternative category assignment
+   *
+   * @param fileName filename
+   * @param alt_id Criterion id
+   */
+  int getAlternativeAssignment(std::string fileName, std::string alt_id);
+
+  /**
+   * Get alternative category assignment
+   *
+   * @param fileName filename
+   * @param crit_id Criterion id
+   */
+  std::vector<float> getCriterionCategoryLimits(std::string fileName,
+                                                std::string crit_id);
 };
 
 #endif

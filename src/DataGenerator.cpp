@@ -7,7 +7,11 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <stdlib.h>
 #include <string>
+
+/// room for improvement can i improve the xml type fucntion by returning doc
+/// type
 
 void DataGenerator::DatasetGenerator(int nb_criteria, int nb_alternative,
                                      int nb_categories,
@@ -159,63 +163,337 @@ void DataGenerator::modelGenerator(int nb_criteria, int nb_categories,
   }
 }
 
-// void Generate::loadDataset(std::string fileName) {
-//   pugi::xml_document doc;
+// void DataGenerator::loadDataset(std::string fileName) {}
 
-//   pugi::xml_parse_result result = doc.load_file("../data" + fileName);
-
-//   std::cout << "Load result: " << result.description()
-//             << ", mesh name: " << doc.child("mesh").attribute("name").value()
-//             << std::endl;
-// }
-
-int DataGenerator::getNumberOfCriteria(std::string fileName) const {
+std::string DataGenerator::getXmlFileType(std::string fileName) {
   pugi::xml_document doc;
   std::string path = "../data/" + fileName;
   if (!doc.load_file(path.c_str()))
-    return -1;
-
-  std::stringstream strValue;
-  unsigned int nb_crit;
+    throw std::invalid_argument("Cannot open xml file, please check path");
 
   // if we have a model xml
-  pugi::xml_node node_criteria = doc.child("model").child("criteria");
+  pugi::xml_node node = doc.child("model").child("modelName");
 
-  if (!*node_criteria.child_value()) {
+  if (*node.child_value()) {
     // if we have a dataset xml
-    pugi::xml_node node_criteria2 = doc.child("dataset").child("criteria");
+    return "model";
+  }
+  return "dataset";
+}
 
-    strValue << node_criteria2.child_value();
-    strValue >> nb_crit;
-    return nb_crit;
+int DataGenerator::getNumberOfCriteria(std::string fileName) {
+  pugi::xml_document doc;
+  std::string path = "../data/" + fileName;
+  if (!doc.load_file(path.c_str()))
+    throw std::invalid_argument("Cannot open xml file, please check path");
+
+  pugi::xml_node node_criteria;
+  if (DataGenerator::getXmlFileType(fileName) == "model") {
+    // if we have a model xml
+    node_criteria = doc.child("model").child("criteria");
+  } else {
+    // if we have a dataset xml
+    node_criteria = doc.child("dataset").child("criteria");
   }
 
+  std::stringstream strValue;
+  int nb_crit;
   strValue << node_criteria.child_value();
   strValue >> nb_crit;
   return nb_crit;
 }
 
-int DataGenerator::getNumberOfCategories(std::string fileName) const {
+int DataGenerator::getNumberOfCategories(std::string fileName) {
   pugi::xml_document doc;
   std::string path = "../data/" + fileName;
   if (!doc.load_file(path.c_str()))
-    return -1;
-  std::stringstream strValue;
-  unsigned int nb_categories;
+    throw std::invalid_argument("Cannot open xml file, please check path");
 
-  // if we have a model xml
-  pugi::xml_node node_cat = doc.child("model").child("categories");
-
-  if (!*node_cat.child_value()) {
+  pugi::xml_node node_cat;
+  if (DataGenerator::getXmlFileType(fileName) == "model") {
+    // if we have a model xml
+    node_cat = doc.child("model").child("categories");
+  } else {
     // if we have a dataset xml
-    pugi::xml_node node_cat2 = doc.child("dataset").child("categories");
-
-    strValue << node_cat2.child_value();
-    strValue >> nb_categories;
-    return nb_categories;
+    node_cat = doc.child("dataset").child("categories");
   }
 
+  std::stringstream strValue;
+  int nb_categories;
   strValue << node_cat.child_value();
   strValue >> nb_categories;
   return nb_categories;
+}
+
+float DataGenerator::getThresholdValue(std::string fileName) {
+  pugi::xml_document doc;
+  std::string path = "../data/" + fileName;
+  if (!doc.load_file(path.c_str()))
+    throw std::invalid_argument("Cannot open xml file, please check path");
+
+  if (DataGenerator::getXmlFileType(fileName) == "model") {
+    // if we have a model xml
+    pugi::xml_node lambda_node = doc.child("model").child("lambda");
+    float lambda = atof(lambda_node.child_value());
+    return lambda;
+  } else {
+    // if we have a dataset xml
+    throw std::invalid_argument("Cannot find any threshold in xml file, "
+                                "most likely have a xml model file");
+  }
+}
+
+int DataGenerator::getNumberOfAlternatives(std::string fileName) {
+  pugi::xml_document doc;
+  std::string path = "../data/" + fileName;
+  if (!doc.load_file(path.c_str()))
+    throw std::invalid_argument("Cannot open xml file, please check path");
+
+  if (DataGenerator::getXmlFileType(fileName) == "model") {
+    // if we have a model xml
+    throw std::invalid_argument(
+        "Cannot find the number of alternatives in xml file, "
+        "most likely have a xml model file");
+  } else {
+    // if we have a dataset xml
+    pugi::xml_node node_alternatives =
+        doc.child("dataset").child("alternatives");
+    std::stringstream strValue;
+    int nb_alt;
+    strValue << node_alternatives.child_value();
+    strValue >> nb_alt;
+    return nb_alt;
+  }
+}
+
+Performance DataGenerator::getAlternativePerformance(std::string fileName,
+                                                     std::string alt_id) {
+  pugi::xml_document doc;
+  std::string path = "../data/" + fileName;
+  if (!doc.load_file(path.c_str()))
+    throw std::invalid_argument("Cannot open xml file, please check path");
+
+  if (DataGenerator::getXmlFileType(fileName) == "model") {
+    // if we have a model xml
+    throw std::invalid_argument("Cannot find any alternatives in xml file, "
+                                "most likely have a xml model file");
+  } else {
+
+    // creating type blocks to return Performance object
+    int nb_criteria = DataGenerator::getNumberOfCriteria(path);
+    Criteria criteria = Criteria(nb_criteria, "crit");
+    std::vector<float> alt_perf;
+
+    pugi::xml_node node_dataset = doc.child("dataset");
+    for (pugi::xml_node_iterator it = node_dataset.begin();
+         it != node_dataset.end(); ++it) {
+
+      if (it->child_value() == alt_id) {
+        // std::cout << "alternative : " << it->child_value() << std::endl;
+        pugi::xml_node alternative_node = node_dataset.child(it->name());
+
+        for (pugi::xml_node_iterator al_it = alternative_node.begin();
+             al_it != alternative_node.end(); ++al_it) {
+
+          // std::cout << "crit : " << al_it->child_value() << std::endl;
+          if (strcmp(al_it->child_value(), "assignment") != 0) {
+            float perf = atof(al_it->child_value());
+            alt_perf.push_back(perf);
+          }
+        }
+        break;
+      }
+    }
+    return Performance(alt_id, criteria, alt_perf);
+  }
+}
+
+std::vector<std::string>
+DataGenerator::getAlternativeIds(std::string fileName) {
+  pugi::xml_document doc;
+  std::string path = "../data/" + fileName;
+  if (!doc.load_file(path.c_str()))
+    throw std::invalid_argument("Cannot open xml file, please check path");
+
+  if (DataGenerator::getXmlFileType(fileName) == "model") {
+    // if we have a model xml
+    throw std::invalid_argument("Cannot find any alternatives in xml file, "
+                                "most likely have a xml model file");
+  } else {
+    // creating vector object to store alternative ids
+    std::vector<std::string> alt_ids;
+
+    pugi::xml_node node_dataset = doc.child("dataset");
+    for (pugi::xml_node_iterator it = node_dataset.begin();
+         it != node_dataset.end(); ++it) {
+      if (strcmp(it->name(), "alternative") == 0) {
+        const char *s = it->child_value();
+        std::string str(s);
+        alt_ids.push_back(s);
+      }
+    }
+    return alt_ids;
+  }
+}
+
+std::vector<std::string> DataGenerator::getCriteriaIds(std::string fileName) {
+  pugi::xml_document doc;
+  std::string path = "../data/" + fileName;
+  if (!doc.load_file(path.c_str()))
+    throw std::invalid_argument("Cannot open xml file, please check path");
+
+  // creating vector object to store criteria ids
+  std::vector<std::string> crit_ids;
+
+  if (DataGenerator::getXmlFileType(fileName) == "model") {
+    // if we have a model xml
+    // going from root ie model then to its first child modelName and passing
+    // to the 5th child ie first criterion
+    pugi::xml_node node_model = doc.child("model");
+
+    for (pugi::xml_node_iterator it = node_model.begin();
+         it != node_model.end(); ++it) {
+      if (strcmp(it->name(), "modelName") != 0 &&
+          strcmp(it->name(), "criteria") != 0 &&
+          strcmp(it->name(), "categories") != 0 &&
+          strcmp(it->name(), "lambda") != 0) {
+        const char *s = it->name();
+        std::string str(s);
+        crit_ids.push_back(s);
+      }
+    }
+  } else {
+    // if we have a dataset xml
+    pugi::xml_node node_dataset = doc.child("dataset").child("alternative");
+    for (pugi::xml_node_iterator it = node_dataset.begin();
+         it != node_dataset.end(); ++it) {
+      if (strcmp(it->name(), "") != 0 & strcmp(it->name(), "assignment") != 0) {
+        const char *s = it->name();
+        std::string str(s);
+        crit_ids.push_back(s);
+      }
+    }
+  }
+  return crit_ids;
+}
+
+Criterion DataGenerator::getCriterion(std::string fileName,
+                                      std::string crit_id) {
+  float weight = 0;
+  pugi::xml_document doc;
+  std::string path = "../data/" + fileName;
+
+  if (!doc.load_file(path.c_str()))
+    throw std::invalid_argument("Cannot open xml file, please check path");
+
+  if (DataGenerator::getXmlFileType(fileName) == "dataset") {
+    // if we have a model xml
+    throw std::invalid_argument(
+        "Cannot find the criterion associated to its weights in xml file, "
+        "most likely have a xml model file");
+  } else {
+    // if we have a dataset xml
+    pugi::xml_node node_model = doc.child("model").child("modelName");
+
+    for (pugi::xml_node_iterator it = node_model.begin();
+         it != node_model.end(); ++it) {
+
+      if (it->child_value() == crit_id) {
+        // std::cout << "criterion : " << it->child_value() << std::endl;
+        pugi::xml_node criterion_node = node_model.child(it->name());
+
+        for (pugi::xml_node_iterator al_it = criterion_node.begin();
+             al_it != criterion_node.end(); ++al_it) {
+
+          // std::cout << "crit : " << al_it->child_value() << std::endl;
+          if (strcmp(al_it->child_value(), "weight") == 0) {
+            weight = atof(al_it->child_value());
+          }
+        }
+        break;
+      }
+    }
+  }
+  return Criterion(crit_id, weight);
+}
+
+int DataGenerator::getAlternativeAssignment(std::string fileName,
+                                            std::string alt_id) {
+  pugi::xml_document doc;
+  std::string path = "../data/" + fileName;
+
+  if (!doc.load_file(path.c_str()))
+    throw std::invalid_argument("Cannot open xml file, please check path");
+
+  if (DataGenerator::getXmlFileType(fileName) == "model") {
+    // if we have a model xml
+    throw std::invalid_argument("Cannot find category assignment associated to "
+                                "alternative in xml file, "
+                                "most likely have a xml model file");
+  } else {
+
+    pugi::xml_node node_dataset = doc.child("dataset");
+    for (pugi::xml_node_iterator it = node_dataset.begin();
+         it != node_dataset.end(); ++it) {
+
+      if (it->child_value() == alt_id) {
+        // std::cout << "alternative : " << it->child_value() << std::endl;
+        pugi::xml_node alternative_node = node_dataset.child(it->name());
+
+        for (pugi::xml_node_iterator al_it = alternative_node.begin();
+             al_it != alternative_node.end(); ++al_it) {
+
+          // std::cout << "crit : " << al_it->child_value() << std::endl;
+          if (strcmp(al_it->name(), "assignment") == 0) {
+            // std::cout << "Success" << al_it->child_value();
+            // need to add when NEW TYPE WILL BE SET
+            return 0;
+          }
+        }
+      }
+    }
+  }
+  return 0;
+}
+
+std::vector<float>
+DataGenerator::getCriterionCategoryLimits(std::string fileName,
+                                          std::string crit_id) {
+  pugi::xml_document doc;
+  std::string path = "../data/" + fileName;
+  std::vector<float> categoryLimits;
+
+  if (!doc.load_file(path.c_str()))
+    throw std::invalid_argument("Cannot open xml file, please check path");
+
+  if (DataGenerator::getXmlFileType(fileName) == "dataset") {
+    // if we have a model xml
+
+    throw std::invalid_argument(
+        "Cannot find category limits associated to criterion in xml file, most "
+        "likely have a xml dataset file");
+
+  } else {
+    // if we have a dataset xml
+    pugi::xml_node node_model = doc.child("model");
+
+    for (pugi::xml_node_iterator it = node_model.begin();
+         it != node_model.end(); ++it) {
+      if (it->name() == crit_id) {
+        pugi::xml_node criterion_node = node_model.child(it->name());
+
+        for (pugi::xml_node_iterator al_it = criterion_node.begin();
+             al_it != criterion_node.end(); ++al_it) {
+
+          if (strcmp(al_it->child_value(), "weight") != 0) {
+            // std::cout << "crit : " << al_it->child_value() << std::endl;
+            float limit = atof(al_it->child_value());
+            categoryLimits.push_back(1.1);
+          }
+        }
+        break;
+      }
+    }
+  }
+  return categoryLimits;
 }
