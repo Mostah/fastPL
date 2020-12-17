@@ -291,7 +291,7 @@ TEST(TestPerformanceTable, TestGetAltBetween) {
                        "),Perf( name : test1, crit : a1, value : 1 )]");
 }
 
-TEST(TestPerformanceTable, TestGenerateRandomPerfValues) {
+TEST(DISABLED_TestPerformanceTable, TestGenerateRandomPerfValues) {
   Criteria crit = Criteria(2, "a");
   PerformanceTable perf_table = PerformanceTable("test", 2, crit);
   perf_table.generateRandomPerfValues(42);
@@ -306,35 +306,43 @@ TEST(TestPerformanceTable, TestGenerateRandomPerfValues) {
 }
 
 TEST(TestPerformanceTable, TestGetBestPerfByCrit) {
+  std::vector<Performance> perf_vect;
   Criteria crit = Criteria(2, "a");
-  PerformanceTable perf_table = PerformanceTable("test", 2, crit);
-  perf_table.generateRandomPerfValues(42);
+  std::vector<float> given_perf0 = {0.2, 1};
+  std::vector<float> given_perf1 = {0.8, 0};
+  perf_vect.push_back(Performance("test0", crit, given_perf0));
+  perf_vect.push_back(Performance("test1", crit, given_perf1));
+  PerformanceTable perf_table = PerformanceTable(perf_vect);
   std::ostringstream os;
   os << perf_table.getBestPerfByCrit(crit);
-  EXPECT_EQ(os.str(), "[Perf( name : test1, crit : a0, value : 0.735424 ),"
-                      "Perf( name : test0, crit : a1, value : 0.524587 )]");
+  EXPECT_EQ(os.str(), "[Perf( name : test1, crit : a0, value : 0.8 ),"
+                      "Perf( name : test0, crit : a1, value : 1 )]");
 
   std::ostringstream os2;
   perf_table.sort("crit");
   os2 << perf_table.getBestPerfByCrit(crit);
-  EXPECT_EQ(os2.str(), "[Perf( name : test1, crit : a0, value : 0.735424 ),"
-                       "Perf( name : test0, crit : a1, value : 0.524587 )]");
+  EXPECT_EQ(os2.str(), "[Perf( name : test1, crit : a0, value : 0.8 ),"
+                       "Perf( name : test0, crit : a1, value : 1 )]");
 }
 
 TEST(TestPerformanceTable, TestGetWorstPerfByCrit) {
+  std::vector<Performance> perf_vect;
   Criteria crit = Criteria(2, "a");
-  PerformanceTable perf_table = PerformanceTable("test", 2, crit);
-  perf_table.generateRandomPerfValues(42);
+  std::vector<float> given_perf0 = {0.2, 1};
+  std::vector<float> given_perf1 = {0.8, 0};
+  perf_vect.push_back(Performance("test0", crit, given_perf0));
+  perf_vect.push_back(Performance("test1", crit, given_perf1));
+  PerformanceTable perf_table = PerformanceTable(perf_vect);
   std::ostringstream os;
   os << perf_table.getWorstPerfByCrit(crit);
-  EXPECT_EQ(os.str(), "[Perf( name : test0, crit : a0, value : 0.000328708 ),"
-                      "Perf( name : test1, crit : a1, value : 0.263306 )]");
+  EXPECT_EQ(os.str(), "[Perf( name : test0, crit : a0, value : 0.2 ),"
+                      "Perf( name : test1, crit : a1, value : 0 )]");
 
   std::ostringstream os2;
   perf_table.sort("crit");
   os2 << perf_table.getWorstPerfByCrit(crit);
-  EXPECT_EQ(os2.str(), "[Perf( name : test0, crit : a0, value : 0.000328708 ),"
-                       "Perf( name : test1, crit : a1, value : 0.263306 )]");
+  EXPECT_EQ(os2.str(), "[Perf( name : test0, crit : a0, value : 0.2 ),"
+                       "Perf( name : test1, crit : a1, value : 0 )]");
 }
 
 TEST(TestPerformanceTable, TestAllInstancesDestroyed) {
