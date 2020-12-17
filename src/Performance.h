@@ -71,7 +71,7 @@ public:
    * @return crit_vect string vector containing the criterion names used in this
    * performance.
    */
-  std::vector<std::string> getCriteria();
+  std::vector<std::string> getCriterionIds();
 
   /**
    * Overloading [] operator for Performance

@@ -1,6 +1,7 @@
 #include "PerformanceTable.h"
 #include "utils.h"
 #include <algorithm>
+#include <ctime>
 #include <iostream>
 #include <map>
 #include <string>
@@ -11,7 +12,7 @@ PerformanceTable::PerformanceTable(std::vector<Performance> &perf_vect) {
     throw std::invalid_argument("The vector must contain performances.");
   }
   std::vector<std::string> perf_id_vect;
-  std::vector<std::string> crit_vect = perf_vect[0].getCriteria();
+  std::vector<std::string> crit_vect = perf_vect[0].getCriterionIds();
 
   for (int i = 0; i < perf_vect.size(); i++) {
     // ensure there is no performance with dupplicated name
@@ -22,7 +23,7 @@ PerformanceTable::PerformanceTable(std::vector<Performance> &perf_vect) {
     perf_id_vect.push_back(perf_vect[i].getId());
 
     // ensure all the performance are based on the same set of criterion
-    if (perf_vect[i].getCriteria() != crit_vect) {
+    if (perf_vect[i].getCriterionIds() != crit_vect) {
       throw std::invalid_argument("Each performance must be based on the same "
                                   "set of criterion, in the same order.");
     }
@@ -86,6 +87,15 @@ std::vector<Perf> PerformanceTable::operator[](std::string name) const {
     throw std::invalid_argument("Row not found in performance table");
   } else {
     throw std::domain_error("Performance table mode corrupted.");
+  }
+}
+
+void PerformanceTable::generateRandomPerfValues(unsigned long int seed) {
+  srand(seed);
+  for (std::vector<Perf> &pv : pt_) {
+    for (Perf &p : pv) {
+      p.setValue((float)rand() / RAND_MAX);
+    }
   }
 }
 
@@ -189,7 +199,7 @@ void PerformanceTable::sort(std::string mode) {
   }
 }
 
-std::vector<Perf> PerformanceTable::getAltBetween(std::string crit, float inf,
+std::vector<Perf> PerformanceTable::getAltBetween(std::string critId, float inf,
                                                   float sup) {
   if (mode_ != "crit") {
     throw std::domain_error("Mode must be crit but is currently set to " +
@@ -199,7 +209,7 @@ std::vector<Perf> PerformanceTable::getAltBetween(std::string crit, float inf,
     throw std::invalid_argument("Sup must be greater (>) than inf");
   }
 
-  std::vector<Perf> pv = this->operator[](crit);
+  std::vector<Perf> pv = this->operator[](critId);
   auto lower_b = std::lower_bound(
       pv.begin(), pv.end(), inf,
       [](const Perf &a, const float b) { return a.getValue() < b; });

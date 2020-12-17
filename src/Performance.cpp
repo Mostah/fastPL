@@ -69,7 +69,7 @@ Perf Performance::operator[](std::string criterion) const {
   throw std::invalid_argument("criterion not found in performance vector");
 }
 
-std::vector<std::string> Performance::getCriteria() {
+std::vector<std::string> Performance::getCriterionIds() {
   std::vector<std::string> crit_vect;
   for (Perf p : performance_) {
     crit_vect.push_back(p.getCrit());

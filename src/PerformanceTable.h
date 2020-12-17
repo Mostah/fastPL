@@ -3,6 +3,7 @@
 
 #include "Criteria.h"
 #include "Performance.h"
+#include <ctime>
 #include <iostream>
 #include <vector>
 
@@ -35,6 +36,13 @@ public:
 
   ~PerformanceTable();
 
+  /**
+   * generateRandomPerfValues set all the Perf values to random
+   *
+   * @param seed (optional) Random seed to use in the random generator
+   */
+  void generateRandomPerfValues(unsigned long int seed = time(NULL));
+
   friend std::ostream &operator<<(std::ostream &out,
                                   const PerformanceTable &perfs);
 
@@ -53,7 +61,9 @@ public:
   std::string getMode() const;
 
   /**
-   * Overloading [] operator for PerformanceTable
+   * Overloading [] operator for PerformanceTable. If the current mode is crit,
+   * will search for the row with the crit name given. If current mode is alt,
+   * will search for the row with the alternative (or profile) name given.
    *
    * @param name name of the row we want to search
    *
@@ -98,9 +108,13 @@ public:
    * performance (value) between inf and sup on criterion crit. The performance
    * table must have been sorted before calling this function.
    *
+   * @param critId crit Id to look for
+   * @param inf inferior boudary
+   * @param sup superior boundary
+   *
    * @return sub_vect
    */
-  std::vector<Perf> getAltBetween(std::string crit, float inf, float sup);
+  std::vector<Perf> getAltBetween(std::string critId, float inf, float sup);
 
 private:
   std::vector<std::vector<Perf>> pt_;

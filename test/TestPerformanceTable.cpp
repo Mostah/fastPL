@@ -296,6 +296,20 @@ TEST(TestPerformanceTable, TestGetAltBetween) {
                        "),Perf( name : test1, crit : a1, value : 1 )]");
 }
 
+TEST(TestPerformanceTable, TestGenerateRandomPerfValues) {
+  Criteria crit = Criteria(2, "a");
+  PerformanceTable perf_table = PerformanceTable("test", 2, crit);
+  perf_table.generateRandomPerfValues(42);
+  std::ostringstream os;
+  os << perf_table;
+  EXPECT_EQ(
+      os.str(),
+      "PerformanceTable(Performance(Perf( name : test0, crit : a0, value "
+      ": 0.000328708 ), Perf( name : test0, crit : a1, value : 0.524587 ), ), "
+      "Performance(Perf( name : test1, crit : a0, value : 0.735424 ), Perf( "
+      "name : test1, crit : a1, value : 0.263306 ), ), )");
+}
+
 TEST(TestPerformanceTable, TestAllInstancesDestroyed) {
   EXPECT_EQ(AtomicMCDAObject::get_nb_instances(), 0);
 }

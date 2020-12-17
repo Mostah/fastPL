@@ -78,7 +78,7 @@ TEST(TestPerformance, TestGetCriteriaVect) {
   Criteria crit = Criteria(2, "a");
   Performance perf = Performance("test", crit);
   std::vector<std::string> crit_vect = {"a0", "a1"};
-  EXPECT_EQ(perf.getCriteria(), crit_vect);
+  EXPECT_EQ(perf.getCriterionIds(), crit_vect);
 }
 
 TEST(TestPerformance, TestAllInstancesDestroyed) {
