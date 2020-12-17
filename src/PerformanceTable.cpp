@@ -29,7 +29,6 @@ PerformanceTable::PerformanceTable(std::vector<Performance> &perf_vect) {
     }
     pt_.push_back(Performance(perf_vect[i]).getPerf());
   }
-  mode_ = "alt";
 }
 
 PerformanceTable::PerformanceTable(std::string prefix, int nb_of_perfs,
@@ -37,7 +36,6 @@ PerformanceTable::PerformanceTable(std::string prefix, int nb_of_perfs,
   for (int i = 0; i < nb_of_perfs; i++) {
     pt_.push_back(Performance(prefix + std::to_string(i), crits).getPerf());
   }
-  mode_ = "alt";
 }
 
 PerformanceTable::PerformanceTable(const PerformanceTable &perfs) {
@@ -49,7 +47,6 @@ PerformanceTable::PerformanceTable(const PerformanceTable &perfs) {
     }
     pt_.push_back(perf_vect);
   }
-  mode_ = "alt";
 }
 
 PerformanceTable::~PerformanceTable() {}
@@ -97,6 +94,7 @@ void PerformanceTable::generateRandomPerfValues(unsigned long int seed) {
       p.setValue((float)rand() / RAND_MAX);
     }
   }
+  sorted_ = false;
 }
 
 Perf PerformanceTable::getPerf(std::string name, std::string crit) const {
@@ -139,7 +137,13 @@ std::vector<std::vector<Perf>> PerformanceTable::getPerformanceTable() const {
 
 std::string PerformanceTable::getMode() const { return mode_; }
 
+bool PerformanceTable::isSorted() const { return sorted_; }
+
 void PerformanceTable::changeMode(std::string mode) {
+  // If nothing to change, return early
+  if (mode == mode_) {
+    return;
+  }
   if (mode != "alt" && mode != "crit") {
     throw std::invalid_argument("Mode must be alt or crit.");
   }
@@ -179,24 +183,20 @@ void PerformanceTable::changeMode(std::string mode) {
 
   pt_ = new_pt;
   mode_ = mode;
+  sorted_ = false;
 }
 
 // OPTI could be optimized by using other sort methods if necessary
 void PerformanceTable::sort(std::string mode) {
-  if (mode != "alt" && mode != "crit") {
-    throw std::invalid_argument("Mode must be alt or crit.");
-  }
-  if (mode == "alt" && mode_ != "alt") {
-    this->changeMode("alt");
-  } else if (mode == "crit" && mode_ != "crit") {
-    this->changeMode("crit");
-  }
+  // ensure the right state
+  this->changeMode(mode);
 
   for (std::vector<Perf> &pv : pt_) {
     std::sort(pv.begin(), pv.end(), [](const Perf &a, const Perf &b) {
       return a.getValue() < b.getValue();
     });
   }
+  sorted_ = true;
 }
 
 std::vector<Perf> PerformanceTable::getAltBetween(std::string critId, float inf,
@@ -228,6 +228,72 @@ std::vector<Perf> PerformanceTable::getAltBetween(std::string critId, float inf,
     std::vector<Perf> v;
     return v;
   }
+}
+
+std::vector<Perf> PerformanceTable::getBestPerfByCrit(Criteria crits) {
+  // ensure the right state
+  this->changeMode("crit");
+  std::vector<Perf> best_pv;
+  if (sorted_) {
+    for (std::vector<Perf> pv : pt_) {
+      if (crits[pv[0].getCrit()].getDirection() == 1) {
+        // sorted in increasing way
+        best_pv.push_back(Perf(pv[pv.size() - 1]));
+      } else {
+        best_pv.push_back(Perf(pv[0]));
+      }
+    }
+  } else {
+    for (std::vector<Perf> pv : pt_) {
+      Perf bp = pv[0];
+      for (Perf p : pv) {
+        if (crits[pv[0].getCrit()].getDirection() == 1) {
+          if (p.getValue() > bp.getValue()) {
+            bp = p;
+          }
+        } else {
+          if (p.getValue() < bp.getValue()) {
+            bp = p;
+          }
+        }
+      }
+      best_pv.push_back(Perf(bp));
+    }
+  }
+  return best_pv;
+}
+
+std::vector<Perf> PerformanceTable::getWorstPerfByCrit(Criteria crits) {
+  // ensure the right state
+  this->changeMode("crit");
+  std::vector<Perf> worst_pv;
+  if (sorted_) {
+    for (std::vector<Perf> pv : pt_) {
+      if (crits[pv[0].getCrit()].getDirection() == -1) {
+        // sorted in increasing way
+        worst_pv.push_back(Perf(pv[pv.size() - 1]));
+      } else {
+        worst_pv.push_back(Perf(pv[0]));
+      }
+    }
+  } else {
+    for (std::vector<Perf> pv : pt_) {
+      Perf bp = pv[0];
+      for (Perf p : pv) {
+        if (crits[pv[0].getCrit()].getDirection() == -1) {
+          if (p.getValue() > bp.getValue()) {
+            bp = p;
+          }
+        } else {
+          if (p.getValue() < bp.getValue()) {
+            bp = p;
+          }
+        }
+      }
+      worst_pv.push_back(Perf(bp));
+    }
+  }
+  return worst_pv;
 }
 
 /*

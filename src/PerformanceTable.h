@@ -61,6 +61,13 @@ public:
   std::string getMode() const;
 
   /**
+   * isSorted getter of the sorted variable
+   *
+   * @return sorted
+   */
+  bool isSorted() const;
+
+  /**
    * Overloading [] operator for PerformanceTable. If the current mode is crit,
    * will search for the row with the crit name given. If current mode is alt,
    * will search for the row with the alternative (or profile) name given.
@@ -91,7 +98,7 @@ public:
    *
    * @param mode selected pt mode (alt or crit)
    */
-  void sort(std::string mode);
+  void sort(std::string mode = "crit");
 
   /**
    * changeMode Change the assigned mode to the performance table given the
@@ -116,11 +123,29 @@ public:
    */
   std::vector<Perf> getAltBetween(std::string critId, float inf, float sup);
 
+  /**
+   * getBestPerfByRow return a perf vector with the best
+   * performance of the alternatives on each criteria
+   *
+   *
+   * @return best_pv
+   */
+  std::vector<Perf> getBestPerfByCrit(Criteria crits);
+
+  /**
+   * getWorstPerfByRow return a perf vector with the worst
+   * performance of the alternatives on each criteria
+   *
+   * @return worst_pv
+   */
+  std::vector<Perf> getWorstPerfByCrit(Criteria crits);
+
 private:
   std::vector<std::vector<Perf>> pt_;
 
   // indicates what is represented by rows: (alt or profiles) or criterias
-  std::string mode_; // takes its value in {"crit", "alt"}
+  std::string mode_ = "alt"; // takes its value in {"crit", "alt"}
+  bool sorted_ = false;
 };
 
 #endif
