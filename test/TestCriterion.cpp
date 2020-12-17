@@ -106,7 +106,6 @@ TEST(TestCriterion, TestWeightGenerator) {
   
   EXPECT_FLOAT_EQ(weight, crit.getWeight());
   EXPECT_FLOAT_EQ(weight2, crit2.getWeight());
-  EXPECT_FLOAT_EQ(weight3, weight2);
 }
 
 TEST(TestCriterion, TestAllCriterionInstancesDestroyed) {
