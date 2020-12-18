@@ -17,22 +17,7 @@ public:
    * criterion is to maximize
    * @param weight Weight of the criterion
    */
-  Criterion(std::string id, int direction, float weight);
-
-  /**
-   * Criterion constructor with only id and weight specification
-   * By defauly the direction is 1
-   * @param id Identifier of the criterion
-   * @param weight Weight criterion
-   */
-  Criterion(std::string id, float weight);
-
-  /**
-   * Criterion constructor without specification
-   *
-   * @param id Identifier of the criterion
-   */
-  Criterion(std::string id);
+  Criterion(std::string id, int direction = 1, float weight = 0.);
 
   /**
    * Criterion constructor by copy

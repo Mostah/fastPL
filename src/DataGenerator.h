@@ -3,9 +3,9 @@
 
 // will be using pugiXML for parsing and generating
 // git clone https://github.com/zeux/pugixml.git
-// to fix error You can fix this by editing the file called pugiconfig.hpp
-// and uncommenting the line here: Uncomment this to switch to header-only
-// version #define PUGIXML_HEADER_ONLY
+// to fix error You can fix this by editing the file called
+// pugixml/src/pugiconfig.hpp and uncommenting the line here: Uncomment this to
+// switch to header-only version #define PUGIXML_HEADER_ONLY
 
 #include "../pugixml/src/pugixml.hpp"
 #include "AtomicMCDAObject.h"
@@ -23,12 +23,13 @@ public:
    * @param nb_alternative number of alternatives
    * @param nb_categories number of categories
    * @param datasetName name of that dataset
+   *@param overwrite bool that refers to if we want to overwrite file
    *
    * @return a saved file of the name datasetName.xml in data/ or default
    * generated name
    */
   void DatasetGenerator(int nb_criteria, int nb_alternative, int nb_categories,
-                        std::string datasetName);
+                        std::string datasetName = "", bool overwrite = 1);
 
   /**
    * Generate a random model and puts it in a xml file
@@ -36,12 +37,13 @@ public:
    * @param nb_criteria number of criteria
    * @param nb_categories number of categories
    * @param modelName name of that model
+   * @param overwrite bool that refers to if we want to overwrite file
    *
    * @return a saved file of the name nametName.xml in data/ or default
    * generated name
    */
-  void modelGenerator(int nb_criteria, int nb_categories,
-                      std::string modelName);
+  void modelGenerator(int nb_criteria, int nb_categories, std::string modelName,
+                      bool overwrite = 1);
 
   /**
    * Get data from xml file
@@ -57,10 +59,10 @@ public:
 
   /**
    * Gets the xml file type
-   * returns either "model" for model xml file types or "dataset" for data xml
-   * files.
+   *
    * @param fileName filename
    *
+   * @return "model" for model xml file types or "dataset" for data xml
    */
   std::string getXmlFileType(std::string fileName);
 

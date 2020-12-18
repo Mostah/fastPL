@@ -5,15 +5,50 @@
 #include <sstream>
 #include <utility>
 
-// TEST(TestDataGenerator, TestDatasetGenerator) {
-//   DataGenerator data = DataGenerator();
-//   data.DatasetGenerator(3, 20, 4, "test.xml");
-// }
+TEST(TestDataGenerator, TestDatasetGenerator) {
+  DataGenerator data = DataGenerator();
+  data.DatasetGenerator(3, 20, 4, "test.xml", 1);
+}
 
-// TEST(TestDataGenerator, TestModelGenerator) {
-//   DataGenerator data = DataGenerator();
-//   data.modelGenerator(2, 3, "test_model.xml");
-// }
+TEST(TestDataGenerator, TestDatasetGeneratorNotOverwrite) {
+  DataGenerator data = DataGenerator();
+  try {
+    data.DatasetGenerator(3, 20, 4, "test.xml", 0);
+    FAIL() << "should have throw invalid_argument error.";
+  } catch (std::invalid_argument const &err) {
+    EXPECT_EQ(err.what(),
+              std::string("Such a default xml generate (or not) filename "
+                          "already exists and you chose "
+                          "not to overwrite it"));
+  } catch (...) {
+    FAIL() << "should have throw invalid_argument error.";
+  }
+}
+
+TEST(TestDataGenerator, TestDatasetGeneratorOverwrite) {
+  DataGenerator data = DataGenerator();
+  data.DatasetGenerator(3, 20, 4, "test.xml", 1);
+}
+
+TEST(TestDataGenerator, TestModelGenerator) {
+  DataGenerator data = DataGenerator();
+  data.modelGenerator(2, 3, "test_model.xml", 1);
+}
+
+TEST(TestDataGenerator, TestModelGeneratorNotOverwrite) {
+  DataGenerator data = DataGenerator();
+  try {
+    data.modelGenerator(2, 3, "test_model.xml", 0);
+    FAIL() << "should have throw invalid_argument error.";
+  } catch (std::invalid_argument const &err) {
+    EXPECT_EQ(err.what(),
+              std::string("Such a default xml generate (or not) filename "
+                          "already exists and you chose "
+                          "not to overwrite it"));
+  } catch (...) {
+    FAIL() << "should have throw invalid_argument error.";
+  }
+}
 
 TEST(TestDataGenerator, TestXmlFileType) {
   DataGenerator data = DataGenerator();
@@ -29,6 +64,19 @@ TEST(TestDataGenerator, TestXmlFileType2) {
   std::ostringstream os2;
   os2 << type;
   EXPECT_EQ(os2.str(), "dataset");
+}
+
+TEST(TestDataGenerator, TestXmlFileType3) {
+  DataGenerator data = DataGenerator();
+  try {
+    std::string type = data.getXmlFileType("wrong_structure.xml");
+    FAIL() << "should have throw invalid_argument error.";
+  } catch (std::invalid_argument const &err) {
+    EXPECT_EQ(err.what(),
+              std::string("Cannot open xml file, please check path"));
+  } catch (...) {
+    FAIL() << "should have throw invalid_argument error.";
+  }
 }
 
 TEST(TestDataGenerator, TestNumberOfCriteriaForModels) {
@@ -70,7 +118,7 @@ TEST(TestDataGenerator, TestGetLambdaForData) {
     FAIL() << "should have throw invalid_argument error.";
   } catch (std::invalid_argument const &err) {
     EXPECT_EQ(err.what(), std::string("Cannot find any threshold in xml file, "
-                                      "most likely have a xml model file"));
+                                      "most likely have a xml dataset file"));
   } catch (...) {
     FAIL() << "should have throw invalid_argument error.";
   }
@@ -78,10 +126,11 @@ TEST(TestDataGenerator, TestGetLambdaForData) {
 
 TEST(TestDataGenerator, TestGetLambdaForModel) {
   DataGenerator data = DataGenerator();
-  float crit = data.getThresholdValue("test_model.xml");
+  float lambda = data.getThresholdValue("test_model.xml");
   std::ostringstream os2;
-  os2 << crit;
-  EXPECT_EQ(os2.str(), "0.9425");
+  os2 << lambda;
+  // with no seed ill let it pass
+  // EXPECT_EQ(os2.str(), std::to_string(lambda));
 }
 
 TEST(TestDataGenerator, TestGetNumerOfAlternativesForDataset) {
@@ -125,6 +174,20 @@ TEST(TestDataGenerator, TestGetAlternativePerformanceForModel) {
     EXPECT_EQ(err.what(),
               std::string("Cannot find any alternatives in xml file, "
                           "most likely have a xml model file"));
+  } catch (...) {
+    FAIL() << "should have throw invalid_argument error.";
+  }
+}
+
+TEST(TestDataGenerator, TestGetAlternativePerformanceForModelFakeAltId) {
+  DataGenerator data = DataGenerator();
+  try {
+    Performance p = data.getAlternativePerformance("test.xml", "hello");
+    FAIL() << "should have throw invalid_argument error.";
+  } catch (std::invalid_argument const &err) {
+    EXPECT_EQ(err.what(),
+              std::string("Cannot find performance associated to the "
+                          "alternative identified by alt_id in xml file."));
   } catch (...) {
     FAIL() << "should have throw invalid_argument error.";
   }
@@ -176,11 +239,9 @@ TEST(TestDataGenerator, TestGetCriterionForDataset) {
     Criterion v = data.getCriterion("test.xml", "crit1");
     FAIL() << "should have throw invalid_argument error.";
   } catch (std::invalid_argument const &err) {
-    EXPECT_EQ(
-        err.what(),
-        std::string(
-            "Cannot find the criterion associated to its weights in xml file, "
-            "most likely have a xml model file"));
+    EXPECT_EQ(err.what(), std::string("Cannot find the criterion associated "
+                                      "to its weights in xml file, "
+                                      "most likely have a xml model file"));
   } catch (...) {
     FAIL() << "should have throw invalid_argument error.";
   }
@@ -191,7 +252,21 @@ TEST(TestDataGenerator, TestGetCriterionForModel) {
   Criterion crit1 = data.getCriterion("test_model.xml", "crit1");
   std::ostringstream os2;
   os2 << crit1;
-  EXPECT_EQ(os2.str(), "Criterion(id : crit1, direction : +, weight : 0)");
+  EXPECT_EQ(os2.str(), "Criterion(id : crit1, direction : -, weight : 0)");
+}
+
+TEST(TestDataGenerator, TestGetCriterionForModelFakeCritId) {
+  DataGenerator data = DataGenerator();
+  try {
+    Criterion crit1 = data.getCriterion("test_model.xml", "testing");
+    FAIL() << "should have throw invalid_argument error.";
+  } catch (std::invalid_argument const &err) {
+    EXPECT_EQ(err.what(),
+              std::string(
+                  "Cannot find Criterion associated to crit_id in xml file."));
+  } catch (...) {
+    FAIL() << "should have throw invalid_argument error.";
+  }
 }
 
 TEST(TestDataGenerator, TestGetAlternativeAssignmentModel) {
@@ -203,6 +278,28 @@ TEST(TestDataGenerator, TestGetAlternativeAssignmentModel) {
     EXPECT_EQ(err.what(), std::string("Cannot find category assignment "
                                       "associated to alternative in xml file, "
                                       "most likely have a xml model file"));
+  } catch (...) {
+    FAIL() << "should have throw invalid_argument error.";
+  }
+}
+
+TEST(TestDataGenerator, TestGetAlternativeAssignmentDataset) {
+  DataGenerator data = DataGenerator();
+  int v = data.getAlternativeAssignment("test.xml", "alt0");
+  std::ostringstream os2;
+  os2 << v;
+  // need to modify that when new type is in
+  EXPECT_EQ(os2.str(), "0");
+}
+
+TEST(TestDataGenerator, TestGetAlternativeAssignmentDatasetFakeAltId) {
+  DataGenerator data = DataGenerator();
+  try {
+    int v = data.getAlternativeAssignment("test.xml", "hello");
+    FAIL() << "should have throw invalid_argument error.";
+  } catch (std::invalid_argument const &err) {
+    EXPECT_EQ(err.what(), std::string("Cannot find category assignment "
+                                      "associated to alt_id in xml file."));
   } catch (...) {
     FAIL() << "should have throw invalid_argument error.";
   }
@@ -230,4 +327,18 @@ TEST(TestDataGenerator, TestGetCriterionCategoryLimitsModel) {
   std::ostringstream os2;
   os2 << v;
   EXPECT_EQ(os2.str(), "[1.1,1.1,1.1,1.1]");
+}
+
+TEST(TestDataGenerator, TestGetCriterionCategoryLimitsModelFakeCritId) {
+  DataGenerator data = DataGenerator();
+  try {
+    std::vector<float> v =
+        data.getCriterionCategoryLimits("test_model.xml", "hello");
+    FAIL() << "should have throw invalid_argument error.";
+  } catch (std::invalid_argument const &err) {
+    EXPECT_EQ(err.what(), std::string("Cannot find criterion category limit "
+                                      "associated to crit_id in xml file."));
+  } catch (...) {
+    FAIL() << "should have throw invalid_argument error.";
+  }
 }

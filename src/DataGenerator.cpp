@@ -14,8 +14,8 @@
 /// type
 
 void DataGenerator::DatasetGenerator(int nb_criteria, int nb_alternative,
-                                     int nb_categories,
-                                     std::string datasetName = "") {
+                                     int nb_categories, std::string datasetName,
+                                     bool overwrite) {
 
   // Generate new XML document within memory
   pugi::xml_document doc;
@@ -64,14 +64,13 @@ void DataGenerator::DatasetGenerator(int nb_criteria, int nb_alternative,
     alternative_node.append_child(pugi::node_pcdata)
         .set_value(alternative.getId().c_str());
 
-    for (int i = 0; i < alternative.getPerf().size(); i++) {
+    for (Perf perf : alternative.getPerf()) {
       // for each criteria give its correspondant performace
-      pugi::xml_node alternative_criteria_node = alternative_node.append_child(
-          alternative.getPerf()[i].getCrit().c_str());
+      pugi::xml_node alternative_criteria_node =
+          alternative_node.append_child(perf.getCrit().c_str());
 
       alternative_criteria_node.append_child(pugi::node_pcdata)
-          .set_value(
-              std::to_string(alternative.getPerf()[i].getValue()).c_str());
+          .set_value(std::to_string(perf.getValue()).c_str());
     }
 
     // Give the category assignemnt to the alternative
@@ -88,12 +87,19 @@ void DataGenerator::DatasetGenerator(int nb_criteria, int nb_alternative,
   }
   std::string modelpath = "../data/" + datasetName;
 
+  if (fileExists(modelpath) && !overwrite) {
+    throw std::invalid_argument("Such a default xml generate (or not) filename "
+                                "already exists and you chose "
+                                "not to overwrite it");
+  }
   bool saveSucceeded = doc.save_file(modelpath.c_str(), PUGIXML_TEXT("  "));
-  assert(saveSucceeded);
+  if (!saveSucceeded) {
+    throw std::invalid_argument("Cannot save xml file...");
+  }
 }
 
 void DataGenerator::modelGenerator(int nb_criteria, int nb_categories,
-                                   std::string modelName) {
+                                   std::string modelName, bool overwrite) {
   // Generate new XML document within memory
   pugi::xml_document doc;
 
@@ -125,6 +131,7 @@ void DataGenerator::modelGenerator(int nb_criteria, int nb_categories,
 
   // Giving lambda
   srand((unsigned)time(NULL));
+  // Lambda is a value between 0.5 and 1 and i gave it 3 decimals
   float lambda = (float)(rand() % 1000) / 2000 + 0.5;
   pugi::xml_node lambda_node = dataset_node.append_child("lambda");
   lambda_node.append_child(pugi::node_pcdata)
@@ -158,8 +165,17 @@ void DataGenerator::modelGenerator(int nb_criteria, int nb_categories,
     }
     std::string modelpath = "../data/" + modelName;
 
+    if (fileExists(modelpath) && !overwrite) {
+      throw std::invalid_argument(
+          "Such a default xml generate (or not) filename "
+          "already exists and you chose "
+          "not to overwrite it");
+    }
+
     bool saveSucceeded = doc.save_file(modelpath.c_str(), PUGIXML_TEXT("  "));
-    assert(saveSucceeded);
+    if (!saveSucceeded) {
+      throw std::invalid_argument("Cannot save xml file...");
+    }
   }
 }
 
@@ -171,14 +187,19 @@ std::string DataGenerator::getXmlFileType(std::string fileName) {
   if (!doc.load_file(path.c_str()))
     throw std::invalid_argument("Cannot open xml file, please check path");
 
-  // if we have a model xml
-  pugi::xml_node node = doc.child("model").child("modelName");
+  pugi::xml_node model_node = doc.child("model").child("modelName");
+  pugi::xml_node dataset_node = doc.child("dataset").child("datasetName");
 
-  if (*node.child_value()) {
-    // if we have a dataset xml
-    return "model";
+  if (!*model_node.child_value() && !*dataset_node.child_value()) {
+    // if both pointers are null there we have a wrong xml structure
+    throw std::invalid_argument("xml file structure is not right");
   }
-  return "dataset";
+  if (!*model_node.child_value()) {
+    // if we have a dataset xml
+    return "dataset";
+  }
+  // if we have a model xml
+  return "model";
 }
 
 int DataGenerator::getNumberOfCriteria(std::string fileName) {
@@ -239,7 +260,7 @@ float DataGenerator::getThresholdValue(std::string fileName) {
   } else {
     // if we have a dataset xml
     throw std::invalid_argument("Cannot find any threshold in xml file, "
-                                "most likely have a xml model file");
+                                "most likely have a xml dataset file");
   }
 }
 
@@ -289,13 +310,11 @@ Performance DataGenerator::getAlternativePerformance(std::string fileName,
          it != node_dataset.end(); ++it) {
 
       if (it->child_value() == alt_id) {
-        // std::cout << "alternative : " << it->child_value() << std::endl;
         pugi::xml_node alternative_node = node_dataset.child(it->name());
 
         for (pugi::xml_node_iterator al_it = alternative_node.begin();
              al_it != alternative_node.end(); ++al_it) {
 
-          // std::cout << "crit : " << al_it->child_value() << std::endl;
           if (strcmp(al_it->child_value(), "assignment") != 0) {
             float perf = atof(al_it->child_value());
             alt_perf.push_back(perf);
@@ -303,6 +322,11 @@ Performance DataGenerator::getAlternativePerformance(std::string fileName,
         }
         break;
       }
+    }
+    if (alt_perf.empty()) {
+      throw std::invalid_argument(
+          "Cannot find performance associated to the alternative identified by "
+          "alt_id in xml file.");
     }
     return Performance(alt_id, criteria, alt_perf);
   }
@@ -379,7 +403,7 @@ std::vector<std::string> DataGenerator::getCriteriaIds(std::string fileName) {
 
 Criterion DataGenerator::getCriterion(std::string fileName,
                                       std::string crit_id) {
-  float weight = 0;
+  float weight = -1;
   pugi::xml_document doc;
   std::string path = "../data/" + fileName;
 
@@ -393,20 +417,18 @@ Criterion DataGenerator::getCriterion(std::string fileName,
         "most likely have a xml model file");
   } else {
     // if we have a dataset xml
-    pugi::xml_node node_model = doc.child("model").child("modelName");
+    pugi::xml_node node_model = doc.child("model");
 
     for (pugi::xml_node_iterator it = node_model.begin();
          it != node_model.end(); ++it) {
 
-      if (it->child_value() == crit_id) {
-        // std::cout << "criterion : " << it->child_value() << std::endl;
+      if (it->name() == crit_id) {
         pugi::xml_node criterion_node = node_model.child(it->name());
 
         for (pugi::xml_node_iterator al_it = criterion_node.begin();
              al_it != criterion_node.end(); ++al_it) {
 
-          // std::cout << "crit : " << al_it->child_value() << std::endl;
-          if (strcmp(al_it->child_value(), "weight") == 0) {
+          if (strcmp(al_it->name(), "weight") == 0) {
             weight = atof(al_it->child_value());
           }
         }
@@ -414,11 +436,17 @@ Criterion DataGenerator::getCriterion(std::string fileName,
       }
     }
   }
+  if (weight == -1) {
+    throw std::invalid_argument(
+        "Cannot find Criterion associated to crit_id in xml file.");
+  }
   return Criterion(crit_id, weight);
 }
 
 int DataGenerator::getAlternativeAssignment(std::string fileName,
                                             std::string alt_id) {
+
+  int assignment = -1;
   pugi::xml_document doc;
   std::string path = "../data/" + fileName;
 
@@ -437,23 +465,25 @@ int DataGenerator::getAlternativeAssignment(std::string fileName,
          it != node_dataset.end(); ++it) {
 
       if (it->child_value() == alt_id) {
-        // std::cout << "alternative : " << it->child_value() << std::endl;
         pugi::xml_node alternative_node = node_dataset.child(it->name());
 
         for (pugi::xml_node_iterator al_it = alternative_node.begin();
              al_it != alternative_node.end(); ++al_it) {
 
-          // std::cout << "crit : " << al_it->child_value() << std::endl;
           if (strcmp(al_it->name(), "assignment") == 0) {
             // std::cout << "Success" << al_it->child_value();
             // need to add when NEW TYPE WILL BE SET
-            return 0;
+            assignment = 0;
           }
         }
       }
     }
   }
-  return 0;
+  if (assignment == -1) {
+    throw std::invalid_argument(
+        "Cannot find category assignment associated to alt_id in xml file.");
+  }
+  return assignment;
 }
 
 std::vector<float>
@@ -486,7 +516,6 @@ DataGenerator::getCriterionCategoryLimits(std::string fileName,
              al_it != criterion_node.end(); ++al_it) {
 
           if (strcmp(al_it->child_value(), "weight") != 0) {
-            // std::cout << "crit : " << al_it->child_value() << std::endl;
             float limit = atof(al_it->child_value());
             categoryLimits.push_back(1.1);
           }
@@ -494,6 +523,10 @@ DataGenerator::getCriterionCategoryLimits(std::string fileName,
         break;
       }
     }
+  }
+  if (categoryLimits.empty()) {
+    throw std::invalid_argument("Cannot find criterion category limit "
+                                "associated to crit_id in xml file.");
   }
   return categoryLimits;
 }

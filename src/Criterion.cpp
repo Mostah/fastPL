@@ -2,12 +2,6 @@
 #include <iostream>
 #include <string>
 
-Criterion::Criterion(std::string id) {
-  id_ = id;
-  direction_ = 1;
-  weight_ = 0.;
-}
-
 Criterion::Criterion(std::string id, int direction, float weight) {
   id_ = id;
   direction_ = direction;
@@ -18,12 +12,6 @@ Criterion::Criterion(const Criterion &crit) {
   id_ = crit.getId();
   direction_ = crit.getDirection();
   weight_ = crit.getWeight();
-}
-
-Criterion::Criterion(std::string id, float weight) {
-  id_ = id;
-  direction_ = 1;
-  weight_ = weight;
 }
 
 std::string Criterion::getId() const { return id_; }

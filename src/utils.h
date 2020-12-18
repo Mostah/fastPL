@@ -4,6 +4,12 @@
 #include "../pugixml/src/pugixml.hpp"
 #include <iostream>
 #include <vector>
+
+#include <fstream>
+#include <string>
+#include <sys/stat.h>
+#include <unistd.h>
+
 /**
  * Overloading << operator for std::vector object
  *
@@ -46,5 +52,10 @@ struct simple_walker : pugi::xml_tree_walker {
 
 //   simple_walker walker;
 //   doc.traverse(walker);
+
+inline bool fileExists(const std::string &name) {
+  struct stat buffer;
+  return (stat(name.c_str(), &buffer) == 0);
+}
 
 #endif

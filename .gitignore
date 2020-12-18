@@ -53,5 +53,4 @@ CTestTestfile.cmake
 _deps
 
 #datasets
-data
 pugixml

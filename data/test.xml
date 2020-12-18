@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<Root />
+<dataset>
+  <datasetName>test.xml</datasetName>
+  <criteria>3</criteria>
+  <categories>4</categories>
+  <alternatives>20</alternatives>
+  <alternative>alt0<crit0>0.000000</crit0>
+    <crit1>0.000000</crit1>
+    <crit2>0.000000</crit2>
+    <assignment>need to get category for it modify performance or other types</assignment>
+  </alternative>
+  <alternative>alt1<crit0>0.000000</crit0>
+    <crit1>0.000000</crit1>
+    <crit2>0.000000</crit2>
+    <assignment>need to get category for it modify performance or other types</assignment>
+  </alternative>
+  <alternative>alt2<crit0>0.000000</crit0>
+    <crit1>0.000000</crit1>
+    <crit2>0.000000</crit2>
+    <assignment>need to get category for it modify performance or other types</assignment>
+  </alternative>
+  <alternative>alt3<crit0>0.000000</crit0>
+    <crit1>0.000000</crit1>
+    <crit2>0.000000</crit2>
+    <assignment>need to get category for it modify performance or other types</assignment>
+  </alternative>
+  <alternative>alt4<crit0>0.000000</crit0>
+    <crit1>0.000000</crit1>
+    <crit2>0.000000</crit2>
+    <assignment>need to get category for it modify performance or other types</assignment>
+  </alternative>
+  <alternative>alt5<crit0>0.000000</crit0>
+    <crit1>0.000000</crit1>
+    <crit2>0.000000</crit2>
+    <assignment>need to get category for it modify performance or other types</assignment>
+  </alternative>
+  <alternative>alt6<crit0>0.000000</crit0>
+    <crit1>0.000000</crit1>
+    <crit2>0.000000</crit2>
+    <assignment>need to get category for it modify performance or other types</assignment>
+  </alternative>
+  <alternative>alt7<crit0>0.000000</crit0>
+    <crit1>0.000000</crit1>
+    <crit2>0.000000</crit2>
+    <assignment>need to get category for it modify performance or other types</assignment>
+  </alternative>
+  <alternative>alt8<crit0>0.000000</crit0>
+    <crit1>0.000000</crit1>
+    <crit2>0.000000</crit2>
+    <assignment>need to get category for it modify performance or other types</assignment>
+  </alternative>
+  <alternative>alt9<crit0>0.000000</crit0>
+    <crit1>0.000000</crit1>
+    <crit2>0.000000</crit2>
+    <assignment>need to get category for it modify performance or other types</assignment>
+  </alternative>
+  <alternative>alt10<crit0>0.000000</crit0>
+    <crit1>0.000000</crit1>
+    <crit2>0.000000</crit2>
+    <assignment>need to get category for it modify performance or other types</assignment>
+  </alternative>
+  <alternative>alt11<crit0>0.000000</crit0>
+    <crit1>0.000000</crit1>
+    <crit2>0.000000</crit2>
+    <assignment>need to get category for it modify performance or other types</assignment>
+  </alternative>
+  <alternative>alt12<crit0>0.000000</crit0>
+    <crit1>0.000000</crit1>
+    <crit2>0.000000</crit2>
+    <assignment>need to get category for it modify performance or other types</assignment>
+  </alternative>
+  <alternative>alt13<crit0>0.000000</crit0>
+    <crit1>0.000000</crit1>
+    <crit2>0.000000</crit2>
+    <assignment>need to get category for it modify performance or other types</assignment>
+  </alternative>
+  <alternative>alt14<crit0>0.000000</crit0>
+    <crit1>0.000000</crit1>
+    <crit2>0.000000</crit2>
+    <assignment>need to get category for it modify performance or other types</assignment>
+  </alternative>
+  <alternative>alt15<crit0>0.000000</crit0>
+    <crit1>0.000000</crit1>
+    <crit2>0.000000</crit2>
+    <assignment>need to get category for it modify performance or other types</assignment>
+  </alternative>
+  <alternative>alt16<crit0>0.000000</crit0>
+    <crit1>0.000000</crit1>
+    <crit2>0.000000</crit2>
+    <assignment>need to get category for it modify performance or other types</assignment>
+  </alternative>
+  <alternative>alt17<crit0>0.000000</crit0>
+    <crit1>0.000000</crit1>
+    <crit2>0.000000</crit2>
+    <assignment>need to get category for it modify performance or other types</assignment>
+  </alternative>
+  <alternative>alt18<crit0>0.000000</crit0>
+    <crit1>0.000000</crit1>
+    <crit2>0.000000</crit2>
+    <assignment>need to get category for it modify performance or other types</assignment>
+  </alternative>
+  <alternative>alt19<crit0>0.000000</crit0>
+    <crit1>0.000000</crit1>
+    <crit2>0.000000</crit2>
+    <assignment>need to get category for it modify performance or other types</assignment>
+  </alternative>
+</dataset>
