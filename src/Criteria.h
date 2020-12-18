@@ -20,7 +20,7 @@ public:
    * @param nb_of_criterion Number of criteria
    * @param prefix Prefix to identify criteria
    */
-  Criteria(int nb_of_criterion, std::string prefix);
+  Criteria(int nb_of_criterion, std::string prefix = "crit");
 
   /**
    * Criteria constructor by copy
@@ -73,7 +73,7 @@ public:
    *
    * @param criteria criterion name of the Perf we want
    *
-   *@return Perf object with associated criterion
+   * @return Perf object with associated criterion
    */
   Criterion operator[](std::string name) const;
 

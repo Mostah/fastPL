@@ -25,7 +25,7 @@ public:
    * @param nb_of_perfs Number of performance
    * @param crits Criteria to evaluate performance over
    */
-  PerformanceTable(std::string prefix, int nb_of_perfs, Criteria crits);
+  PerformanceTable(int nb_of_perfs, Criteria crits, std::string prefix = "alt");
 
   /**
    * Performances constructor by copy
@@ -40,8 +40,11 @@ public:
    * generateRandomPerfValues set all the Perf values to random
    *
    * @param seed (optional) Random seed to use in the random generator
+   * @param lower_bound (optional) lower bound of the generated Perf values
+   * @param upper_bound (optional) upper bound of the generated Perf values
    */
-  void generateRandomPerfValues(unsigned long int seed = time(NULL));
+  void generateRandomPerfValues(unsigned long int seed = time(NULL),
+                                int lower_bound = 0, int upper_bound = 1);
 
   friend std::ostream &operator<<(std::ostream &out,
                                   const PerformanceTable &perfs);

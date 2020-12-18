@@ -14,27 +14,27 @@ PerformanceTable::PerformanceTable(std::vector<Performance> &perf_vect) {
   std::vector<std::string> perf_id_vect;
   std::vector<std::string> crit_vect = perf_vect[0].getCriterionIds();
 
-  for (int i = 0; i < perf_vect.size(); i++) {
+  for (Performance p : perf_vect) {
     // ensure there is no performance with dupplicated name
-    if (std::find(perf_id_vect.begin(), perf_id_vect.end(),
-                  perf_vect[i].getId()) != perf_id_vect.end()) {
+    if (std::find(perf_id_vect.begin(), perf_id_vect.end(), p.getId()) !=
+        perf_id_vect.end()) {
       throw std::invalid_argument("Each performance must have different ids.");
     }
-    perf_id_vect.push_back(perf_vect[i].getId());
+    perf_id_vect.push_back(p.getId());
 
     // ensure all the performance are based on the same set of criterion
-    if (perf_vect[i].getCriterionIds() != crit_vect) {
+    if (p.getCriterionIds() != crit_vect) {
       throw std::invalid_argument("Each performance must be based on the same "
                                   "set of criterion, in the same order.");
     }
-    pt_.push_back(Performance(perf_vect[i]).getPerf());
+    pt_.push_back(Performance(p).getPerf());
   }
 }
 
-PerformanceTable::PerformanceTable(std::string prefix, int nb_of_perfs,
-                                   Criteria crits) {
+PerformanceTable::PerformanceTable(int nb_of_perfs, Criteria crits,
+                                   std::string prefix) {
   for (int i = 0; i < nb_of_perfs; i++) {
-    pt_.push_back(Performance(prefix + std::to_string(i), crits).getPerf());
+    pt_.push_back(Performance(crits, prefix + std::to_string(i)).getPerf());
   }
 }
 
@@ -87,11 +87,18 @@ std::vector<Perf> PerformanceTable::operator[](std::string name) const {
   }
 }
 
-void PerformanceTable::generateRandomPerfValues(unsigned long int seed) {
+void PerformanceTable::generateRandomPerfValues(unsigned long int seed,
+                                                int lower_bound,
+                                                int upper_bound) {
+  if (lower_bound > upper_bound) {
+    throw std::invalid_argument(
+        "Lower bound must be lower than the upper bound.");
+  }
   srand(seed);
   for (std::vector<Perf> &pv : pt_) {
     for (Perf &p : pv) {
-      p.setValue((float)rand() / RAND_MAX);
+      p.setValue((float)lower_bound + ((float)rand() / RAND_MAX) *
+                                          (float)(upper_bound - lower_bound));
     }
   }
   sorted_ = false;
@@ -295,12 +302,3 @@ std::vector<Perf> PerformanceTable::getWorstPerfByCrit(Criteria crits) {
   }
   return worst_pv;
 }
-
-/*
-  for (std::vector<Perf> v : new_pt) {
-    for (Perf e : v) {
-      std::cout << e.getName() << " " << e.getCrit() << " ";
-    }
-    std::cout << std::endl;
-  }
-  */

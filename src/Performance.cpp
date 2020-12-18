@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-Performance::Performance(std::string id, Criteria &criteria) {
+Performance::Performance(Criteria &criteria, std::string id) {
   id_ = id;
   std::vector<Criterion> criterion_vect = criteria.getCriterionVect();
   for (int i = 0; i < criterion_vect.size(); i++) {
@@ -13,8 +13,8 @@ Performance::Performance(std::string id, Criteria &criteria) {
   }
 }
 
-Performance::Performance(std::string id, Criteria &criteria,
-                         std::vector<float> &given_perf) {
+Performance::Performance(Criteria &criteria, std::vector<float> &given_perf,
+                         std::string id) {
   id_ = id;
   std::vector<Criterion> criterion_vect = criteria.getCriterionVect();
   for (int i = 0; i < criterion_vect.size(); i++) {
