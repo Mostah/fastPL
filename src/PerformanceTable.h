@@ -10,7 +10,7 @@
 class PerformanceTable {
 public:
   /**
-   * Performances constructor with defined vector of performance. All
+   * PerformanceTable constructor with defined vector of performance. All
    * Performance should have the same criteria to be based on.
    *
    * @param perf_vect Vector of performance
@@ -18,8 +18,8 @@ public:
   PerformanceTable(std::vector<Performance> &perf_vect);
 
   /**
-   * Criteria constructor without perf values but set of criteria to evaluate
-   * performance over
+   * PerformanceTable constructor without perf values but set of criteria to
+   * evaluate performance over. perf values will be set to 0.
    *
    * @param prefix Prefix to use for the name of each Performance created
    * @param nb_of_perfs Number of performance
@@ -89,10 +89,6 @@ public:
    */
   Perf getPerf(std::string name, std::string crit) const;
 
-  // TODO
-  // get middle
-  // get best ap, get worst ap
-
   /**
    * sort Sort the performance table given the selected mode: alt or crit.
    * Sorted by alt will assign the first dimension to alt and sort the second by
@@ -130,6 +126,7 @@ public:
    * getBestPerfByRow return a perf vector with the best
    * performance of the alternatives on each criteria
    *
+   * @param crits Criteria to search in the performance table
    *
    * @return best_pv
    */
@@ -138,6 +135,8 @@ public:
   /**
    * getWorstPerfByRow return a perf vector with the worst
    * performance of the alternatives on each criteria
+   *
+   * @param crits Criteria to search in the performance table
    *
    * @return worst_pv
    */
