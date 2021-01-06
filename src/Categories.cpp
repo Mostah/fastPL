@@ -1,5 +1,5 @@
-#include "Categories.h"
-#include "utils.h"
+#include "../include/Categories.h"
+#include "../include/utils.h"
 #include <iostream>
 #include <ostream>
 #include <string.h>
@@ -12,7 +12,6 @@ Categories::Categories(int number_of_categories, std::string prefix) {
     categories_vector_.push_back(tmp_cat);
   }
 }
-
 
 Categories::Categories(std::vector<std::string> vect_category_ids) {
   for (int i = 0; i < vect_category_ids.size(); i++) {

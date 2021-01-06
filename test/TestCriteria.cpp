@@ -1,5 +1,5 @@
-#include "../src/Criteria.h"
-#include "../src/Criterion.h"
+#include "../include/Criteria.h"
+#include "../include/Criterion.h"
 #include "gtest/gtest.h"
 #include <sstream>
 #include <utility>
@@ -36,9 +36,10 @@ TEST(TestCriteria, TestBaseConstructorWithNbOnly) {
   Criteria criteria1 = Criteria(2);
   std::ostringstream os;
   os << criteria1;
-  EXPECT_EQ(os.str(), "Criteria(Criterion(id : crit0, name : , "
-                      "direction : +, weight : 0), Criterion(id : crit1, name : , "
-                      "direction : +, weight : 0), )");
+  EXPECT_EQ(os.str(),
+            "Criteria(Criterion(id : crit0, name : , "
+            "direction : +, weight : 0), Criterion(id : crit1, name : , "
+            "direction : +, weight : 0), )");
 }
 
 TEST(TestCriteria, TestCopyConstructor) {
@@ -147,7 +148,6 @@ TEST(TestCriteria, TestOperatorConstantSubscript) {
   EXPECT_EQ(os.str(), "Criterion(id : crit0, name : , "
                       "direction : +, weight : 0)");
 }
-
 
 TEST(TestCriteria, TestAllInstancesDestroyed) {
   EXPECT_EQ(AtomicMCDAObject::get_nb_instances(), 0);

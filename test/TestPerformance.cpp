@@ -1,5 +1,5 @@
-#include "../src/Criteria.h"
-#include "../src/Performance.h"
+#include "../include/Criteria.h"
+#include "../include/Performance.h"
 #include "gtest/gtest.h"
 #include <sstream>
 #include <utility>

@@ -1,6 +1,6 @@
-#include "Performance.h"
-#include "Criteria.h"
-#include "Perf.h"
+#include "../include/Performance.h"
+#include "../include/Criteria.h"
+#include "../include/Perf.h"
 #include <iostream>
 #include <string>
 #include <vector>

@@ -1,5 +1,5 @@
-#include "Criteria.h"
-#include "Criterion.h"
+#include "../include/Criteria.h"
+#include "../include/Criterion.h"
 #include <iostream>
 #include <string>
 #include <vector>

@@ -83,3 +83,12 @@ SSH connect to the docker image (just in case)
 ```
 docker run -it <container_id> /bin/bash 
 ```
+
+## Generating documentation 
+```
+cd doxygen
+cmake .
+doxygen Doxyfile.Doxigen
+cd html
+google-chrome index.html
+```

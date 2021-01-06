@@ -4,16 +4,18 @@ project(fastPL) #name of your project
 
 add_subdirectory(extsrc/googletest) # add googletest subdirectory
 
+add_subdirectory(doxygen) # add doxygen doc generator
+
 set(Headers 
-    src/Criterion.h
-    src/Criteria.h
-    src/Perf.h
-    src/Performance.h
-    src/PerformanceTable.h
-    src/AtomicMCDAObject.h
-    src/Category.h
-    src/Categories.h
-    src/utils.h
+    include/Criterion.h
+    include/Criteria.h
+    include/Perf.h
+    include/Performance.h
+    include/PerformanceTable.h
+    include/AtomicMCDAObject.h
+    include/Category.h
+    include/Categories.h
+    include/utils.h
     )
 
 set(Sources 
