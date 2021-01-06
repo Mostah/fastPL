@@ -46,6 +46,15 @@ TEST(TestCriteria, TestCriterionVectConstructor) {
   }
 }
 
+TEST(TestCriteria, TestBaseConstructorWithNbOnly) {
+  Criteria criteria1 = Criteria(2);
+  std::ostringstream os;
+  os << criteria1;
+  EXPECT_EQ(os.str(), "Criteria(Criterion(id : crit0, name : , "
+                      "direction : +, weight : 0), Criterion(id : crit1, name : , "
+                      "direction : +, weight : 0), )");
+}
+
 TEST(TestCriteria, TestCopyConstructor) {
   std::string id = "test";
   std::string name = "criterion_test";
@@ -132,6 +141,27 @@ TEST(TestCriteria, TestGetSumWeight) {
   sum_weight = crits.getSumWeight();
   EXPECT_FLOAT_EQ(1, sum_weight);
 }
+
+TEST(TestCriteria, TestOperatorSubscript) {
+  Criteria criteria1 = Criteria(1);
+  Criterion crit = criteria1[0];
+
+  std::ostringstream os;
+  os << crit;
+  EXPECT_EQ(os.str(), "Criterion(id : crit0, name : , "
+                      "direction : +, weight : 0)");
+}
+
+TEST(TestCriteria, TestOperatorConstantSubscript) {
+  const Criteria criteria1 = Criteria(1);
+  Criterion crit = criteria1[0];
+
+  std::ostringstream os;
+  os << crit;
+  EXPECT_EQ(os.str(), "Criterion(id : crit0, name : , "
+                      "direction : +, weight : 0)");
+}
+
 
 TEST(TestCriteria, TestAllInstancesDestroyed) {
   EXPECT_EQ(AtomicMCDAObject::get_nb_instances(), 0);

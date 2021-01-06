@@ -96,3 +96,8 @@ Criterion Criteria::operator[](std::string name) const {
   }
   throw std::invalid_argument("Criterion not found in this Criteria vector");
 }
+
+Criterion Criteria::operator[](int index) { return criterion_vect_[index]; }
+Criterion Criteria::operator[](int index) const {
+  return criterion_vect_[index];
+}

@@ -77,6 +77,16 @@ public:
    */
   Criterion operator[](std::string name) const;
 
+  /**
+   * Overloading [] operator for Criteria
+   *
+   * @param index index of the object we want
+   *
+   * @return Criterion object at index position of Criteria object
+   */
+  Criterion operator[](int index);
+  Criterion operator[](int index) const;
+
 private:
   std::vector<Criterion> criterion_vect_;
 };
