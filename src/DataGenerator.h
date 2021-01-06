@@ -7,7 +7,7 @@
 // pugixml/src/pugiconfig.hpp and uncommenting the line here: Uncomment this to
 // switch to header-only version #define PUGIXML_HEADER_ONLY
 
-#include "../pugixml/src/pugixml.hpp"
+#include "../extsrc/pugixml/src/pugixml.hpp"
 #include "AtomicMCDAObject.h"
 #include "Performance.h"
 #include <iostream>

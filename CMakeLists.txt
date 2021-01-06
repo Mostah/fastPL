@@ -3,6 +3,13 @@ cmake_minimum_required(VERSION 3.12) # version can be different
 project(fastPL) #name of your project
 
 add_subdirectory(extsrc/googletest) # add googletest subdirectory
+add_subdirectory(extsrc/pugixml) #add pugixml directory
+
+# for macosx  sed -i '' 's/\/\/#define PUGIXML_HEADER_ONLY/#define PUGIXML_HEADER_ONLY/' ..//extsrc/pugixml/src/pugixml.hpp
+# for linux sed 's/\/\/#define PUGIXML_HEADER_ONLY/#define PUGIXML_HEADER_ONLY/' ../extsrc/pugixml/src/pugixml.hpp
+
+# uncommenting relevant line of pugixml package
+add_executable(sed -i '' 's/\/\/#define PUGIXML_HEADER_ONLY/#define PUGIXML_HEADER_ONLY/' ..//extsrc/pugixml/src/pugixml.hpp) # add the executable
 
 set(Headers 
     src/Criterion.h

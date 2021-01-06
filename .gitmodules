@@ -1,3 +1,7 @@
+[submodule "extsrc/pugixml"]
+	path = extsrc/pugixml
+	url = https://github.com/zeux/pugixml.git
+	
 [submodule "extsrc/googletest"]
 	path = extsrc/googletest
 	url = https://github.com/google/googletest.git
