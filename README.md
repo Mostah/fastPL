@@ -84,7 +84,22 @@ SSH connect to the docker image (just in case)
 docker run -it <container_id> /bin/bash 
 ```
 
-## Generating documentation 
+## Generating documentation with doxygen
+
+### Installing doxygen
+
+#### On Ubuntu
+```
+sudo apt-get install doxygen
+```
+
+#### On MacOSX with brew
+```
+brew install doxygen
+```
+
+### Generating documentation
+
 ```
 cd doxygen
 cmake .
