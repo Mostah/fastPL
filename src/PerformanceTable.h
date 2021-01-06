@@ -25,7 +25,8 @@ public:
    * @param nb_of_perfs Number of performance
    * @param crits Criteria to evaluate performance over
    */
-  PerformanceTable(int nb_of_perfs, Criteria crits, std::string prefix = "alt");
+  PerformanceTable(int nb_of_perfs, Criteria &crits,
+                   std::string prefix = "alt");
 
   /**
    * Performances constructor by copy

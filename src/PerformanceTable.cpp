@@ -31,7 +31,7 @@ PerformanceTable::PerformanceTable(std::vector<Performance> &perf_vect) {
   }
 }
 
-PerformanceTable::PerformanceTable(int nb_of_perfs, Criteria crits,
+PerformanceTable::PerformanceTable(int nb_of_perfs, Criteria &crits,
                                    std::string prefix) {
   for (int i = 0; i < nb_of_perfs; i++) {
     pt_.push_back(Performance(crits, prefix + std::to_string(i)).getPerf());
@@ -47,6 +47,8 @@ PerformanceTable::PerformanceTable(const PerformanceTable &perfs) {
     }
     pt_.push_back(perf_vect);
   }
+  mode_ = perfs.mode_;
+  sorted_ = perfs.sorted_;
 }
 
 PerformanceTable::~PerformanceTable() {}
