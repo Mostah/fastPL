@@ -11,11 +11,7 @@ jobs:
       - run: git submodule init; git submodule update
       - run: mkdir build; cd build; cmake ..; make
       - persist_to_workspace:
-        root: build
-        paths: 
-          - "."
-      - persist_to_workspace:
-        root: doxygen
+        root: tmp/workspace
         paths: 
           - "."
   test:
@@ -24,7 +20,7 @@ jobs:
     steps:
       # instead of checking out, restore workspace (will merge all parallel containers from previous job)
       - attach_workspace:
-          at: build
+          at: tmp
       - run: cd build; ./Test
 
   doc_generation:
@@ -33,7 +29,7 @@ jobs:
     steps:
       # instead of checking out, restore workspace (will merge all parallel containers from previous job)
       - attach_workspace:
-          at: doxygen
+          at: tmp/workspace
       - run: cd doxygen; doxygen Doxyfile.Doxygen
 
 
