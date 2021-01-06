@@ -68,7 +68,11 @@ AlternativePerformance::AlternativePerformance(
 }
 
 std::map<std::string, std::string>
-AlternativePerformance::getAlternativePerformanceMap() const {}
+AlternativePerformance::getAlternativeAssignments() const {
+  return alt_assignment_;
+}
 
 std::string
-AlternativePerformance::getAlternativePerformance(std::string altName) const {}
+AlternativePerformance::getAlternativeAssignment(std::string altName) const {
+  return alt_assignment_.find(altName)->second;
+}
