@@ -264,6 +264,16 @@ TEST(TestPerformanceTable, TestGetAltBetween) {
   } catch (...) {
     FAIL() << "should have throw domain error.";
   }
+  perf_table.changeMode("crit");
+
+  try {
+    perf_table.getAltBetween("a0", 0, 1);
+    FAIL() << "should have throw domain error.";
+  } catch (std::domain_error const &err) {
+    EXPECT_EQ(err.what(), std::string("The performance table must be sorted."));
+  } catch (...) {
+    FAIL() << "should have throw domain error.";
+  }
 
   perf_table.sort("crit");
   try {

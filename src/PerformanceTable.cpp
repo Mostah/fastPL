@@ -215,6 +215,9 @@ std::vector<Perf> PerformanceTable::getAltBetween(std::string critId, float inf,
   if (inf >= sup) {
     throw std::invalid_argument("Sup must be greater (>) than inf");
   }
+  if (!sorted_) {
+    throw std::domain_error("The performance table must be sorted.");
+  }
 
   std::vector<Perf> pv = this->operator[](critId);
   auto lower_b = std::lower_bound(
