@@ -35,6 +35,15 @@ TEST(TestCriterion, TestConstructorByCopy) {
   EXPECT_EQ(os.str(), "Criterion(id : test_copy, direction : +, weight : 0.3)");
 }
 
+TEST(TestCriterion, TestRandomWeightGeneration) {
+  std::string id = "crit1";
+  Criterion crit = Criterion(id);
+  crit.getRandomCriterionWeight(0);
+  std::ostringstream os;
+  os << crit;
+  EXPECT_EQ(os.str(), "Criterion(id : crit1, direction : +, weight : 0.93)");
+}
+
 TEST(TestCriterion, TestAllCriterionInstancesDestroyed) {
   EXPECT_EQ(AtomicMCDAObject::get_nb_instances(), 0);
 }

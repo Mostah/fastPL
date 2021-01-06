@@ -7,13 +7,13 @@
 
 TEST(TestDataGenerator, TestDatasetGenerator) {
   DataGenerator data = DataGenerator();
-  data.DatasetGenerator(3, 20, 4, "test.xml", 1);
+  data.datasetGenerator(3, 20, 4, "test.xml", 1);
 }
 
 TEST(TestDataGenerator, TestDatasetGeneratorNotOverwrite) {
   DataGenerator data = DataGenerator();
   try {
-    data.DatasetGenerator(3, 20, 4, "test.xml", 0);
+    data.datasetGenerator(3, 20, 4, "test.xml", 0, 0);
     FAIL() << "should have throw invalid_argument error.";
   } catch (std::invalid_argument const &err) {
     EXPECT_EQ(err.what(),
@@ -27,18 +27,18 @@ TEST(TestDataGenerator, TestDatasetGeneratorNotOverwrite) {
 
 TEST(TestDataGenerator, TestDatasetGeneratorOverwrite) {
   DataGenerator data = DataGenerator();
-  data.DatasetGenerator(3, 20, 4, "test.xml", 1);
+  data.datasetGenerator(3, 20, 4, "test.xml", 1, 0);
 }
 
 TEST(TestDataGenerator, TestModelGenerator) {
   DataGenerator data = DataGenerator();
-  data.modelGenerator(2, 3, "test_model.xml", 1);
+  data.modelGenerator(2, 3, "test_model.xml", 1, 0);
 }
 
 TEST(TestDataGenerator, TestModelGeneratorNotOverwrite) {
   DataGenerator data = DataGenerator();
   try {
-    data.modelGenerator(2, 3, "test_model.xml", 0);
+    data.modelGenerator(2, 3, "test_model.xml", 0, 0);
     FAIL() << "should have throw invalid_argument error.";
   } catch (std::invalid_argument const &err) {
     EXPECT_EQ(err.what(),
@@ -252,7 +252,7 @@ TEST(TestDataGenerator, TestGetCriterionForModel) {
   Criterion crit1 = data.getCriterion("test_model.xml", "crit1");
   std::ostringstream os2;
   os2 << crit1;
-  EXPECT_EQ(os2.str(), "Criterion(id : crit1, direction : -, weight : 0)");
+  EXPECT_EQ(os2.str(), "Criterion(id : crit1, direction : -, weight :0.5)");
 }
 
 TEST(TestDataGenerator, TestGetCriterionForModelFakeCritId) {

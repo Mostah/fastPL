@@ -23,13 +23,15 @@ public:
    * @param nb_alternative number of alternatives
    * @param nb_categories number of categories
    * @param datasetName name of that dataset
-   *@param overwrite bool that refers to if we want to overwrite file
+   * @param overwrite bool that refers to if we want to overwrite file
+   * @param seed seed to control random generation
    *
    * @return a saved file of the name datasetName.xml in data/ or default
    * generated name
    */
-  void DatasetGenerator(int nb_criteria, int nb_alternative, int nb_categories,
-                        std::string datasetName = "", bool overwrite = 1);
+  void datasetGenerator(int nb_criteria, int nb_alternative, int nb_categories,
+                        std::string datasetName = "", bool overwrite = 1,
+                        bool changeSeed = 0);
 
   /**
    * Generate a random model and puts it in a xml file
@@ -38,12 +40,13 @@ public:
    * @param nb_categories number of categories
    * @param modelName name of that model
    * @param overwrite bool that refers to if we want to overwrite file
+   * @param seed seed to control random generation
    *
    * @return a saved file of the name nametName.xml in data/ or default
    * generated name
    */
   void modelGenerator(int nb_criteria, int nb_categories, std::string modelName,
-                      bool overwrite = 1);
+                      bool overwrite = 1, bool changeSeed = 0);
 
   /**
    * Get data from xml file
@@ -56,6 +59,15 @@ public:
   // void loadDataset(std::string fileName);
 
   // void saveDataset(new type, std::string datasetName);
+
+  /**
+   * Get an xml_document type for preocessing the xml files
+   *
+   * @param fileName filename
+   *
+   * @return pugi::xml_document object that hold info on the xml filename file
+   */
+  pugi::xml_document openXmlFile(std::string filename);
 
   /**
    * Gets the xml file type

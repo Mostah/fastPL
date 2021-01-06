@@ -4,17 +4,17 @@
   <modelName>test_model.xml</modelName>
   <criteria>2</criteria>
   <categories>3</categories>
-  <lambda>0.901500</lambda>
+  <lambda>0.965000</lambda>
   <crit0>
-    <cat0>need to add performance of each profile for each crit</cat0>
-    <cat1>need to add performance of each profile for each crit</cat1>
-    <cat2>need to add performance of each profile for each crit</cat2>
-    <weight>0.000000</weight>
+    <cat0>hi</cat0>
+    <cat1>hi</cat1>
+    <cat2>hi</cat2>
+    <weight>nan</weight>
   </crit0>
   <crit1>
-    <cat0>need to add performance of each profile for each crit</cat0>
-    <cat1>need to add performance of each profile for each crit</cat1>
-    <cat2>need to add performance of each profile for each crit</cat2>
-    <weight>0.000000</weight>
+    <cat0>hi</cat0>
+    <cat1>hi</cat1>
+    <cat2>hi</cat2>
+    <weight>nan</weight>
   </crit1>
 </model>

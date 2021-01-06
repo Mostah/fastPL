@@ -45,7 +45,7 @@ public:
    *
    * @return criterion_vect_
    */
-  std::vector<Criterion> getCriterionVect() const;
+  std::vector<Criterion> getCriterionVect();
 
   /**
    * getMinWeight return the min criterion weight of this Criteria structure
@@ -67,6 +67,31 @@ public:
    * @return sum_weight
    */
   float getSumWeight();
+
+  /**
+   * getWeights returns an vector of all the weight from the Criteria structure
+   *
+   * @return get_weights
+   */
+  std::vector<float> getWeights() const;
+
+  /**
+   * Set new weights in the Criteria object
+   *
+   */
+  void setWeights(std::vector<float> newWeights);
+  /**
+   * normalizeWeights normalizes the weights of each criterion in the Criteria
+   * object
+   *
+   */
+  void normalizeWeights();
+
+  /**
+   * Generates random Criteria weight for each Criterion
+   *
+   */
+  void generateRandomCriteriaWeights(bool changeSeed = 1);
 
   /**
    * Overloading [] dict operator for Performance

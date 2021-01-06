@@ -11,6 +11,7 @@ set(OTHER  "s@\/\/ #define PUGIXML_HEADER_ONLY@#define PUGIXML_HEADER_ONLY@")
 execute_process(COMMAND sed -i "" ${OTHER} ${PUGIXML_HEADER_FILE} )
 
 set(Headers 
+    src/utils.h
     src/Criterion.h
     src/Criteria.h
     src/Perf.h
@@ -19,7 +20,6 @@ set(Headers
     src/AtomicMCDAObject.h
     src/Category.h
     src/Categories.h
-    src/utils.h
     src/DataGenerator.h
     )
 

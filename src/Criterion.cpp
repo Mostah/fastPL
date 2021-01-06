@@ -1,4 +1,5 @@
 #include "Criterion.h"
+#include "utils2.h"
 #include <iostream>
 #include <string>
 
@@ -25,6 +26,14 @@ void Criterion::setDirection(int direction) { direction_ = direction; }
 float Criterion::getWeight() const { return weight_; }
 
 void Criterion::setWeight(float weight) { weight_ = weight; }
+
+void Criterion::getRandomCriterionWeight(bool changeSeed) {
+  if (changeSeed) {
+    Criterion::setWeight(getRandomUniformNumber(1));
+  } else {
+    Criterion::setWeight(getRandomUniformNumber(0));
+  }
+}
 
 std::ostream &operator<<(std::ostream &out, const Criterion &crit) {
   std::string dir = "";

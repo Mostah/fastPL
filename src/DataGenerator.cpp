@@ -4,18 +4,16 @@
 #include "Perf.h"
 #include "Performance.h"
 #include "utils.h"
+#include "utils2.h"
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <stdlib.h>
 #include <string>
 
-/// room for improvement can i improve the xml type fucntion by returning doc
-/// type
-
-void DataGenerator::DatasetGenerator(int nb_criteria, int nb_alternative,
+void DataGenerator::datasetGenerator(int nb_criteria, int nb_alternative,
                                      int nb_categories, std::string datasetName,
-                                     bool overwrite) {
+                                     bool overwrite, bool changeSeed) {
 
   // Generate new XML document within memory
   pugi::xml_document doc;
@@ -58,7 +56,7 @@ void DataGenerator::DatasetGenerator(int nb_criteria, int nb_alternative,
   for (int i = 0; i < nb_alternative; i++) {
     pugi::xml_node alternative_node = dataset_node.append_child("alternative");
 
-    Performance alternative = Performance("alt" + std::to_string(i), criterias);
+    Performance alternative = Performance(criterias, "alt" + std::to_string(i));
 
     // getting alternative id
     alternative_node.append_child(pugi::node_pcdata)
@@ -99,7 +97,8 @@ void DataGenerator::DatasetGenerator(int nb_criteria, int nb_alternative,
 }
 
 void DataGenerator::modelGenerator(int nb_criteria, int nb_categories,
-                                   std::string modelName, bool overwrite) {
+                                   std::string modelName, bool overwrite,
+                                   bool changeSeed) {
   // Generate new XML document within memory
   pugi::xml_document doc;
 
@@ -130,15 +129,16 @@ void DataGenerator::modelGenerator(int nb_criteria, int nb_categories,
       .set_value(std::to_string(nb_categories).c_str());
 
   // Giving lambda
-  srand((unsigned)time(NULL));
-  // Lambda is a value between 0.5 and 1 and i gave it 3 decimals
-  float lambda = (float)(rand() % 1000) / 2000 + 0.5;
+  // Lambda is a value between 0.5 and 1
+  float lambda = getRandomUniformNumberBis(changeSeed);
+
   pugi::xml_node lambda_node = dataset_node.append_child("lambda");
   lambda_node.append_child(pugi::node_pcdata)
       .set_value(std::to_string(lambda).c_str());
 
   // Creating a criteria object in plot each criterion profile limit
   Criteria criteria = Criteria(nb_criteria, "crit");
+  criteria.normalizeWeights();
   Categories categories = Categories(nb_categories);
 
   for (int i = 0; i < nb_criteria; i++) {
@@ -148,9 +148,7 @@ void DataGenerator::modelGenerator(int nb_criteria, int nb_categories,
     for (int j = 0; j < nb_categories; j++) {
       pugi::xml_node profile_node =
           criteria_node.append_child(categories.getIdCategories()[j].c_str());
-
-      profile_node.append_child(pugi::node_pcdata)
-          .set_value("need to add performance of each profile for each crit");
+      profile_node.append_child(pugi::node_pcdata).set_value("hi");
     }
 
     // Give the weight assignmed to the criterion
@@ -181,12 +179,17 @@ void DataGenerator::modelGenerator(int nb_criteria, int nb_categories,
 
 // void DataGenerator::loadDataset(std::string fileName) {}
 
-std::string DataGenerator::getXmlFileType(std::string fileName) {
+pugi::xml_document DataGenerator::openXmlFile(std::string fileName) {
   pugi::xml_document doc;
   std::string path = "../data/" + fileName;
   if (!doc.load_file(path.c_str()))
     throw std::invalid_argument("Cannot open xml file, please check path");
+  return doc;
+}
 
+std::string DataGenerator::getXmlFileType(std::string fileName) {
+
+  pugi::xml_document doc = DataGenerator::openXmlFile(fileName);
   pugi::xml_node model_node = doc.child("model").child("modelName");
   pugi::xml_node dataset_node = doc.child("dataset").child("datasetName");
 
@@ -203,11 +206,8 @@ std::string DataGenerator::getXmlFileType(std::string fileName) {
 }
 
 int DataGenerator::getNumberOfCriteria(std::string fileName) {
-  pugi::xml_document doc;
-  std::string path = "../data/" + fileName;
-  if (!doc.load_file(path.c_str()))
-    throw std::invalid_argument("Cannot open xml file, please check path");
 
+  pugi::xml_document doc = DataGenerator::openXmlFile(fileName);
   pugi::xml_node node_criteria;
   if (DataGenerator::getXmlFileType(fileName) == "model") {
     // if we have a model xml
@@ -225,11 +225,8 @@ int DataGenerator::getNumberOfCriteria(std::string fileName) {
 }
 
 int DataGenerator::getNumberOfCategories(std::string fileName) {
-  pugi::xml_document doc;
-  std::string path = "../data/" + fileName;
-  if (!doc.load_file(path.c_str()))
-    throw std::invalid_argument("Cannot open xml file, please check path");
 
+  pugi::xml_document doc = DataGenerator::openXmlFile(fileName);
   pugi::xml_node node_cat;
   if (DataGenerator::getXmlFileType(fileName) == "model") {
     // if we have a model xml
@@ -247,10 +244,7 @@ int DataGenerator::getNumberOfCategories(std::string fileName) {
 }
 
 float DataGenerator::getThresholdValue(std::string fileName) {
-  pugi::xml_document doc;
-  std::string path = "../data/" + fileName;
-  if (!doc.load_file(path.c_str()))
-    throw std::invalid_argument("Cannot open xml file, please check path");
+  pugi::xml_document doc = DataGenerator::openXmlFile(fileName);
 
   if (DataGenerator::getXmlFileType(fileName) == "model") {
     // if we have a model xml
@@ -265,10 +259,7 @@ float DataGenerator::getThresholdValue(std::string fileName) {
 }
 
 int DataGenerator::getNumberOfAlternatives(std::string fileName) {
-  pugi::xml_document doc;
-  std::string path = "../data/" + fileName;
-  if (!doc.load_file(path.c_str()))
-    throw std::invalid_argument("Cannot open xml file, please check path");
+  pugi::xml_document doc = DataGenerator::openXmlFile(fileName);
 
   if (DataGenerator::getXmlFileType(fileName) == "model") {
     // if we have a model xml
@@ -289,10 +280,7 @@ int DataGenerator::getNumberOfAlternatives(std::string fileName) {
 
 Performance DataGenerator::getAlternativePerformance(std::string fileName,
                                                      std::string alt_id) {
-  pugi::xml_document doc;
-  std::string path = "../data/" + fileName;
-  if (!doc.load_file(path.c_str()))
-    throw std::invalid_argument("Cannot open xml file, please check path");
+  pugi::xml_document doc = DataGenerator::openXmlFile(fileName);
 
   if (DataGenerator::getXmlFileType(fileName) == "model") {
     // if we have a model xml
@@ -301,7 +289,7 @@ Performance DataGenerator::getAlternativePerformance(std::string fileName,
   } else {
 
     // creating type blocks to return Performance object
-    int nb_criteria = DataGenerator::getNumberOfCriteria(path);
+    int nb_criteria = DataGenerator::getNumberOfCriteria(fileName);
     Criteria criteria = Criteria(nb_criteria, "crit");
     std::vector<float> alt_perf;
 
@@ -328,16 +316,13 @@ Performance DataGenerator::getAlternativePerformance(std::string fileName,
           "Cannot find performance associated to the alternative identified by "
           "alt_id in xml file.");
     }
-    return Performance(alt_id, criteria, alt_perf);
+    return Performance(criteria, alt_perf, alt_id);
   }
 }
 
 std::vector<std::string>
 DataGenerator::getAlternativeIds(std::string fileName) {
-  pugi::xml_document doc;
-  std::string path = "../data/" + fileName;
-  if (!doc.load_file(path.c_str()))
-    throw std::invalid_argument("Cannot open xml file, please check path");
+  pugi::xml_document doc = DataGenerator::openXmlFile(fileName);
 
   if (DataGenerator::getXmlFileType(fileName) == "model") {
     // if we have a model xml
@@ -361,10 +346,7 @@ DataGenerator::getAlternativeIds(std::string fileName) {
 }
 
 std::vector<std::string> DataGenerator::getCriteriaIds(std::string fileName) {
-  pugi::xml_document doc;
-  std::string path = "../data/" + fileName;
-  if (!doc.load_file(path.c_str()))
-    throw std::invalid_argument("Cannot open xml file, please check path");
+  pugi::xml_document doc = DataGenerator::openXmlFile(fileName);
 
   // creating vector object to store criteria ids
   std::vector<std::string> crit_ids;
@@ -404,11 +386,7 @@ std::vector<std::string> DataGenerator::getCriteriaIds(std::string fileName) {
 Criterion DataGenerator::getCriterion(std::string fileName,
                                       std::string crit_id) {
   float weight = -1;
-  pugi::xml_document doc;
-  std::string path = "../data/" + fileName;
-
-  if (!doc.load_file(path.c_str()))
-    throw std::invalid_argument("Cannot open xml file, please check path");
+  pugi::xml_document doc = DataGenerator::openXmlFile(fileName);
 
   if (DataGenerator::getXmlFileType(fileName) == "dataset") {
     // if we have a model xml
@@ -440,18 +418,15 @@ Criterion DataGenerator::getCriterion(std::string fileName,
     throw std::invalid_argument(
         "Cannot find Criterion associated to crit_id in xml file.");
   }
-  return Criterion(crit_id, weight);
+  std::cout << "found the weight " << weight;
+  return Criterion(crit_id, 1, weight);
 }
 
 int DataGenerator::getAlternativeAssignment(std::string fileName,
                                             std::string alt_id) {
 
   int assignment = -1;
-  pugi::xml_document doc;
-  std::string path = "../data/" + fileName;
-
-  if (!doc.load_file(path.c_str()))
-    throw std::invalid_argument("Cannot open xml file, please check path");
+  pugi::xml_document doc = DataGenerator::openXmlFile(fileName);
 
   if (DataGenerator::getXmlFileType(fileName) == "model") {
     // if we have a model xml
@@ -489,12 +464,9 @@ int DataGenerator::getAlternativeAssignment(std::string fileName,
 std::vector<float>
 DataGenerator::getCriterionCategoryLimits(std::string fileName,
                                           std::string crit_id) {
-  pugi::xml_document doc;
-  std::string path = "../data/" + fileName;
-  std::vector<float> categoryLimits;
 
-  if (!doc.load_file(path.c_str()))
-    throw std::invalid_argument("Cannot open xml file, please check path");
+  std::vector<float> categoryLimits;
+  pugi::xml_document doc = DataGenerator::openXmlFile(fileName);
 
   if (DataGenerator::getXmlFileType(fileName) == "dataset") {
     // if we have a model xml

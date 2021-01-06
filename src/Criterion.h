@@ -17,7 +17,7 @@ public:
    * criterion is to maximize
    * @param weight Weight of the criterion
    */
-  Criterion(std::string id, int direction = 1, float weight = 0.);
+  Criterion(std::string id, int direction = 1, float weight = 0.0f);
 
   /**
    * Criterion constructor by copy
@@ -71,6 +71,13 @@ public:
    * @param weight
    */
   void setWeight(float weight);
+
+  /**
+   * Randomizes the value of the weight of the Criterion object
+   *
+   * @param weight
+   */
+  void getRandomCriterionWeight(bool changeSeed = 1);
 
 private:
   std::string id_;

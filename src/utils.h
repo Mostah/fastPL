@@ -27,6 +27,14 @@ std::ostream &operator<<(std::ostream &out, const std::vector<T> &vec) {
   return out;
 }
 
+template <typename T>
+std::vector<T> subVector(std::vector<T> const &v, int m, int n) {
+  auto first = v.begin() + m;
+  auto last = v.begin() + n + 1;
+  std::vector<T> vector(first, last);
+  return vector;
+}
+
 /**
  * Pugy XML Tree walker viewer
  *
@@ -56,12 +64,6 @@ struct simple_walker : pugi::xml_tree_walker {
 inline bool fileExists(const std::string &name) {
   struct stat buffer;
   return (stat(name.c_str(), &buffer) == 0);
-  template <typename T>
-  std::vector<T> subVector(std::vector<T> const &v, int m, int n) {
-    auto first = v.begin() + m;
-    auto last = v.begin() + n + 1;
-    std::vector<T> vector(first, last);
-    return vector;
-  }
+}
 
 #endif
