@@ -29,6 +29,29 @@ TEST(TestCriteria, TestCriterionVectConstructor) {
   os << crits;
   EXPECT_EQ(os.str(), "Criteria(Criterion(id : test, "
                       "direction : -, weight : 0.4), )");
+
+  std::vector<Criterion> crit_vect_err;
+  crit_vect_err.push_back(Criterion("a", "", -1, 0.4));
+  crit_vect_err.push_back(Criterion("a", "", -1, 0));
+
+  try {
+    Criteria crits_err = Criteria(crit_vect_err);
+    FAIL() << "should have throw invalid argument.";
+  } catch (std::invalid_argument const &err) {
+    EXPECT_EQ(err.what(),
+              std::string("Each criterion must have different ids."));
+  } catch (...) {
+    FAIL() << "should have throw invalid argument.";
+  }
+}
+
+TEST(TestCriteria, TestBaseConstructorWithNbOnly) {
+  Criteria criteria1 = Criteria(2);
+  std::ostringstream os;
+  os << criteria1;
+  EXPECT_EQ(os.str(), "Criteria(Criterion(id : crit0, name : , "
+                      "direction : +, weight : 0), Criterion(id : crit1, name : , "
+                      "direction : +, weight : 0), )");
 }
 
 TEST(TestCriteria, TestCopyConstructor) {
@@ -115,6 +138,27 @@ TEST(TestCriteria, TestGetSumWeight) {
   sum_weight = crits.getSumWeight();
   EXPECT_FLOAT_EQ(1, sum_weight);
 }
+
+TEST(TestCriteria, TestOperatorSubscript) {
+  Criteria criteria1 = Criteria(1);
+  Criterion crit = criteria1[0];
+
+  std::ostringstream os;
+  os << crit;
+  EXPECT_EQ(os.str(), "Criterion(id : crit0, name : , "
+                      "direction : +, weight : 0)");
+}
+
+TEST(TestCriteria, TestOperatorConstantSubscript) {
+  const Criteria criteria1 = Criteria(1);
+  Criterion crit = criteria1[0];
+
+  std::ostringstream os;
+  os << crit;
+  EXPECT_EQ(os.str(), "Criterion(id : crit0, name : , "
+                      "direction : +, weight : 0)");
+}
+
 
 TEST(TestCriteria, TestAllInstancesDestroyed) {
   EXPECT_EQ(AtomicMCDAObject::get_nb_instances(), 0);
