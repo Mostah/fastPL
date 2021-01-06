@@ -1,13 +1,21 @@
 #include "../include/Criteria.h"
 #include "../include/Criterion.h"
+#include <algorithm>
 #include <iostream>
 #include <string>
 #include <vector>
 
 Criteria::Criteria(std::vector<Criterion> &criterion_vect) {
-  // deep copy
-  for (int i = 0; i < criterion_vect.size(); i++) {
-    criterion_vect_.push_back(Criterion(criterion_vect[i]));
+  std::vector<std::string> crit_id_vect;
+  for (Criterion crit : criterion_vect) {
+    // ensure there is no criterion with dupplicated name
+    if (std::find(crit_id_vect.begin(), crit_id_vect.end(), crit.getId()) !=
+        crit_id_vect.end()) {
+      throw std::invalid_argument("Each criterion must have different ids.");
+    }
+    crit_id_vect.push_back(crit.getId());
+
+    criterion_vect_.push_back(Criterion(crit));
   }
 }
 
@@ -78,6 +86,15 @@ float Criteria::getSumWeight() {
     sum += crit.getWeight();
   }
   return sum;
+}
+
+Criterion Criteria::operator[](std::string name) const {
+  for (Criterion c : criterion_vect_) {
+    if (c.getId() == name) {
+      return c;
+    }
+  }
+  throw std::invalid_argument("Criterion not found in this Criteria vector");
 }
 
 Criterion Criteria::operator[](int index) { return criterion_vect_[index]; }
