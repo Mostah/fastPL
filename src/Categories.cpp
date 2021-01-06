@@ -13,13 +13,6 @@ Categories::Categories(int number_of_categories, std::string prefix) {
   }
 }
 
-Categories::Categories(int number_of_categories) {
-  for (int i = 0; i < number_of_categories; i++) {
-    std::string id = "cat" + std::to_string(i);
-    Category tmp_cat = Category(id, i);
-    categories_vector_.push_back(tmp_cat);
-  }
-}
 
 Categories::Categories(std::vector<std::string> vect_category_ids) {
   for (int i = 0; i < vect_category_ids.size(); i++) {

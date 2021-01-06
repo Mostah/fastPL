@@ -20,7 +20,7 @@ public:
    * @param nb_of_criterion Number of criteria
    * @param prefix Prefix to identify criteria
    */
-  Criteria(int nb_of_criterion, std::string prefix);
+  Criteria(int nb_of_criterion, std::string prefix = "crit");
 
   /**
    * Criteria constructor by copy
@@ -67,6 +67,25 @@ public:
    * @return sum_weight
    */
   float getSumWeight();
+
+  /**
+   * Overloading [] dict operator for Performance
+   *
+   * @param criteria criterion name of the Perf we want
+   *
+   * @return Perf object with associated criterion
+   */
+  Criterion operator[](std::string name) const;
+
+  /**
+   * Overloading [] operator for Criteria
+   *
+   * @param index index of the object we want
+   *
+   * @return Criterion object at index position of Criteria object
+   */
+  Criterion operator[](int index);
+  Criterion operator[](int index) const;
 
 private:
   std::vector<Criterion> criterion_vect_;
