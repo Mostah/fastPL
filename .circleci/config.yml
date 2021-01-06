@@ -11,11 +11,13 @@ jobs:
       - run: git submodule init; git submodule update
       - run: mkdir build; cd build; cmake ..; make
       - persist_to_workspace:
-          root: 
-            - build
-            - doxygen
-          paths: 
-            - "."
+        root: build
+        paths: 
+          - "."
+      - persist_to_workspace:
+        root: doxygen
+        paths: 
+          - "."
   test:
     docker:
       - image: gcc:9.3
