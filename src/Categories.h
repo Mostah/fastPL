@@ -13,7 +13,7 @@ public:
    * @param number_of_categories number of categories wanted
    * @param prefix prefix given to each category ids.
    */
-  Categories(int number_of_categories, std::string prefix);
+  Categories(int number_of_categories, std::string prefix = "cat");
 
   /**
    * Categories standard constructor 2
@@ -22,13 +22,6 @@ public:
    *
    */
   Categories(std::vector<std::string> vect_category_ids);
-
-  /**
-   * Categories standard constructor 3
-   *
-   * @param number_of_categories number of categories wanted
-   */
-  Categories(int number_of_categories);
 
   /**
    *Categories constructor by copy

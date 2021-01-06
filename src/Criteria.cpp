@@ -79,3 +79,8 @@ float Criteria::getSumWeight() {
   }
   return sum;
 }
+
+Criterion Criteria::operator[](int index) { return criterion_vect_[index]; }
+Criterion Criteria::operator[](int index) const {
+  return criterion_vect_[index];
+}
