@@ -30,8 +30,8 @@ jobs:
       # instead of checking out, restore workspace (will merge all parallel containers from previous job)
       - attach_workspace:
           at: ./
-      - run: apt-get update && apt-get -y install doxygen
-      - run: cd doxygen; doxygen Doxyfile.Doxygen
+      - run: apt-get update && apt-get -y install cmake && apt-get -y install doxygen
+      - run: cd doxygen; cmake .; doxygen Doxyfile.Doxygen 
 
 
 # Orchestrate our job run sequence
