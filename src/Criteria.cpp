@@ -11,7 +11,7 @@
 Criteria::Criteria(std::vector<Criterion> &criterion_vect) {
   std::vector<std::string> crit_id_vect;
   for (Criterion crit : criterion_vect) {
-    // ensure there is no criterion with dupplicated name
+    // ensure there is no criterion with duplicated name
     if (std::find(crit_id_vect.begin(), crit_id_vect.end(), crit.getId()) !=
         crit_id_vect.end()) {
       throw std::invalid_argument("Each criterion must have different ids.");

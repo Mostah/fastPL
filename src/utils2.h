@@ -39,10 +39,11 @@ inline float getRandomUniformNumberBis(bool changeSeed = 1) {
   }
 }
 
-inline std::vector<float> randomCriteriaLimits(int nbCategories) {
+inline std::vector<float> randomCriteriaLimits(int nbCategories,
+                                               bool changeSeed = 1) {
   std::vector<float> critLimits;
   for (int i = 0; i < nbCategories; i++) {
-    critLimits.push_back(getRandomUniformNumber());
+    critLimits.push_back(getRandomUniformNumber(changeSeed));
   }
   sort(critLimits.begin(), critLimits.end());
   return critLimits;

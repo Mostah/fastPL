@@ -138,17 +138,20 @@ void DataGenerator::modelGenerator(int nb_criteria, int nb_categories,
 
   // Creating a criteria object in plot each criterion profile limit
   Criteria criteria = Criteria(nb_criteria, "crit");
-  criteria.normalizeWeights();
+  criteria.generateRandomCriteriaWeights(changeSeed);
   Categories categories = Categories(nb_categories);
 
   for (int i = 0; i < nb_criteria; i++) {
     pugi::xml_node criteria_node = dataset_node.append_child(
         criteria.getCriterionVect()[i].getId().c_str());
 
+    // Generate random Criteria Limits
+    std::vector<float> critLimit = randomCriteriaLimits(nb_categories, 0);
     for (int j = 0; j < nb_categories; j++) {
       pugi::xml_node profile_node =
           criteria_node.append_child(categories.getIdCategories()[j].c_str());
-      profile_node.append_child(pugi::node_pcdata).set_value("hi");
+      profile_node.append_child(pugi::node_pcdata)
+          .set_value(std::to_string(critLimit[j]).c_str());
     }
 
     // Give the weight assignmed to the criterion
@@ -158,22 +161,27 @@ void DataGenerator::modelGenerator(int nb_criteria, int nb_categories,
         .set_value(
             std::to_string(criteria.getCriterionVect()[i].getWeight()).c_str());
 
-    if (modelName == "") {
-      std::string modelpath = "../data/" + name + ".xml";
-    }
-    std::string modelpath = "../data/" + modelName;
+    // Add direction needed for the criterion
+    pugi::xml_node direction_node = criteria_node.append_child("direction");
 
-    if (fileExists(modelpath) && !overwrite) {
-      throw std::invalid_argument(
-          "Such a default xml generate (or not) filename "
-          "already exists and you chose "
-          "not to overwrite it");
-    }
+    direction_node.append_child(pugi::node_pcdata)
+        .set_value(std::to_string(criteria.getCriterionVect()[i].getDirection())
+                       .c_str());
+  }
+  if (modelName == "") {
+    std::string modelpath = "../data/" + name + ".xml";
+  }
+  std::string modelpath = "../data/" + modelName;
 
-    bool saveSucceeded = doc.save_file(modelpath.c_str(), PUGIXML_TEXT("  "));
-    if (!saveSucceeded) {
-      throw std::invalid_argument("Cannot save xml file...");
-    }
+  if (fileExists(modelpath) && !overwrite) {
+    throw std::invalid_argument("Such a default xml generate (or not) filename "
+                                "already exists and you chose "
+                                "not to overwrite it");
+  }
+
+  bool saveSucceeded = doc.save_file(modelpath.c_str(), PUGIXML_TEXT("  "));
+  if (!saveSucceeded) {
+    throw std::invalid_argument("Cannot save xml file...");
   }
 }
 
@@ -386,6 +394,7 @@ std::vector<std::string> DataGenerator::getCriteriaIds(std::string fileName) {
 Criterion DataGenerator::getCriterion(std::string fileName,
                                       std::string crit_id) {
   float weight = -1;
+  float direction = 0;
   pugi::xml_document doc = DataGenerator::openXmlFile(fileName);
 
   if (DataGenerator::getXmlFileType(fileName) == "dataset") {
@@ -409,17 +418,19 @@ Criterion DataGenerator::getCriterion(std::string fileName,
           if (strcmp(al_it->name(), "weight") == 0) {
             weight = atof(al_it->child_value());
           }
+          if (strcmp(al_it->name(), "direction") == 0) {
+            direction = atof(al_it->child_value());
+          }
         }
         break;
       }
     }
   }
-  if (weight == -1) {
+  if (weight == -1 || direction == 0) {
     throw std::invalid_argument(
         "Cannot find Criterion associated to crit_id in xml file.");
   }
-  std::cout << "found the weight " << weight;
-  return Criterion(crit_id, 1, weight);
+  return Criterion(crit_id, direction, weight);
 }
 
 int DataGenerator::getAlternativeAssignment(std::string fileName,
@@ -487,9 +498,10 @@ DataGenerator::getCriterionCategoryLimits(std::string fileName,
         for (pugi::xml_node_iterator al_it = criterion_node.begin();
              al_it != criterion_node.end(); ++al_it) {
 
-          if (strcmp(al_it->child_value(), "weight") != 0) {
+          if (strcmp(al_it->name(), "weight") != 0 &&
+              strcmp(al_it->name(), "direction") != 0) {
             float limit = atof(al_it->child_value());
-            categoryLimits.push_back(1.1);
+            categoryLimits.push_back(limit);
           }
         }
         break;

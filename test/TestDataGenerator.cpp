@@ -252,7 +252,7 @@ TEST(TestDataGenerator, TestGetCriterionForModel) {
   Criterion crit1 = data.getCriterion("test_model.xml", "crit1");
   std::ostringstream os2;
   os2 << crit1;
-  EXPECT_EQ(os2.str(), "Criterion(id : crit1, direction : -, weight :0.5)");
+  EXPECT_EQ(os2.str(), "Criterion(id : crit1, direction : +, weight : 0.5)");
 }
 
 TEST(TestDataGenerator, TestGetCriterionForModelFakeCritId) {
@@ -326,7 +326,7 @@ TEST(TestDataGenerator, TestGetCriterionCategoryLimitsModel) {
       data.getCriterionCategoryLimits("test_model.xml", "crit0");
   std::ostringstream os2;
   os2 << v;
-  EXPECT_EQ(os2.str(), "[1.1,1.1,1.1,1.1]");
+  EXPECT_EQ(os2.str(), "[0.93,0.93,0.93]");
 }
 
 TEST(TestDataGenerator, TestGetCriterionCategoryLimitsModelFakeCritId) {
