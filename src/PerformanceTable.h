@@ -143,7 +143,7 @@ public:
    */
   std::vector<Perf> getWorstPerfByCrit(Criteria crits);
 
-private:
+protected:
   std::vector<std::vector<Perf>> pt_;
 
   // indicates what is represented by rows: (alt or profiles) or criterias
