@@ -1,5 +1,5 @@
-#include "../include/Criteria.h"
-#include "../include/Criterion.h"
+#include "../../include/types/Criteria.h"
+#include "../../include/types/Criterion.h"
 #include "gtest/gtest.h"
 #include <sstream>
 #include <utility>

@@ -1,5 +1,5 @@
-#include "../include/PerformanceTable.h"
-#include "../include/utils.h"
+#include "../../include/types/PerformanceTable.h"
+#include "../../include/utils.h"
 #include <algorithm>
 #include <ctime>
 #include <iostream>

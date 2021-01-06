@@ -1,4 +1,4 @@
-#include "../include/Category.h"
+#include "../../include/types/Category.h"
 #include "gtest/gtest.h"
 #include <sstream>
 #include <utility>

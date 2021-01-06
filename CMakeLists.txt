@@ -7,26 +7,26 @@ add_subdirectory(extsrc/googletest) # add googletest subdirectory
 add_subdirectory(doxygen) # add doxygen doc generator
 
 set(Headers 
-    include/Criterion.h
-    include/Criteria.h
-    include/Perf.h
-    include/Performance.h
-    include/PerformanceTable.h
-    include/AtomicMCDAObject.h
-    include/Category.h
-    include/Categories.h
+    include/types/Criterion.h
+    include/types/Criteria.h
+    include/types/Perf.h
+    include/types/Performance.h
+    include/types/PerformanceTable.h
+    include/types/AtomicMCDAObject.h
+    include/types/Category.h
+    include/types/Categories.h
     include/utils.h
     )
 
 set(Sources 
-    src/Criterion.cpp
-    src/Criteria.cpp
-    src/Perf.cpp
-    src/Performance.cpp
-    src/PerformanceTable.cpp
-    src/AtomicMCDAObject.cpp
-    src/Category.cpp
-    src/Categories.cpp
+    src/types/Criterion.cpp
+    src/types/Criteria.cpp
+    src/types/Perf.cpp
+    src/types/Performance.cpp
+    src/types/PerformanceTable.cpp
+    src/types/AtomicMCDAObject.cpp
+    src/types/Category.cpp
+    src/types/Categories.cpp
     )
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17" )

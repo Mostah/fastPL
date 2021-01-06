@@ -1,10 +1,10 @@
-#include "TestCategories.cpp"
-#include "TestCategory.cpp"
-#include "TestCriteria.cpp"
-#include "TestCriterion.cpp"
-#include "TestPerf.cpp"
-#include "TestPerformance.cpp"
-#include "TestPerformanceTable.cpp"
+#include "types/TestCategories.cpp"
+#include "types/TestCategory.cpp"
+#include "types/TestCriteria.cpp"
+#include "types/TestCriterion.cpp"
+#include "types/TestPerf.cpp"
+#include "types/TestPerformance.cpp"
+#include "types/TestPerformanceTable.cpp"
 #include "gtest/gtest.h"
 #include <sstream>
 #include <utility>

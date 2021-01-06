@@ -1,4 +1,4 @@
-#include "../include/Criterion.h"
+#include "../../include/types/Criterion.h"
 #include <iostream>
 #include <string>
 
