@@ -7,7 +7,7 @@
 TEST(TestPerformance, TestBaseConstructor) {
   std::string id = "test";
   Criteria crit = Criteria(2, "a");
-  Performance perf = Performance(id, crit);
+  Performance perf = Performance(crit, id);
   std::ostringstream os;
   os << perf;
   EXPECT_EQ(os.str(), "Performance(Perf( name : test, crit : a0, value : 0 ), "
@@ -18,7 +18,7 @@ TEST(TestPerformance, TestConstructorWithPerfFloatVect) {
   std::string id = "test";
   Criteria crit = Criteria(2, "a");
   std::vector<float> given_perf = {0.4, 0.6};
-  Performance perf = Performance(id, crit, given_perf);
+  Performance perf = Performance(crit, given_perf, id);
   std::ostringstream os;
   os << perf;
   EXPECT_EQ(os.str(),
@@ -47,7 +47,7 @@ TEST(TestPerformance, TestConstructorByCopy) {
   std::string id = "test";
   Criteria crit = Criteria(2, "a");
   std::vector<float> given_perf = {0.4, 0.6};
-  Performance perf = Performance(id, crit, given_perf);
+  Performance perf = Performance(crit, given_perf, id);
 
   Performance perf_copied = Performance(perf);
   std::ostringstream os;
@@ -60,7 +60,7 @@ TEST(TestPerformance, TestConstructorByCopy) {
 TEST(TestPerformance, TestAccessOperator) {
   std::string id = "test";
   Criteria crit = Criteria(2, "a");
-  Performance perf = Performance(id, crit);
+  Performance perf = Performance(crit, id);
   Perf p_a0 = perf["a0"];
   std::ostringstream os;
   os << p_a0;
@@ -72,6 +72,13 @@ TEST(TestPerformance, TestAccessOperator) {
     EXPECT_EQ(err.what(),
               std::string("criterion not found in performance vector"));
   }
+}
+
+TEST(TestPerformance, TestGetCriteriaVect) {
+  Criteria crit = Criteria(2, "a");
+  Performance perf = Performance(crit, "test");
+  std::vector<std::string> crit_vect = {"a0", "a1"};
+  EXPECT_EQ(perf.getCriterionIds(), crit_vect);
 }
 
 TEST(TestPerformance, TestAllInstancesDestroyed) {
