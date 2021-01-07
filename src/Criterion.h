@@ -48,7 +48,6 @@ public:
    *
    * @return name
    */
-
   int getDirection() const;
 
   /**
