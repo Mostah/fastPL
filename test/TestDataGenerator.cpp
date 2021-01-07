@@ -10,7 +10,6 @@
 TEST(TestDataGenerator, TestDummy) {
   std::ofstream file;
   file.open("../data/test.txt");
-  std::cout << file.is_open();
   file
       << "Please writr this text to a file.\n this text is written using C++\n";
   file.close();

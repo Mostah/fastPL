@@ -1,7 +1,6 @@
 #include "Criteria.h"
 #include "Criterion.h"
 #include "utils.h"
-#include "utils2.h"
 #include <algorithm>
 #include <iostream>
 #include <numeric>
