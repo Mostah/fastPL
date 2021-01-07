@@ -1,14 +1,32 @@
 #include "../src/DataGenerator.h"
 #include "../src/utils.h"
 #include "gtest/gtest.h"
+#include <fstream>
 #include <iostream>
 #include <sstream>
 #include <tuple>
 #include <utility>
 
+TEST(TestDataGenerator, TestDummy) {
+  std::ofstream file;
+  file.open("../data/test.txt");
+  std::cout << file.is_open();
+  file
+      << "Please writr this text to a file.\n this text is written using C++\n";
+  file.close();
+  bool u = fileExists("../data/test.txt");
+  std::ostringstream os2;
+  os2 << u;
+  EXPECT_EQ(os2.str(), "1");
+}
+
 TEST(TestDataGenerator, TestDatasetGenerator) {
   DataGenerator data = DataGenerator();
   data.datasetGenerator(3, 20, 4, "test.xml", 1);
+  bool u = fileExists("../data/test.xml");
+  std::ostringstream os2;
+  os2 << u;
+  EXPECT_EQ(os2.str(), "1");
 }
 
 TEST(TestDataGenerator, TestDatasetGeneratorNotOverwrite) {
@@ -29,11 +47,19 @@ TEST(TestDataGenerator, TestDatasetGeneratorNotOverwrite) {
 TEST(TestDataGenerator, TestDatasetGeneratorOverwrite) {
   DataGenerator data = DataGenerator();
   data.datasetGenerator(3, 20, 4, "test.xml", 1, 0);
+  bool u = fileExists("../data/test.xml");
+  std::ostringstream os2;
+  os2 << u;
+  EXPECT_EQ(os2.str(), "1");
 }
 
 TEST(TestDataGenerator, TestModelGenerator) {
   DataGenerator data = DataGenerator();
   data.modelGenerator(2, 3, "test_model.xml", 1, 0);
+  bool u = fileExists("../data/test_model.xml");
+  std::ostringstream os2;
+  os2 << u;
+  EXPECT_EQ(os2.str(), "1");
 }
 
 TEST(TestDataGenerator, TestModelGeneratorNotOverwrite) {

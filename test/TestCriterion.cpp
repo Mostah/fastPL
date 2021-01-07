@@ -41,7 +41,7 @@ TEST(TestCriterion, TestRandomWeightGeneration) {
   crit.getRandomCriterionWeight(0);
   std::ostringstream os;
   os << crit;
-  EXPECT_EQ(os.str(), "Criterion(id : crit1, direction : +, weight : 0.93)");
+  EXPECT_EQ(os.str(), "Criterion(id : crit1, direction : +, weight : 0.383)");
 }
 
 TEST(TestCriterion, TestAllCriterionInstancesDestroyed) {

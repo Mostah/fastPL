@@ -3,9 +3,8 @@
 
 // will be using pugiXML for parsing and generating
 // git clone https://github.com/zeux/pugixml.git
-// to fix error You can fix this by editing the file called
-// pugixml/src/pugiconfig.hpp and uncommenting the line here: Uncomment this to
-// switch to header-only version #define PUGIXML_HEADER_ONLY
+// forked repo and uncomment in pugixml/src/pugiconfig.hpp
+// line 48 #define PUGIXML_HEADER_ONLY
 
 #include "../extsrc/pugixml/src/pugixml.hpp"
 #include "AtomicMCDAObject.h"
