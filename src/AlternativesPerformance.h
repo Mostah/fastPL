@@ -70,6 +70,14 @@ public:
   std::map<std::string, std::string> getAlternativesAssignments() const;
 
   /**
+   * setAlternativesPerformanceMap getter of the alternatives assignments
+   *
+   * @param alt_assignment assignment map
+   */
+  void
+  setAlternativesAssignments(std::map<std::string, std::string> alt_assignment);
+
+  /**
    * getAlternative getter of the assignment of one specified alternative
    *
    * @param altName name of the alternative of which the assignment
@@ -77,6 +85,14 @@ public:
    * @return assignment (=categoryId) of the alternative
    */
   std::string getAlternativeAssignment(std::string altName) const;
+
+  /**
+   * setAlternative getter of the assignment of one specified alternative
+   *
+   * @param altName name of the alternative the category will be assigned to
+   * @param catName name of the category to assign
+   */
+  void setAlternativeAssignment(std::string altName, std::string catName);
 
 private:
   // Hashmap: key = Alternative Name, value = Category Name

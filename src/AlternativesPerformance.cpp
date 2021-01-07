@@ -15,25 +15,15 @@ AlternativesPerformance::AlternativesPerformance(
       alt_assignment_[altName] = "";
     }
   } else {
-    // Check if the alternatives in the given map are in the performance table
-    auto it = alt_assignment.begin();
+    // Check if the alternatives are in the performance table
     for (std::pair<std::string, std::string> element : alt_assignment) {
-      std::string alternative_name = element.first;
-      bool alt_in_table = false;
-      for (std::vector<Perf> p : pt_) {
-        if (p[0].getName() == alternative_name) {
-          alt_in_table = true;
-        }
-      }
-      if (alt_in_table == false) {
+      if (this->findAlt(element.first) == false) {
         throw std::invalid_argument(
             "The alternatives in the map should be present "
             "in the performance table.");
       }
-      if (alt_in_table == true) {
-        alt_assignment_ = alt_assignment;
-      }
     }
+    alt_assignment_ = alt_assignment;
   }
 }
 
@@ -51,25 +41,15 @@ AlternativesPerformance::AlternativesPerformance(
       alt_assignment_[altName] = "";
     }
   } else {
-    // Check if the alternatives in the given map are in the performance table
-    auto it = alt_assignment.begin();
+    // Check if the alternatives are in the performance table
     for (std::pair<std::string, std::string> element : alt_assignment) {
-      std::string alternative_name = element.first;
-      bool alt_in_table = false;
-      for (std::vector<Perf> p : pt_) {
-        if (p[0].getName() == alternative_name) {
-          alt_in_table = true;
-        }
-      }
-      if (alt_in_table == false) {
+      if (this->findAlt(element.first) == false) {
         throw std::invalid_argument(
             "The alternatives in the map should be present "
             "in the performance table.");
       }
-      if (alt_in_table == true) {
-        alt_assignment_ = alt_assignment;
-      }
     }
+    alt_assignment_ = alt_assignment;
   }
 }
 
@@ -87,25 +67,15 @@ AlternativesPerformance::AlternativesPerformance(
       alt_assignment_[altName] = "";
     }
   } else {
-    // Check if the alternatives in the given map are in the performance table
-    auto it = alt_assignment.begin();
+    // Check if the alternatives are in the performance table
     for (std::pair<std::string, std::string> element : alt_assignment) {
-      std::string alternative_name = element.first;
-      bool alt_in_table = false;
-      for (std::vector<Perf> p : pt_) {
-        if (p[0].getName() == alternative_name) {
-          alt_in_table = true;
-        }
-      }
-      if (alt_in_table == false) {
+      if (this->findAlt(element.first) == false) {
         throw std::invalid_argument(
             "The alternatives in the map should be present "
             "in the performance table.");
       }
-      if (alt_in_table == true) {
-        alt_assignment_ = alt_assignment;
-      }
     }
+    alt_assignment_ = alt_assignment;
   }
 }
 
@@ -143,7 +113,30 @@ AlternativesPerformance::getAlternativesAssignments() const {
   return alt_assignment_;
 }
 
+void AlternativesPerformance::setAlternativesAssignments(
+    std::map<std::string, std::string> alt_assignment) {
+  // Check if the alternatives are in the performance table
+  for (std::pair<std::string, std::string> element : alt_assignment) {
+    if (this->findAlt(element.first) == false) {
+      throw std::invalid_argument(
+          "The alternatives in the map should be present "
+          "in the performance table.");
+    }
+  }
+  alt_assignment_ = alt_assignment;
+}
+
 std::string
 AlternativesPerformance::getAlternativeAssignment(std::string altName) const {
   return alt_assignment_.find(altName)->second;
+}
+
+void AlternativesPerformance::setAlternativeAssignment(std::string altName,
+                                                       std::string catName) {
+  if (this->findAlt(altName) == true) {
+    alt_assignment_[altName] = catName;
+  } else {
+    throw std::invalid_argument("The alternatives in the map should be present "
+                                "in the performance table.");
+  }
 }

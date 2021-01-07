@@ -180,6 +180,89 @@ TEST(TestAlternativesPerformance, TestCopyConstructor) {
   EXPECT_EQ(os.str(), os2.str());
 }
 
+TEST(TestAlternativesPerformance, TestGetAssignmentMap) {
+  Criteria crit = Criteria(2, "a");
+  std::map<std::string, std::string> map =
+      std::map<std::string, std::string>{{"test0", "cat0"}, {"test1", "cat1"}};
+  AlternativesPerformance alt_perf =
+      AlternativesPerformance(2, crit, "test", map);
+
+  std::map<std::string, std::string> map2 =
+      alt_perf.getAlternativesAssignments();
+
+  EXPECT_EQ(map2, map);
+}
+
+TEST(TestAlternativesPerformance, TestSetAssignmentMap) {
+  Criteria crit = Criteria(2, "a");
+  AlternativesPerformance alt_perf = AlternativesPerformance(2, crit, "test");
+  std::map<std::string, std::string> map =
+      std::map<std::string, std::string>{{"test0", "cat0"}, {"test1", "cat1"}};
+
+  alt_perf.setAlternativesAssignments(map);
+
+  EXPECT_EQ(map, alt_perf.getAlternativesAssignments());
+}
+
+TEST(TestAlternativesPerformance, TestSetAssignmentMapErrors) {
+  Criteria crit = Criteria(2, "a");
+  AlternativesPerformance alt_perf = AlternativesPerformance(2, crit, "test");
+  std::map<std::string, std::string> map = std::map<std::string, std::string>{
+      {"testerror0", "cat0"}, {"test1", "cat1"}};
+
+  try {
+    alt_perf.setAlternativesAssignments(map);
+    FAIL() << "should have thrown invalid argument.";
+  } catch (std::invalid_argument const &err) {
+    EXPECT_EQ(err.what(), std::string("The alternatives in the map should be "
+                                      "present in the performance table."));
+  } catch (...) {
+    FAIL() << "should have thrown invalid argument.";
+  }
+}
+
+TEST(TestAlternativesPerformance, TestGetAlternativeAssignment) {
+  Criteria crit = Criteria(2, "a");
+  std::map<std::string, std::string> map =
+      std::map<std::string, std::string>{{"test0", "cat0"}, {"test1", "cat1"}};
+  AlternativesPerformance alt_perf =
+      AlternativesPerformance(2, crit, "test", map);
+
+  std::string alt_test0_assignment = alt_perf.getAlternativeAssignment("test0");
+
+  EXPECT_EQ(alt_test0_assignment, "cat0");
+}
+
+TEST(TestAlternativesPerformance, TestSetAlternativeAssignment) {
+  Criteria crit = Criteria(2, "a");
+  std::map<std::string, std::string> map =
+      std::map<std::string, std::string>{{"test0", "cat0"}, {"test1", "cat1"}};
+  AlternativesPerformance alt_perf =
+      AlternativesPerformance(2, crit, "test", map);
+
+  alt_perf.setAlternativeAssignment("test0", "cat5");
+
+  EXPECT_EQ(alt_perf.getAlternativeAssignment("test0"), "cat5");
+}
+
+TEST(TestAlternativesPerformance, TestSetAlternativeAssignmentError) {
+  Criteria crit = Criteria(2, "a");
+  std::map<std::string, std::string> map =
+      std::map<std::string, std::string>{{"test0", "cat0"}, {"test1", "cat1"}};
+  AlternativesPerformance alt_perf =
+      AlternativesPerformance(2, crit, "test", map);
+
+  try {
+    alt_perf.setAlternativeAssignment("testerror0", "cat5");
+    FAIL() << "should have thrown invalid argument.";
+  } catch (std::invalid_argument const &err) {
+    EXPECT_EQ(err.what(), std::string("The alternatives in the map should be "
+                                      "present in the performance table."));
+  } catch (...) {
+    FAIL() << "should have thrown invalid argument.";
+  }
+}
+
 TEST(TestAlternativesPerformance, TestAllInstancesDestroyed) {
   EXPECT_EQ(AtomicMCDAObject::get_nb_instances(), 0);
 }
