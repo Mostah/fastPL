@@ -12,19 +12,22 @@ public:
   /**
    * Performance standard constructor
    *
-   * @param id Id name of the performance (ex: name of alternative or profile)
    * @param criteria Criterion object to base performance over
+   * @param id Id name of the performance (ex: name of alternative or profile)
+   *
    */
-  Performance(std::string id, Criteria &criteria);
+  Performance(Criteria &criteria, std::string id = "alt");
 
   /**
    * Performance standard constructor
    *
-   * @param id Id name of the performance (ex: name of alternative or profile)
    * @param criteria Criterion object to base performance over
    * @param performance vector of performance (float) to set
+   * @param id Id name of the performance (ex: name of alternative or profile)
+   *
    */
-  Performance(std::string id, Criteria &criteria, std::vector<float> &p);
+  Performance(Criteria &criteria, std::vector<float> &p,
+              std::string id = "alt");
 
   /**
    * Performance standard constructor
@@ -64,6 +67,14 @@ public:
    * @param id
    */
   void setId(std::string id);
+
+  /**
+   * getCriteria get of the criteria name used in the performance
+   *
+   * @return crit_vect string vector containing the criterion names used in this
+   * performance.
+   */
+  std::vector<std::string> getCriterionIds();
 
   /**
    * Overloading [] operator for Performance
