@@ -21,7 +21,7 @@ jobs:
       # instead of checking out, restore workspace (will merge all parallel containers from previous job)
       - attach_workspace:
           at: ./
-      - run: ls
+      - run: cd data; ls; touch t.txt;
       - run: cd build; ./Test
 
   doc_generation:
