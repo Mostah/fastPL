@@ -35,7 +35,6 @@ inline float getRandomUniformNumberBis(bool changeSeed = 1) {
     std::this_thread::sleep_for(std::chrono::milliseconds(750));
     return (float)(rand() % 1000) / 2000 + 0.5;
   } else {
-    srand(1);
     return (float)(rand() % 1000) / 2000 + 0.5;
   }
 }
