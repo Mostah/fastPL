@@ -1,4 +1,4 @@
-#include "TestAlternativePerformance.cpp"
+#include "TestAlternativesPerformance.cpp"
 #include "TestCategories.cpp"
 #include "TestCategory.cpp"
 #include "TestCriteria.cpp"
