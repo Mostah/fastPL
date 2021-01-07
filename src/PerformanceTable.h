@@ -143,6 +143,13 @@ public:
    */
   std::vector<Perf> getWorstPerfByCrit(Criteria crits);
 
+  /**
+   * findAlt return true if the alternative is in the performance table
+   *
+   * @param altName Alternative to lookup
+   *
+   * @return true if found, false if nots
+   */
   bool findAlt(std::string altName);
 
 protected:
