@@ -1,6 +1,7 @@
 #ifndef UTILS2_H
 #define UTILS2_H
 
+#include <algorithm>
 #include <chrono>
 #include <stdio.h>
 #include <stdlib.h>

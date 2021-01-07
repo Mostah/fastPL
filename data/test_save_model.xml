@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<Root />
+<model>
+  <modelName>model_crit2_cat2</modelName>
+  <criteria>2</criteria>
+  <categories>2</categories>
+  <lambda>0.100000</lambda>
+  <a0>
+    <cat0>0.755605</cat0>
+    <cat1>0.000008</cat1>
+    <weight>0.500000</weight>
+    <direction>1</direction>
+  </a0>
+  <a1>
+    <cat0>0.458650</cat0>
+    <cat1>0.131538</cat1>
+    <weight>0.500000</weight>
+    <direction>1</direction>
+  </a1>
+</model>

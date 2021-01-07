@@ -9,8 +9,11 @@
 
 #include "../extsrc/pugixml/src/pugixml.hpp"
 #include "AtomicMCDAObject.h"
+#include "Criterion.h"
 #include "Performance.h"
+#include "PerformanceTable.h"
 #include <iostream>
+#include <tuple>
 
 class DataGenerator : public AtomicMCDAObject {
 public:
@@ -61,11 +64,34 @@ public:
   // void saveDataset(new type, std::string datasetName);
 
   /**
+   * Get model data from xml file
+   *
+   * @param fileName filename
+   *
+   * @return object to use algorithms
+   *
+   */
+  std::tuple<float, Criteria, PerformanceTable> loadModel(std::string fileName);
+
+  /**
+   * Save model data in xml file name filename
+   *
+   * @param fileName filename
+   *
+   * @return save file in xml format
+   *
+   */
+  void saveModel(std::string fileName, float lambda, Criteria criteria,
+                 PerformanceTable pt, bool overwrite = 1,
+                 std::string modelName = "");
+
+  /**
    * Get an xml_document type for preocessing the xml files
    *
    * @param fileName filename
    *
-   * @return pugi::xml_document object that hold info on the xml filename file
+   * @return pugi::xml_document object that hold info on the xml filename
+   * file
    */
   pugi::xml_document openXmlFile(std::string filename);
 

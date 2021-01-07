@@ -3,6 +3,7 @@
 #include "gtest/gtest.h"
 #include <iostream>
 #include <sstream>
+#include <tuple>
 #include <utility>
 
 TEST(TestDataGenerator, TestDatasetGenerator) {
@@ -79,6 +80,77 @@ TEST(TestDataGenerator, TestXmlFileType3) {
   }
 }
 
+TEST(TestDataGenerator, TestLoadModel) {
+  DataGenerator data = DataGenerator();
+  std::tuple<float, Criteria, PerformanceTable> t =
+      data.loadModel("test_model.xml");
+  float lambda = std::get<0>(t);
+  Criteria crit = std::get<1>(t);
+  PerformanceTable pt = std::get<2>(t);
+  std::ostringstream os;
+  std::ostringstream os2;
+  std::ostringstream os3;
+  os << lambda;
+  os2 << crit;
+  os3 << pt;
+  EXPECT_EQ(os.str(), "0.9035");
+  EXPECT_EQ(os2.str(),
+            "Criteria(Criterion(id : crit0, direction : +, weight : 0.5), "
+            "Criterion(id : crit1, direction : +, weight : 0.5), )");
+  EXPECT_EQ(os3.str(),
+            "PerformanceTable(Performance(Perf( name : prof0, crit : crit0, "
+            "value : 0.93 ), Perf( name : prof0, crit : crit1, value : 0.93 ), "
+            "), Performance(Perf( name : prof1, crit : crit0, value : 0.93 ), "
+            "Perf( name : prof1, crit : crit1, value : 0.93 ), ), "
+            "Performance(Perf( name : prof2, crit : crit0, value : 0.93 ), "
+            "Perf( name : prof2, crit : crit1, value : 0.93 ), ), )");
+}
+
+TEST(TestDataGenerator, TestSaveModelWrongNumberCriteria) {
+  DataGenerator data = DataGenerator();
+  Criteria crit = Criteria(2, "a");
+  float lambda = 0.1;
+  PerformanceTable perf_table = PerformanceTable(3, crit, "test");
+  try {
+    data.saveModel("test_save_model.xml", lambda, crit, perf_table, 1);
+    FAIL() << "should have throw invalid_argument error.";
+  } catch (std::invalid_argument const &err) {
+    EXPECT_EQ(err.what(),
+              std::string(" Number of criteria and the number and the length "
+                          "of the performance of the fictive alternative (ie "
+                          "profile performance) does not match"));
+  } catch (...) {
+    FAIL() << "should have throw invalid_argument error.";
+  }
+}
+
+TEST(TestDataGenerator, TestSaveModel) {
+  DataGenerator data = DataGenerator();
+  Criteria crit = Criteria(2, "a");
+  crit.generateRandomCriteriaWeights(0);
+  float lambda = 0.1;
+  PerformanceTable perf_table = PerformanceTable(2, crit, "test");
+  perf_table.generateRandomPerfValues(1);
+  data.saveModel("test_save_model.xml", lambda, crit, perf_table, 1);
+}
+
+TEST(TestDataGenerator, TestSaveModelCanttOverwrite) {
+  DataGenerator data = DataGenerator();
+  Criteria crit = Criteria(2, "a");
+  float lambda = 0.1;
+  PerformanceTable perf_table = PerformanceTable(2, crit, "test");
+  try {
+    data.saveModel("test_save_model.xml", lambda, crit, perf_table, 0);
+    FAIL() << "should have throw invalid_argument error.";
+  } catch (std::invalid_argument const &err) {
+    EXPECT_EQ(err.what(),
+              std::string("Such a default xml generate (or not) filename "
+                          "already exists and you chose not to overwrite it"));
+  } catch (...) {
+    FAIL() << "should have throw invalid_argument error.";
+  }
+}
+
 TEST(TestDataGenerator, TestNumberOfCriteriaForModels) {
   DataGenerator data = DataGenerator();
   int crit = data.getNumberOfCriteria("test_model.xml");
@@ -129,8 +201,7 @@ TEST(TestDataGenerator, TestGetLambdaForModel) {
   float lambda = data.getThresholdValue("test_model.xml");
   std::ostringstream os2;
   os2 << lambda;
-  // with no seed ill let it pass
-  // EXPECT_EQ(os2.str(), std::to_string(lambda));
+  EXPECT_EQ(os2.str(), "0.9035");
 }
 
 TEST(TestDataGenerator, TestGetNumerOfAlternativesForDataset) {
