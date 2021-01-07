@@ -4,11 +4,11 @@ project(fastPL) #name of your project
 
 add_subdirectory(extsrc/googletest) # add googletest subdirectory
 
-set(PUGIXML_HEADER_FILE ../extsrc/pugixml/src/pugiconfig.hpp)
-set(OTHER  "s@\/\/ #define PUGIXML_HEADER_ONLY@#define PUGIXML_HEADER_ONLY@")
-
+# Not using anymore since forked pugixml git
+# set(PUGIXML_HEADER_FILE ../extsrc/pugixml/src/pugiconfig.hpp)
+# set(OTHER  "s@\/\/ #define PUGIXML_HEADER_ONLY@#define PUGIXML_HEADER_ONLY@")
 # uncommenting relevant line of pugixml package, adding the executable
-execute_process(COMMAND sed -i "" ${OTHER} ${PUGIXML_HEADER_FILE} )
+# execute_process(COMMAND sed -i "" ${OTHER} ${PUGIXML_HEADER_FILE} )
 
 set(Headers 
     src/utils.h
