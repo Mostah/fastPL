@@ -25,7 +25,8 @@ public:
    * @param nb_of_perfs Number of performance
    * @param crits Criteria to evaluate performance over
    */
-  PerformanceTable(int nb_of_perfs, Criteria crits, std::string prefix = "alt");
+  PerformanceTable(int nb_of_perfs, Criteria &crits,
+                   std::string prefix = "alt");
 
   /**
    * Performances constructor by copy
@@ -130,7 +131,7 @@ public:
    *
    * @return best_pv
    */
-  std::vector<Perf> getBestPerfByCrit(Criteria crits);
+  std::vector<Perf> getBestPerfByCrit(Criteria &crits);
 
   /**
    * getWorstPerfByRow return a perf vector with the worst
@@ -140,7 +141,7 @@ public:
    *
    * @return worst_pv
    */
-  std::vector<Perf> getWorstPerfByCrit(Criteria crits);
+  std::vector<Perf> getWorstPerfByCrit(Criteria &crits);
 
 private:
   std::vector<std::vector<Perf>> pt_;

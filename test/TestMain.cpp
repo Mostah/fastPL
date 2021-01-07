@@ -2,6 +2,7 @@
 #include "TestCategory.cpp"
 #include "TestCriteria.cpp"
 #include "TestCriterion.cpp"
+#include "TestMRSort.cpp"
 #include "TestPerf.cpp"
 #include "TestPerformance.cpp"
 #include "TestPerformanceTable.cpp"
