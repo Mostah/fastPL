@@ -7,18 +7,6 @@
 #include <tuple>
 #include <utility>
 
-TEST(TestDataGenerator, TestDummy) {
-  std::ofstream file;
-  file.open("../data/test.txt");
-  file
-      << "Please writr this text to a file.\n this text is written using C++\n";
-  file.close();
-  bool u = fileExists("../data/test.txt");
-  std::ostringstream os2;
-  os2 << u;
-  EXPECT_EQ(os2.str(), "1");
-}
-
 /**
 TEST(TestDataGenerator, TestDatasetGenerator) {
   DataGenerator data = DataGenerator();
@@ -159,8 +147,11 @@ TEST(TestDataGenerator, TestSaveModel) {
   crit.generateRandomCriteriaWeights(0);
   float lambda = 0.1;
   PerformanceTable perf_table = PerformanceTable(2, crit, "test");
-  perf_table.generateRandomPerfValues(1);
   data.saveModel("test_save_model.xml", lambda, crit, perf_table, 1);
+  bool u = fileExists("../data/test_save_model.xml");
+  std::ostringstream os2;
+  os2 << u;
+  EXPECT_EQ(os2.str(), "1");
 }
 
 TEST(TestDataGenerator, TestSaveModelCanttOverwrite) {
@@ -178,6 +169,7 @@ TEST(TestDataGenerator, TestSaveModelCanttOverwrite) {
   } catch (...) {
     FAIL() << "should have throw invalid_argument error.";
   }
+  std::remove("../data/test_save_model.xml");
 }
 
 TEST(TestDataGenerator, TestNumberOfCriteriaForModels) {
