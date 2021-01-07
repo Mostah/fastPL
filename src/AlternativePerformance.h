@@ -5,6 +5,7 @@
 #include "Performance.h"
 #include "PerformanceTable.h"
 #include <iostream>
+#include <iterator>
 #include <map>
 #include <ostream>
 #include <string.h>
@@ -15,11 +16,11 @@ public:
   /**
    * AlternativePerformance standard constructor (PerformanceTable surcharged)
    *
-   * @param perf_vect Vector of performance
    * @param alt_assignment Map of alternative assignements to categories
+   * @param perf_vect Vector of performance
    */
-  AlternativePerformance(std::vector<Performance> &perf_vect,
-                         std::map<std::string, std::string> alt_assignment);
+  AlternativePerformance(std::map<std::string, std::string> alt_assignment,
+                         std::vector<Performance> &perf_vect);
 
   /**
    * AlternativePerformance standard constructor without map (PerformanceTable
@@ -33,12 +34,14 @@ public:
    * AltAssignemnt constructor without perf values but set of criteria
    * to evaluate performance over (PerformanceTable surcharged)
    *
+   * @param alt_assignment Map of alternative to the assigned category
    * @param nb_of_perfs Number of performance
    * @param crits Criteria to evaluate performance over
-   * @param alt_assignment Map of alternative to the assigned category
+   * @param prefix Prefix to use for the name of each Performance createds
    */
-  AlternativePerformance(int nb_of_perfs, Criteria &crits,
-                         std::map<std::string, std::string> alt_assignment);
+  AlternativePerformance(std::map<std::string, std::string> alt_assignment,
+                         int nb_of_perfs, Criteria &crits,
+                         std::string prefix = "alt");
 
   /**
    * AltAssignemnt constructor without perf values but set of criteria
@@ -46,18 +49,19 @@ public:
    *
    * @param nb_of_perfs Number of performance
    * @param crits Criteria to evaluate performance over
-   * @param alt_assignment Map of alternative to the assigned category
+   * @param prefix Prefix to use for the name of each Performance created
    */
-  AlternativePerformance(int nb_of_perfs, Criteria &crits);
+  AlternativePerformance(int nb_of_perfs, Criteria &crits,
+                         std::string prefix = "alt");
 
   /**
    * AlternativePerformance constructor using an existing performance table
    *
-   * @param perf_table Performance table to copy
    * @param alt_assignment Map of alternative assignements to categories
+   * @param perf_table Performance table to copy
    */
-  AlternativePerformance(const PerformanceTable &perf_table,
-                         std::map<std::string, std::string> alt_assignment);
+  AlternativePerformance(std::map<std::string, std::string> alt_assignment,
+                         const PerformanceTable &perf_table);
 
   /**
    * AlternativePerformance constructor using an existing performance table
@@ -75,6 +79,9 @@ public:
   AlternativePerformance(const AlternativePerformance &alt);
 
   ~AlternativePerformance();
+
+  friend std::ostream &operator<<(std::ostream &out,
+                                  const AlternativePerformance &alt);
 
   /**
    * getAlternativePerformanceMap getter of the alternatives assignments
