@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
 
 TEST(TestDataGenerator, TestDummy) {
   std::ofstream file;
-  file.open("../data/test.txt");
+  file.open("./data/test.txt");
   std::cout << file.is_open() << std::endl;
   file
       << "Please writr this text to a file.\n this text is written using C++\n";
