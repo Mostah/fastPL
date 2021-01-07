@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.12) # version can be different
 project(fastPL) #name of your project
 
 add_subdirectory(extsrc/googletest) # add googletest subdirectory
+add_subdirectory(extsrc/pugixml) # add googletest subdirectory
 
 # Not using anymore since forked pugixml git
 # set(PUGIXML_HEADER_FILE ../extsrc/pugixml/src/pugiconfig.hpp)
@@ -42,4 +43,5 @@ add_library(Core ${Headers} ${Sources})   # build a library with our header and 
 add_executable(Test test/TestMain.cpp) # add the executable
 
 target_link_libraries(Test Core gtest) # link librairies to the executable
+target_link_libraries(Test Core pugixml) # link librairies to the executable
 
