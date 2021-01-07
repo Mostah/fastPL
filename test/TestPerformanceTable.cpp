@@ -10,11 +10,12 @@ TEST(TestPerformanceTable, TestBaseConstructor) {
   PerformanceTable perf_table = PerformanceTable(2, crit, "test");
   std::ostringstream os;
   os << perf_table;
-  EXPECT_EQ(os.str(),
-            "PerformanceTable(Performance(Perf( name : test0, crit : a0, value "
-            ": 0 ), Perf( name : test0, crit : a1, value : 0 ), ), "
-            "Performance(Perf( name : test1, crit : a0, value : 0 ), Perf( "
-            "name : test1, crit : a1, value : 0 ), ), )");
+  EXPECT_EQ(
+      os.str(),
+      "PerformanceTable[ Performance: Perf( name : test0, crit : a0, value "
+      ": 0 ) Perf( name : test0, crit : a1, value : 0 ) | "
+      "Performance: Perf( name : test1, crit : a0, value : 0 ) Perf( "
+      "name : test1, crit : a1, value : 0 ) | ]");
   EXPECT_EQ(perf_table.getMode(), "alt");
 }
 
@@ -27,11 +28,12 @@ TEST(TestPerformanceTable, TestConstructorWithPerfVect) {
 
   std::ostringstream os;
   os << perf_table;
-  EXPECT_EQ(os.str(),
-            "PerformanceTable(Performance(Perf( name : test0, crit : a0, value "
-            ": 0 ), Perf( name : test0, crit : a1, value : 0 ), ), "
-            "Performance(Perf( name : test1, crit : a0, value : 0 ), Perf( "
-            "name : test1, crit : a1, value : 0 ), ), )");
+  EXPECT_EQ(
+      os.str(),
+      "PerformanceTable[ Performance: Perf( name : test0, crit : a0, value "
+      ": 0 ) Perf( name : test0, crit : a1, value : 0 ) | "
+      "Performance: Perf( name : test1, crit : a0, value : 0 ) Perf( "
+      "name : test1, crit : a1, value : 0 ) | ]");
   EXPECT_EQ(perf_table.getMode(), "alt");
 }
 
@@ -104,10 +106,10 @@ TEST(TestPerformanceTable, TestConstructorByCopy) {
   os << perf_table2;
   EXPECT_EQ(
       os.str(),
-      "PerformanceTable(Performance(Perf( name : test0, crit : a0, value : 0 "
-      "), Perf( name : test0, crit : a1, value : 0 ), ), Performance(Perf( "
-      "name : test1, crit : a0, value : 0 ), Perf( name : test1, crit : a1, "
-      "value : 0 ), ), )");
+      "PerformanceTable[ Performance: Perf( name : test0, crit : a0, value "
+      ": 0 ) Perf( name : test0, crit : a1, value : 0 ) | "
+      "Performance: Perf( name : test1, crit : a0, value : 0 ) Perf( "
+      "name : test1, crit : a1, value : 0 ) | ]");
   EXPECT_EQ(perf_table.getMode(), "alt");
 }
 
@@ -176,23 +178,21 @@ TEST(TestPerformanceTable, TestChangeMode) {
   perf_table.changeMode("crit");
   std::ostringstream os;
   os << perf_table;
-  EXPECT_EQ(
-      os.str(),
-      "PerformanceTable(Performance(Perf( name : test0, crit : a0, value : 0 "
-      "), Perf( name : test1, crit : a0, value : 0 ), ), Performance(Perf( "
-      "name : test0, crit : a1, value : 0 ), Perf( name : test1, crit : a1, "
-      "value : 0 ), ), )");
+  EXPECT_EQ(os.str(),
+            "PerformanceTable[ Performance: Perf( name : test0, crit : a0, "
+            "value : 0 ) Perf( name : test1, crit : a0, value : 0 ) | "
+            "Performance: Perf( name : test0, crit : a1, value : 0 ) Perf( "
+            "name : test1, crit : a1, value : 0 ) | ]");
   EXPECT_EQ(perf_table.getMode(), "crit");
 
   perf_table.changeMode("alt");
   std::ostringstream os2;
   os2 << perf_table;
-  EXPECT_EQ(
-      os2.str(),
-      "PerformanceTable(Performance(Perf( name : test0, crit : a0, value : 0 "
-      "), Perf( name : test0, crit : a1, value : 0 ), ), Performance(Perf( "
-      "name : test1, crit : a0, value : 0 ), Perf( name : test1, crit : a1, "
-      "value : 0 ), ), )");
+  EXPECT_EQ(os2.str(),
+            "PerformanceTable[ Performance: Perf( name : test0, crit : a0, "
+            "value : 0 ) Perf( name : test0, crit : a1, value : 0 ) | "
+            "Performance: Perf( name : test1, crit : a0, value : 0 ) Perf( "
+            "name : test1, crit : a1, value : 0 ) | ]");
   EXPECT_EQ(perf_table.getMode(), "alt");
 
   try {
@@ -221,10 +221,10 @@ TEST(TestPerformanceTable, TestSort) {
   os << perf_table;
   EXPECT_EQ(
       os.str(),
-      "PerformanceTable(Performance(Perf( name : test0, crit : a1, value : 0.4 "
-      "), Perf( name : test0, crit : a0, value : 0.8 ), ), Performance(Perf( "
-      "name : test1, crit : a0, value : 0.2 ), Perf( name : test1, crit : a1, "
-      "value : 0.6 ), ), )");
+      "PerformanceTable[ Performance: Perf( name : test0, crit : a1, value "
+      ": 0.4 ) Perf( name : test0, crit : a0, value : 0.8 ) | "
+      "Performance: Perf( name : test1, crit : a0, value : 0.2 ) Perf( "
+      "name : test1, crit : a1, value : 0.6 ) | ]");
   EXPECT_EQ(perf_table.getMode(), "alt");
   EXPECT_EQ(perf_table.isSorted(), true);
 
@@ -234,10 +234,10 @@ TEST(TestPerformanceTable, TestSort) {
   os2 << perf_table;
   EXPECT_EQ(
       os2.str(),
-      "PerformanceTable(Performance(Perf( name : test1, crit : a0, value : 0.2 "
-      "), Perf( name : test0, crit : a0, value : 0.8 ), ), Performance(Perf( "
-      "name : test0, crit : a1, value : 0.4 ), Perf( name : test1, crit : a1, "
-      "value : 0.6 ), ), )");
+      "PerformanceTable[ Performance: Perf( name : test1, crit : a0, value "
+      ": 0.2 ) Perf( name : test0, crit : a0, value : 0.8 ) | "
+      "Performance: Perf( name : test0, crit : a1, value : 0.4 ) Perf( "
+      "name : test1, crit : a1, value : 0.6 ) | ]");
   EXPECT_EQ(perf_table.getMode(), "crit");
   EXPECT_EQ(perf_table.isSorted(), true);
 }
