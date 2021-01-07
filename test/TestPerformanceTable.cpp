@@ -341,6 +341,19 @@ TEST(TestPerformanceTable, TestGetWorstPerfByCrit) {
                        "Perf( name : test1, crit : a1, value : 0 )]");
 }
 
+TEST(TestPerformanceTable, TestFindAlt) {
+  std::vector<Performance> perf_vect;
+  Criteria crit = Criteria(2, "a");
+  std::vector<float> given_perf0 = {0.8, 0.4};
+  std::vector<float> given_perf1 = {0.2, 0.6};
+  perf_vect.push_back(Performance(crit, given_perf0, "test0"));
+  perf_vect.push_back(Performance(crit, given_perf1, "test1"));
+  PerformanceTable perf_table = PerformanceTable(perf_vect);
+
+  EXPECT_TRUE(perf_table.findAlt("test0"));
+  EXPECT_FALSE(perf_table.findAlt("test8"));
+}
+
 TEST(TestPerformanceTable, TestAllInstancesDestroyed) {
   EXPECT_EQ(AtomicMCDAObject::get_nb_instances(), 0);
 }

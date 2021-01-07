@@ -143,6 +143,8 @@ public:
    */
   std::vector<Perf> getWorstPerfByCrit(Criteria crits);
 
+  bool findAlt(std::string altName);
+
 protected:
   std::vector<std::vector<Perf>> pt_;
 
