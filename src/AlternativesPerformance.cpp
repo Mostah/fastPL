@@ -1,21 +1,39 @@
 #include "AlternativesPerformance.h"
+#include <typeinfo>
 
 AlternativesPerformance::AlternativesPerformance(
     std::vector<Performance> &perf_vect,
     std::map<std::string, std::string> alt_assignment)
     : PerformanceTable(perf_vect) {
-  // Need to check if alt_assignment is legit
+  if (mode_ != "alt") {
+    throw std::domain_error(
+        "Performance table mode should be alt to assign default categories.");
+  }
   if (alt_assignment == std::map<std::string, std::string>{{"", ""}}) {
-    if (mode_ != "alt") {
-      throw std::domain_error(
-          "Performance table mode should be alt to assign default categories.");
-    }
     for (std::vector<Perf> pv : pt_) {
       std::string altName = pv[0].getName();
       alt_assignment_[altName] = "";
     }
   } else {
-    alt_assignment_ = alt_assignment;
+    // Check if the alternatives in the given map are in the performance table
+    auto it = alt_assignment.begin();
+    for (std::pair<std::string, std::string> element : alt_assignment) {
+      std::string alternative_name = element.first;
+      bool alt_in_table = false;
+      for (std::vector<Perf> p : pt_) {
+        if (p[0].getName() == alternative_name) {
+          alt_in_table = true;
+        }
+      }
+      if (alt_in_table == false) {
+        throw std::invalid_argument(
+            "The alternatives in the map should be present "
+            "in the performance table.");
+      }
+      if (alt_in_table == true) {
+        alt_assignment_ = alt_assignment;
+      }
+    }
   }
 }
 
@@ -23,18 +41,35 @@ AlternativesPerformance::AlternativesPerformance(
     int nb_of_perfs, Criteria &crits, std::string prefix,
     std::map<std::string, std::string> alt_assignment)
     : PerformanceTable(nb_of_perfs, crits, prefix) {
-  // Need to check if alt_assignment is legit
+  if (mode_ != "alt") {
+    throw std::domain_error(
+        "Performance table mode should be alt to assign default categories.");
+  }
   if (alt_assignment == std::map<std::string, std::string>{{"", ""}}) {
-    if (mode_ != "alt") {
-      throw std::domain_error(
-          "Performance table mode should be alt to assign default categories.");
-    }
     for (std::vector<Perf> pv : pt_) {
       std::string altName = pv[0].getName();
       alt_assignment_[altName] = "";
     }
   } else {
-    alt_assignment_ = alt_assignment;
+    // Check if the alternatives in the given map are in the performance table
+    auto it = alt_assignment.begin();
+    for (std::pair<std::string, std::string> element : alt_assignment) {
+      std::string alternative_name = element.first;
+      bool alt_in_table = false;
+      for (std::vector<Perf> p : pt_) {
+        if (p[0].getName() == alternative_name) {
+          alt_in_table = true;
+        }
+      }
+      if (alt_in_table == false) {
+        throw std::invalid_argument(
+            "The alternatives in the map should be present "
+            "in the performance table.");
+      }
+      if (alt_in_table == true) {
+        alt_assignment_ = alt_assignment;
+      }
+    }
   }
 }
 
@@ -44,22 +79,40 @@ AlternativesPerformance::AlternativesPerformance(
     : PerformanceTable(perf_table) {
   if (alt_assignment == std::map<std::string, std::string>{{"", ""}}) {
     if (mode_ != "alt") {
-      throw std::domain_error(
-          "Performance table mode should be alt to assign default categories.");
+      throw std::domain_error("Performance table mode should be alt to "
+                              "assign default categories.");
     }
     for (std::vector<Perf> pv : pt_) {
       std::string altName = pv[0].getName();
       alt_assignment_[altName] = "";
     }
   } else {
-    alt_assignment_ = alt_assignment;
+    // Check if the alternatives in the given map are in the performance table
+    auto it = alt_assignment.begin();
+    for (std::pair<std::string, std::string> element : alt_assignment) {
+      std::string alternative_name = element.first;
+      bool alt_in_table = false;
+      for (std::vector<Perf> p : pt_) {
+        if (p[0].getName() == alternative_name) {
+          alt_in_table = true;
+        }
+      }
+      if (alt_in_table == false) {
+        throw std::invalid_argument(
+            "The alternatives in the map should be present "
+            "in the performance table.");
+      }
+      if (alt_in_table == true) {
+        alt_assignment_ = alt_assignment;
+      }
+    }
   }
 }
 
 AlternativesPerformance::AlternativesPerformance(
     const AlternativesPerformance &alt)
     : PerformanceTable(alt) {
-  // How to implement the copy for PerfTable?
+  alt_assignment_ = alt.alt_assignment_;
 }
 
 AlternativesPerformance::~AlternativesPerformance() {}
