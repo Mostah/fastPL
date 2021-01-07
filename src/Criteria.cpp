@@ -80,6 +80,7 @@ float Criteria::getMaxWeight() {
   }
   return max;
 }
+
 float Criteria::getSumWeight() {
   float sum = 0;
   for (Criterion crit : criterion_vect_) {
