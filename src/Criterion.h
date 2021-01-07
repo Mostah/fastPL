@@ -78,6 +78,26 @@ public:
    */
   void getRandomCriterionWeight(bool changeSeed = 1);
 
+  /**
+   * generateDirection generator of random direction
+   * can also be used as reinitialisation for direction
+   *
+   * @param seed Optional: seed for random generation. Set to time(NULL) by
+   * default
+   *
+   */
+  void generateDirection(unsigned long int seed = time(NULL));
+
+  /**
+   * generateWeight generator of random weight
+   * can also be used as reinitialisation for weight
+   *
+   * @param seed Optional: seed for random generation. Set to time(NULL) by
+   * default
+   *
+   */
+  void generateWeight(unsigned long int seed = time(NULL));
+
 private:
   std::string id_;
   int direction_;
