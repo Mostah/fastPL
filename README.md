@@ -3,7 +3,7 @@ This work is based on Olivier Sobrie's work on preference learning algorithms (p
 
 The  objective of this repository is to translate the previous code (py-mcda) in C++ and set up the parallelisation tools needed to process a greater amount of entrypoints.
 
-# Repository structure
+# Repository structure  
 
 * [src](https://github.com/Mostah/fastPL/tree/master/src) : Sources files (headers and classes)
 

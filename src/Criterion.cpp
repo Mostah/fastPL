@@ -24,6 +24,19 @@ Criterion::Criterion(const Criterion &crit) {
   weight_ = crit.getWeight();
 }
 
+void Criterion::generateDirection(unsigned long int seed){ 
+    srand(seed);
+    if ( ((float) rand() / RAND_MAX) < 0.5){ direction_ = -1; }
+    else { direction_ = 1; }
+}
+
+void Criterion::generateWeight(unsigned long int seed){
+    srand(seed);
+    weight_ = (float) rand() / RAND_MAX ;
+}
+
+
+
 std::string Criterion::getId() const { return id_; }
 
 void Criterion::setId(std::string id) { id_ = id; }
