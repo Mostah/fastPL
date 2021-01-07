@@ -6,7 +6,7 @@
 #include <sstream>
 #include <utility>
 
-TEST(TestAlternativesPerformance, TestBaseConstructorWithoutMap) {
+TEST(TestAlternativesPerformance, TestBaseConstructorDefaultMap) {
   Criteria crit = Criteria(2, "a");
   AlternativesPerformance alt_perf = AlternativesPerformance(2, crit, "test");
   std::ostringstream os;
