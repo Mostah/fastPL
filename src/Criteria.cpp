@@ -1,14 +1,16 @@
 #include "Criteria.h"
 #include "Criterion.h"
+#include "utils.h"
 #include <algorithm>
 #include <iostream>
+#include <numeric>
 #include <string>
 #include <vector>
 
 Criteria::Criteria(std::vector<Criterion> &criterion_vect) {
   std::vector<std::string> crit_id_vect;
   for (Criterion crit : criterion_vect) {
-    // ensure there is no criterion with dupplicated name
+    // ensure there is no criterion with duplicated name
     if (std::find(crit_id_vect.begin(), crit_id_vect.end(), crit.getId()) !=
         crit_id_vect.end()) {
       throw std::invalid_argument("Each criterion must have different ids.");
@@ -80,12 +82,53 @@ float Criteria::getMaxWeight() {
   }
   return max;
 }
+
 float Criteria::getSumWeight() {
   float sum = 0;
   for (Criterion crit : criterion_vect_) {
     sum += crit.getWeight();
   }
   return sum;
+}
+
+std::vector<float> Criteria::getWeights() const {
+  std::vector<float> weights;
+  for (Criterion c : criterion_vect_) {
+    weights.push_back(c.getWeight());
+  }
+  return weights;
+}
+
+void Criteria::setWeights(std::vector<float> newWeigths) {
+  if (newWeigths.size() != criterion_vect_.size()) {
+    throw std::invalid_argument(
+        "New weight vector must have same length as Criteria ie have the same "
+        "value as the number of criteria");
+  }
+  for (int i = 0; i < criterion_vect_.size(); i++) {
+    criterion_vect_[i].setWeight(newWeigths[i]);
+  }
+}
+
+void Criteria::normalizeWeights() {
+  float sum = Criteria::getSumWeight();
+  std::vector<float> weights = Criteria::getWeights();
+  std::transform(weights.begin(), weights.end(), weights.begin(),
+                 [&sum](float &c) { return c / sum; });
+  for (int i = 0; i < weights.size(); i++) {
+    criterion_vect_[i].setWeight(weights[i]);
+  }
+}
+
+void Criteria::generateRandomCriteriaWeights(bool changeSeed) {
+  std::vector<float> weights;
+  for (int i = 0; i < criterion_vect_.size(); i++) {
+    weights.push_back(getRandomUniformNumber(changeSeed));
+  }
+  float totSum = std::accumulate(weights.begin(), weights.end(), 0.00f);
+  std::transform(weights.begin(), weights.end(), weights.begin(),
+                 [totSum](float &c) { return c / totSum; });
+  Criteria::setWeights(weights);
 }
 
 Criterion Criteria::operator[](std::string name) const {

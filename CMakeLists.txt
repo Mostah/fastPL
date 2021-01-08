@@ -5,8 +5,10 @@ project(fastPL) #name of your project
 # add external directories
 add_subdirectory(extsrc/googletest)
 add_subdirectory(extsrc/spdlog)
+add_subdirectory(extsrc/pugixml)
 
 set(Headers 
+    src/utils.h
     src/Criterion.h
     src/Criteria.h
     src/Perf.h
@@ -15,7 +17,7 @@ set(Headers
     src/AtomicMCDAObject.h
     src/Category.h
     src/Categories.h
-    src/utils.h
+    src/DataGenerator.h
     )
 
 set(Sources 
@@ -27,6 +29,7 @@ set(Sources
     src/AtomicMCDAObject.cpp
     src/Category.cpp
     src/Categories.cpp
+    src/DataGenerator.cpp
     )
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17" )
@@ -41,3 +44,5 @@ add_executable(Main src/main.cpp)
 target_link_libraries(Test Core gtest) 
 target_link_libraries(Test Core spdlog::spdlog_header_only) 
 target_link_libraries(Main Core spdlog::spdlog_header_only)
+target_link_libraries(Test Core pugixml)
+target_link_libraries(Main Core pugixml)
