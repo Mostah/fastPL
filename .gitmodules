@@ -1,3 +1,10 @@
+[submodule "extsrc/pugixml"]
+	path = extsrc/pugixml
+	url = https://github.com/thibmonsel/pugixml.git
+	
 [submodule "extsrc/googletest"]
 	path = extsrc/googletest
 	url = https://github.com/google/googletest.git
+[submodule "extsrc/spdlog"]
+	path = extsrc/spdlog
+	url = https://github.com/gabime/spdlog.git

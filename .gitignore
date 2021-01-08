@@ -55,3 +55,6 @@ _deps
 # Doxygen files
 doxygen/*
 !doxygen/CMakeLists.txt
+
+# logs
+logs/

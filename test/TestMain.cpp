@@ -2,6 +2,7 @@
 #include "types/TestCategory.cpp"
 #include "types/TestCriteria.cpp"
 #include "types/TestCriterion.cpp"
+#include "types/TestDataGenerator.cpp"
 #include "types/TestPerf.cpp"
 #include "types/TestPerformance.cpp"
 #include "types/TestPerformanceTable.cpp"
