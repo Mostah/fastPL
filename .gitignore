@@ -52,4 +52,5 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 
-#datasets
+# logs
+logs/

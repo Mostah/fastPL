@@ -2,8 +2,10 @@ cmake_minimum_required(VERSION 3.12) # version can be different
 
 project(fastPL) #name of your project
 
-add_subdirectory(extsrc/googletest) # add googletest subdirectory
-add_subdirectory(extsrc/pugixml) # add googletest subdirectory
+# add external directories
+add_subdirectory(extsrc/googletest)
+add_subdirectory(extsrc/spdlog)
+add_subdirectory(extsrc/pugixml)
 
 set(Headers 
     src/utils.h
@@ -34,8 +36,13 @@ SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17" )
 
 add_library(Core ${Headers} ${Sources})   # build a library with our header and source files
 
-add_executable(Test test/TestMain.cpp) # add the executable
+# Add executables
+add_executable(Test test/TestMain.cpp)
+add_executable(Main src/main.cpp)
 
-target_link_libraries(Test Core gtest) # link librairies to the executable
-target_link_libraries(Test Core pugixml) # link librairies to the executable
-
+# link librairies to executables
+target_link_libraries(Test Core gtest) 
+target_link_libraries(Test Core spdlog::spdlog_header_only) 
+target_link_libraries(Main Core spdlog::spdlog_header_only)
+target_link_libraries(Test Core pugixml)
+target_link_libraries(Main Core pugixml)
