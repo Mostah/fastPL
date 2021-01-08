@@ -53,7 +53,9 @@ void Criteria::setCriterionVect(std::vector<Criterion> &criterion_vect) {
   }
 }
 
-std::vector<Criterion> Criteria::getCriterionVect() { return criterion_vect_; };
+std::vector<Criterion> Criteria::getCriterionVect() const {
+  return criterion_vect_;
+};
 
 float Criteria::getMinWeight() {
   if (criterion_vect_.size() == 0) {
