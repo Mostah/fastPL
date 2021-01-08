@@ -45,7 +45,7 @@ public:
    *
    * @return criterion_vect_
    */
-  std::vector<Criterion> getCriterionVect();
+  std::vector<Criterion> getCriterionVect() const;
 
   /**
    * getMinWeight return the min criterion weight of this Criteria structure
