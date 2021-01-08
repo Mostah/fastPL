@@ -3,8 +3,10 @@ cmake_minimum_required(VERSION 3.12) # version can be different
 project(fastPL) #name of your project
 
 add_subdirectory(extsrc/googletest) # add googletest subdirectory
+add_subdirectory(extsrc/pugixml) # add googletest subdirectory
 
 set(Headers 
+    src/utils.h
     src/Criterion.h
     src/Criteria.h
     src/Perf.h
@@ -13,7 +15,7 @@ set(Headers
     src/AtomicMCDAObject.h
     src/Category.h
     src/Categories.h
-    src/utils.h
+    src/DataGenerator.h
     )
 
 set(Sources 
@@ -25,6 +27,7 @@ set(Sources
     src/AtomicMCDAObject.cpp
     src/Category.cpp
     src/Categories.cpp
+    src/DataGenerator.cpp
     )
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17" )
@@ -34,4 +37,5 @@ add_library(Core ${Headers} ${Sources})   # build a library with our header and 
 add_executable(Test test/TestMain.cpp) # add the executable
 
 target_link_libraries(Test Core gtest) # link librairies to the executable
+target_link_libraries(Test Core pugixml) # link librairies to the executable
 
