@@ -1,49 +1,37 @@
 #include "Criterion.h"
+#include "utils.h"
 #include <iostream>
 #include <string>
 
-Criterion::Criterion(std::string id) {
+Criterion::Criterion(std::string id, int direction, float weight) {
   id_ = id;
-  name_ = "";
-  direction_ = 1;
-  weight_ = 0.;
-}
-
-Criterion::Criterion(std::string id, std::string name, int direction,
-                     float weight) {
-  id_ = id;
-  name_ = name;
   direction_ = direction;
   weight_ = weight;
 }
 
 Criterion::Criterion(const Criterion &crit) {
   id_ = crit.getId();
-  name_ = crit.getName();
   direction_ = crit.getDirection();
   weight_ = crit.getWeight();
 }
 
-void Criterion::generateDirection(unsigned long int seed){ 
-    srand(seed);
-    if ( ((float) rand() / RAND_MAX) < 0.5){ direction_ = -1; }
-    else { direction_ = 1; }
+void Criterion::generateDirection(unsigned long int seed) {
+  srand(seed);
+  if (((float)rand() / RAND_MAX) < 0.5) {
+    direction_ = -1;
+  } else {
+    direction_ = 1;
+  }
 }
 
-void Criterion::generateWeight(unsigned long int seed){
-    srand(seed);
-    weight_ = (float) rand() / RAND_MAX ;
+void Criterion::generateWeight(unsigned long int seed) {
+  srand(seed);
+  weight_ = (float)rand() / RAND_MAX;
 }
-
-
 
 std::string Criterion::getId() const { return id_; }
 
 void Criterion::setId(std::string id) { id_ = id; }
-
-std::string Criterion::getName() const { return name_; }
-
-void Criterion::setName(std::string name) { name_ = name; }
 
 int Criterion::getDirection() const { return direction_; }
 
@@ -53,6 +41,14 @@ float Criterion::getWeight() const { return weight_; }
 
 void Criterion::setWeight(float weight) { weight_ = weight; }
 
+void Criterion::getRandomCriterionWeight(bool changeSeed) {
+  if (changeSeed) {
+    Criterion::setWeight(getRandomUniformNumber(1));
+  } else {
+    Criterion::setWeight(getRandomUniformNumber(0));
+  }
+}
+
 std::ostream &operator<<(std::ostream &out, const Criterion &crit) {
   std::string dir = "";
   if (crit.direction_ == 1) {
@@ -60,8 +56,8 @@ std::ostream &operator<<(std::ostream &out, const Criterion &crit) {
   } else {
     dir = "-";
   }
-  out << "Criterion(id : " << crit.id_ << ", name : " << crit.name_
-      << ", direction : " << dir << ", weight : " << crit.weight_ << ")";
+  out << "Criterion(id : " << crit.id_ << ", direction : " << dir
+      << ", weight : " << crit.weight_ << ")";
   return out;
 }
 

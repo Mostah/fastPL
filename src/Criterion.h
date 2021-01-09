@@ -13,19 +13,11 @@ public:
    * Criterion standard constructor
    *
    * @param id Identifier of the criterion
-   * @param name Friendly name of the criterion
    * @param direction Equal to -1 if criterion is to minimize, 1 if the
    * criterion is to maximize
    * @param weight Weight of the criterion
    */
-  Criterion(std::string id, std::string name, int direction, float weight);
-
-  /**
-   * Criterion constructor without specification
-   *
-   * @param id Identifier of the criterion
-   */
-  Criterion(std::string id);
+  Criterion(std::string id, int direction = 1, float weight = 0.0f);
 
   /**
    * Criterion constructor by copy
@@ -36,26 +28,6 @@ public:
 
   ~Criterion();
   friend std::ostream &operator<<(std::ostream &out, const Criterion &crit);
-
-  /**
-   * generateDirection generator of random direction
-   * can also be used as reinitialisation for direction
-   *
-   * @param seed Optional: seed for random generation. Set to time(NULL) by
-   * default
-   *
-   */
-  void generateDirection(unsigned long int seed = time(NULL));
-
-  /**
-   * generateWeight generator of random weight
-   * can also be used as reinitialisation for weight
-   *
-   * @param seed Optional: seed for random generation. Set to time(NULL) by
-   * default
-   *
-   */
-  void generateWeight(unsigned long int seed = time(NULL));
 
   /**
    * getId getter of id parameter
@@ -75,20 +47,6 @@ public:
    * getName getter of name parameter
    *
    * @return name
-   */
-  std::string getName() const;
-
-  /**
-   * setName setter of name parameter
-   *
-   * @param name
-   */
-  void setName(std::string name);
-
-  /**
-   * getDirection getter of direction parameter
-   *
-   * @return direction
    */
   int getDirection() const;
 
@@ -113,9 +71,35 @@ public:
    */
   void setWeight(float weight);
 
+  /**
+   * Randomizes the value of the weight of the Criterion object
+   *
+   * @param weight
+   */
+  void getRandomCriterionWeight(bool changeSeed = 1);
+
+  /**
+   * generateDirection generator of random direction
+   * can also be used as reinitialisation for direction
+   *
+   * @param seed Optional: seed for random generation. Set to time(NULL) by
+   * default
+   *
+   */
+  void generateDirection(unsigned long int seed = time(NULL));
+
+  /**
+   * generateWeight generator of random weight
+   * can also be used as reinitialisation for weight
+   *
+   * @param seed Optional: seed for random generation. Set to time(NULL) by
+   * default
+   *
+   */
+  void generateWeight(unsigned long int seed = time(NULL));
+
 private:
   std::string id_;
-  std::string name_;
   int direction_;
   float weight_;
 };

@@ -1,5 +1,6 @@
 #include "../src/Criteria.h"
 #include "../src/Criterion.h"
+#include "../src/utils.h"
 #include "gtest/gtest.h"
 #include <sstream>
 #include <utility>
@@ -9,17 +10,16 @@ TEST(TestCriteria, TestBaseConstructorWithNbAndId) {
   Criteria crits = Criteria(2, id);
   std::ostringstream os;
   os << crits;
-  EXPECT_EQ(os.str(), "Criteria(Criterion(id : test0, name : , "
+  EXPECT_EQ(os.str(), "Criteria(Criterion(id : test0, "
                       "direction : +, weight : 0), Criterion(id : "
-                      "test1, name : , direction : +, weight : 0), )");
+                      "test1, direction : +, weight : 0), )");
 }
 
 TEST(TestCriteria, TestCriterionVectConstructor) {
   std::string id = "test";
-  std::string name = "criterion_test";
   int direction = -1;
   float weight = 0.4;
-  Criterion crit = Criterion(id, name, direction, weight);
+  Criterion crit = Criterion(id, direction, weight);
 
   std::vector<Criterion> crit_vect;
   crit_vect.push_back(crit);
@@ -28,12 +28,12 @@ TEST(TestCriteria, TestCriterionVectConstructor) {
 
   std::ostringstream os;
   os << crits;
-  EXPECT_EQ(os.str(), "Criteria(Criterion(id : test, name : criterion_test, "
+  EXPECT_EQ(os.str(), "Criteria(Criterion(id : test, "
                       "direction : -, weight : 0.4), )");
 
   std::vector<Criterion> crit_vect_err;
-  crit_vect_err.push_back(Criterion("a", "", -1, 0.4));
-  crit_vect_err.push_back(Criterion("a", "", -1, 0));
+  crit_vect_err.push_back(Criterion("a", -1, 0.4));
+  crit_vect_err.push_back(Criterion("a", -1, 0));
 
   try {
     Criteria crits_err = Criteria(crit_vect_err);
@@ -50,17 +50,16 @@ TEST(TestCriteria, TestBaseConstructorWithNbOnly) {
   Criteria criteria1 = Criteria(2);
   std::ostringstream os;
   os << criteria1;
-  EXPECT_EQ(os.str(), "Criteria(Criterion(id : crit0, name : , "
-                      "direction : +, weight : 0), Criterion(id : crit1, name : , "
-                      "direction : +, weight : 0), )");
+  EXPECT_EQ(os.str(),
+            "Criteria(Criterion(id : crit0, direction : +, weight : 0), "
+            "Criterion(id : crit1, direction : +, weight : 0), )");
 }
 
 TEST(TestCriteria, TestCopyConstructor) {
   std::string id = "test";
-  std::string name = "criterion_test";
   int direction = -1;
   float weight = 0.4;
-  Criterion crit = Criterion(id, name, direction, weight);
+  Criterion crit = Criterion(id, direction, weight);
 
   std::vector<Criterion> crit_vect;
   crit_vect.push_back(crit);
@@ -71,16 +70,15 @@ TEST(TestCriteria, TestCopyConstructor) {
 
   std::ostringstream os;
   os << crits_copied;
-  EXPECT_EQ(os.str(), "Criteria(Criterion(id : test, name : criterion_test, "
+  EXPECT_EQ(os.str(), "Criteria(Criterion(id : test, "
                       "direction : -, weight : 0.4), )");
 }
 
 TEST(TestCriteria, TestSetCriterionVect) {
   std::string id = "test";
-  std::string name = "criterion_test";
   int direction = -1;
   float weight = 0.4;
-  Criterion crit = Criterion(id, name, direction, weight);
+  Criterion crit = Criterion(id, direction, weight);
 
   std::vector<Criterion> crit_vect;
   crit_vect.push_back(crit);
@@ -90,7 +88,7 @@ TEST(TestCriteria, TestSetCriterionVect) {
 
   std::ostringstream os;
   os << crits;
-  EXPECT_EQ(os.str(), "Criteria(Criterion(id : test, name : criterion_test, "
+  EXPECT_EQ(os.str(), "Criteria(Criterion(id : test, "
                       "direction : -, weight : 0.4), )");
 }
 
@@ -102,8 +100,8 @@ TEST(TestCriteria, TestGetMaxWeight) {
   EXPECT_FLOAT_EQ(0, max_weight);
 
   std::vector<Criterion> crit_vect1;
-  crit_vect1.push_back(Criterion("test0", "", -1, 0.4));
-  crit_vect1.push_back(Criterion("test1", "", -1, 0.6));
+  crit_vect1.push_back(Criterion("test0", -1, 0.4));
+  crit_vect1.push_back(Criterion("test1", -1, 0.6));
   crits.setCriterionVect(crit_vect1);
 
   max_weight = crits.getMaxWeight();
@@ -118,8 +116,8 @@ TEST(TestCriteria, TestGetMinWeight) {
   EXPECT_FLOAT_EQ(0, min_weight);
 
   std::vector<Criterion> crit_vect1;
-  crit_vect1.push_back(Criterion("test0", "", -1, 0.4));
-  crit_vect1.push_back(Criterion("test1", "", -1, 0.6));
+  crit_vect1.push_back(Criterion("test0", -1, 0.4));
+  crit_vect1.push_back(Criterion("test1", -1, 0.6));
   crits.setCriterionVect(crit_vect1);
 
   min_weight = crits.getMinWeight();
@@ -134,8 +132,8 @@ TEST(TestCriteria, TestGetSumWeight) {
   EXPECT_FLOAT_EQ(0, sum_weight);
 
   std::vector<Criterion> crit_vect1;
-  crit_vect1.push_back(Criterion("test0", "", -1, 0.4));
-  crit_vect1.push_back(Criterion("test1", "", -1, 0.6));
+  crit_vect1.push_back(Criterion("test0", -1, 0.4));
+  crit_vect1.push_back(Criterion("test1", -1, 0.6));
   crits.setCriterionVect(crit_vect1);
 
   sum_weight = crits.getSumWeight();
@@ -148,8 +146,7 @@ TEST(TestCriteria, TestOperatorSubscript) {
 
   std::ostringstream os;
   os << crit;
-  EXPECT_EQ(os.str(), "Criterion(id : crit0, name : , "
-                      "direction : +, weight : 0)");
+  EXPECT_EQ(os.str(), "Criterion(id : crit0, direction : +, weight : 0)");
 }
 
 TEST(TestCriteria, TestOperatorConstantSubscript) {
@@ -158,10 +155,46 @@ TEST(TestCriteria, TestOperatorConstantSubscript) {
 
   std::ostringstream os;
   os << crit;
-  EXPECT_EQ(os.str(), "Criterion(id : crit0, name : , "
-                      "direction : +, weight : 0)");
+  EXPECT_EQ(os.str(), "Criterion(id : crit0, direction : +, weight : 0)");
 }
 
+TEST(TestCriteria, TestGetWeights) {
+  const Criteria criteria1 = Criteria(2);
+  std::vector<float> w = criteria1.getWeights();
+  std::ostringstream os;
+  os << w;
+  EXPECT_EQ(os.str(), "[0,0]");
+}
+
+TEST(TestCriteria, TestSetWeights) {
+  Criteria criteria1 = Criteria(2);
+  std::vector<float> w{1.1, 1.2};
+  std::ostringstream os;
+  criteria1.setWeights(w);
+  std::vector<float> w2 = criteria1.getWeights();
+  os << w2;
+  EXPECT_EQ(os.str(), "[1.1,1.2]");
+}
+
+TEST(TestCriteria, TestNormalizeWeights) {
+  Criteria criteria1 = Criteria(4);
+  std::vector<float> w{2.2, 2.2, 2.2, 2.2};
+  criteria1.setWeights(w);
+  criteria1.normalizeWeights();
+  std::vector<float> w2 = criteria1.getWeights();
+  std::ostringstream os;
+  os << w2;
+  EXPECT_EQ(os.str(), "[0.25,0.25,0.25,0.25]");
+}
+
+TEST(TestCriteria, TestRandomWeights) {
+  Criteria criteria1 = Criteria(3);
+  criteria1.generateRandomCriteriaWeights(0);
+  std::vector<float> w = criteria1.getWeights();
+  std::ostringstream os;
+  os << w;
+  EXPECT_EQ(os.str(), "[0.333333,0.333333,0.333333]");
+}
 
 TEST(TestCriteria, TestAllInstancesDestroyed) {
   EXPECT_EQ(AtomicMCDAObject::get_nb_instances(), 0);

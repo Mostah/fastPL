@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<Root />
+<model>
+  <modelName>test_model.xml</modelName>
+  <criteria>2</criteria>
+  <categories>3</categories>
+  <lambda>0.903500</lambda>
+  <crit0>
+    <cat0>0.930000</cat0>
+    <cat1>0.930000</cat1>
+    <cat2>0.930000</cat2>
+    <weight>0.500000</weight>
+    <direction>1</direction>
+  </crit0>
+  <crit1>
+    <cat0>0.930000</cat0>
+    <cat1>0.930000</cat1>
+    <cat2>0.930000</cat2>
+    <weight>0.500000</weight>
+    <direction>1</direction>
+  </crit1>
+</model>
