@@ -150,7 +150,7 @@ public:
    *
    * @return true if found, false if nots
    */
-  bool findAlt(std::string altName);
+  bool isAltInTable(std::string altName);
 
 protected:
   std::vector<std::vector<Perf>> pt_;

@@ -17,7 +17,7 @@ AlternativesPerformance::AlternativesPerformance(
   } else {
     // Check if the alternatives are in the performance table
     for (std::pair<std::string, std::string> element : alt_assignment) {
-      if (!this->findAlt(element.first)) {
+      if (!this->isAltInTable(element.first)) {
         throw std::invalid_argument(
             "The alternatives in the map should be present "
             "in the performance table.");
@@ -43,7 +43,7 @@ AlternativesPerformance::AlternativesPerformance(
   } else {
     // Check if the alternatives are in the performance table
     for (std::pair<std::string, std::string> element : alt_assignment) {
-      if (!this->findAlt(element.first)) {
+      if (!this->isAltInTable(element.first)) {
         throw std::invalid_argument(
             "The alternatives in the map should be present "
             "in the performance table.");
@@ -69,7 +69,7 @@ AlternativesPerformance::AlternativesPerformance(
   } else {
     // Check if the alternatives are in the performance table
     for (std::pair<std::string, std::string> element : alt_assignment) {
-      if (!this->findAlt(element.first)) {
+      if (!this->isAltInTable(element.first)) {
         throw std::invalid_argument(
             "The alternatives in the map should be present "
             "in the performance table.");
@@ -117,7 +117,7 @@ void AlternativesPerformance::setAlternativesAssignments(
     std::map<std::string, std::string> alt_assignment) {
   // Check if the alternatives are in the performance table
   for (std::pair<std::string, std::string> element : alt_assignment) {
-    if (!this->findAlt(element.first)) {
+    if (!this->isAltInTable(element.first)) {
       throw std::invalid_argument(
           "The alternatives in the map should be present "
           "in the performance table.");
@@ -133,7 +133,7 @@ AlternativesPerformance::getAlternativeAssignment(std::string altName) const {
 
 void AlternativesPerformance::setAlternativeAssignment(std::string altName,
                                                        std::string catName) {
-  if (this->findAlt(altName)) {
+  if (this->isAltInTable(altName)) {
     alt_assignment_[altName] = catName;
   } else {
     throw std::invalid_argument("The alternatives in the map should be present "

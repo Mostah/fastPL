@@ -308,7 +308,7 @@ std::vector<Perf> PerformanceTable::getWorstPerfByCrit(Criteria crits) {
   return worst_pv;
 }
 
-bool PerformanceTable::findAlt(std::string altName) {
+bool PerformanceTable::isAltInTable(std::string altName) {
   for (std::vector<Perf> p : pt_) {
     if (p[0].getName() == altName) {
       return (true);
