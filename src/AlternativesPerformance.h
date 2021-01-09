@@ -17,8 +17,10 @@ public:
    * AlternativesPerformance standard constructor (PerformanceTable surcharged)
    *
    * @param perf_vect Vector of performance
-   * @param alt_assignment Map of alternative to the assigned category. Default
-   * alternatives assigned to empty categories
+   * @param alt_assignment Map of alternative to the assigned category.
+   * Default alternatives assigned to empty categories, but good practice would
+   * be to create the AlternativePerformance object with an
+   * AlternativeAssignment map, otherwise we should use PerformanceTable instead
    */
   AlternativesPerformance(std::vector<Performance> &perf_vect,
                           std::map<std::string, std::string> alt_assignment =
@@ -32,8 +34,10 @@ public:
    * @param crits Criteria to evaluate performance over
    * @param prefix Prefix to use for the name of each Performance created.
    * Default = "alt"
-   * @param alt_assignment Map of alternative to the assigned category. Default
-   * alternatives assigned to empty categories
+   * @param alt_assignment Map of alternative to the assigned category.
+   * Default alternatives assigned to empty categories, but good practice would
+   * be to create the AlternativePerformance object with an
+   * AlternativeAssignment map, otherwise we should use PerformanceTable instead
    * */
   AlternativesPerformance(int nb_of_perfs, Criteria &crits,
                           std::string prefix = "alt",
@@ -43,8 +47,11 @@ public:
   /**
    * AlternativesPerformance constructor using an existing performance table
    *
-   * @param alt_assignment Map of alternative assignements to categories
    * @param perf_table Performance table to copy
+   * @param alt_assignment Map of alternative assignements to categories
+   * Default alternatives assigned to empty categories, but good practice would
+   * be to create the AlternativePerformance object with an
+   * AlternativeAssignment map, otherwise we should use PerformanceTable instead
    */
   AlternativesPerformance(const PerformanceTable &perf_table,
                           std::map<std::string, std::string> alt_assignment =
