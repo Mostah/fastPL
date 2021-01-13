@@ -5,7 +5,7 @@ project(fastPL) #name of your project
 add_subdirectory(extsrc/googletest) # add googletest subdirectory
 
 set(Headers 
-    src/MRSort.h
+    src/MRSortModel.h
     src/Criterion.h
     src/Criteria.h
     src/Perf.h
@@ -18,7 +18,7 @@ set(Headers
     )
 
 set(Sources 
-    src/MRSort.cpp
+    src/MRSortModel.cpp
     src/Criterion.cpp
     src/Criteria.cpp
     src/Perf.cpp
