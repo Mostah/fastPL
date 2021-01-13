@@ -307,14 +307,15 @@ std::vector<Perf> PerformanceTable::getWorstPerfByCrit(Criteria &crits) {
 }
 
 void PerformanceTable::generateRandomOrderedPerfValues() {
-  for (int i = 0; i < pt_.size(); i++) {
+  for (int j = 0; j < pt_[0].size(); j++) {
     std::vector<float> r_vect;
-    for (int j = 0; j < pt_[i].size(); j++) {
+    for (int i = 0; i < pt_.size(); i++) {
       r_vect.push_back(((float)rand() / RAND_MAX));
     }
     std::sort(r_vect.begin(), r_vect.end());
-    for (int j = 0; j < pt_[i].size(); j++) {
-      pt_[pt_.size() - i - 1][j].setValue(r_vect[j]);
+    std::reverse(r_vect.begin(), r_vect.end());
+    for (int i = 0; i < pt_.size(); i++) {
+      pt_[i][j].setValue(r_vect[i]);
     }
   }
 }

@@ -358,8 +358,8 @@ TEST(TestPerformanceTable, TestIsOrdered) {
 }
 
 TEST(TestPerformanceTable, TestgenerateRandomOrderedPerfValues) {
-  Criteria crit = Criteria(2, "a");
-  PerformanceTable pt_ordered = PerformanceTable(3, crit);
+  Criteria crit = Criteria(4, "a");
+  PerformanceTable pt_ordered = PerformanceTable(12, crit);
   pt_ordered.generateRandomOrderedPerfValues();
   EXPECT_TRUE(pt_ordered.isOrdered());
 }
