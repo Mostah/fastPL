@@ -82,7 +82,6 @@ inline bool fileExists(const std::string &name) {
 inline float getRandomUniformNumber(bool changeSeed = 1) {
   if (changeSeed) {
     srand(time(NULL));
-    std::this_thread::sleep_for(std::chrono::milliseconds(750));
   } else {
     srand(0);
   }

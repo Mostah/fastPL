@@ -72,9 +72,10 @@ public:
   bool isSorted() const;
 
   /**
-   * Overloading [] operator for PerformanceTable. If the current mode is crit,
-   * will search for the row with the crit name given. If current mode is alt,
-   * will search for the row with the alternative (or profile) name given.
+   * Overloading [] operator for PerformanceTable. If the current mode is
+   *crit, will search for the row with the crit name given. If current mode
+   *is alt, will search for the row with the alternative (or profile) name
+   *given.
    *
    * @param name name of the row we want to search
    *
@@ -142,6 +143,21 @@ public:
    * @return worst_pv
    */
   std::vector<Perf> getWorstPerfByCrit(Criteria &crits);
+
+  /**
+   * isOrdered check if the performance table is ordered to be use as a profile
+   * type: each alts must be ranked given their value on each criterion.
+   *
+   * @return isOrdered
+   */
+  bool isOrdered();
+
+  /**
+   * generateRandomOrderedPerfValues generate perf values in a profile ordered
+   * manner.
+   *
+   */
+  void generateRandomOrderedPerfValues();
 
 private:
   std::vector<std::vector<Perf>> pt_;

@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "AtomicMCDAObject.h"
+#include "Categories.h"
 #include "Criteria.h"
 #include "PerformanceTable.h"
 
@@ -48,8 +49,19 @@ public:
    */
   std::string getId() const;
 
+  /**
+   * categoryAssignment assign the categories given the performance table
+   * and the current state of the model.
+   *
+   * @param pt PerformanceTable
+   *
+   * @return category_assignment pair vector with first value is the alternative
+   * id and second value the category assigned.
+   */
+  std::vector<std::pair<std::string, std::string>>
+  categoryAssignment(PerformanceTable &pt);
+
   Criteria criteria;
-  // Will be changed for Alternative Performance once defined
   PerformanceTable profiles;
   float lambda;
 

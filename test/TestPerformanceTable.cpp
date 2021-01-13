@@ -341,6 +341,29 @@ TEST(TestPerformanceTable, TestGetWorstPerfByCrit) {
                        "Perf( name : test1, crit : a1, value : 0 )]");
 }
 
+TEST(TestPerformanceTable, TestIsOrdered) {
+  std::vector<Performance> perf_vect;
+  Criteria crit = Criteria(3, "a");
+  std::vector<float> given_perf0 = {0.8, 1, 0.4};
+  std::vector<float> given_perf1 = {0.8, 0.1, 0.3};
+  perf_vect.push_back(Performance(crit, given_perf0, "test0"));
+  perf_vect.push_back(Performance(crit, given_perf1, "test1"));
+  PerformanceTable profile = PerformanceTable(perf_vect);
+  EXPECT_TRUE(profile.isOrdered());
+
+  std::vector<float> given_perf2 = {0.6, 0, 0.5};
+  perf_vect.push_back(Performance(crit, given_perf2, "test2"));
+  PerformanceTable profile2 = PerformanceTable(perf_vect);
+  EXPECT_FALSE(profile2.isOrdered());
+}
+
+TEST(TestPerformanceTable, TestgenerateRandomOrderedPerfValues) {
+  Criteria crit = Criteria(2, "a");
+  PerformanceTable pt_ordered = PerformanceTable(3, crit);
+  pt_ordered.generateRandomOrderedPerfValues();
+  EXPECT_TRUE(pt_ordered.isOrdered());
+}
+
 TEST(TestPerformanceTable, TestAllInstancesDestroyed) {
   EXPECT_EQ(AtomicMCDAObject::get_nb_instances(), 0);
 }
