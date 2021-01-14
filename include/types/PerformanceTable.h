@@ -25,7 +25,8 @@ public:
    * @param nb_of_perfs Number of performance
    * @param crits Criteria to evaluate performance over
    */
-  PerformanceTable(int nb_of_perfs, Criteria crits, std::string prefix = "alt");
+  PerformanceTable(int nb_of_perfs, Criteria &crits,
+                   std::string prefix = "alt");
 
   /**
    * Performances constructor by copy
@@ -142,7 +143,16 @@ public:
    */
   std::vector<Perf> getWorstPerfByCrit(Criteria crits);
 
-private:
+  /**
+   * findAlt return true if the alternative is in the performance table
+   *
+   * @param altName Alternative to lookup
+   *
+   * @return true if found, false if nots
+   */
+  bool isAltInTable(std::string altName);
+
+protected:
   std::vector<std::vector<Perf>> pt_;
 
   // indicates what is represented by rows: (alt or profiles) or criterias
