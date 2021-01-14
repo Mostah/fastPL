@@ -328,64 +328,63 @@ void DataGenerator::saveModel(std::string fileName, float lambda,
   }
 }
 
-std::tuple<PerformanceTable, std::unordered_map<std::string, Category>>
-DataGenerator::loadDataset(std::string fileName) {
+AlternativesPerformance DataGenerator::loadDataset(std::string fileName) {
   pugi::xml_document doc = DataGenerator::openXmlFile(fileName);
   if (DataGenerator::getXmlFileType(fileName) == "model") {
     // if we have a model xml
     throw std::invalid_argument("Cannot find any alternatives in xml file, "
                                 "most likely have a xml model file");
-  } else {
-    // creating type blocks to return Performance object
-    std::unordered_map<std::string, Category> altAssignments;
-    int nb_criteria = DataGenerator::getNumberOfCriteria(fileName);
-    Criteria criteria = Criteria(nb_criteria, "crit");
-    std::vector<Performance> vecPerformances;
-
-    pugi::xml_node node_dataset = doc.child("dataset");
-    for (pugi::xml_node_iterator it = node_dataset.begin();
-         it != node_dataset.end(); ++it) {
-      std::vector<float> altPerf;
-
-      if (strcmp(it->name(), "alternative") == 0) {
-
-        pugi::xml_node alternative_node = node_dataset.child(it->name());
-        std::string altId = it->child_value();
-
-        for (pugi::xml_node_iterator it = alternative_node.begin();
-             it != alternative_node.end(); ++it) {
-
-          if (strcmp(it->name(), "assignment") != 0 ||
-              strcmp(it->name(), "") != 0) {
-
-            float perf = atof(it->child_value());
-            altPerf.push_back(perf);
-
-          } else if (strcmp(it->name(), "assignment") == 0) {
-
-            float rank = atof(it->child_value());
-            altAssignments.insert(
-                {altId, Category("cat" + std::to_string(rank), rank)});
-          }
-        }
-        vecPerformances.push_back(Performance(criteria, altPerf, altId));
-      }
-    }
-    return std::make_tuple(PerformanceTable(vecPerformances), altAssignments);
   }
+  // creating type blocks to return Performance object
+  std::unordered_map<std::string, Category> altAssignments;
+  int nb_criteria = DataGenerator::getNumberOfCriteria(fileName);
+  Criteria criteria = Criteria(nb_criteria, "crit");
+  std::vector<Performance> vecPerformances;
+
+  pugi::xml_node node_dataset = doc.child("dataset");
+  for (pugi::xml_node_iterator it = node_dataset.begin();
+       it != node_dataset.end(); ++it) {
+    std::vector<float> altPerf;
+
+    if (strcmp(it->name(), "alternative") == 0) {
+
+      pugi::xml_node alternative_node = node_dataset.child(it->name());
+      std::string altId = it->child_value();
+
+      for (pugi::xml_node_iterator it = alternative_node.begin();
+           it != alternative_node.end(); ++it) {
+
+        if (strcmp(it->name(), "assignment") != 0 ||
+            strcmp(it->name(), "") != 0) {
+
+          float perf = atof(it->child_value());
+          altPerf.push_back(perf);
+
+        } else if (strcmp(it->name(), "assignment") == 0) {
+
+          float rank = atof(it->child_value());
+          altAssignments.insert(
+              {altId, Category("cat" + std::to_string(rank), rank)});
+        }
+      }
+      vecPerformances.push_back(Performance(criteria, altPerf, altId));
+    }
+  }
+  return AlternativesPerformance(PerformanceTable(vecPerformances),
+                                 altAssignments);
 }
 
-void DataGenerator::saveDataset(std::string fileName, PerformanceTable pt,
+void DataGenerator::saveDataset(std::string fileName,
                                 AlternativesPerformance altPerf,
                                 int nb_categories, bool overwrite,
                                 std::string datasetName) {
 
-  if (pt.getMode() != "alt") {
+  if (altPerf.getMode() != "alt") {
     throw std::invalid_argument("Performance table must be in alt mode");
   }
 
-  int nb_alternatives = pt.getPerformanceTable().size();
-  int nb_criteria = pt.getPerformanceTable()[0].size();
+  int nb_alternatives = altPerf.getPerformanceTable().size();
+  int nb_criteria = altPerf.getPerformanceTable()[0].size();
 
   // Generate new XML document within memory
   pugi::xml_document doc;
@@ -423,7 +422,7 @@ void DataGenerator::saveDataset(std::string fileName, PerformanceTable pt,
       .set_value(std::to_string(nb_alternatives).c_str());
 
   // looping over alternatives
-  for (std::vector<Perf> p : pt.getPerformanceTable()) {
+  for (std::vector<Perf> p : altPerf.getPerformanceTable()) {
     pugi::xml_node alternative_node = dataset_node.append_child("alternative");
     // getting alternative id
     alternative_node.append_child(pugi::node_pcdata)

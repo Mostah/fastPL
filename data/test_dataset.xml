@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <Root />
 <dataset>
-  <datasetName>test.xml</datasetName>
+  <datasetName>test_dataset.xml</datasetName>
   <criteria>3</criteria>
   <categories>4</categories>
   <alternatives>5</alternatives>

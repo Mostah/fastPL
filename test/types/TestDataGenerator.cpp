@@ -182,7 +182,7 @@ TEST(TestDataGenerator, TestSaveDataset) {
       std::unordered_map<std::string, Category>{
           {"alt0", cat0}, {"alt1", cat1}, {"alt2", cat0}, {"alt3", cat1}};
   AlternativesPerformance alt_perf = AlternativesPerformance(perf_table, map);
-  data.saveDataset("test_save_dataset.xml", perf_table, alt_perf, 2, 0);
+  data.saveDataset("test_save_dataset.xml", alt_perf, 2, 0);
   bool u = fileExists("../data/dataset_alt4_crit3_cat2.xml");
   std::ostringstream os2;
   os2 << u;
@@ -202,7 +202,7 @@ TEST(TestDataGenerator, TestSaveDatasetCanOverwrite) {
           {"alt0", cat0}, {"alt1", cat1}, {"alt2", cat0}, {"alt3", cat1}};
   AlternativesPerformance alt_perf = AlternativesPerformance(perf_table, map);
 
-  data.saveDataset("test_save_dataset.xml", perf_table, alt_perf, 2, 1);
+  data.saveDataset("test_save_dataset.xml", alt_perf, 2, 1);
   bool u = fileExists("../data/dataset_alt4_crit3_cat2.xml");
   std::ostringstream os2;
   os2 << u;
@@ -222,7 +222,7 @@ TEST(TestDataGenerator, TestSaveDatasetCantOverwrite) {
           {"alt0", cat0}, {"alt1", cat1}, {"alt2", cat0}, {"alt3", cat1}};
   AlternativesPerformance alt_perf = AlternativesPerformance(perf_table, map);
   try {
-    data.saveDataset("test_save_dataset.xml", perf_table, alt_perf, 2, 0);
+    data.saveDataset("test_save_dataset.xml", alt_perf, 2, 0);
     FAIL() << "should have throw invalid_argument error.";
   } catch (std::invalid_argument const &err) {
     EXPECT_EQ(err.what(),

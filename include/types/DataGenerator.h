@@ -55,25 +55,27 @@ public:
    * Save dataset data in xml file name filename
    *
    * @param fileName filename
+   * @param altPerf Alternative Peformance type
+   * @param nb_categories number of categories
+   * @param overwrite overwrite potentiel filename if it exists
+   * @param datasetName dataset name given in xml file
    *
    * @return save file in xml format
    *
    */
-  void saveDataset(std::string fileName, PerformanceTable pt,
-                   AlternativesPerformance altPerf, int nb_categories,
-                   bool overwrite = 1, std::string datasetName = "");
+  void saveDataset(std::string fileName, AlternativesPerformance altPerf,
+                   int nb_categories, bool overwrite = 1,
+                   std::string datasetName = "");
 
   /**
    * Get dataset data from xml file
    *
    * @param fileName filename
    *
-   * @return tuple that represents data used in preference learning in order to
-   * create an AlternativePerformance object
+   * @return AlternativesPerformance object in order to use MRSort model
    *
    */
-  std::tuple<PerformanceTable, std::unordered_map<std::string, Category>>
-  loadDataset(std::string fileName);
+  AlternativesPerformance loadDataset(std::string fileName);
 
   /**
    * Save model data in xml file name filename
