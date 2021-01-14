@@ -1,10 +1,10 @@
-app:
-  - env:
-    - staging:
-      - log_level: DEBUG
+env:
+  staging:
+    log_level: "DEBUG"
 
-    - prod:
-      - log_level: INFO
-      
-  - log_file: ../logs/app_log.txt
-  - data_dir: ../data/
+  prod:
+    log_level: "INFO"
+# log_level takes its value in { DEBUG, INFO, WARN, ERROR, CRITICAL }
+
+log_file: ../logs/app_log.txt
+data_dir: ../data/
