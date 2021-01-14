@@ -7,21 +7,19 @@
 #include <tuple>
 #include <utility>
 
-/**
-TEST(TestDataGenerator, TestDatasetGenerator) {
-  DataGenerator data = DataGenerator();
-  data.datasetGenerator(3, 20, 4, "test.xml", 1, 0);
-  bool u = fileExists("../data/test.xml");
-  std::ostringstream os2;
-  os2 << u;
-  EXPECT_EQ(os2.str(), "1");
-}
-*/
+// TEST(TestDataGenerator, TestDatasetGenerator) {
+//   DataGenerator data = DataGenerator();
+//   data.datasetGenerator(3, 5, 4, "test.xml", 1, 0);
+//   bool u = fileExists("../data/test.xml");
+//   std::ostringstream os2;
+//   os2 << u;
+//   EXPECT_EQ(os2.str(), "1");
+// }
 
 TEST(TestDataGenerator, TestDatasetGeneratorNotOverwrite) {
   DataGenerator data = DataGenerator();
   try {
-    data.datasetGenerator(3, 20, 4, "test.xml", 0, 0);
+    data.datasetGenerator(3, 5, 4, "test.xml", 0, 0);
     FAIL() << "should have throw invalid_argument error.";
   } catch (std::invalid_argument const &err) {
     EXPECT_EQ(err.what(),
@@ -35,7 +33,7 @@ TEST(TestDataGenerator, TestDatasetGeneratorNotOverwrite) {
 
 TEST(TestDataGenerator, TestDatasetGeneratorOverwrite) {
   DataGenerator data = DataGenerator();
-  data.datasetGenerator(3, 20, 4, "test.xml", 1, 0);
+  data.datasetGenerator(3, 5, 4, "test.xml", 1, 0);
   bool u = fileExists("../data/test.xml");
   std::ostringstream os2;
   os2 << u;
@@ -259,50 +257,9 @@ TEST(TestDataGenerator, TestLoadDataset) {
       "alt3, crit : crit1, value : 0 ) Perf( name : alt3, crit : crit2, value "
       ": 0 ) | Performance: Perf( name : alt4, crit : crit0, value : 0 ) Perf( "
       "name : alt4, crit : crit1, value : 0 ) Perf( name : alt4, crit : crit2, "
-      "value : 0 ) | Performance: Perf( name : alt5, crit : crit0, value : 0 ) "
-      "Perf( name : alt5, crit : crit1, value : 0 ) Perf( name : alt5, crit : "
-      "crit2, value : 0 ) | Performance: Perf( name : alt6, crit : crit0, "
-      "value : 0 ) Perf( name : alt6, crit : crit1, value : 0 ) Perf( name : "
-      "alt6, crit : crit2, value : 0 ) | Performance: Perf( name : alt7, crit "
-      ": crit0, value : 0 ) Perf( name : alt7, crit : crit1, value : 0 ) Perf( "
-      "name : alt7, crit : crit2, value : 0 ) | Performance: Perf( name : "
-      "alt8, crit : crit0, value : 0 ) Perf( name : alt8, crit : crit1, value "
-      ": 0 ) Perf( name : alt8, crit : crit2, value : 0 ) | Performance: Perf( "
-      "name : alt9, crit : crit0, value : 0 ) Perf( name : alt9, crit : crit1, "
-      "value : 0 ) Perf( name : alt9, crit : crit2, value : 0 ) | Performance: "
-      "Perf( name : alt10, crit : crit0, value : 0 ) Perf( name : alt10, crit "
-      ": crit1, value : 0 ) Perf( name : alt10, crit : crit2, value : 0 ) | "
-      "Performance: Perf( name : alt11, crit : crit0, value : 0 ) Perf( name : "
-      "alt11, crit : crit1, value : 0 ) Perf( name : alt11, crit : crit2, "
-      "value : 0 ) | Performance: Perf( name : alt12, crit : crit0, value : 0 "
-      ") Perf( name : alt12, crit : crit1, value : 0 ) Perf( name : alt12, "
-      "crit : crit2, value : 0 ) | Performance: Perf( name : alt13, crit : "
-      "crit0, value : 0 ) Perf( name : alt13, crit : crit1, value : 0 ) Perf( "
-      "name : alt13, crit : crit2, value : 0 ) | Performance: Perf( name : "
-      "alt14, crit : crit0, value : 0 ) Perf( name : alt14, crit : crit1, "
-      "value : 0 ) Perf( name : alt14, crit : crit2, value : 0 ) | "
-      "Performance: Perf( name : alt15, crit : crit0, value : 0 ) Perf( name : "
-      "alt15, crit : crit1, value : 0 ) Perf( name : alt15, crit : crit2, "
-      "value : 0 ) | Performance: Perf( name : alt16, crit : crit0, value : 0 "
-      ") Perf( name : alt16, crit : crit1, value : 0 ) Perf( name : alt16, "
-      "crit : crit2, value : 0 ) | Performance: Perf( name : alt17, crit : "
-      "crit0, value : 0 ) Perf( name : alt17, crit : crit1, value : 0 ) Perf( "
-      "name : alt17, crit : crit2, value : 0 ) | Performance: Perf( name : "
-      "alt18, crit : crit0, value : 0 ) Perf( name : alt18, crit : crit1, "
-      "value : 0 ) Perf( name : alt18, crit : crit2, value : 0 ) | "
-      "Performance: Perf( name : alt19, crit : crit0, value : 0 ) Perf( name : "
-      "alt19, crit : crit1, value : 0 ) Perf( name : alt19, crit : crit2, "
-      "value : 0 ) | ], AlternativesAssignment{ alt19->Category(id : , rank : "
-      "-1) alt17->Category(id : , rank : -1) alt15->Category(id : , rank : -1) "
-      "alt14->Category(id : , rank : -1) alt18->Category(id : , rank : -1) "
-      "alt13->Category(id : , rank : -1) alt16->Category(id : , rank : -1) "
-      "alt9->Category(id : , rank : -1) alt8->Category(id : , rank : -1) "
-      "alt7->Category(id : , rank : -1) alt0->Category(id : , rank : -1) "
-      "alt10->Category(id : , rank : -1) alt12->Category(id : , rank : -1) "
-      "alt5->Category(id : , rank : -1) alt6->Category(id : , rank : -1) "
-      "alt4->Category(id : , rank : -1) alt2->Category(id : , rank : -1) "
-      "alt1->Category(id : , rank : -1) alt11->Category(id : , rank : -1) "
-      "alt3->Category(id : , rank : -1) }");
+      "value : 0 ) | ], AlternativesAssignment{ alt4->Category(id : , rank : "
+      "-1) alt2->Category(id : , rank : -1) alt1->Category(id : , rank : -1) "
+      "alt3->Category(id : , rank : -1) alt0->Category(id : , rank : -1) }");
 }
 
 TEST(TestDataGenerator, TestNumberOfCriteriaForModels) {
@@ -363,7 +320,7 @@ TEST(TestDataGenerator, TestGetNumerOfAlternativesForDataset) {
   int nb_alternatives = data.getNumberOfAlternatives("test.xml");
   std::ostringstream os2;
   os2 << nb_alternatives;
-  EXPECT_EQ(os2.str(), "20");
+  EXPECT_EQ(os2.str(), "5");
 }
 
 TEST(TestDataGenerator, TestGetNumerOfAlternativesForModel) {
@@ -423,9 +380,7 @@ TEST(TestDataGenerator, TestGetAlternativeIdsForDataset) {
   std::vector<std::string> v = data.getAlternativeIds("test.xml");
   std::ostringstream os2;
   os2 << v;
-  EXPECT_EQ(os2.str(),
-            "[alt0,alt1,alt2,alt3,alt4,alt5,alt6,alt7,alt8,alt9,alt10,"
-            "alt11,alt12,alt13,alt14,alt15,alt16,alt17,alt18,alt19]");
+  EXPECT_EQ(os2.str(), "[alt0,alt1,alt2,alt3,alt4]");
 }
 
 TEST(TestDataGenerator, TestGetAlternativeIdsForModel) {
