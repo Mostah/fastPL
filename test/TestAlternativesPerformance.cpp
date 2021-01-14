@@ -163,7 +163,6 @@ TEST(TestAlternativesPerformance, TestCopyConstructor) {
   std::vector<Performance> perf_vect;
   Criteria crit = Criteria(2, "crit");
   perf_vect.push_back(Performance(crit, "a0"));
-  perf_vect.push_back(Performance(crit, "a1"));
   PerformanceTable perf_table = PerformanceTable(perf_vect);
   AlternativesPerformance alt_perf = AlternativesPerformance(perf_table);
 
