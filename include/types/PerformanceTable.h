@@ -159,7 +159,16 @@ public:
    */
   void generateRandomOrderedPerfValues();
 
-private:
+  /**
+   * findAlt return true if the alternative is in the performance table
+   *
+   * @param altName Alternative to lookup
+   *
+   * @return true if found, false if nots
+   */
+  bool isAltInTable(std::string altName);
+
+protected:
   std::vector<std::vector<Perf>> pt_;
 
   // indicates what is represented by rows: (alt or profiles) or criterias

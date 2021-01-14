@@ -47,20 +47,22 @@ PerformanceTable::PerformanceTable(const PerformanceTable &perfs) {
     }
     pt_.push_back(perf_vect);
   }
+  mode_ = perfs.mode_;
+  sorted_ = perfs.sorted_;
 }
 
 PerformanceTable::~PerformanceTable() {}
 
 std::ostream &operator<<(std::ostream &out, const PerformanceTable &perfs) {
-  out << "PerformanceTable(";
+  out << "PerformanceTable[ ";
   for (std::vector<Perf> p : perfs.pt_) {
-    out << "Performance(";
+    out << "Performance: ";
     for (Perf perf : p) {
-      out << perf << ", ";
+      out << perf << " ";
     }
-    out << "), ";
+    out << "| ";
   }
-  out << ")";
+  out << "]";
   return out;
 }
 
@@ -329,4 +331,12 @@ bool PerformanceTable::isOrdered() {
     }
   }
   return true;
+}
+bool PerformanceTable::isAltInTable(std::string altName) {
+  for (std::vector<Perf> p : pt_) {
+    if (p[0].getName() == altName) {
+      return (true);
+    }
+  }
+  return (false);
 }

@@ -115,12 +115,12 @@ TEST(TestDataGenerator, TestLoadModel) {
             "Criteria(Criterion(id : crit0, direction : +, weight : 0.5), "
             "Criterion(id : crit1, direction : +, weight : 0.5), )");
   EXPECT_EQ(os3.str(),
-            "PerformanceTable(Performance(Perf( name : prof0, crit : crit0, "
-            "value : 0.93 ), Perf( name : prof0, crit : crit1, value : 0.93 ), "
-            "), Performance(Perf( name : prof1, crit : crit0, value : 0.93 ), "
-            "Perf( name : prof1, crit : crit1, value : 0.93 ), ), "
-            "Performance(Perf( name : prof2, crit : crit0, value : 0.93 ), "
-            "Perf( name : prof2, crit : crit1, value : 0.93 ), ), )");
+            "PerformanceTable[ Performance: Perf( name : prof0, crit : crit0, "
+            "value : 0.93 ) Perf( name : prof0, crit : crit1, value : 0.93 ) | "
+            "Performance: Perf( name : prof1, crit : crit0, value : 0.93 ) "
+            "Perf( name : prof1, crit : crit1, value : 0.93 ) | Performance: "
+            "Perf( name : prof2, crit : crit0, value : 0.93 ) Perf( name : "
+            "prof2, crit : crit1, value : 0.93 ) | ]");
 }
 
 TEST(TestDataGenerator, TestSaveModelWrongNumberCriteria) {

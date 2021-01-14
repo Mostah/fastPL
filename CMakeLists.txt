@@ -20,6 +20,7 @@ set(Headers
     include/types/Category.h
     include/types/Categories.h
     include/types/DataGenerator.h
+    include/types/AlternativesPerformance.h
     include/utils.h
     )
 
@@ -34,6 +35,7 @@ set(Sources
     src/types/Category.cpp
     src/types/Categories.cpp
     src/types/DataGenerator.cpp
+    src/types/AlternativesPerformance.cpp
     )
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17" )
