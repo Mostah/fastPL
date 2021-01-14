@@ -31,7 +31,7 @@ PerformanceTable::PerformanceTable(std::vector<Performance> &perf_vect) {
   }
 }
 
-PerformanceTable::PerformanceTable(int nb_of_perfs, Criteria crits,
+PerformanceTable::PerformanceTable(int nb_of_perfs, Criteria &crits,
                                    std::string prefix) {
   for (int i = 0; i < nb_of_perfs; i++) {
     pt_.push_back(Performance(crits, prefix + std::to_string(i)).getPerf());
@@ -47,20 +47,22 @@ PerformanceTable::PerformanceTable(const PerformanceTable &perfs) {
     }
     pt_.push_back(perf_vect);
   }
+  mode_ = perfs.mode_;
+  sorted_ = perfs.sorted_;
 }
 
 PerformanceTable::~PerformanceTable() {}
 
 std::ostream &operator<<(std::ostream &out, const PerformanceTable &perfs) {
-  out << "PerformanceTable(";
+  out << "PerformanceTable[ ";
   for (std::vector<Perf> p : perfs.pt_) {
-    out << "Performance(";
+    out << "Performance: ";
     for (Perf perf : p) {
-      out << perf << ", ";
+      out << perf << " ";
     }
-    out << "), ";
+    out << "| ";
   }
-  out << ")";
+  out << "]";
   return out;
 }
 
@@ -304,4 +306,13 @@ std::vector<Perf> PerformanceTable::getWorstPerfByCrit(Criteria crits) {
     }
   }
   return worst_pv;
+}
+
+bool PerformanceTable::isAltInTable(std::string altName) {
+  for (std::vector<Perf> p : pt_) {
+    if (p[0].getName() == altName) {
+      return (true);
+    }
+  }
+  return (false);
 }

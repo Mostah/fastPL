@@ -12,7 +12,7 @@ public:
    * @param category_id Category id
    * @param cat_rank rank of Category
    */
-  Category(std::string category_id, int cat_rank);
+  Category(std::string category_id = "", int cat_rank = -1);
 
   /**
    * Category constructor by copy
@@ -60,6 +60,15 @@ public:
    *
    */
   friend std::ostream &operator<<(std::ostream &out, const Category &category);
+
+  /**
+   * Overloading == operator for Category class
+   *
+   * @param cat1 Category object 1
+   * @param cat2 Category object 2
+   *
+   */
+  friend bool operator==(const Category &cat1, const Category &cat2);
 
 private:
   std::string category_id_;

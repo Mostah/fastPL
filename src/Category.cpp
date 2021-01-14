@@ -26,3 +26,7 @@ std::ostream &operator<<(std::ostream &out, const Category &cat) {
       << ")";
   return out;
 }
+
+bool operator==(const Category &cat1, const Category &cat2) {
+  return (cat1.rank_ == cat2.rank_ && cat1.category_id_ == cat2.category_id_);
+}
