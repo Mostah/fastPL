@@ -1,4 +1,4 @@
-#include "../src/Perf.h"
+#include "../../include/types/Perf.h"
 #include "gtest/gtest.h"
 #include <sstream>
 #include <utility>

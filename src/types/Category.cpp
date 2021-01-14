@@ -1,4 +1,4 @@
-#include "Category.h"
+#include "../../include/types/Category.h"
 
 Category::Category(std::string cat_id, int cat_rank) {
   category_id_ = cat_id;

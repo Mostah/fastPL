@@ -1,4 +1,4 @@
-#include "AtomicMCDAObject.h"
+#include "../../include/types/AtomicMCDAObject.h"
 
 AtomicMCDAObject::AtomicMCDAObject() { ++nb_instances_; };
 

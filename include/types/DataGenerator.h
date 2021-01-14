@@ -6,7 +6,7 @@
 // forked repo and uncomment in pugixml/src/pugiconfig.hpp
 // line 48 #define PUGIXML_HEADER_ONLY
 
-#include "../extsrc/pugixml/src/pugixml.hpp"
+#include "../../extsrc/pugixml/src/pugixml.hpp"
 #include "AtomicMCDAObject.h"
 #include "Criterion.h"
 #include "Performance.h"

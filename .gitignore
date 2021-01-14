@@ -52,5 +52,9 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 
+# Doxygen files
+doxygen/*
+!doxygen/CMakeLists.txt
+
 # logs
 logs/

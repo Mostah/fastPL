@@ -1,5 +1,5 @@
-#include "../src/Categories.h"
-#include "../src/utils.h"
+#include "../../include/types/Categories.h"
+#include "../../include/utils.h"
 #include "gtest/gtest.h"
 #include <iostream>
 #include <ostream>

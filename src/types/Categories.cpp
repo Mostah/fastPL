@@ -1,5 +1,5 @@
-#include "Categories.h"
-#include "utils.h"
+#include "../../include/types/Categories.h"
+#include "../../include/utils.h"
 #include <iostream>
 #include <ostream>
 #include <string.h>
