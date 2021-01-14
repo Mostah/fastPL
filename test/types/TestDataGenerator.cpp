@@ -172,6 +172,139 @@ TEST(TestDataGenerator, TestSaveModelCanttOverwrite) {
   std::remove("../data/test_save_model.xml");
 }
 
+TEST(TestDataGenerator, TestSaveDataset) {
+  DataGenerator data = DataGenerator();
+  Criteria crit = Criteria(3, "crit");
+  crit.generateRandomCriteriaWeights(0);
+  PerformanceTable perf_table = PerformanceTable(4, crit, "alt");
+  perf_table.generateRandomPerfValues();
+  Category cat0 = Category("cat0", 0);
+  Category cat1 = Category("cat1", 1);
+  std::unordered_map<std::string, Category> map =
+      std::unordered_map<std::string, Category>{
+          {"alt0", cat0}, {"alt1", cat1}, {"alt2", cat0}, {"alt3", cat1}};
+  AlternativesPerformance alt_perf = AlternativesPerformance(perf_table, map);
+  data.saveDataset("test_save_dataset.xml", perf_table, alt_perf, 2, 0);
+  bool u = fileExists("../data/dataset_alt4_crit3_cat2.xml");
+  std::ostringstream os2;
+  os2 << u;
+  EXPECT_EQ(os2.str(), "1");
+}
+
+TEST(TestDataGenerator, TestSaveDatasetCanOverwrite) {
+  DataGenerator data = DataGenerator();
+  Criteria crit = Criteria(3, "crit");
+  crit.generateRandomCriteriaWeights(0);
+  PerformanceTable perf_table = PerformanceTable(4, crit, "alt");
+  perf_table.generateRandomPerfValues();
+  Category cat0 = Category("cat0", 0);
+  Category cat1 = Category("cat1", 1);
+  std::unordered_map<std::string, Category> map =
+      std::unordered_map<std::string, Category>{
+          {"alt0", cat0}, {"alt1", cat1}, {"alt2", cat0}, {"alt3", cat1}};
+  AlternativesPerformance alt_perf = AlternativesPerformance(perf_table, map);
+
+  data.saveDataset("test_save_dataset.xml", perf_table, alt_perf, 2, 1);
+  bool u = fileExists("../data/dataset_alt4_crit3_cat2.xml");
+  std::ostringstream os2;
+  os2 << u;
+  EXPECT_EQ(os2.str(), "1");
+}
+
+TEST(TestDataGenerator, TestSaveDatasetCantOverwrite) {
+  DataGenerator data = DataGenerator();
+  Criteria crit = Criteria(3, "crit");
+  crit.generateRandomCriteriaWeights(0);
+  PerformanceTable perf_table = PerformanceTable(4, crit, "alt");
+  perf_table.generateRandomPerfValues();
+  Category cat0 = Category("cat0", 0);
+  Category cat1 = Category("cat1", 1);
+  std::unordered_map<std::string, Category> map =
+      std::unordered_map<std::string, Category>{
+          {"alt0", cat0}, {"alt1", cat1}, {"alt2", cat0}, {"alt3", cat1}};
+  AlternativesPerformance alt_perf = AlternativesPerformance(perf_table, map);
+  try {
+    data.saveDataset("test_save_dataset.xml", perf_table, alt_perf, 2, 0);
+    FAIL() << "should have throw invalid_argument error.";
+  } catch (std::invalid_argument const &err) {
+    EXPECT_EQ(err.what(),
+              std::string("Such a default xml generate (or not) filename "
+                          "already exists and you chose not to overwrite it"));
+  } catch (...) {
+    FAIL() << "should have throw invalid_argument error.";
+  }
+  std::remove("../data/dataset_alt4_crit3_cat2.xml");
+}
+
+TEST(TestDataGenerator, TestLoadDataset) {
+  DataGenerator data = DataGenerator();
+  std::tuple<PerformanceTable, std::unordered_map<std::string, Category>> t =
+      data.loadDataset("../data/test.xml");
+  PerformanceTable pt = std::get<0>(t);
+  std::unordered_map<std::string, Category> altAssignments = std::get<1>(t);
+  AlternativesPerformance alt_perf =
+      AlternativesPerformance(pt, altAssignments);
+  std::ostringstream os;
+  os << alt_perf;
+  EXPECT_EQ(
+      os.str(),
+      "AlternativesPerformance( PerformanceTable[ Performance: Perf( name : "
+      "alt0, crit : crit0, value : 0 ) Perf( name : alt0, crit : crit1, value "
+      ": 0 ) Perf( name : alt0, crit : crit2, value : 0 ) | Performance: Perf( "
+      "name : alt1, crit : crit0, value : 0 ) Perf( name : alt1, crit : crit1, "
+      "value : 0 ) Perf( name : alt1, crit : crit2, value : 0 ) | Performance: "
+      "Perf( name : alt2, crit : crit0, value : 0 ) Perf( name : alt2, crit : "
+      "crit1, value : 0 ) Perf( name : alt2, crit : crit2, value : 0 ) | "
+      "Performance: Perf( name : alt3, crit : crit0, value : 0 ) Perf( name : "
+      "alt3, crit : crit1, value : 0 ) Perf( name : alt3, crit : crit2, value "
+      ": 0 ) | Performance: Perf( name : alt4, crit : crit0, value : 0 ) Perf( "
+      "name : alt4, crit : crit1, value : 0 ) Perf( name : alt4, crit : crit2, "
+      "value : 0 ) | Performance: Perf( name : alt5, crit : crit0, value : 0 ) "
+      "Perf( name : alt5, crit : crit1, value : 0 ) Perf( name : alt5, crit : "
+      "crit2, value : 0 ) | Performance: Perf( name : alt6, crit : crit0, "
+      "value : 0 ) Perf( name : alt6, crit : crit1, value : 0 ) Perf( name : "
+      "alt6, crit : crit2, value : 0 ) | Performance: Perf( name : alt7, crit "
+      ": crit0, value : 0 ) Perf( name : alt7, crit : crit1, value : 0 ) Perf( "
+      "name : alt7, crit : crit2, value : 0 ) | Performance: Perf( name : "
+      "alt8, crit : crit0, value : 0 ) Perf( name : alt8, crit : crit1, value "
+      ": 0 ) Perf( name : alt8, crit : crit2, value : 0 ) | Performance: Perf( "
+      "name : alt9, crit : crit0, value : 0 ) Perf( name : alt9, crit : crit1, "
+      "value : 0 ) Perf( name : alt9, crit : crit2, value : 0 ) | Performance: "
+      "Perf( name : alt10, crit : crit0, value : 0 ) Perf( name : alt10, crit "
+      ": crit1, value : 0 ) Perf( name : alt10, crit : crit2, value : 0 ) | "
+      "Performance: Perf( name : alt11, crit : crit0, value : 0 ) Perf( name : "
+      "alt11, crit : crit1, value : 0 ) Perf( name : alt11, crit : crit2, "
+      "value : 0 ) | Performance: Perf( name : alt12, crit : crit0, value : 0 "
+      ") Perf( name : alt12, crit : crit1, value : 0 ) Perf( name : alt12, "
+      "crit : crit2, value : 0 ) | Performance: Perf( name : alt13, crit : "
+      "crit0, value : 0 ) Perf( name : alt13, crit : crit1, value : 0 ) Perf( "
+      "name : alt13, crit : crit2, value : 0 ) | Performance: Perf( name : "
+      "alt14, crit : crit0, value : 0 ) Perf( name : alt14, crit : crit1, "
+      "value : 0 ) Perf( name : alt14, crit : crit2, value : 0 ) | "
+      "Performance: Perf( name : alt15, crit : crit0, value : 0 ) Perf( name : "
+      "alt15, crit : crit1, value : 0 ) Perf( name : alt15, crit : crit2, "
+      "value : 0 ) | Performance: Perf( name : alt16, crit : crit0, value : 0 "
+      ") Perf( name : alt16, crit : crit1, value : 0 ) Perf( name : alt16, "
+      "crit : crit2, value : 0 ) | Performance: Perf( name : alt17, crit : "
+      "crit0, value : 0 ) Perf( name : alt17, crit : crit1, value : 0 ) Perf( "
+      "name : alt17, crit : crit2, value : 0 ) | Performance: Perf( name : "
+      "alt18, crit : crit0, value : 0 ) Perf( name : alt18, crit : crit1, "
+      "value : 0 ) Perf( name : alt18, crit : crit2, value : 0 ) | "
+      "Performance: Perf( name : alt19, crit : crit0, value : 0 ) Perf( name : "
+      "alt19, crit : crit1, value : 0 ) Perf( name : alt19, crit : crit2, "
+      "value : 0 ) | ], AlternativesAssignment{ alt19->Category(id : , rank : "
+      "-1) alt17->Category(id : , rank : -1) alt15->Category(id : , rank : -1) "
+      "alt14->Category(id : , rank : -1) alt18->Category(id : , rank : -1) "
+      "alt13->Category(id : , rank : -1) alt16->Category(id : , rank : -1) "
+      "alt9->Category(id : , rank : -1) alt8->Category(id : , rank : -1) "
+      "alt7->Category(id : , rank : -1) alt0->Category(id : , rank : -1) "
+      "alt10->Category(id : , rank : -1) alt12->Category(id : , rank : -1) "
+      "alt5->Category(id : , rank : -1) alt6->Category(id : , rank : -1) "
+      "alt4->Category(id : , rank : -1) alt2->Category(id : , rank : -1) "
+      "alt1->Category(id : , rank : -1) alt11->Category(id : , rank : -1) "
+      "alt3->Category(id : , rank : -1) }");
+}
+
 TEST(TestDataGenerator, TestNumberOfCriteriaForModels) {
   DataGenerator data = DataGenerator();
   int crit = data.getNumberOfCriteria("test_model.xml");

@@ -7,6 +7,7 @@
 // line 48 #define PUGIXML_HEADER_ONLY
 
 #include "../../extsrc/pugixml/src/pugixml.hpp"
+#include "AlternativesPerformance.h"
 #include "AtomicMCDAObject.h"
 #include "Criterion.h"
 #include "Performance.h"
@@ -51,38 +52,55 @@ public:
                       bool overwrite = 1, bool changeSeed = 0);
 
   /**
-   * Get data from xml file
-   *
-   * @param fileName filename
-   *
-   * @return a type for model usage
-   *
-   */
-  // void loadDataset(std::string fileName);
-
-  // void saveDataset(new type, std::string datasetName);
-
-  /**
-   * Get model data from xml file
-   *
-   * @param fileName filename
-   *
-   * @return object to use algorithms
-   *
-   */
-  std::tuple<float, Criteria, PerformanceTable> loadModel(std::string fileName);
-
-  /**
-   * Save model data in xml file name filename
+   * Save dataset data in xml file name filename
    *
    * @param fileName filename
    *
    * @return save file in xml format
    *
    */
+  void saveDataset(std::string fileName, PerformanceTable pt,
+                   AlternativesPerformance altPerf, int nb_categories,
+                   bool overwrite = 1, std::string datasetName = "");
+
+  /**
+   * Get dataset data from xml file
+   *
+   * @param fileName filename
+   *
+   * @return tuple that represents data used in preference learning in order to
+   * create an AlternativePerformance object
+   *
+   */
+  std::tuple<PerformanceTable, std::unordered_map<std::string, Category>>
+  loadDataset(std::string fileName);
+
+  /**
+   * Save model data in xml file name filename
+   *
+   * @param fileName filename
+   * @param lambda threshold
+   * @param pt profile Performance table
+   * @param overwrite do i want to overwrite a file if it has the same
+   "fileName"
+   * @param modelName model name given in the xml
+
+   * @return save file in xml format
+   *
+   */
   void saveModel(std::string fileName, float lambda, Criteria criteria,
                  PerformanceTable pt, bool overwrite = 1,
                  std::string modelName = "");
+
+  /**
+   * Get model data from xml file
+   *
+   * @param fileName filename
+   *
+   * @return tuple object to use algorithms
+   *
+   */
+  std::tuple<float, Criteria, PerformanceTable> loadModel(std::string fileName);
 
   /**
    * Get an xml_document type for preocessing the xml files
