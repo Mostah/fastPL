@@ -1,3 +1,4 @@
+#include "types/TestAlternativesPerformance.cpp"
 #include "types/TestCategories.cpp"
 #include "types/TestCategory.cpp"
 #include "types/TestCriteria.cpp"
