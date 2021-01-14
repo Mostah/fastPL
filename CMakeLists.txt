@@ -10,6 +10,7 @@ add_subdirectory(extsrc/pugixml)
 add_subdirectory(doxygen) # add doxygen doc generator
 
 set(Headers 
+    include/utils.h
     include/types/Criterion.h
     include/types/Criteria.h
     include/types/Perf.h
@@ -20,10 +21,10 @@ set(Headers
     include/types/Categories.h
     include/types/DataGenerator.h
     include/types/AlternativesPerformance.h
-    include/utils.h
     )
 
 set(Sources 
+    src/utils.cpp
     src/types/Criterion.cpp
     src/types/Criteria.cpp
     src/types/Perf.cpp
