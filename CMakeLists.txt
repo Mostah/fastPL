@@ -22,6 +22,7 @@ set(Headers
     include/types/DataGenerator.h
     include/types/AlternativesPerformance.h
     include/utils.h
+    include/app.h
     )
 
 set(Sources 
@@ -35,11 +36,16 @@ set(Sources
     src/types/Categories.cpp
     src/types/DataGenerator.cpp
     src/types/AlternativesPerformance.cpp
+    src/app.cpp
     )
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17" )
 
 add_library(Core ${Headers} ${Sources})   # build a library with our header and source files
+target_link_libraries(Core spdlog::spdlog_header_only)
+target_link_libraries(Core yaml-cpp)
+target_link_libraries(Core pugixml)
+
 
 # Add executables
 add_executable(Test test/TestMain.cpp)
