@@ -7,6 +7,7 @@
 // line 48 #define PUGIXML_HEADER_ONLY
 
 #include "../../extsrc/pugixml/src/pugixml.hpp"
+#include "AlternativesPerformance.h"
 #include "AtomicMCDAObject.h"
 #include "Criterion.h"
 #include "Performance.h"
@@ -51,38 +52,57 @@ public:
                       bool overwrite = 1, bool changeSeed = 0);
 
   /**
-   * Get data from xml file
+   * Save dataset data in xml file name filename
    *
    * @param fileName filename
+   * @param altPerf Alternative Peformance type
+   * @param nb_categories number of categories
+   * @param overwrite overwrite potentiel filename if it exists
+   * @param datasetName dataset name given in xml file
    *
-   * @return a type for model usage
+   * @return save file in xml format
    *
    */
-  // void loadDataset(std::string fileName);
-
-  // void saveDataset(new type, std::string datasetName);
+  void saveDataset(std::string fileName, AlternativesPerformance altPerf,
+                   int nb_categories, bool overwrite = 1,
+                   std::string datasetName = "");
 
   /**
-   * Get model data from xml file
+   * Get dataset data from xml file
    *
    * @param fileName filename
    *
-   * @return object to use algorithms
+   * @return AlternativesPerformance object in order to use MRSort model
    *
    */
-  std::tuple<float, Criteria, PerformanceTable> loadModel(std::string fileName);
+  AlternativesPerformance loadDataset(std::string fileName);
 
   /**
    * Save model data in xml file name filename
    *
    * @param fileName filename
-   *
+   * @param lambda threshold
+   * @param pt profile Performance table
+   * @param overwrite do i want to overwrite a file if it has the same
+   "fileName"
+   * @param modelName model name given in the xml
+
    * @return save file in xml format
    *
    */
   void saveModel(std::string fileName, float lambda, Criteria criteria,
                  PerformanceTable pt, bool overwrite = 1,
                  std::string modelName = "");
+
+  /**
+   * Get model data from xml file
+   *
+   * @param fileName filename
+   *
+   * @return tuple object to use algorithms
+   *
+   */
+  std::tuple<float, Criteria, PerformanceTable> loadModel(std::string fileName);
 
   /**
    * Get an xml_document type for preocessing the xml files
