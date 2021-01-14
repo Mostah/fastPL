@@ -1,5 +1,5 @@
-#include "../src/DataGenerator.h"
-#include "../src/utils.h"
+#include "../../include/types/DataGenerator.h"
+#include "../../include/utils.h"
 #include "gtest/gtest.h"
 #include <fstream>
 #include <iostream>

@@ -1,7 +1,7 @@
-#include "../src/AlternativesPerformance.h"
-#include "../src/Criteria.h"
-#include "../src/Performance.h"
-#include "../src/PerformanceTable.h"
+#include "../../include/types/AlternativesPerformance.h"
+#include "../../include/types/Criteria.h"
+#include "../../include/types/Performance.h"
+#include "../../include/types/PerformanceTable.h"
 #include "gtest/gtest.h"
 #include <sstream>
 #include <utility>

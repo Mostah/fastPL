@@ -1,6 +1,6 @@
-#include "../src/Criteria.h"
-#include "../src/Criterion.h"
-#include "../src/utils.h"
+#include "../../include/types/Criteria.h"
+#include "../../include/types/Criterion.h"
+#include "../../include/utils.h"
 #include "gtest/gtest.h"
 #include <sstream>
 #include <utility>

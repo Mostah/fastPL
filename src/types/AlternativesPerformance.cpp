@@ -1,4 +1,4 @@
-#include "AlternativesPerformance.h"
+#include "../../include/types/AlternativesPerformance.h"
 #include <typeinfo>
 
 Category default_cat;

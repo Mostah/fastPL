@@ -7,31 +7,33 @@ add_subdirectory(extsrc/googletest)
 add_subdirectory(extsrc/spdlog)
 add_subdirectory(extsrc/pugixml)
 
+add_subdirectory(doxygen) # add doxygen doc generator
+
 set(Headers 
-    src/utils.h
-    src/Criterion.h
-    src/Criteria.h
-    src/Perf.h
-    src/Performance.h
-    src/PerformanceTable.h
-    src/AtomicMCDAObject.h
-    src/Category.h
-    src/Categories.h
-    src/DataGenerator.h
-    src/AlternativesPerformance.h
+    include/types/Criterion.h
+    include/types/Criteria.h
+    include/types/Perf.h
+    include/types/Performance.h
+    include/types/PerformanceTable.h
+    include/types/AtomicMCDAObject.h
+    include/types/Category.h
+    include/types/Categories.h
+    include/types/DataGenerator.h
+    include/types/AlternativesPerformance.h
+    include/utils.h
     )
 
 set(Sources 
-    src/Criterion.cpp
-    src/Criteria.cpp
-    src/Perf.cpp
-    src/Performance.cpp
-    src/PerformanceTable.cpp
-    src/AtomicMCDAObject.cpp
-    src/Category.cpp
-    src/Categories.cpp
-    src/DataGenerator.cpp
-    src/AlternativesPerformance.cpp
+    src/types/Criterion.cpp
+    src/types/Criteria.cpp
+    src/types/Perf.cpp
+    src/types/Performance.cpp
+    src/types/PerformanceTable.cpp
+    src/types/AtomicMCDAObject.cpp
+    src/types/Category.cpp
+    src/types/Categories.cpp
+    src/types/DataGenerator.cpp
+    src/types/AlternativesPerformance.cpp
     )
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17" )

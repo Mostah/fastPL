@@ -1,5 +1,5 @@
-#include "Criterion.h"
-#include "utils.h"
+#include "../../include/types/Criterion.h"
+#include "../../include/utils.h"
 #include <iostream>
 #include <string>
 
