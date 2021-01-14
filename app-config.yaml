@@ -1,0 +1,10 @@
+app:
+  - env:
+    - staging:
+      - log_level: DEBUG
+
+    - prod:
+      - log_level: INFO
+      
+  - log_file: ../logs/app_log.txt
+  - data_dir: ../data/

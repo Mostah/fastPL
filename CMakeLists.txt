@@ -6,6 +6,7 @@ project(fastPL) #name of your project
 add_subdirectory(extsrc/googletest)
 add_subdirectory(extsrc/spdlog)
 add_subdirectory(extsrc/pugixml)
+add_subdirectory(extsrc/yaml-cpp)
 
 add_subdirectory(doxygen) # add doxygen doc generator
 
@@ -44,7 +45,12 @@ add_executable(Main src/main.cpp)
 
 # link librairies to executables
 target_link_libraries(Test Core gtest) 
+
 target_link_libraries(Test Core spdlog::spdlog_header_only) 
 target_link_libraries(Main Core spdlog::spdlog_header_only)
+
 target_link_libraries(Test Core pugixml)
 target_link_libraries(Main Core pugixml)
+
+target_link_libraries(Test Core yaml-cpp)
+target_link_libraries(Main Core yaml-cpp)
