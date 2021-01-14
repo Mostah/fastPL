@@ -4,7 +4,7 @@
 #include <iostream>
 
 struct Config {
-  std::__1::shared_ptr<spdlog::logger> logger;
+  std::shared_ptr<spdlog::logger> logger;
   std::string data_dir = "../data/";
   std::string env = "staging";
 };
