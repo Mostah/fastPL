@@ -44,8 +44,8 @@ TEST(TestMRSortModel, TestBaseConstructor) {
   EXPECT_EQ(os.str(),
             "Model( id : model, lambda : 0.5, crit : Criteria(Criterion(id "
             ": crit0, direction : +, weight : 0), ), "
-            "profiles : PerformanceTable(Performance(Perf( name : "
-            "prof0, crit : crit0, value : 0 ), ), ))");
+            "profiles : PerformanceTable[ Performance: Perf( name : "
+            "prof0, crit : crit0, value : 0 ) | ])");
 }
 
 TEST(TestMRSortModel, TestCategoryAssignment) {
