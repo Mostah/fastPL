@@ -7,19 +7,19 @@
 #include <tuple>
 #include <utility>
 
-// TEST(TestDataGenerator, TestDatasetGenerator) {
-//   DataGenerator data = DataGenerator();
-//   data.datasetGenerator(3, 5, 4, "test.xml", 1, 0);
-//   bool u = fileExists("../data/test.xml");
-//   std::ostringstream os2;
-//   os2 << u;
-//   EXPECT_EQ(os2.str(), "1");
-// }
+TEST(TestDataGenerator, TestDatasetGenerator) {
+  DataGenerator data = DataGenerator();
+  data.datasetGenerator(3, 5, 4, "test_dataset.xml", 1, 0);
+  bool u = fileExists("../data/test_dataset.xml");
+  std::ostringstream os2;
+  os2 << u;
+  EXPECT_EQ(os2.str(), "1");
+}
 
 TEST(TestDataGenerator, TestDatasetGeneratorNotOverwrite) {
   DataGenerator data = DataGenerator();
   try {
-    data.datasetGenerator(3, 5, 4, "test.xml", 0, 0);
+    data.datasetGenerator(3, 5, 4, "test_dataset.xml", 0, 0);
     FAIL() << "should have throw invalid_argument error.";
   } catch (std::invalid_argument const &err) {
     EXPECT_EQ(err.what(),
@@ -33,8 +33,8 @@ TEST(TestDataGenerator, TestDatasetGeneratorNotOverwrite) {
 
 TEST(TestDataGenerator, TestDatasetGeneratorOverwrite) {
   DataGenerator data = DataGenerator();
-  data.datasetGenerator(3, 5, 4, "test.xml", 1, 0);
-  bool u = fileExists("../data/test.xml");
+  data.datasetGenerator(3, 5, 4, "test_dataset.xml", 1, 0);
+  bool u = fileExists("../data/test_dataset.xml");
   std::ostringstream os2;
   os2 << u;
   EXPECT_EQ(os2.str(), "1");
@@ -76,7 +76,7 @@ TEST(TestDataGenerator, TestXmlFileType) {
 
 TEST(TestDataGenerator, TestXmlFileType2) {
   DataGenerator data = DataGenerator();
-  std::string type = data.getXmlFileType("test.xml");
+  std::string type = data.getXmlFileType("test_dataset.xml");
   std::ostringstream os2;
   os2 << type;
   EXPECT_EQ(os2.str(), "dataset");
@@ -274,7 +274,7 @@ TEST(TestDataGenerator, TestNumberOfCriteriaForModels) {
 
 TEST(TestDataGenerator, TestNumberOfCriteriaForData) {
   DataGenerator data = DataGenerator();
-  int crit = data.getNumberOfCriteria("test.xml");
+  int crit = data.getNumberOfCriteria("test_dataset.xml");
   std::ostringstream os2;
   os2 << crit;
   EXPECT_EQ(os2.str(), "3");
@@ -290,7 +290,7 @@ TEST(TestDataGenerator, TestNumberOfCategoriesForModels) {
 
 TEST(TestDataGenerator, TestNumberOfCategoriesForData) {
   DataGenerator data = DataGenerator();
-  int crit = data.getNumberOfCategories("test.xml");
+  int crit = data.getNumberOfCategories("test_dataset.xml");
   std::ostringstream os2;
   os2 << crit;
   EXPECT_EQ(os2.str(), "4");
@@ -299,7 +299,7 @@ TEST(TestDataGenerator, TestNumberOfCategoriesForData) {
 TEST(TestDataGenerator, TestGetLambdaForData) {
   DataGenerator data = DataGenerator();
   try {
-    int crit = data.getThresholdValue("test.xml");
+    int crit = data.getThresholdValue("test_dataset.xml");
     FAIL() << "should have throw invalid_argument error.";
   } catch (std::invalid_argument const &err) {
     EXPECT_EQ(err.what(), std::string("Cannot find any threshold in xml file, "
@@ -319,7 +319,7 @@ TEST(TestDataGenerator, TestGetLambdaForModel) {
 
 TEST(TestDataGenerator, TestGetNumerOfAlternativesForDataset) {
   DataGenerator data = DataGenerator();
-  int nb_alternatives = data.getNumberOfAlternatives("test.xml");
+  int nb_alternatives = data.getNumberOfAlternatives("test_dataset.xml");
   std::ostringstream os2;
   os2 << nb_alternatives;
   EXPECT_EQ(os2.str(), "5");
@@ -341,7 +341,7 @@ TEST(TestDataGenerator, TestGetNumerOfAlternativesForModel) {
 
 TEST(TestDataGenerator, TestGetAlternativePerformanceForDataset) {
   DataGenerator data = DataGenerator();
-  Performance p = data.getAlternativePerformance("test.xml", "alt0");
+  Performance p = data.getAlternativePerformance("test_dataset.xml", "alt0");
   std::ostringstream os2;
   os2 << p;
   EXPECT_EQ(os2.str(), "Performance(Perf( name : alt0, crit : crit0, value : 0 "
@@ -366,7 +366,7 @@ TEST(TestDataGenerator, TestGetAlternativePerformanceForModel) {
 TEST(TestDataGenerator, TestGetAlternativePerformanceForModelFakeAltId) {
   DataGenerator data = DataGenerator();
   try {
-    Performance p = data.getAlternativePerformance("test.xml", "hello");
+    Performance p = data.getAlternativePerformance("test_dataset.xml", "hello");
     FAIL() << "should have throw invalid_argument error.";
   } catch (std::invalid_argument const &err) {
     EXPECT_EQ(err.what(),
@@ -379,7 +379,7 @@ TEST(TestDataGenerator, TestGetAlternativePerformanceForModelFakeAltId) {
 
 TEST(TestDataGenerator, TestGetAlternativeIdsForDataset) {
   DataGenerator data = DataGenerator();
-  std::vector<std::string> v = data.getAlternativeIds("test.xml");
+  std::vector<std::string> v = data.getAlternativeIds("test_dataset.xml");
   std::ostringstream os2;
   os2 << v;
   EXPECT_EQ(os2.str(), "[alt0,alt1,alt2,alt3,alt4]");
@@ -401,7 +401,7 @@ TEST(TestDataGenerator, TestGetAlternativeIdsForModel) {
 
 TEST(TestDataGenerator, TestGetCriteriaIdsForDataset) {
   DataGenerator data = DataGenerator();
-  std::vector<std::string> v = data.getCriteriaIds("test.xml");
+  std::vector<std::string> v = data.getCriteriaIds("test_dataset.xml");
   std::ostringstream os2;
   os2 << v;
   EXPECT_EQ(os2.str(), "[crit0,crit1,crit2]");
@@ -418,7 +418,7 @@ TEST(TestDataGenerator, TestGetCriteriaIdsForModel) {
 TEST(TestDataGenerator, TestGetCriterionForDataset) {
   DataGenerator data = DataGenerator();
   try {
-    Criterion v = data.getCriterion("test.xml", "crit1");
+    Criterion v = data.getCriterion("test_dataset.xml", "crit1");
     FAIL() << "should have throw invalid_argument error.";
   } catch (std::invalid_argument const &err) {
     EXPECT_EQ(err.what(), std::string("Cannot find the criterion associated "
@@ -467,7 +467,7 @@ TEST(TestDataGenerator, TestGetAlternativeAssignmentModel) {
 
 TEST(TestDataGenerator, TestGetAlternativeAssignmentDataset) {
   DataGenerator data = DataGenerator();
-  int v = data.getAlternativeAssignment("test.xml", "alt0");
+  int v = data.getAlternativeAssignment("test_dataset.xml", "alt0");
   std::ostringstream os2;
   os2 << v;
   // need to modify that when new type is in
@@ -477,7 +477,7 @@ TEST(TestDataGenerator, TestGetAlternativeAssignmentDataset) {
 TEST(TestDataGenerator, TestGetAlternativeAssignmentDatasetFakeAltId) {
   DataGenerator data = DataGenerator();
   try {
-    int v = data.getAlternativeAssignment("test.xml", "hello");
+    int v = data.getAlternativeAssignment("test_dataset.xml", "hello");
     FAIL() << "should have throw invalid_argument error.";
   } catch (std::invalid_argument const &err) {
     EXPECT_EQ(err.what(), std::string("Cannot find category assignment "
@@ -490,7 +490,8 @@ TEST(TestDataGenerator, TestGetAlternativeAssignmentDatasetFakeAltId) {
 TEST(TestDataGenerator, TestGetCriterionCategoryLimitsDataset) {
   DataGenerator data = DataGenerator();
   try {
-    std::vector<float> v = data.getCriterionCategoryLimits("test.xml", "crit1");
+    std::vector<float> v =
+        data.getCriterionCategoryLimits("test_dataset.xml", "crit1");
     FAIL() << "should have throw invalid_argument error.";
   } catch (std::invalid_argument const &err) {
     EXPECT_EQ(err.what(),
