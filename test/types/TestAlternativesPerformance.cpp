@@ -9,33 +9,28 @@
 TEST(TestAlternativesPerformance, TestConstructorBaseConstructor) {
   Criteria crit = Criteria(2, "crit");
   Category cat0 = Category("cat0", 0);
-  Category cat1 = Category("cat1", 1);
 
-  AlternativesPerformance alt_perf = AlternativesPerformance(2, crit, "a");
+  AlternativesPerformance alt_perf = AlternativesPerformance(1, crit, "a");
   std::ostringstream os;
   os << alt_perf;
-  EXPECT_EQ(os.str(),
-            "AlternativesPerformance( PerformanceTable[ Performance: Perf( "
-            "name : a0, crit : crit0, value : 0 ) Perf( name : a0, crit : "
-            "crit1, value : 0 ) | Performance: Perf( name : a1, crit : crit0, "
-            "value : 0 ) Perf( name : a1, crit : crit1, value : 0 ) | ], "
-            "AlternativesAssignment{ a1->Category(id : , rank : -1) "
-            "a0->Category(id : , rank : -1) }");
+  EXPECT_EQ(
+      os.str(),
+      "AlternativesPerformance( PerformanceTable[ Performance: Perf( name : "
+      "a0, crit : crit0, value : 0 ) Perf( name : a0, crit : crit1, value : 0 "
+      ") | ], AlternativesAssignment{ a0->Category(id : , rank : -1) }");
   EXPECT_EQ(alt_perf.getMode(), "alt");
 
   std::unordered_map<std::string, Category> map =
-      std::unordered_map<std::string, Category>{{"a0", cat0}, {"a1", cat1}};
+      std::unordered_map<std::string, Category>{{"a0", cat0}};
   AlternativesPerformance alt_perf2 =
-      AlternativesPerformance(2, crit, "a", map);
+      AlternativesPerformance(1, crit, "a", map);
   std::ostringstream os2;
   os2 << alt_perf2;
-  EXPECT_EQ(os2.str(),
-            "AlternativesPerformance( PerformanceTable[ Performance: Perf( "
-            "name : a0, crit : crit0, value : 0 ) Perf( name : a0, crit : "
-            "crit1, value : 0 ) | Performance: Perf( name : a1, crit : crit0, "
-            "value : 0 ) Perf( name : a1, crit : crit1, value : 0 ) | ], "
-            "AlternativesAssignment{ a1->Category(id : cat1, rank : 1) "
-            "a0->Category(id : cat0, rank : 0) }");
+  EXPECT_EQ(
+      os2.str(),
+      "AlternativesPerformance( PerformanceTable[ Performance: Perf( name : "
+      "a0, crit : crit0, value : 0 ) Perf( name : a0, crit : crit1, value : 0 "
+      ") | ], AlternativesAssignment{ a0->Category(id : cat0, rank : 0) }");
   EXPECT_EQ(alt_perf2.getMode(), "alt");
 }
 
@@ -62,35 +57,30 @@ TEST(TestAlternativesPerformance, TestConstructorWithPerfVect) {
   std::vector<Performance> perf_vect;
   Criteria crit = Criteria(2, "crit");
   perf_vect.push_back(Performance(crit, "a0"));
-  perf_vect.push_back(Performance(crit, "a1"));
+  // perf_vect.push_back(Performance(crit, "a1"));
 
   AlternativesPerformance alt_perf = AlternativesPerformance(perf_vect);
   std::ostringstream os;
   os << alt_perf;
-  EXPECT_EQ(os.str(),
-            "AlternativesPerformance( PerformanceTable[ Performance: Perf( "
-            "name : a0, crit : crit0, value : 0 ) Perf( name : a0, crit : "
-            "crit1, value : 0 ) | Performance: Perf( name : a1, crit : crit0, "
-            "value : 0 ) Perf( name : a1, crit : crit1, value : 0 ) | ], "
-            "AlternativesAssignment{ a1->Category(id : , rank : -1) "
-            "a0->Category(id : , rank : -1) }");
+  EXPECT_EQ(
+      os.str(),
+      "AlternativesPerformance( PerformanceTable[ Performance: Perf( name : "
+      "a0, crit : crit0, value : 0 ) Perf( name : a0, crit : crit1, value : 0 "
+      ") | ], AlternativesAssignment{ a0->Category(id : , rank : -1) }");
   EXPECT_EQ(alt_perf.getMode(), "alt");
 
   Category cat0 = Category("cat0", 0);
-  Category cat1 = Category("cat1", 1);
   std::unordered_map<std::string, Category> map =
-      std::unordered_map<std::string, Category>{{"a0", cat0}, {"a1", cat1}};
+      std::unordered_map<std::string, Category>{{"a0", cat0}};
 
   AlternativesPerformance alt_perf2 = AlternativesPerformance(perf_vect, map);
   std::ostringstream os2;
   os2 << alt_perf2;
-  EXPECT_EQ(os2.str(),
-            "AlternativesPerformance( PerformanceTable[ Performance: Perf( "
-            "name : a0, crit : crit0, value : 0 ) Perf( name : a0, crit : "
-            "crit1, value : 0 ) | Performance: Perf( name : a1, crit : crit0, "
-            "value : 0 ) Perf( name : a1, crit : crit1, value : 0 ) | ], "
-            "AlternativesAssignment{ a1->Category(id : cat1, rank : 1) "
-            "a0->Category(id : cat0, rank : 0) }");
+  EXPECT_EQ(
+      os2.str(),
+      "AlternativesPerformance( PerformanceTable[ Performance: Perf( name : "
+      "a0, crit : crit0, value : 0 ) Perf( name : a0, crit : crit1, value : 0 "
+      ") | ], AlternativesAssignment{ a0->Category(id : cat0, rank : 0) }");
 }
 
 TEST(TestAlternativesPerformance, TestConstructorWithPerfVectMapErrors) {
@@ -119,36 +109,30 @@ TEST(TestAlternativesPerformance, TestConstructorWithPerfTable) {
   std::vector<Performance> perf_vect;
   Criteria crit = Criteria(2, "crit");
   perf_vect.push_back(Performance(crit, "a0"));
-  perf_vect.push_back(Performance(crit, "a1"));
   PerformanceTable perf_table = PerformanceTable(perf_vect);
 
   AlternativesPerformance alt_perf = AlternativesPerformance(perf_table);
 
   std::ostringstream os;
   os << alt_perf;
-  EXPECT_EQ(os.str(),
-            "AlternativesPerformance( PerformanceTable[ Performance: Perf( "
-            "name : a0, crit : crit0, value : 0 ) Perf( name : a0, crit : "
-            "crit1, value : 0 ) | Performance: Perf( name : a1, crit : crit0, "
-            "value : 0 ) Perf( name : a1, crit : crit1, value : 0 ) | ], "
-            "AlternativesAssignment{ a1->Category(id : , rank : -1) "
-            "a0->Category(id : , rank : -1) }");
+  EXPECT_EQ(
+      os.str(),
+      "AlternativesPerformance( PerformanceTable[ Performance: Perf( name : "
+      "a0, crit : crit0, value : 0 ) Perf( name : a0, crit : crit1, value : 0 "
+      ") | ], AlternativesAssignment{ a0->Category(id : , rank : -1) }");
   EXPECT_EQ(alt_perf.getMode(), "alt");
 
   Category cat0 = Category("cat0", 0);
-  Category cat1 = Category("cat1", 1);
   std::unordered_map<std::string, Category> map =
-      std::unordered_map<std::string, Category>{{"a0", cat0}, {"a1", cat1}};
+      std::unordered_map<std::string, Category>{{"a0", cat0}};
   AlternativesPerformance alt_perf2 = AlternativesPerformance(perf_table, map);
   std::ostringstream os2;
   os2 << alt_perf2;
-  EXPECT_EQ(os2.str(),
-            "AlternativesPerformance( PerformanceTable[ Performance: Perf( "
-            "name : a0, crit : crit0, value : 0 ) Perf( name : a0, crit : "
-            "crit1, value : 0 ) | Performance: Perf( name : a1, crit : crit0, "
-            "value : 0 ) Perf( name : a1, crit : crit1, value : 0 ) | ], "
-            "AlternativesAssignment{ a1->Category(id : cat1, rank : 1) "
-            "a0->Category(id : cat0, rank : 0) }");
+  EXPECT_EQ(
+      os2.str(),
+      "AlternativesPerformance( PerformanceTable[ Performance: Perf( name : "
+      "a0, crit : crit0, value : 0 ) Perf( name : a0, crit : crit1, value : 0 "
+      ") | ], AlternativesAssignment{ a0->Category(id : cat0, rank : 0) }");
   EXPECT_EQ(alt_perf2.getMode(), "alt");
 }
 
