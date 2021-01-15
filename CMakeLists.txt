@@ -7,7 +7,7 @@ add_subdirectory(extsrc/googletest)
 add_subdirectory(extsrc/spdlog)
 add_subdirectory(extsrc/pugixml)
 
-add_subdirectory(doxygen) # add doxygen doc generator
+add_subdirectory(doc) # add doxygen doc generator
 
 set(Headers 
     include/types/MRSortModel.h
