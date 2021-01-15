@@ -58,3 +58,4 @@ logs/
 # documentation
 doc/*
 !doc/CMakeLists.txt
+!doc/doc_generation.sh
