@@ -31,7 +31,7 @@ jobs:
       - attach_workspace:
           at: ./
       - run: apt-get update && apt-get -y install cmake && apt-get -y install doxygen
-      - run: cd doxygen; cmake .; doxygen Doxyfile.Doxygen 
+      - run: cd doc; cmake .; doxygen Doxyfile.Doxygen 
 
 
 # Orchestrate our job run sequence
