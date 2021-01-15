@@ -47,6 +47,18 @@ docker run -it <container_id> /bin/bash
 cd /home/fastpl/logs
 ```
 
+# Online Documentation
+
+## Link to the online documentation
+https://mostah.github.io/fastPL/
+
+## Script to update online doc
+From root directory:
+
+```
+sh doc_generation.sh
+```
+
 # Local Tests environment configuration
 
 ## Test C++ code on Circle CI
@@ -103,7 +115,21 @@ Example:
 ./Test --gtest_filter=TestGeneralName.*                 # All tests of Name1 = GeneralName 
 ```
 
-## Generating documentation with doxygen
+## Docker image
+
+### Run test using the docker image
+```
+docker-compose up --build
+```
+
+SSH connect to the docker image (just in case)
+
+### Replace container_id with the current container id
+```
+docker run -it <container_id> /bin/bash 
+```
+
+## Generating documentation locally with doxygen
 
 ### Installing doxygen
 
@@ -120,7 +146,7 @@ brew install doxygen
 ### Generating documentation
 
 ```
-cd doxygen
+cd doc
 cmake .
 doxygen Doxyfile.Doxigen
 cd html
