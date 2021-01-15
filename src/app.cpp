@@ -13,7 +13,7 @@ void App::initializeLogger(YAML::Node &yml_conf) {
   } else {
     log_path = "../logs/app_log.txt";
   }
-  conf.logger = spdlog::basic_logger_mt("app_logger", "../logs/app_log.txt");
+  conf.logger = spdlog::basic_logger_mt("app_logger", log_path);
 
   if (yml_conf["env"][conf.env]["log_level"].as<std::string>() == "DEBUG") {
     spdlog::set_level(spdlog::level::debug);

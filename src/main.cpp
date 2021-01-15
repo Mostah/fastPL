@@ -6,14 +6,20 @@
 #include "../include/app.h"
 
 int main(int argc, char *argv[]) {
-  YAML::Node yaml_config = YAML::LoadFile("../app-config.yaml");
+  YAML::Node yaml_config;
+  try {
+    yaml_config = YAML::LoadFile("../app-config.yaml");
+  } catch (...) {
+    std::cerr << "ERROR: app-config.yaml file not found at ../. from where the "
+                 "program got executed."
+              << std::endl;
+    return 1;
+  }
   App app = App();
 
   int exec_code = app.parseArgs(argc, argv);
-  if (exec_code == 1) {
-    return 1;
-  } else if (exec_code == 0) {
-    return 0;
+  if (exec_code != -1) {
+    return exec_code;
   }
 
   app.initializeLogger(yaml_config);
