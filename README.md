@@ -9,9 +9,43 @@ The  objective of this repository is to translate the previous code (py-mcda) in
 
 * [test](https://github.com/Mostah/fastPL/tree/master/test) : Test files
 
-* [extsrc](https://github.com/Mostah/fastPL/tree/master/extsrc) : External sources, here googletest
+* [extsrc](https://github.com/Mostah/fastPL/tree/master/extsrc) : External sources and dependencies
 
 * [.circleci](https://github.com/Mostah/fastPL/tree/master/.circleci) : CircleCi configuration
+
+# Run app and test in Docker
+
+## Build Docker image
+
+First thing first, build the docker image
+
+```
+docker build . -t fastpl
+```
+
+## Run test using the docker image
+```
+docker run fastpl ./Test
+```
+
+## Run the main app using the docker image
+The following command will show the run config options (helper):
+```
+docker run fastpl
+```
+
+To run the app with default config:
+```
+docker run fastpl ./Main
+```
+
+## SSH connect to the docker image and check the logs
+
+Replace container_id with the current container id
+```
+docker run -it <container_id> /bin/bash 
+cd /home/fastpl/logs
+```
 
 # Online Documentation
 
@@ -25,7 +59,7 @@ From root directory:
 sh doc_generation.sh
 ```
 
-# Tests environment configuration
+# Local Tests environment configuration
 
 ## Test C++ code on Circle CI
 
@@ -33,19 +67,18 @@ See [Circle CI configuration file](https://github.com/Mostah/fastPL/blob/master/
 
 ## Manual test with google-test
 
-### Get gtest from repo
+### Download and set up dependencies
 
 ``` 
 git submodule init
 git submodule update
 ``` 
 
-### Build gtest
+### Build the project
 
-#### Ubuntu
+cmake must have been installed in the machine. Run `sudo apt-get install cmake` for Ubuntu
 
 ```
-sudo apt-get install cmake
 mkdir build
 cd build
 cmake ..
@@ -113,7 +146,7 @@ brew install doxygen
 ### Generating documentation
 
 ```
-cd doxygen
+cd doc
 cmake .
 doxygen Doxyfile.Doxigen
 cd html

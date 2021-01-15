@@ -1,4 +1,5 @@
 #include "../../include/types/DataGenerator.h"
+#include "../../include/app.h"
 #include "../../include/types/Categories.h"
 #include "../../include/types/Criteria.h"
 #include "../../include/types/Criterion.h"
@@ -13,6 +14,8 @@
 #include <string>
 #include <tuple>
 #include <unordered_map>
+
+DataGenerator::DataGenerator(Config &config) : conf(config) {}
 
 void DataGenerator::datasetGenerator(int nb_criteria, int nb_alternative,
                                      int nb_categories, std::string datasetName,
@@ -85,9 +88,9 @@ void DataGenerator::datasetGenerator(int nb_criteria, int nb_alternative,
 
   std::string modelpath;
   if (datasetName == "") {
-    modelpath = "../data/" + name + ".xml";
+    modelpath = conf.data_dir + name + ".xml";
   } else {
-    modelpath = "../data/" + datasetName;
+    modelpath = conf.data_dir + datasetName;
   }
 
   if (fileExists(modelpath) && !overwrite) {
@@ -175,9 +178,9 @@ void DataGenerator::modelGenerator(int nb_criteria, int nb_categories,
   }
   std::string modelpath;
   if (modelName == "") {
-    modelpath = "../data/" + name + ".xml";
+    modelpath = conf.data_dir + name + ".xml";
   } else {
-    modelpath = "../data/" + modelName;
+    modelpath = conf.data_dir + modelName;
   }
 
   if (fileExists(modelpath) && !overwrite) {
@@ -315,7 +318,7 @@ void DataGenerator::saveModel(std::string fileName, float lambda,
         .set_value(std::to_string(criteria.getCriterionVect()[i].getDirection())
                        .c_str());
   }
-  std::string modelpath = "../data/" + fileName;
+  std::string modelpath = conf.data_dir + fileName;
   if (fileExists(modelpath) && !overwrite) {
     throw std::invalid_argument("Such a default xml generate (or not) filename "
                                 "already exists and you chose "
@@ -451,9 +454,9 @@ void DataGenerator::saveDataset(std::string fileName,
 
   std::string modelpath;
   if (datasetName == "") {
-    modelpath = "../data/" + name + ".xml";
+    modelpath = conf.data_dir + name + ".xml";
   } else {
-    modelpath = "../data/" + datasetName;
+    modelpath = conf.data_dir + datasetName;
   }
 
   if (fileExists(modelpath) && !overwrite) {
@@ -469,7 +472,7 @@ void DataGenerator::saveDataset(std::string fileName,
 
 pugi::xml_document DataGenerator::openXmlFile(std::string fileName) {
   pugi::xml_document doc;
-  std::string path = "../data/" + fileName;
+  std::string path = conf.data_dir + fileName;
   if (!doc.load_file(path.c_str()))
     throw std::invalid_argument("Cannot open xml file, please check path");
   return doc;
