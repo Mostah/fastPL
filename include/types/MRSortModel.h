@@ -26,9 +26,8 @@ public:
               float lambda, std::string id = "model");
 
   /**
-   * MRSortModel generator constructor. This
-   * constructor initializes the profiles, lambda and criteria weights at
-   * random.
+   * MRSortModel generator constructor. This constructor initializes the
+   * profiles, lambda and criteria weights at random.
    *
    * @param ap alternative performance object
    * @param id optional name of the model
@@ -58,8 +57,8 @@ public:
    *
    * @param pt PerformanceTable
    *
-   * @return category_assignment pair vector with first value is the alternative
-   * id and second value the category assigned.
+   * @return category_assignment AlternativeAssignment object containing the pt
+   * given in args and the category assignment.
    */
   AlternativesPerformance categoryAssignment(PerformanceTable &pt);
 

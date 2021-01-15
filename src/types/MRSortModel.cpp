@@ -46,7 +46,7 @@ AlternativesPerformance MRSortModel::categoryAssignment(PerformanceTable &pt) {
   }
   std::unordered_map<std::string, Category> cat_assignment;
 
-  // Looping over all alternative
+  // Looping over all alternatives
   for (std::vector<Perf> alt : pt.getPerformanceTable()) {
     bool assigned = false;
     // For all alt, looping over all profiles in descending order
