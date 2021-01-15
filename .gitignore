@@ -58,3 +58,6 @@ doxygen/*
 
 # logs
 logs/
+
+# documentation
+doc/html/
