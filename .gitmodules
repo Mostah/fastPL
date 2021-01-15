@@ -8,3 +8,6 @@
 [submodule "extsrc/spdlog"]
 	path = extsrc/spdlog
 	url = https://github.com/gabime/spdlog.git
+[submodule "extsrc/yaml-cpp"]
+	path = extsrc/yaml-cpp
+	url = git@github.com:jbeder/yaml-cpp.git

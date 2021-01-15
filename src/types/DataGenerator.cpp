@@ -1,4 +1,5 @@
 #include "../../include/types/DataGenerator.h"
+#include "../../include/app.h"
 #include "../../include/types/Categories.h"
 #include "../../include/types/Criteria.h"
 #include "../../include/types/Criterion.h"
@@ -12,6 +13,9 @@
 #include <stdlib.h>
 #include <string>
 #include <tuple>
+#include <unordered_map>
+
+DataGenerator::DataGenerator(Config &config) : conf(config) {}
 
 void DataGenerator::datasetGenerator(int nb_criteria, int nb_alternative,
                                      int nb_categories, std::string datasetName,
@@ -84,9 +88,9 @@ void DataGenerator::datasetGenerator(int nb_criteria, int nb_alternative,
 
   std::string modelpath;
   if (datasetName == "") {
-    modelpath = "../data/" + name + ".xml";
+    modelpath = conf.data_dir + name + ".xml";
   } else {
-    modelpath = "../data/" + datasetName;
+    modelpath = conf.data_dir + datasetName;
   }
 
   if (fileExists(modelpath) && !overwrite) {
@@ -174,9 +178,9 @@ void DataGenerator::modelGenerator(int nb_criteria, int nb_categories,
   }
   std::string modelpath;
   if (modelName == "") {
-    modelpath = "../data/" + name + ".xml";
+    modelpath = conf.data_dir + name + ".xml";
   } else {
-    modelpath = "../data/" + modelName;
+    modelpath = conf.data_dir + modelName;
   }
 
   if (fileExists(modelpath) && !overwrite) {
@@ -191,44 +195,51 @@ void DataGenerator::modelGenerator(int nb_criteria, int nb_categories,
   }
 }
 
-// void DataGenerator::loadDataset(std::string fileName) {}
-
 std::tuple<float, Criteria, PerformanceTable>
 DataGenerator::loadModel(std::string fileName) {
+  pugi::xml_document doc = DataGenerator::openXmlFile(fileName);
 
-  // Getting lambda from model
-  float lambda = DataGenerator::getThresholdValue(fileName);
-  std::vector<Criterion> criteria_vec;
-  std::vector<std::string> criteriaIds =
-      DataGenerator::getCriteriaIds(fileName);
-  std::vector<std::vector<float>> catLimits;
-  for (std::vector<std::string>::iterator it = criteriaIds.begin(),
-                                          end = criteriaIds.end();
-       it != end; ++it) {
-    criteria_vec.push_back(DataGenerator::getCriterion(fileName, *it));
-    catLimits.push_back(
-        DataGenerator::getCriterionCategoryLimits(fileName, *it));
-  }
+  if (DataGenerator::getXmlFileType(fileName) != "model") {
+    // if we have a model xml
+    throw std::invalid_argument(
+        "Cannot find any lambda and profile performances in xml file, "
+        "most likely have a dataset xml file");
+  } else {
 
-  Criteria criteria = Criteria(criteria_vec);
-  int nbCriteria = catLimits.size();
-  int nbFictionalAlternatives = catLimits[0].size();
-  std::vector<std::vector<float>> fictPerformances;
-  for (int i = 0; i < nbFictionalAlternatives; i++) {
-    std::vector<float> tmp;
-    for (int j = 0; j < nbCriteria; j++) {
-      tmp.push_back(catLimits[j][i]);
+    // Getting lambda from model
+    float lambda = DataGenerator::getThresholdValue(fileName);
+    std::vector<Criterion> criteria_vec;
+    std::vector<std::string> criteriaIds =
+        DataGenerator::getCriteriaIds(fileName);
+    std::vector<std::vector<float>> catLimits;
+    for (std::vector<std::string>::iterator it = criteriaIds.begin(),
+                                            end = criteriaIds.end();
+         it != end; ++it) {
+      criteria_vec.push_back(DataGenerator::getCriterion(fileName, *it));
+      catLimits.push_back(
+          DataGenerator::getCriterionCategoryLimits(fileName, *it));
     }
-    fictPerformances.push_back(tmp);
-  }
 
-  std::vector<Performance> vecPerformance;
-  for (int i = 0; i < nbFictionalAlternatives; i++) {
-    vecPerformance.push_back(
-        Performance(criteria, fictPerformances[i], "prof" + std::to_string(i)));
+    Criteria criteria = Criteria(criteria_vec);
+    int nbCriteria = catLimits.size();
+    int nbFictionalAlternatives = catLimits[0].size();
+    std::vector<std::vector<float>> fictPerformances;
+    for (int i = 0; i < nbFictionalAlternatives; i++) {
+      std::vector<float> tmp;
+      for (int j = 0; j < nbCriteria; j++) {
+        tmp.push_back(catLimits[j][i]);
+      }
+      fictPerformances.push_back(tmp);
+    }
+
+    std::vector<Performance> vecPerformance;
+    for (int i = 0; i < nbFictionalAlternatives; i++) {
+      vecPerformance.push_back(Performance(criteria, fictPerformances[i],
+                                           "prof" + std::to_string(i)));
+    }
+    PerformanceTable perftab = PerformanceTable(vecPerformance);
+    return std::make_tuple(lambda, criteria, perftab);
   }
-  PerformanceTable perftab = PerformanceTable(vecPerformance);
-  return std::make_tuple(lambda, criteria, perftab);
 }
 
 void DataGenerator::saveModel(std::string fileName, float lambda,
@@ -240,7 +251,8 @@ void DataGenerator::saveModel(std::string fileName, float lambda,
 
   if (nb_categories != pt.getPerformanceTable()[0].size()) {
     throw std::invalid_argument(
-        " Number of criteria and the number and the length of the performance "
+        " Number of criteria and the number and the length of the "
+        "performance "
         "of the fictive alternative (ie profile performance) does not match");
   }
   // Generate new XML document within memory
@@ -306,7 +318,7 @@ void DataGenerator::saveModel(std::string fileName, float lambda,
         .set_value(std::to_string(criteria.getCriterionVect()[i].getDirection())
                        .c_str());
   }
-  std::string modelpath = "../data/" + fileName;
+  std::string modelpath = conf.data_dir + fileName;
   if (fileExists(modelpath) && !overwrite) {
     throw std::invalid_argument("Such a default xml generate (or not) filename "
                                 "already exists and you chose "
@@ -319,9 +331,148 @@ void DataGenerator::saveModel(std::string fileName, float lambda,
   }
 }
 
+AlternativesPerformance DataGenerator::loadDataset(std::string fileName) {
+  pugi::xml_document doc = DataGenerator::openXmlFile(fileName);
+  if (DataGenerator::getXmlFileType(fileName) == "model") {
+    // if we have a model xml
+    throw std::invalid_argument("Cannot find any alternatives in xml file, "
+                                "most likely have a xml model file");
+  }
+  // creating type blocks to return Performance object
+  std::unordered_map<std::string, Category> altAssignments;
+  int nb_criteria = DataGenerator::getNumberOfCriteria(fileName);
+  Criteria criteria = Criteria(nb_criteria, "crit");
+  std::vector<Performance> vecPerformances;
+
+  pugi::xml_node node_dataset = doc.child("dataset");
+  for (pugi::xml_node_iterator it = node_dataset.begin();
+       it != node_dataset.end(); ++it) {
+    std::vector<float> altPerf;
+
+    if (strcmp(it->name(), "alternative") == 0) {
+
+      pugi::xml_node alternative_node = node_dataset.child(it->name());
+      std::string altId = it->child_value();
+
+      for (pugi::xml_node_iterator it = alternative_node.begin();
+           it != alternative_node.end(); ++it) {
+
+        if (strcmp(it->name(), "assignment") != 0 ||
+            strcmp(it->name(), "") != 0) {
+
+          float perf = atof(it->child_value());
+          altPerf.push_back(perf);
+
+        } else if (strcmp(it->name(), "assignment") == 0) {
+
+          float rank = atof(it->child_value());
+          altAssignments.insert(
+              {altId, Category("cat" + std::to_string(rank), rank)});
+        }
+      }
+      vecPerformances.push_back(Performance(criteria, altPerf, altId));
+    }
+  }
+  return AlternativesPerformance(PerformanceTable(vecPerformances),
+                                 altAssignments);
+}
+
+void DataGenerator::saveDataset(std::string fileName,
+                                AlternativesPerformance altPerf,
+                                int nb_categories, bool overwrite,
+                                std::string datasetName) {
+
+  if (altPerf.getMode() != "alt") {
+    throw std::invalid_argument("Performance table must be in alt mode");
+  }
+
+  int nb_alternatives = altPerf.getPerformanceTable().size();
+  int nb_criteria = altPerf.getPerformanceTable()[0].size();
+
+  // Generate new XML document within memory
+  pugi::xml_document doc;
+
+  // Creating root
+  auto root = doc.append_child("Root");
+  pugi::xml_node dataset_node = doc.append_child("dataset");
+
+  // Giving dataset name
+  pugi::xml_node model_name = dataset_node.append_child("datasetName");
+  std::string name = "dataset_alt" + std::to_string(nb_alternatives) + "_crit" +
+                     std::to_string(nb_criteria) + "_cat" +
+                     std::to_string(nb_categories);
+
+  if (datasetName == "") {
+    model_name.append_child(pugi::node_pcdata).set_value(name.c_str());
+  } else {
+    model_name.append_child(pugi::node_pcdata).set_value(datasetName.c_str());
+  }
+
+  // Giving number of criterias in total
+  pugi::xml_node criteria_node = dataset_node.append_child("criteria");
+
+  criteria_node.append_child(pugi::node_pcdata)
+      .set_value(std::to_string(nb_criteria).c_str());
+
+  // Giving number of categories in total
+  pugi::xml_node categories = dataset_node.append_child("categories");
+  categories.append_child(pugi::node_pcdata)
+      .set_value(std::to_string(nb_categories).c_str());
+
+  // Giving number of alternatives in total
+  pugi::xml_node alternatives = dataset_node.append_child("alternatives");
+  alternatives.append_child(pugi::node_pcdata)
+      .set_value(std::to_string(nb_alternatives).c_str());
+
+  // looping over alternatives
+  for (std::vector<Perf> p : altPerf.getPerformanceTable()) {
+    pugi::xml_node alternative_node = dataset_node.append_child("alternative");
+    // getting alternative id
+    alternative_node.append_child(pugi::node_pcdata)
+        .set_value(p[0].getName().c_str());
+
+    // looping over performance values of specific alternative
+    for (Perf perf : p) {
+      // for each criteria give its correspondant performace
+      pugi::xml_node alternative_criteria_node =
+          alternative_node.append_child(perf.getCrit().c_str());
+
+      alternative_criteria_node.append_child(pugi::node_pcdata)
+          .set_value(std::to_string(perf.getValue()).c_str());
+    }
+
+    // Get the category assignemnt of the alternative from altPerf
+    pugi::xml_node alternative_assignment =
+        alternative_node.append_child("assignment");
+
+    alternative_assignment.append_child(pugi::node_pcdata)
+        .set_value(
+            std::to_string(altPerf.getAlternativeAssignment(p[0].getName())
+                               .getCategoryRank())
+                .c_str());
+  }
+
+  std::string modelpath;
+  if (datasetName == "") {
+    modelpath = conf.data_dir + name + ".xml";
+  } else {
+    modelpath = conf.data_dir + datasetName;
+  }
+
+  if (fileExists(modelpath) && !overwrite) {
+    throw std::invalid_argument("Such a default xml generate (or not) filename "
+                                "already exists and you chose "
+                                "not to overwrite it");
+  }
+  bool saveSucceeded = doc.save_file(modelpath.c_str(), PUGIXML_TEXT("  "));
+  if (!saveSucceeded) {
+    throw std::invalid_argument("Cannot save xml file...");
+  }
+}
+
 pugi::xml_document DataGenerator::openXmlFile(std::string fileName) {
   pugi::xml_document doc;
-  std::string path = "../data/" + fileName;
+  std::string path = conf.data_dir + fileName;
   if (!doc.load_file(path.c_str()))
     throw std::invalid_argument("Cannot open xml file, please check path");
   return doc;
@@ -420,6 +571,7 @@ int DataGenerator::getNumberOfAlternatives(std::string fileName) {
 
 Performance DataGenerator::getAlternativePerformance(std::string fileName,
                                                      std::string alt_id) {
+
   pugi::xml_document doc = DataGenerator::openXmlFile(fileName);
 
   if (DataGenerator::getXmlFileType(fileName) == "model") {
@@ -493,8 +645,8 @@ std::vector<std::string> DataGenerator::getCriteriaIds(std::string fileName) {
 
   if (DataGenerator::getXmlFileType(fileName) == "model") {
     // if we have a model xml
-    // going from root ie model then to its first child modelName and passing
-    // to the 5th child ie first criterion
+    // going from root ie model then to its first child modelName and
+    // passing to the 5th child ie first criterion
     pugi::xml_node node_model = doc.child("model");
 
     for (pugi::xml_node_iterator it = node_model.begin();
@@ -531,9 +683,9 @@ Criterion DataGenerator::getCriterion(std::string fileName,
 
   if (DataGenerator::getXmlFileType(fileName) == "dataset") {
     // if we have a model xml
-    throw std::invalid_argument(
-        "Cannot find the criterion associated to its weights in xml file, "
-        "most likely have a xml model file");
+    throw std::invalid_argument("Cannot find the criterion associated to "
+                                "its weights in xml file, "
+                                "most likely have a xml model file");
   } else {
     // if we have a dataset xml
     pugi::xml_node node_model = doc.child("model");
@@ -598,8 +750,8 @@ int DataGenerator::getAlternativeAssignment(std::string fileName,
     }
   }
   if (assignment == -1) {
-    throw std::invalid_argument(
-        "Cannot find category assignment associated to alt_id in xml file.");
+    throw std::invalid_argument("Cannot find category assignment "
+                                "associated to alt_id in xml file.");
   }
   return assignment;
 }
