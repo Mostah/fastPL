@@ -100,7 +100,7 @@ TEST(TestDataGenerator, TestXmlFileType3) {
   Config conf = getTestConf();
   DataGenerator data = DataGenerator(conf);
   try {
-    std::string type = data.getXmlFileType("wrong_structure.xml");
+    std::string type = data.getXmlFileType("test_wrong_structure.xml");
     FAIL() << "should have throw invalid_argument error.";
   } catch (std::invalid_argument const &err) {
     EXPECT_EQ(err.what(),
