@@ -13,6 +13,18 @@ The  objective of this repository is to translate the previous code (py-mcda) in
 
 * [.circleci](https://github.com/Mostah/fastPL/tree/master/.circleci) : CircleCi configuration
 
+# Online Documentation
+
+## Link to the online documentation
+https://mostah.github.io/fastPL/
+
+## Script to update online doc
+From root directory:
+
+```
+sh doc_generation.sh
+```
+
 # Tests environment configuration
 
 ## Test C++ code on Circle CI
@@ -84,7 +96,7 @@ SSH connect to the docker image (just in case)
 docker run -it <container_id> /bin/bash 
 ```
 
-## Generating documentation with doxygen
+## Generating documentation locally with doxygen
 
 ### Installing doxygen
 
