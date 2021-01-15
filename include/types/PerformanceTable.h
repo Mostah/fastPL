@@ -145,21 +145,6 @@ public:
   std::vector<Perf> getWorstPerfByCrit(Criteria &crits);
 
   /**
-   * isOrdered check if the performance table is ordered to be use as a profile
-   * type: each alts must be ranked given their value on each criterion.
-   *
-   * @return isOrdered
-   */
-  bool isOrdered();
-
-  /**
-   * generateRandomOrderedPerfValues generate perf values in a profile ordered
-   * manner.
-   *
-   */
-  void generateRandomOrderedPerfValues();
-
-  /**
    * findAlt return true if the alternative is in the performance table
    *
    * @param altName Alternative to lookup

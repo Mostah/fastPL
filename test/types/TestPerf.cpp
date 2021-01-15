@@ -37,7 +37,3 @@ TEST(TestPerf, TestGetterSetter) {
   EXPECT_EQ("test2", perf.getName());
   EXPECT_EQ("b", perf.getCrit());
 }
-
-TEST(TestPerf, TestAllInstancesDestroyed) {
-  EXPECT_EQ(AtomicMCDAObject::get_nb_instances(), 0);
-}

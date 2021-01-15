@@ -22,7 +22,7 @@ Criteria getTestCriteria() {
   return Criteria(crit_vect);
 }
 
-PerformanceTable getTestProfile() {
+Profiles getTestProfile() {
   std::vector<Performance> perf_vect;
   Criteria crit = getTestCriteria();
   std::vector<float> given_perf0 = {0.8, 1, 0.4};
@@ -31,14 +31,14 @@ PerformanceTable getTestProfile() {
   perf_vect.push_back(Performance(crit, given_perf0, "cat0"));
   perf_vect.push_back(Performance(crit, given_perf1, "cat1"));
   perf_vect.push_back(Performance(crit, given_perf2, "cat2"));
-  return PerformanceTable(perf_vect);
+  return Profiles(perf_vect);
 }
 
 Categories getTestCategories() { return Categories(4); }
 
-TEST(TestMRSortModel, TestBaseConstructor) {
+TEST(TestMRSortModel, TestBaseConstructorError) {
   Criteria crit = Criteria(1);
-  PerformanceTable prof = PerformanceTable(1, crit, "prof");
+  Profiles prof = Profiles(1, crit, "prof");
 
   Categories cats = Categories(1);
   try {
@@ -50,20 +50,10 @@ TEST(TestMRSortModel, TestBaseConstructor) {
   } catch (...) {
     FAIL() << "should have throw invalid argument.";
   }
-
-  cats = Categories(2);
-  MRSortModel mrsort = MRSortModel(crit, prof, cats, 0.5);
-  std::ostringstream os;
-  os << mrsort;
-  EXPECT_EQ(os.str(),
-            "Model( id : model, lambda : 0.5, crit : Criteria(Criterion(id "
-            ": crit0, direction : +, weight : 0), ), "
-            "profiles : PerformanceTable[ Performance: Perf( name : "
-            "prof0, crit : crit0, value : 0 ) | ])");
 }
 
 TEST(TestMRSortModel, TestCategoryAssignment) {
-  PerformanceTable profile = getTestProfile();
+  Profiles profile = getTestProfile();
   Criteria criteria = getTestCriteria();
   Categories categories = getTestCategories();
   MRSortModel mrsort = MRSortModel(criteria, profile, categories, 0.6);
@@ -87,8 +77,4 @@ TEST(TestMRSortModel, TestCategoryAssignment) {
 
   AlternativesPerformance ap = mrsort.categoryAssignment(pt_);
   EXPECT_EQ(expected_assignment, ap.getAlternativesAssignments());
-}
-
-TEST(TestMRSort, TestAllInstancesDestroyed) {
-  EXPECT_EQ(AtomicMCDAObject::get_nb_instances(), 0);
 }

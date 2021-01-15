@@ -5,9 +5,7 @@
 #include <string>
 #include <vector>
 
-#include "AtomicMCDAObject.h"
-
-class Criterion : public AtomicMCDAObject {
+class Criterion {
 public:
   /**
    * Criterion standard constructor

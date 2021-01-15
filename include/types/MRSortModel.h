@@ -6,12 +6,12 @@
 #include <vector>
 
 #include "AlternativesPerformance.h"
-#include "AtomicMCDAObject.h"
 #include "Categories.h"
 #include "Criteria.h"
 #include "PerformanceTable.h"
+#include "Profiles.h"
 
-class MRSortModel : public AtomicMCDAObject {
+class MRSortModel {
 public:
   /**
    * MRSortModel standard constructor
@@ -22,8 +22,8 @@ public:
    * @param lambda threshold
    * @param id optional name of the model
    */
-  MRSortModel(Criteria &criteria, PerformanceTable &profiles,
-              Categories &categories, float lambda, std::string id = "model");
+  MRSortModel(Criteria &criteria, Profiles &profiles, Categories &categories,
+              float lambda, std::string id = "model");
 
   /**
    * MRSortModel generator constructor. This
@@ -64,9 +64,9 @@ public:
   AlternativesPerformance categoryAssignment(PerformanceTable &pt);
 
   Criteria criteria;
-  PerformanceTable profiles;
+  Profiles profiles;
   float lambda;
-  Categories categories;
+  Categories &categories;
 
 private:
   std::string id_;

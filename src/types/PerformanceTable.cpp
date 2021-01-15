@@ -308,30 +308,6 @@ std::vector<Perf> PerformanceTable::getWorstPerfByCrit(Criteria &crits) {
   return worst_pv;
 }
 
-void PerformanceTable::generateRandomOrderedPerfValues() {
-  for (int j = 0; j < pt_[0].size(); j++) {
-    std::vector<float> r_vect;
-    for (int i = 0; i < pt_.size(); i++) {
-      r_vect.push_back(((float)rand() / RAND_MAX));
-    }
-    std::sort(r_vect.begin(), r_vect.end());
-    std::reverse(r_vect.begin(), r_vect.end());
-    for (int i = 0; i < pt_.size(); i++) {
-      pt_[i][j].setValue(r_vect[i]);
-    }
-  }
-}
-
-bool PerformanceTable::isOrdered() {
-  for (int i = 0; i < pt_.size() - 1; i++) {
-    for (int j = 0; j < pt_[i].size(); j++) {
-      if (pt_[i][j].getValue() < pt_[i + 1][j].getValue()) {
-        return false;
-      }
-    }
-  }
-  return true;
-}
 bool PerformanceTable::isAltInTable(std::string altName) {
   for (std::vector<Perf> p : pt_) {
     if (p[0].getName() == altName) {

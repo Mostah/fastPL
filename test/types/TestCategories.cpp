@@ -147,7 +147,3 @@ TEST(TestCategories, TestGetCategoryOfRank) {
   os2 << cat1;
   EXPECT_EQ(os2.str(), "Category(id : fastpl, rank : 1)");
 }
-
-TEST(TestCategory, TestAllInstancesDestroyed) {
-  EXPECT_EQ(AtomicMCDAObject::get_nb_instances(), 0);
-}

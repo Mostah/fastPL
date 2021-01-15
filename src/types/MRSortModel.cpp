@@ -7,13 +7,11 @@
 #include <map>
 #include <string>
 
-MRSortModel::MRSortModel(Criteria &crits, PerformanceTable &profs,
-                         Categories &cats, float lbd, std::string id)
+Categories default_cats;
+
+MRSortModel::MRSortModel(Criteria &crits, Profiles &profs, Categories &cats,
+                         float lbd, std::string id)
     : criteria(crits), profiles(profs), categories(cats) {
-  if (!profiles.isOrdered()) {
-    throw std::invalid_argument(
-        "The given performance table cannot be use as a profile");
-  }
   if (profiles.getPerformanceTable().size() !=
       cats.getIdCategories().size() - 1) {
     throw std::invalid_argument(
@@ -24,7 +22,8 @@ MRSortModel::MRSortModel(Criteria &crits, PerformanceTable &profs,
 }
 
 MRSortModel::MRSortModel(int n_cat, int n_crit, std::string id)
-    : criteria(n_crit), profiles(n_cat - 1, criteria, "prof") {
+    : criteria(n_crit), profiles(n_cat - 1, criteria, "prof"),
+      categories(default_cats) {
   if (n_cat < 2) {
     throw std::invalid_argument(
         "The number of categories (n_cat) must be greater than 2");
@@ -37,7 +36,7 @@ MRSortModel::MRSortModel(int n_cat, int n_crit, std::string id)
 
   criteria.generateRandomCriteriaWeights();
 
-  profiles.generateRandomOrderedPerfValues();
+  profiles.generateRandomPerfValues();
 }
 
 AlternativesPerformance MRSortModel::categoryAssignment(PerformanceTable &pt) {
