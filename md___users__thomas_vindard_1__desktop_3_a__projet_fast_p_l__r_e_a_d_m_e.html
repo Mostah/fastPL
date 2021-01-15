@@ -76,35 +76,32 @@ Repository structure</h1>
 <li><a href="https://github.com/Mostah/fastPL/tree/master/.circleci">.circleci</a> : CircleCi configuration</li>
 </ul>
 <h1><a class="anchor" id="autotoc_md2"></a>
-Online Documentation</h1>
-<p><a href="https://mostah.github.io/fastPL/">https://mostah.github.io/fastPL/</a></p>
-<h1><a class="anchor" id="autotoc_md3"></a>
 Tests environment configuration</h1>
-<h2><a class="anchor" id="autotoc_md4"></a>
+<h2><a class="anchor" id="autotoc_md3"></a>
 Test C++ code on Circle CI</h2>
 <p>See <a href="https://github.com/Mostah/fastPL/blob/master/.circleci/config.yml">Circle CI configuration file</a></p>
-<h2><a class="anchor" id="autotoc_md5"></a>
+<h2><a class="anchor" id="autotoc_md4"></a>
 Manual test with google-test</h2>
-<h3><a class="anchor" id="autotoc_md6"></a>
+<h3><a class="anchor" id="autotoc_md5"></a>
 Get gtest from repo</h3>
 <div class="fragment"><div class="line">git submodule init</div>
 <div class="line">git submodule update</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md7"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md6"></a>
 Build gtest</h3>
-<h4><a class="anchor" id="autotoc_md8"></a>
+<h4><a class="anchor" id="autotoc_md7"></a>
 Ubuntu</h4>
 <div class="fragment"><div class="line">sudo apt-get install cmake</div>
 <div class="line">mkdir build</div>
 <div class="line">cd build</div>
 <div class="line">cmake ..</div>
 <div class="line">make</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md9"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md8"></a>
 Run test manually</h3>
 <p>First, move to build folder </p><div class="fragment"><div class="line">cd build</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md10"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md9"></a>
 Run all tests</h4>
 <div class="fragment"><div class="line">./Test  </div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md11"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md10"></a>
 Run specific tests</h4>
 <p>Run the exectuable using the filter option of gtest: </p><div class="fragment"><div class="line">--gtest_filter=POSTIVE_PATTERNS[-NEGATIVE_PATTERNS]</div>
 <div class="line">    Run only the tests whose name matches one of the positive patterns but</div>
@@ -114,26 +111,26 @@ Run specific tests</h4>
 <div class="line">    The name of TEST(Name1, Name2) is &quot;Name1.Name2&quot;</div>
 </div><!-- fragment --><p>Example: </p><div class="fragment"><div class="line">./Test --gtest_filter=TestGeneralName.TestPreciseName   # One specific Test</div>
 <div class="line">./Test --gtest_filter=TestGeneralName.*                 # All tests of Name1 = GeneralName </div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md12"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md11"></a>
 Docker image</h2>
-<h3><a class="anchor" id="autotoc_md13"></a>
+<h3><a class="anchor" id="autotoc_md12"></a>
 Run test using the docker image</h3>
 <div class="fragment"><div class="line">docker-compose up --build</div>
 </div><!-- fragment --><p>SSH connect to the docker image (just in case)</p>
-<h3><a class="anchor" id="autotoc_md14"></a>
+<h3><a class="anchor" id="autotoc_md13"></a>
 Replace container_id with the current container id</h3>
 <div class="fragment"><div class="line">docker run -it &lt;container_id&gt; /bin/bash </div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md15"></a>
-Generating documentation locally with doxygen</h2>
-<h3><a class="anchor" id="autotoc_md16"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md14"></a>
+Generating documentation with doxygen</h2>
+<h3><a class="anchor" id="autotoc_md15"></a>
 Installing doxygen</h3>
-<h4><a class="anchor" id="autotoc_md17"></a>
+<h4><a class="anchor" id="autotoc_md16"></a>
 On Ubuntu</h4>
 <div class="fragment"><div class="line">sudo apt-get install doxygen</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md18"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md17"></a>
 On MacOSX with brew</h4>
 <div class="fragment"><div class="line">brew install doxygen</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md19"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md18"></a>
 Generating documentation</h3>
 <div class="fragment"><div class="line">cd doxygen</div>
 <div class="line">cmake .</div>
