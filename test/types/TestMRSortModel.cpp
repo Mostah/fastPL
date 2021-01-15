@@ -34,11 +34,25 @@ PerformanceTable getTestProfile() {
   return PerformanceTable(perf_vect);
 }
 
+Categories getTestCategories() { return Categories(4); }
+
 TEST(TestMRSortModel, TestBaseConstructor) {
   Criteria crit = Criteria(1);
   PerformanceTable prof = PerformanceTable(1, crit, "prof");
 
-  MRSortModel mrsort = MRSortModel(crit, prof, 0.5);
+  Categories cats = Categories(1);
+  try {
+    MRSortModel mrsort = MRSortModel(crit, prof, cats, 0.5);
+    FAIL() << "should have throw invalid argument.";
+  } catch (std::invalid_argument const &err) {
+    EXPECT_EQ(err.what(),
+              std::string("For n categories we must have n - 1 profiles."));
+  } catch (...) {
+    FAIL() << "should have throw invalid argument.";
+  }
+
+  cats = Categories(2);
+  MRSortModel mrsort = MRSortModel(crit, prof, cats, 0.5);
   std::ostringstream os;
   os << mrsort;
   EXPECT_EQ(os.str(),
@@ -51,7 +65,8 @@ TEST(TestMRSortModel, TestBaseConstructor) {
 TEST(TestMRSortModel, TestCategoryAssignment) {
   PerformanceTable profile = getTestProfile();
   Criteria criteria = getTestCriteria();
-  MRSortModel mrsort = MRSortModel(criteria, profile, 0.6);
+  Categories categories = getTestCategories();
+  MRSortModel mrsort = MRSortModel(criteria, profile, categories, 0.6);
 
   std::vector<Performance> perf_vect;
   std::vector<float> alt0 = {0.9, 0.6, 0.5};
@@ -64,13 +79,14 @@ TEST(TestMRSortModel, TestCategoryAssignment) {
   perf_vect.push_back(Performance(criteria, alt3, "alt3"));
   PerformanceTable pt_ = PerformanceTable(perf_vect);
 
-  std::vector<std::pair<std::string, std::string>> expected_assignment;
-  expected_assignment.push_back(std::make_pair("alt0", "cat0"));
-  expected_assignment.push_back(std::make_pair("alt1", "cat1"));
-  expected_assignment.push_back(std::make_pair("alt2", "cat2"));
-  expected_assignment.push_back(std::make_pair("alt3", "base"));
+  std::unordered_map<std::string, Category> expected_assignment;
+  expected_assignment["alt0"] = categories.getCategoryOfRank(3);
+  expected_assignment["alt1"] = categories.getCategoryOfRank(2);
+  expected_assignment["alt2"] = categories.getCategoryOfRank(1);
+  expected_assignment["alt3"] = categories.getCategoryOfRank(0);
 
-  EXPECT_EQ(expected_assignment, mrsort.categoryAssignment(pt_));
+  AlternativesPerformance ap = mrsort.categoryAssignment(pt_);
+  EXPECT_EQ(expected_assignment, ap.getAlternativesAssignments());
 }
 
 TEST(TestMRSort, TestAllInstancesDestroyed) {

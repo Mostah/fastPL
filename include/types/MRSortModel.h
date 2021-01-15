@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 
+#include "AlternativesPerformance.h"
 #include "AtomicMCDAObject.h"
 #include "Categories.h"
 #include "Criteria.h"
@@ -16,11 +17,13 @@ public:
    * MRSortModel standard constructor
    *
    * @param criteria Criteria object
+   * @param profiles PerformanceTable containing the profiles
+   * @param categories Categories object used for the profiles
    * @param lambda threshold
    * @param id optional name of the model
    */
-  MRSortModel(Criteria &criteria, PerformanceTable &profiles, float lambda,
-              std::string id = "model");
+  MRSortModel(Criteria &criteria, PerformanceTable &profiles,
+              Categories &categories, float lambda, std::string id = "model");
 
   /**
    * MRSortModel generator constructor. This
@@ -58,12 +61,12 @@ public:
    * @return category_assignment pair vector with first value is the alternative
    * id and second value the category assigned.
    */
-  std::vector<std::pair<std::string, std::string>>
-  categoryAssignment(PerformanceTable &pt);
+  AlternativesPerformance categoryAssignment(PerformanceTable &pt);
 
   Criteria criteria;
   PerformanceTable profiles;
   float lambda;
+  Categories categories;
 
 private:
   std::string id_;
