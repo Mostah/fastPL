@@ -63,7 +63,7 @@ struct simple_walker : pugi::xml_tree_walker {
 
 //   HOW TO USE
 //   pugi::xml_document doc;
-//   std::string path = "../data/" + fileName;
+//   std::string path = data_dir + fileName;
 //   pugi::xml_parse_result result = doc.load_file(path.c_str());
 
 //   simple_walker walker;
