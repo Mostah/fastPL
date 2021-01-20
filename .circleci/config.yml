@@ -8,7 +8,9 @@ jobs:
       - checkout
       # command to build all files
       - run: apt-get update && apt-get -y install doxygen
-      - run: version=3.19; build=1; mkdir ~/temp; cd ~/temp; wget https://cmake.org/files/v$version/cmake-$version.$build-Linux-x86_64.sh ; mkdir /opt/cmake; sh cmake-$version.$build-Linux-x86_64.sh --prefix=/opt/cmake
+      - run: version=3.19; build=1; mkdir ~/temp; cd ~/temp; wget https://cmake.org/files/v$version/cmake-$version.$build-Linux-x86_64.sh ; 
+      - run: mkdir /opt/cmake; 
+      - run: sh cmake-$version.$build-Linux-x86_64.sh --prefix=/opt/cmake
       - run: ln -s /opt/cmake/bin/cmake /usr/local/bin/cmake
       - run: git submodule init; git submodule update
       - run: mkdir build; cd build; cmake .. -DBUILD_DEPS:BOOL=ON -DUSE_SCIP=OFF; make
