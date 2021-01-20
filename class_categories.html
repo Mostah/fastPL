@@ -69,11 +69,13 @@ $(function() {
 <div class="title">Categories Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_categories_8h_source.html">Categories.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a643830d18a3e30949f5fe64133ffb94a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_categories.html#a643830d18a3e30949f5fe64133ffb94a">Categories</a> (int number_of_categories, std::string prefix=&quot;cat&quot;)</td></tr>
-<tr class="separator:a643830d18a3e30949f5fe64133ffb94a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9b3f24abb81e609d5f1703617deaf2b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_categories.html#aa9b3f24abb81e609d5f1703617deaf2b">Categories</a> (int number_of_categories=2, std::string prefix=&quot;cat&quot;)</td></tr>
+<tr class="separator:aa9b3f24abb81e609d5f1703617deaf2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c8b82f2fcba0e0c72707329b246cfe8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_categories.html#a7c8b82f2fcba0e0c72707329b246cfe8">Categories</a> (std::vector&lt; std::string &gt; vect_category_ids)</td></tr>
 <tr class="separator:a7c8b82f2fcba0e0c72707329b246cfe8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa89b2d83c5f0cdbd49439f693d6c45d6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_categories.html#aa89b2d83c5f0cdbd49439f693d6c45d6">Categories</a> (const <a class="el" href="class_categories.html">Categories</a> &amp;categories)</td></tr>
@@ -90,6 +92,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a392ca98107bb520f65fd1b6ff93131c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a39bc8644187819b7a086859f81bb9352"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_categories.html#a39bc8644187819b7a086859f81bb9352">setIdCategories</a> (std::vector&lt; std::string &gt; &amp;set_category_ids)</td></tr>
 <tr class="separator:a39bc8644187819b7a086859f81bb9352"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1cc5a04224d9458d28f77ea2b720fe90"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_category.html">Category</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_categories.html#a1cc5a04224d9458d28f77ea2b720fe90">getCategoryOfRank</a> (int rank)</td></tr>
+<tr class="separator:a1cc5a04224d9458d28f77ea2b720fe90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a91dee77547d0c7d4e4db3d24f863b69d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_category.html">Category</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_categories.html#a91dee77547d0c7d4e4db3d24f863b69d">operator[]</a> (int index)</td></tr>
 <tr class="separator:a91dee77547d0c7d4e4db3d24f863b69d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a374b882820a902e372705c42b9a11794"><td class="memItemLeft" align="right" valign="top"><a id="a374b882820a902e372705c42b9a11794"></a>
@@ -101,9 +105,11 @@ Friends</h2></td></tr>
 <tr class="memitem:a6f37f401554fcb930cd284d27d3b6c4a"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_categories.html#a6f37f401554fcb930cd284d27d3b6c4a">operator&lt;&lt;</a> (std::ostream &amp;out, const <a class="el" href="class_categories.html">Categories</a> &amp;categories)</td></tr>
 <tr class="separator:a6f37f401554fcb930cd284d27d3b6c4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a643830d18a3e30949f5fe64133ffb94a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a643830d18a3e30949f5fe64133ffb94a">&#9670;&nbsp;</a></span>Categories() <span class="overload">[1/3]</span></h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p><a class="el" href="class_categories.html">Categories</a> is a wrapper around a vector of category. The rank 0 is considered as the lowest one for the profiles </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="aa9b3f24abb81e609d5f1703617deaf2b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9b3f24abb81e609d5f1703617deaf2b">&#9670;&nbsp;</a></span>Categories() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -112,7 +118,7 @@ Friends</h2></td></tr>
           <td class="memname">Categories::Categories </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>number_of_categories</em>, </td>
+          <td class="paramname"><em>number_of_categories</em> = <code>2</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -189,6 +195,31 @@ Friends</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a1cc5a04224d9458d28f77ea2b720fe90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1cc5a04224d9458d28f77ea2b720fe90">&#9670;&nbsp;</a></span>getCategoryOfRank()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_category.html">Category</a> Categories::getCategoryOfRank </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>rank</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>getCategoryOfRank get the category corresponding to the requested rank in the vector.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rank</td><td>rank of the category to return </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a922fc06ac021b37130207a607c54fc57"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a922fc06ac021b37130207a607c54fc57">&#9670;&nbsp;</a></span>getIdCategories()</h2>
 

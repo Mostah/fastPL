@@ -69,24 +69,6 @@ $(function() {
 <div class="title">Criterion Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="dynheader">
-Inheritance diagram for Criterion:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_criterion__inherit__graph.png" border="0" usemap="#a_criterion_inherit__map" alt="Inheritance graph"/></div>
-<map name="_criterion_inherit__map" id="_criterion_inherit__map">
-<area shape="rect" title=" " alt="" coords="41,80,111,107"/>
-<area shape="rect" href="class_atomic_m_c_d_a_object.html" title=" " alt="" coords="5,5,147,32"/>
-</map>
-<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
-<div class="dynheader">
-Collaboration diagram for Criterion:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_criterion__coll__graph.png" border="0" usemap="#a_criterion_coll__map" alt="Collaboration graph"/></div>
-<map name="_criterion_coll__map" id="_criterion_coll__map">
-<area shape="rect" title=" " alt="" coords="41,80,111,107"/>
-<area shape="rect" href="class_atomic_m_c_d_a_object.html" title=" " alt="" coords="5,5,147,32"/>
-</map>
-<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -94,6 +76,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a16433c05ecdb565fbb0180605c8fec4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9c0b5e02da6fb70bf7d6c78585d9f108"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_criterion.html#a9c0b5e02da6fb70bf7d6c78585d9f108">Criterion</a> (const <a class="el" href="class_criterion.html">Criterion</a> &amp;crit)</td></tr>
 <tr class="separator:a9c0b5e02da6fb70bf7d6c78585d9f108"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30a2dbf1201d1f40183dddaeab8f8d01"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_criterion.html#a30a2dbf1201d1f40183dddaeab8f8d01">generateDirection</a> (unsigned long int seed=0)</td></tr>
+<tr class="separator:a30a2dbf1201d1f40183dddaeab8f8d01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6126e4743bd62f0801d445f65881d5f3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_criterion.html#a6126e4743bd62f0801d445f65881d5f3">generateWeight</a> (unsigned long int seed=0)</td></tr>
+<tr class="separator:a6126e4743bd62f0801d445f65881d5f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abe0d994eee74bd6d5e9f9a640de0c7c2"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_criterion.html#abe0d994eee74bd6d5e9f9a640de0c7c2">getId</a> () const</td></tr>
 <tr class="separator:abe0d994eee74bd6d5e9f9a640de0c7c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a84ba2ec6db6d087f6a35f4e92391117a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_criterion.html#a84ba2ec6db6d087f6a35f4e92391117a">setId</a> (std::string id)</td></tr>
@@ -106,25 +92,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a45aefe5e306299f2412508411c6f771f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7ce0840f5357b8578cfbf05d948520bc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_criterion.html#a7ce0840f5357b8578cfbf05d948520bc">setWeight</a> (float weight)</td></tr>
 <tr class="separator:a7ce0840f5357b8578cfbf05d948520bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2bda0d9186ba8be12b38267ddd7f19c1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_criterion.html#a2bda0d9186ba8be12b38267ddd7f19c1">getRandomCriterionWeight</a> (bool changeSeed=1)</td></tr>
-<tr class="separator:a2bda0d9186ba8be12b38267ddd7f19c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaab4c85f49103eb908dc90cd27be6d97"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_criterion.html#aaab4c85f49103eb908dc90cd27be6d97">generateDirection</a> (unsigned long int seed=time(NULL))</td></tr>
-<tr class="separator:aaab4c85f49103eb908dc90cd27be6d97"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a98a6394abd76e827c413ed173d7f2ef4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_criterion.html#a98a6394abd76e827c413ed173d7f2ef4">generateWeight</a> (unsigned long int seed=time(NULL))</td></tr>
-<tr class="separator:a98a6394abd76e827c413ed173d7f2ef4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
 <tr class="memitem:ad3db51893e937de5eada77236dc27e6a"><td class="memItemLeft" align="right" valign="top"><a id="ad3db51893e937de5eada77236dc27e6a"></a>
 std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;&lt;</b> (std::ostream &amp;out, const <a class="el" href="class_criterion.html">Criterion</a> &amp;crit)</td></tr>
 <tr class="separator:ad3db51893e937de5eada77236dc27e6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
-Additional Inherited Members</h2></td></tr>
-<tr class="inherit_header pub_static_methods_class_atomic_m_c_d_a_object"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_class_atomic_m_c_d_a_object')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="class_atomic_m_c_d_a_object.html">AtomicMCDAObject</a></td></tr>
-<tr class="memitem:a09beeef70eac2067bb6aaec5bb674239 inherit pub_static_methods_class_atomic_m_c_d_a_object"><td class="memItemLeft" align="right" valign="top"><a id="a09beeef70eac2067bb6aaec5bb674239"></a>
-static int&#160;</td><td class="memItemRight" valign="bottom"><b>get_nb_instances</b> ()</td></tr>
-<tr class="separator:a09beeef70eac2067bb6aaec5bb674239 inherit pub_static_methods_class_atomic_m_c_d_a_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a16433c05ecdb565fbb0180605c8fec4c"></a>
@@ -196,8 +169,8 @@ static int&#160;</td><td class="memItemRight" valign="bottom"><b>get_nb_instance
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="aaab4c85f49103eb908dc90cd27be6d97"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaab4c85f49103eb908dc90cd27be6d97">&#9670;&nbsp;</a></span>generateDirection()</h2>
+<a id="a30a2dbf1201d1f40183dddaeab8f8d01"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30a2dbf1201d1f40183dddaeab8f8d01">&#9670;&nbsp;</a></span>generateDirection()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -206,7 +179,7 @@ static int&#160;</td><td class="memItemRight" valign="bottom"><b>get_nb_instance
           <td class="memname">void Criterion::generateDirection </td>
           <td>(</td>
           <td class="paramtype">unsigned long int&#160;</td>
-          <td class="paramname"><em>seed</em> = <code>time(NULL)</code></td><td>)</td>
+          <td class="paramname"><em>seed</em> = <code>0</code></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -214,15 +187,15 @@ static int&#160;</td><td class="memItemRight" valign="bottom"><b>get_nb_instance
 <p>generateDirection generator of random direction can also be used as reinitialisation for direction</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">seed</td><td>Optional: seed for random generation. Set to time(NULL) by default </td></tr>
+    <tr><td class="paramname">seed</td><td>Optional: seed for random generation. Set to 0 by default </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a98a6394abd76e827c413ed173d7f2ef4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a98a6394abd76e827c413ed173d7f2ef4">&#9670;&nbsp;</a></span>generateWeight()</h2>
+<a id="a6126e4743bd62f0801d445f65881d5f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6126e4743bd62f0801d445f65881d5f3">&#9670;&nbsp;</a></span>generateWeight()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -231,7 +204,7 @@ static int&#160;</td><td class="memItemRight" valign="bottom"><b>get_nb_instance
           <td class="memname">void Criterion::generateWeight </td>
           <td>(</td>
           <td class="paramtype">unsigned long int&#160;</td>
-          <td class="paramname"><em>seed</em> = <code>time(NULL)</code></td><td>)</td>
+          <td class="paramname"><em>seed</em> = <code>0</code></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -239,7 +212,7 @@ static int&#160;</td><td class="memItemRight" valign="bottom"><b>get_nb_instance
 <p>generateWeight generator of random weight can also be used as reinitialisation for weight</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">seed</td><td>Optional: seed for random generation. Set to time(NULL) by default </td></tr>
+    <tr><td class="paramname">seed</td><td>Optional: seed for random generation. Set to 0 by default </td></tr>
   </table>
   </dd>
 </dl>
@@ -281,31 +254,6 @@ static int&#160;</td><td class="memItemRight" valign="bottom"><b>get_nb_instance
 </div><div class="memdoc">
 <p>getId getter of id parameter</p>
 <dl class="section return"><dt>Returns</dt><dd>id </dd></dl>
-
-</div>
-</div>
-<a id="a2bda0d9186ba8be12b38267ddd7f19c1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2bda0d9186ba8be12b38267ddd7f19c1">&#9670;&nbsp;</a></span>getRandomCriterionWeight()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Criterion::getRandomCriterionWeight </td>
-          <td>(</td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>changeSeed</em> = <code>1</code></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Randomizes the value of the weight of the <a class="el" href="class_criterion.html">Criterion</a> object</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">weight</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>

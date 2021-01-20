@@ -68,31 +68,16 @@ $(function() {
 <div class="title">DataGenerator Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="dynheader">
-Inheritance diagram for DataGenerator:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_data_generator__inherit__graph.png" border="0" usemap="#a_data_generator_inherit__map" alt="Inheritance graph"/></div>
-<map name="_data_generator_inherit__map" id="_data_generator_inherit__map">
-<area shape="rect" title=" " alt="" coords="23,80,129,107"/>
-<area shape="rect" href="class_atomic_m_c_d_a_object.html" title=" " alt="" coords="5,5,147,32"/>
-</map>
-<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
-<div class="dynheader">
-Collaboration diagram for DataGenerator:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_data_generator__coll__graph.png" border="0" usemap="#a_data_generator_coll__map" alt="Collaboration graph"/></div>
-<map name="_data_generator_coll__map" id="_data_generator_coll__map">
-<area shape="rect" title=" " alt="" coords="23,80,129,107"/>
-<area shape="rect" href="class_atomic_m_c_d_a_object.html" title=" " alt="" coords="5,5,147,32"/>
-</map>
-<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a8322675a707487b39a767b8fa6b88313"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_generator.html#a8322675a707487b39a767b8fa6b88313">datasetGenerator</a> (int nb_criteria, int nb_alternative, int nb_categories, std::string datasetName=&quot;&quot;, bool overwrite=1, bool changeSeed=0)</td></tr>
-<tr class="separator:a8322675a707487b39a767b8fa6b88313"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f34d6ee53c4f99d7689b3012c70192c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_generator.html#a8f34d6ee53c4f99d7689b3012c70192c">modelGenerator</a> (int nb_criteria, int nb_categories, std::string modelName, bool overwrite=1, bool changeSeed=0)</td></tr>
-<tr class="separator:a8f34d6ee53c4f99d7689b3012c70192c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a42fb47712c41ce5313053d60adec05"><td class="memItemLeft" align="right" valign="top"><a id="a2a42fb47712c41ce5313053d60adec05"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>DataGenerator</b> (<a class="el" href="struct_config.html">Config</a> &amp;config)</td></tr>
+<tr class="separator:a2a42fb47712c41ce5313053d60adec05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33eaa44e0a93bf596f06fffb7d343415"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_generator.html#a33eaa44e0a93bf596f06fffb7d343415">datasetGenerator</a> (int nb_criteria, int nb_alternative, int nb_categories, std::string datasetName=&quot;&quot;, bool overwrite=1, unsigned long int seed=0)</td></tr>
+<tr class="separator:a33eaa44e0a93bf596f06fffb7d343415"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa73d2fe3ce64ef23f5375215f50e17fc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_generator.html#aa73d2fe3ce64ef23f5375215f50e17fc">modelGenerator</a> (int nb_criteria, int nb_categories, std::string modelName, bool overwrite=1, unsigned long int seed=0)</td></tr>
+<tr class="separator:aa73d2fe3ce64ef23f5375215f50e17fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7bee0e83de7a2ed6f334e424d900adbe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_generator.html#a7bee0e83de7a2ed6f334e424d900adbe">saveDataset</a> (std::string fileName, <a class="el" href="class_alternatives_performance.html">AlternativesPerformance</a> altPerf, int nb_categories, bool overwrite=1, std::string datasetName=&quot;&quot;)</td></tr>
 <tr class="separator:a7bee0e83de7a2ed6f334e424d900adbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a75d3251816d994c7a8f03f78aec2553a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_alternatives_performance.html">AlternativesPerformance</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_generator.html#a75d3251816d994c7a8f03f78aec2553a">loadDataset</a> (std::string fileName)</td></tr>
@@ -125,17 +110,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a8c5ca8b7f56eae1ad1e544d57f8c2544"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3db4060bcdc917476884b26a8059d8b4"><td class="memItemLeft" align="right" valign="top">std::vector&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_generator.html#a3db4060bcdc917476884b26a8059d8b4">getCriterionCategoryLimits</a> (std::string fileName, std::string crit_id)</td></tr>
 <tr class="separator:a3db4060bcdc917476884b26a8059d8b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
-Additional Inherited Members</h2></td></tr>
-<tr class="inherit_header pub_static_methods_class_atomic_m_c_d_a_object"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_class_atomic_m_c_d_a_object')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="class_atomic_m_c_d_a_object.html">AtomicMCDAObject</a></td></tr>
-<tr class="memitem:a09beeef70eac2067bb6aaec5bb674239 inherit pub_static_methods_class_atomic_m_c_d_a_object"><td class="memItemLeft" align="right" valign="top"><a id="a09beeef70eac2067bb6aaec5bb674239"></a>
-static int&#160;</td><td class="memItemRight" valign="bottom"><b>get_nb_instances</b> ()</td></tr>
-<tr class="separator:a09beeef70eac2067bb6aaec5bb674239 inherit pub_static_methods_class_atomic_m_c_d_a_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a8322675a707487b39a767b8fa6b88313"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8322675a707487b39a767b8fa6b88313">&#9670;&nbsp;</a></span>datasetGenerator()</h2>
+<a id="a33eaa44e0a93bf596f06fffb7d343415"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a33eaa44e0a93bf596f06fffb7d343415">&#9670;&nbsp;</a></span>datasetGenerator()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -173,8 +151,8 @@ static int&#160;</td><td class="memItemRight" valign="bottom"><b>get_nb_instance
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>changeSeed</em> = <code>0</code>&#160;</td>
+          <td class="paramtype">unsigned long int&#160;</td>
+          <td class="paramname"><em>seed</em> = <code>0</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -571,8 +549,8 @@ static int&#160;</td><td class="memItemRight" valign="bottom"><b>get_nb_instance
 
 </div>
 </div>
-<a id="a8f34d6ee53c4f99d7689b3012c70192c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8f34d6ee53c4f99d7689b3012c70192c">&#9670;&nbsp;</a></span>modelGenerator()</h2>
+<a id="aa73d2fe3ce64ef23f5375215f50e17fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa73d2fe3ce64ef23f5375215f50e17fc">&#9670;&nbsp;</a></span>modelGenerator()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -604,8 +582,8 @@ static int&#160;</td><td class="memItemRight" valign="bottom"><b>get_nb_instance
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>changeSeed</em> = <code>0</code>&#160;</td>
+          <td class="paramtype">unsigned long int&#160;</td>
+          <td class="paramname"><em>seed</em> = <code>0</code>&#160;</td>
         </tr>
         <tr>
           <td></td>

@@ -74,9 +74,10 @@ $(function() {
 Inheritance diagram for PerformanceTable:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_performance_table__inherit__graph.png" border="0" usemap="#a_performance_table_inherit__map" alt="Inheritance graph"/></div>
-<map name="_performance_table_inherit__map" id="_performance_table_inherit__map">
-<area shape="rect" title=" " alt="" coords="25,5,151,32"/>
+<map name="_performance_table_inherit__map" id="a_performance_table_inherit__map">
+<area shape="rect" title=" " alt="" coords="94,5,221,32"/>
 <area shape="rect" href="class_alternatives_performance.html" title=" " alt="" coords="5,80,171,107"/>
+<area shape="rect" href="class_profiles.html" title=" " alt="" coords="195,80,261,107"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -106,10 +107,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a1d13b0d5565652a87d03ea9877c83912"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6f89b112906c68383fa1dcf9117cb580"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_perf.html">Perf</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_performance_table.html#a6f89b112906c68383fa1dcf9117cb580">getAltBetween</a> (std::string critId, float inf, float sup)</td></tr>
 <tr class="separator:a6f89b112906c68383fa1dcf9117cb580"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abfef9cb2624166a1eb14b9bfd92f42dc"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_perf.html">Perf</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_performance_table.html#abfef9cb2624166a1eb14b9bfd92f42dc">getBestPerfByCrit</a> (<a class="el" href="class_criteria.html">Criteria</a> crits)</td></tr>
-<tr class="separator:abfef9cb2624166a1eb14b9bfd92f42dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04a0970b9056e4e76e680df61c4f0b71"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_perf.html">Perf</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_performance_table.html#a04a0970b9056e4e76e680df61c4f0b71">getWorstPerfByCrit</a> (<a class="el" href="class_criteria.html">Criteria</a> crits)</td></tr>
-<tr class="separator:a04a0970b9056e4e76e680df61c4f0b71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e1c464b2d7e85b161ada712229363be"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_perf.html">Perf</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_performance_table.html#a0e1c464b2d7e85b161ada712229363be">getBestPerfByCrit</a> (<a class="el" href="class_criteria.html">Criteria</a> &amp;crits)</td></tr>
+<tr class="separator:a0e1c464b2d7e85b161ada712229363be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0dd416663fb37cf812e2dbd2bd0c1adc"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_perf.html">Perf</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_performance_table.html#a0dd416663fb37cf812e2dbd2bd0c1adc">getWorstPerfByCrit</a> (<a class="el" href="class_criteria.html">Criteria</a> &amp;crits)</td></tr>
+<tr class="separator:a0dd416663fb37cf812e2dbd2bd0c1adc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6299d88ea47fc4694829bd33df9525a0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_performance_table.html#a6299d88ea47fc4694829bd33df9525a0">isAltInTable</a> (std::string altName)</td></tr>
 <tr class="separator:a6299d88ea47fc4694829bd33df9525a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -338,8 +339,8 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
 
 </div>
 </div>
-<a id="abfef9cb2624166a1eb14b9bfd92f42dc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abfef9cb2624166a1eb14b9bfd92f42dc">&#9670;&nbsp;</a></span>getBestPerfByCrit()</h2>
+<a id="a0e1c464b2d7e85b161ada712229363be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e1c464b2d7e85b161ada712229363be">&#9670;&nbsp;</a></span>getBestPerfByCrit()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -347,7 +348,7 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
         <tr>
           <td class="memname">std::vector&lt;<a class="el" href="class_perf.html">Perf</a>&gt; PerformanceTable::getBestPerfByCrit </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_criteria.html">Criteria</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="class_criteria.html">Criteria</a> &amp;&#160;</td>
           <td class="paramname"><em>crits</em></td><td>)</td>
           <td></td>
         </tr>
@@ -438,8 +439,8 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
 
 </div>
 </div>
-<a id="a04a0970b9056e4e76e680df61c4f0b71"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a04a0970b9056e4e76e680df61c4f0b71">&#9670;&nbsp;</a></span>getWorstPerfByCrit()</h2>
+<a id="a0dd416663fb37cf812e2dbd2bd0c1adc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0dd416663fb37cf812e2dbd2bd0c1adc">&#9670;&nbsp;</a></span>getWorstPerfByCrit()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -447,7 +448,7 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
         <tr>
           <td class="memname">std::vector&lt;<a class="el" href="class_perf.html">Perf</a>&gt; PerformanceTable::getWorstPerfByCrit </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_criteria.html">Criteria</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="class_criteria.html">Criteria</a> &amp;&#160;</td>
           <td class="paramname"><em>crits</em></td><td>)</td>
           <td></td>
         </tr>
