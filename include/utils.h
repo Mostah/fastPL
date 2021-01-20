@@ -49,17 +49,17 @@ std::vector<T> subVector(std::vector<T> const &v, int m, int n) {
  * @param node xml_node
  *
  */
-// struct simple_walker : pugi::xml_tree_walker {
-//   virtual bool for_each(pugi::xml_node &node) {
-//     for (int i = 0; i < depth(); ++i)
-//       std::cout << "  "; // indentation
+struct simple_walker : pugi::xml_tree_walker {
+  virtual bool for_each(pugi::xml_node &node) {
+    for (int i = 0; i < depth(); ++i)
+      std::cout << "  "; // indentation
 
-//     std::cout << node.type() << ": name='" << node.name() << "', value='"
-//               << node.value() << "'\n";
+    std::cout << node.type() << ": name='" << node.name() << "', value='"
+              << node.value() << "'\n";
 
-//     return true; // continue traversal
-//   }
-// };
+    return true; // continue traversal
+  }
+};
 //   ^^^^^^^^^^^^ HOW TO USE ^^^^^^^^^^^^
 //   pugi::xml_document doc;
 //   std::string path = data_dir + fileName;
