@@ -5,20 +5,20 @@
 #include <utility>
 
 TEST(TestUtils, TestRandomIntGenerator) {
-  int random1 = getRandomUniformInt(0, 0, 20);
-  int random2 = getRandomUniformInt(0, 0, 20);
-  int random3 = getRandomUniformInt(40, 0, 20);
+  int random1 = getRandomUniformInt(0, 20, 0);
+  int random2 = getRandomUniformInt(0, 20, 0);
+  int random3 = getRandomUniformInt(0, 20, 40);
 
   EXPECT_EQ(random1, random2);
   EXPECT_NE(random1, random3);
 }
 
 TEST(TestUtils, TestRandomFloatGenerator) {
-  float random1 = getRandomUniformFloat(0, 1, 4);
-  float random2 = getRandomUniformFloat(0, 1, 4);
-  float random3 = getRandomUniformFloat(40, 1, 4);
+  float random1 = getRandomUniformFloat(1, 4, 0);
+  float random2 = getRandomUniformFloat(1, 4, 0);
+  float random3 = getRandomUniformFloat(1, 4, 40);
 
-  float random4 = getRandomUniformFloat(10);
+  float random4 = getRandomUniformFloat();
 
   EXPECT_EQ(random1, random2);
   EXPECT_NE(random1, random3);

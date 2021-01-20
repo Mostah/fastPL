@@ -73,46 +73,16 @@ inline bool fileExists(const std::string &name) {
   return (stat(name.c_str(), &buffer) == 0);
 }
 
-// /**
-//  * Random number generator between 0 and 1
-//  *
-//  * @return random  number
-//  */
-// inline float getRandomUniformNumber(bool changeSeed) {
-//   if (changeSeed) {
-//     srand(time(NULL));
-//     std::this_thread::sleep_for(std::chrono::milliseconds(750));
-//   } else {
-//     srand(0);
-//   }
-//   return (float)(rand() % 1000) / 1000;
-// }
-
-// /**
-//  * Random number generator between 1/2 and 1
-//  *
-//  * @return random  number
-//  */
-// inline float getRandomUniformNumberBis(bool changeSeed) {
-//   if (changeSeed) {
-//     srand(time(NULL));
-//     std::this_thread::sleep_for(std::chrono::milliseconds(750));
-//     return (float)(rand() % 1000) / 2000 + 0.5;
-//   } else {
-//     return (float)(rand() % 1000) / 2000 + 0.5;
-//   }
-// }
-
 /**
  * Random int number generator
  *
- * @param seed to initiate the generator
  * @param min min of generated number
  * @param max max of generated number
+ * @param seed to initiate the generator
  *
- * @return random int number
+ * @return random int number between min and max
  */
-inline int getRandomUniformInt(unsigned long int seed, int min, int max) {
+inline int getRandomUniformInt(int min, int max, unsigned long int seed = 0) {
   srand(seed);
   return min + rand() % (max - min);
 }
@@ -120,27 +90,26 @@ inline int getRandomUniformInt(unsigned long int seed, int min, int max) {
 /**
  * Random float number generator
  *
- * @param seed to initiate the generator
  * @param min min of generated number
  * @param max max of generated number
+ * @param seed to initiate the generator
  *
- * @return random float number
+ * @return random float number between min and max
  */
-inline float getRandomUniformFloat(unsigned long int seed, float min = 0,
-                                   float max = 1) {
+inline float getRandomUniformFloat(float min = 0, float max = 1,
+                                   unsigned long int seed = 0) {
   srand(seed);
   return min + (((float)rand()) / (float)RAND_MAX) * (max - min);
 }
 
-// Shouldn't this function be in Criteria?
-inline std::vector<float> randomCriteriaLimits(int nbCategories,
-                                               bool changeSeed) {
-  std::vector<float> critLimits;
+inline std::vector<float> randomCategoriesLimits(int nbCategories,
+                                                 unsigned long int seed = 0) {
+  std::vector<float> catLimits;
   for (int i = 0; i < nbCategories; i++) {
-    critLimits.push_back(getRandomUniformNumber(changeSeed));
+    catLimits.push_back(getRandomUniformFloat(0, 1, seed));
   }
-  sort(critLimits.begin(), critLimits.end());
-  return critLimits;
+  sort(catLimits.begin(), catLimits.end());
+  return catLimits;
 }
 
 #endif
