@@ -3,8 +3,28 @@
 
 #include "../types/AlternativesPerformance.h"
 
-class ProfileInitializer : public AtomicMCDAObject {
+class ProfileInitializer {
 public:
+  /**
+   * ProfileInitializer standard constructor
+   *
+   * @return ProfileInitializer object
+   */
+  ProfileInitializer(AlternativesPerformance &altPerfs);
+
+  /**
+   * ProfileInitializer copy constructor
+   *
+   * @return ProfileInitializer object
+   */
+  ProfileInitializer(const ProfileInitializer &profInit);
+
+  /**
+   * ProfileInitializer standard deconstructor
+   *
+   */
+  ~ProfileInitializer(){};
+
   /**
    * Getter of the alternativePerformance class attribute
    *
@@ -17,15 +37,7 @@ public:
    *
    * @return null
    */
-  void setAlternativesPerformance(AlternativesPerformance newAltPerfs);
-
-  /**
-   * Computes the frequency with which alternatives in the learning set are
-   * assigned to each category
-   *
-   * @return vector of those frequency
-   */
-  std::vector<float> categoryFrequency(AlternativesPerformance newAltPerfs);
+  void setAlternativesPerformance(AlternativesPerformance &newAltPerfs);
 
   /**
    * Computes the frequency with which alternatives in the learning set are
@@ -41,25 +53,31 @@ public:
    *
    * @return vector of alternative ids
    */
-  std::vector<std::string> getProfilePerformanceCandidates(Criterion crit,
-                                                           Category cat);
+  std::vector<std::string>
+  getProfilePerformanceCandidates(const Criterion &crit, const Category &cat,
+                                  const int nbCategories);
 
   /**
-   * Compute the likelyhood of chosing the performance of the alternative
-   * identified by its altId as the performance value for profile delimting
-   * catAbove and catBelow for criterion crit
+   * Compute the likelihood of choosing the performance of the alternative
+   * identified by its altId as the performance value for profile delimiting
+   * catAbove and catBelow for criterion crit.
    *
    * @return weighted probability
    */
-  float weightedProbability(std::string altId, Criterion crit,
-                            Category catAbove, Category catBelow);
+  float weightedProbability(const std::string altId, const Criterion &crit,
+                            const Category &catAbove, const Category &catBelow,
+                            const int nbCategories,
+                            const std::vector<float> &catFrequency,
+                            float delta = 0.001);
 
   /**
    * Initialize all of the profile performance values for Criterion crit
    *
    * @return initialized profile performances for Criterion crit
    */
-  std::vector<float> initializeProfilePerformance(Criterion crit);
+  std::vector<float>
+  initializeProfilePerformance(Criterion &crit, Categories const &categories,
+                               const std::vector<float> &catFre);
 
   /**
    * Initialize all profiles
@@ -71,4 +89,5 @@ public:
 private:
   AlternativesPerformance altPerformance_;
 };
+
 #endif
