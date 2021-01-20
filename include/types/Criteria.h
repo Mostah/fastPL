@@ -91,7 +91,7 @@ public:
    * Generates random Criteria weight for each Criterion
    *
    */
-  void generateRandomCriteriaWeights(bool changeSeed = 1);
+  void generateRandomCriteriaWeights(unsigned long int seed = time(NULL));
 
   /**
    * Overloading [] dict operator for Performance

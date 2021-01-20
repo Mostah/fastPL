@@ -60,8 +60,7 @@ struct simple_walker : pugi::xml_tree_walker {
     return true; // continue traversal
   }
 };
-
-//   HOW TO USE
+//   ^^^^^^^^^^^^ HOW TO USE ^^^^^^^^^^^^
 //   pugi::xml_document doc;
 //   std::string path = data_dir + fileName;
 //   pugi::xml_parse_result result = doc.load_file(path.c_str());
@@ -75,43 +74,43 @@ inline bool fileExists(const std::string &name) {
 }
 
 /**
- * Random number generator between 0 and 1
+ * Random int number generator
  *
- * @return random  number
+ * @param seed to initiate the generator, default 0
+ * @param min min of generated number, default 0
+ * @param max max of generated number, default 100
+ *
+ * @return random int number between min and max
  */
-inline float getRandomUniformNumber(bool changeSeed = 1) {
-  if (changeSeed) {
-    srand(time(NULL));
-    std::this_thread::sleep_for(std::chrono::milliseconds(750));
-  } else {
-    srand(0);
-  }
-  return (float)(rand() % 1000) / 1000;
+inline int getRandomUniformInt(unsigned long int seed = 0, int min = 0,
+                               int max = 100) {
+  srand(seed);
+  return min + rand() % (max - min);
 }
 
 /**
- * Random number generator between 1/2 and 1
+ * Random float number generator
  *
- * @return random  number
+ * @param seed to initiate the generator, default 0
+ * @param min min of generated number, default 0
+ * @param max max of generated number, default 1
+ *
+ * @return random float number between min and max
  */
-inline float getRandomUniformNumberBis(bool changeSeed = 1) {
-  if (changeSeed) {
-    srand(time(NULL));
-    std::this_thread::sleep_for(std::chrono::milliseconds(750));
-    return (float)(rand() % 1000) / 2000 + 0.5;
-  } else {
-    return (float)(rand() % 1000) / 2000 + 0.5;
-  }
+inline float getRandomUniformFloat(unsigned long int seed = 0, float min = 0,
+                                   float max = 1) {
+  srand(seed);
+  return min + (((float)rand()) / (float)RAND_MAX) * (max - min);
 }
 
-inline std::vector<float> randomCriteriaLimits(int nbCategories,
-                                               bool changeSeed = 1) {
-  std::vector<float> critLimits;
+inline std::vector<float>
+randomCategoriesLimits(int nbCategories, unsigned long int seed = time(NULL)) {
+  std::vector<float> catLimits;
   for (int i = 0; i < nbCategories; i++) {
-    critLimits.push_back(getRandomUniformNumber(changeSeed));
+    catLimits.push_back(getRandomUniformFloat(seed));
   }
-  sort(critLimits.begin(), critLimits.end());
-  return critLimits;
+  sort(catLimits.begin(), catLimits.end());
+  return catLimits;
 }
 
 #endif

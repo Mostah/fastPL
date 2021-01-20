@@ -19,7 +19,7 @@ DataGenerator::DataGenerator(Config &config) : conf(config) {}
 
 void DataGenerator::datasetGenerator(int nb_criteria, int nb_alternative,
                                      int nb_categories, std::string datasetName,
-                                     bool overwrite, bool changeSeed) {
+                                     bool overwrite, unsigned long int seed) {
 
   // Generate new XML document within memory
   pugi::xml_document doc;
@@ -106,7 +106,7 @@ void DataGenerator::datasetGenerator(int nb_criteria, int nb_alternative,
 
 void DataGenerator::modelGenerator(int nb_criteria, int nb_categories,
                                    std::string modelName, bool overwrite,
-                                   bool changeSeed) {
+                                   unsigned long int seed) {
   // Generate new XML document within memory
   pugi::xml_document doc;
 
@@ -138,7 +138,7 @@ void DataGenerator::modelGenerator(int nb_criteria, int nb_categories,
 
   // Giving lambda
   // Lambda is a value between 0.5 and 1
-  float lambda = getRandomUniformNumberBis(changeSeed);
+  float lambda = getRandomUniformFloat(seed, 0.5, 1);
 
   pugi::xml_node lambda_node = dataset_node.append_child("lambda");
   lambda_node.append_child(pugi::node_pcdata)
@@ -146,7 +146,7 @@ void DataGenerator::modelGenerator(int nb_criteria, int nb_categories,
 
   // Creating a criteria object in plot each criterion profile limit
   Criteria criteria = Criteria(nb_criteria, "crit");
-  criteria.generateRandomCriteriaWeights(changeSeed);
+  criteria.generateRandomCriteriaWeights(seed);
   Categories categories = Categories(nb_categories);
 
   for (int i = 0; i < nb_criteria; i++) {
@@ -154,7 +154,7 @@ void DataGenerator::modelGenerator(int nb_criteria, int nb_categories,
         criteria.getCriterionVect()[i].getId().c_str());
 
     // Generate random Criteria Limits
-    std::vector<float> critLimit = randomCriteriaLimits(nb_categories, 0);
+    std::vector<float> critLimit = randomCategoriesLimits(nb_categories, 0);
     for (int j = 0; j < nb_categories; j++) {
       pugi::xml_node profile_node =
           criteria_node.append_child(categories.getIdCategories()[j].c_str());
