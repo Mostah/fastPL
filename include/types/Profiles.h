@@ -15,10 +15,11 @@ public:
   /**
    * Profiles standard constructor (PerformanceTable surcharged)
    *
-   * @param perf_vect Vector of performance
+   * @param perf_vect Vector of performance that models category limits
+   * @param mode give the mode of the profile performance table
    *
    */
-  Profiles(std::vector<Performance> &perf_vect);
+  Profiles(std::vector<Performance> &perf_vect, std::string mode);
 
   /**
    * Profiles constructor without perf values but set of
@@ -27,9 +28,16 @@ public:
    * @param nb_of_prof Number of profile
    * @param crits Criteria to evaluate performance over
    * @param prefix Prefix to use for the name of each Performance created.
+   * @param mode give the mode of the profile performance table
    * Default = "alt"
    * */
-  Profiles(int nb_of_prof, Criteria &crits, std::string prefix = "prof");
+  Profiles(int nb_of_prof, Criteria &crits, std::string mode,
+           std::string prefix = "prof");
+
+  /**
+   * Method that changes Profile mode and gets the order of the profile PT
+   */
+  Profiles changeMode();
 
   /**
    * Profiles constructor by copy
@@ -38,7 +46,7 @@ public:
    */
   Profiles(const Profiles &profiles);
 
-  ~Profiles();
+  ~Profiles(){};
 
   friend std::ostream &operator<<(std::ostream &out, const Profiles &profs);
 
@@ -61,6 +69,11 @@ public:
    */
   void generateRandomPerfValues(unsigned long int seed = time(NULL),
                                 int lower_bound = 0, int upper_bound = 1);
+
+  /**
+   * Function that will display the profile performance table in a elegant way
+   */
+  void display();
 };
 
 #endif

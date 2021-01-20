@@ -10,7 +10,7 @@
 // #include "types/TestPerf.cpp"
 // #include "types/TestPerformance.cpp"
 // #include "types/TestPerformanceTable.cpp"
-// #include "types/TestProfiles.cpp"
+#include "types/TestProfiles.cpp"
 #include "gtest/gtest.h"
 #include <sstream>
 #include <utility>

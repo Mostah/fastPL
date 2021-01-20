@@ -1,5 +1,6 @@
 #include "../../include/app.h"
 #include "../../include/learning/InitializeProfile.h"
+#include "../../include/types/Profiles.h"
 #include "../../include/utils.h"
 #include "spdlog/spdlog.h"
 #include "gtest/gtest.h"
@@ -120,10 +121,31 @@ TEST(TestProfileInitializer, TestInitializeProfilePerformance) {
   AlternativesPerformance alt_perf = AlternativesPerformance(perf_table, map);
   ProfileInitializer profInit = ProfileInitializer(conf, alt_perf);
   const std::vector<float> freq = profInit.categoryFrequency();
-  std::vector<float> profileCrit =
+  Performance profileCrit =
       profInit.initializeProfilePerformance(crit[0], categories, freq);
   std::ostringstream os;
   os << profileCrit;
-  EXPECT_EQ(profileCrit.size(), categories.getNumberCategories() - 1);
-  EXPECT_EQ(os.str(), "[0.8,0.6]");
+  EXPECT_EQ(profileCrit.getCriterionIds().size(),
+            categories.getNumberCategories() - 1);
+  EXPECT_EQ(os.str(), "Performance(Perf( name : crit, crit : cat0, value : 0.6 "
+                      "), Perf( name : crit, crit : cat1, value : 0.8 ), )");
+}
+
+TEST(TestProfileInitializer, TestInitializeProfiles) {
+  Config conf = getTestConf();
+  Criteria crit = Criteria(2);
+  Categories categories = Categories(3);
+  std::unordered_map<std::string, Category> map =
+      std::unordered_map<std::string, Category>{
+          {"alt0", categories[0]}, {"alt1", categories[1]},
+          {"alt2", categories[2]}, {"alt3", categories[2]},
+          {"alt4", categories[1]}, {"alt5", categories[1]}};
+  AlternativesPerformance alt_perf =
+      AlternativesPerformance(6, crit, "alt", map);
+  alt_perf.generateRandomPerfValues(1);
+  std::cout << alt_perf;
+  ProfileInitializer profInit = ProfileInitializer(conf, alt_perf);
+  Profiles new_p = profInit.initializeProfiles(categories);
+  new_p.display();
+  EXPECT_TRUE(new_p.isProfileOrdered());
 }

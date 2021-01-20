@@ -4,6 +4,7 @@
 #include "../../include/learning/InitializeProfile.h"
 #include "../../include/types/AlternativesPerformance.h"
 #include "../../include/types/Categories.h"
+#include "../../include/types/Criteria.h"
 #include "../../include/utils.h"
 
 #include <algorithm>
@@ -135,7 +136,7 @@ float ProfileInitializer::weightedProbability(
   return proba;
 }
 
-std::vector<float> ProfileInitializer::initializeProfilePerformance(
+Performance ProfileInitializer::initializeProfilePerformance(
     const Criterion &crit, Categories &categories,
     const std::vector<float> &catFre) {
   std::vector<float> categoryLimits;
@@ -164,7 +165,27 @@ std::vector<float> ProfileInitializer::initializeProfilePerformance(
       }
     }
     categoryLimits.push_back(
-        altPerformance_.getPerf(candidates[i], crit.getId()).getValue());
+        altPerformance_.getPerf(candidates[index], crit.getId()).getValue());
   }
-  return categoryLimits;
+  std::reverse(categoryLimits.begin(), categoryLimits.end());
+  // this is a work around since we would actually need to construct a
+  // Performance with a categories object.
+
+  Criteria fictiveCategories = Criteria(categoryLimits.size(), "crit");
+  return Performance(fictiveCategories, categoryLimits, "b_i");
+}
+
+Profiles ProfileInitializer::initializeProfiles(Categories &categories) {
+  std::vector<Performance> perf_vec;
+  Performance firstAltPerf = altPerformance_.getPerformanceTable()[0];
+  std::vector<std::string> criteriaIds = firstAltPerf.getCriterionIds();
+  std::vector<float> catFreq = ProfileInitializer::categoryFrequency();
+  for (std::string criterion : criteriaIds) {
+    Performance p = ProfileInitializer::initializeProfilePerformance(
+        criterion, categories, catFreq);
+    perf_vec.push_back(p);
+  }
+  Profiles p = Profiles(perf_vec, "crit");
+  p.changeMode();
+  return p;
 }

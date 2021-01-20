@@ -18,7 +18,9 @@ PerformanceTable::PerformanceTable(std::vector<Performance> &perf_vect) {
     // ensure there is no performance with dupplicated name
     if (std::find(perf_id_vect.begin(), perf_id_vect.end(), p.getId()) !=
         perf_id_vect.end()) {
-      throw std::invalid_argument("Each performance must have different ids.");
+      // NEED TO REVIEW THING I THINK WE NEED TO TAKE IT OUT
+      // throw std::invalid_argument("Each performance must have different
+      // ids.");
     }
     perf_id_vect.push_back(p.getId());
 

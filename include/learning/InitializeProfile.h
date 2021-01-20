@@ -4,6 +4,7 @@
 #include "../app.h"
 #include "../types/AlternativesPerformance.h"
 #include "../types/Categories.h"
+#include "../types/Profiles.h"
 
 class ProfileInitializer {
 public:
@@ -77,16 +78,15 @@ public:
    *
    * @return initialized profile performances for Criterion crit
    */
-  std::vector<float>
-  initializeProfilePerformance(const Criterion &crit, Categories &categories,
-                               const std::vector<float> &catFre);
+  Performance initializeProfilePerformance(const Criterion &crit,
+                                           Categories &categories,
+                                           const std::vector<float> &catFre);
 
   /**
    * Initialize all profiles
-   * I would need to be able to create a PerformanceTable with mode="crit"
-   * @return profile PerformanceTable
+   * @return profile Profile in "crit" mode
    */
-  PerformanceTable initializeProfiles();
+  Profiles initializeProfiles(Categories &categories);
 
 private:
   Config &conf;
