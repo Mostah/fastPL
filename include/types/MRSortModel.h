@@ -17,7 +17,7 @@ public:
    * MRSortModel standard constructor
    *
    * @param criteria Criteria object
-   * @param profiles PerformanceTable containing the profiles
+   * @param profiles Profiles containing the profiles
    * @param categories Categories object used for the profiles
    * @param lambda threshold
    * @param id optional name of the model

@@ -26,7 +26,7 @@ MRSortModel::MRSortModel(int n_cat, int n_crit, std::string id)
       categories(default_cats) {
   if (n_cat < 2) {
     throw std::invalid_argument(
-        "The number of categories (n_cat) must be greater than 2");
+        "The number of categories (n_cat) must be >= 2");
   }
   id_ = id;
   categories = Categories(n_cat);
