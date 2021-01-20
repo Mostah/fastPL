@@ -102,8 +102,8 @@ inline float getRandomUniformFloat(float min = 0, float max = 1,
   return min + (((float)rand()) / (float)RAND_MAX) * (max - min);
 }
 
-inline std::vector<float> randomCategoriesLimits(int nbCategories,
-                                                 unsigned long int seed = 0) {
+inline std::vector<float>
+randomCategoriesLimits(int nbCategories, unsigned long int seed = time(NULL)) {
   std::vector<float> catLimits;
   for (int i = 0; i < nbCategories; i++) {
     catLimits.push_back(getRandomUniformFloat(0, 1, seed));
