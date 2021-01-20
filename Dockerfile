@@ -1,5 +1,5 @@
 # Get the GCC preinstalled image from Docker Hub
-FROM gcc:9.3
+FROM gcc:10.2
 
 # install cmake
 RUN apt-get update && apt-get -y install cmake git doxygen

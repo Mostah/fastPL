@@ -3,11 +3,11 @@ version: 2.1
 jobs:
   compile:
     docker:
-      - image: gcc:9.3
+      - image: gcc:10.2
     steps:
       - checkout
       # command to build all files
-      - run: apt-get update && apt-get -y install cmake=3.16.3-1ubuntu1 && apt-get -y install doxygen
+      - run: apt-get update && apt-get -y install cmake && apt-get -y install doxygen
       - run: git submodule init; git submodule update
       - run: mkdir build; cd build; cmake .. -DBUILD_DEPS:BOOL=ON -DUSE_SCIP=OFF; make
       - persist_to_workspace:
