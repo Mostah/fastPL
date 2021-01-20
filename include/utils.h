@@ -26,10 +26,22 @@
  *
  */
 template <typename T>
-std::ostream &operator<<(std::ostream &out, const std::vector<T> &vec);
+std::ostream &operator<<(std::ostream &out, const std::vector<T> &vec) {
+  out << "[";
+  for (std::size_t i = 0; i < vec.size(); i++) {
+    out << vec[i] << (i == vec.size() - 1 ? "" : ",");
+  }
+  out << "]";
+  return out;
+}
 
 template <typename T>
-std::vector<T> subVector(std::vector<T> const &v, int m, int n);
+std::vector<T> subVector(std::vector<T> const &v, int m, int n) {
+  auto first = v.begin() + m;
+  auto last = v.begin() + n + 1;
+  std::vector<T> vector(first, last);
+  return vector;
+}
 
 /**
  * Pugy XML Tree walker viewer
@@ -37,17 +49,17 @@ std::vector<T> subVector(std::vector<T> const &v, int m, int n);
  * @param node xml_node
  *
  */
-struct simple_walker : pugi::xml_tree_walker {
-  virtual bool for_each(pugi::xml_node &node) {
-    for (int i = 0; i < depth(); ++i)
-      std::cout << "  "; // indentation
+// struct simple_walker : pugi::xml_tree_walker {
+//   virtual bool for_each(pugi::xml_node &node) {
+//     for (int i = 0; i < depth(); ++i)
+//       std::cout << "  "; // indentation
 
-    std::cout << node.type() << ": name='" << node.name() << "', value='"
-              << node.value() << "'\n";
+//     std::cout << node.type() << ": name='" << node.name() << "', value='"
+//               << node.value() << "'\n";
 
-    return true; // continue traversal
-  }
-};
+//     return true; // continue traversal
+//   }
+// };
 //   ^^^^^^^^^^^^ HOW TO USE ^^^^^^^^^^^^
 //   pugi::xml_document doc;
 //   std::string path = "../data/" + fileName;
@@ -56,21 +68,40 @@ struct simple_walker : pugi::xml_tree_walker {
 //   simple_walker walker;
 //   doc.traverse(walker);
 
-inline bool fileExists(const std::string &name);
+inline bool fileExists(const std::string &name) {
+  struct stat buffer;
+  return (stat(name.c_str(), &buffer) == 0);
+}
 
-/**
- * Random number generator between 0 and 1
- *
- * @return random  number
- */
-inline float getRandomUniformNumber(bool changeSeed = 1);
+// /**
+//  * Random number generator between 0 and 1
+//  *
+//  * @return random  number
+//  */
+// inline float getRandomUniformNumber(bool changeSeed) {
+//   if (changeSeed) {
+//     srand(time(NULL));
+//     std::this_thread::sleep_for(std::chrono::milliseconds(750));
+//   } else {
+//     srand(0);
+//   }
+//   return (float)(rand() % 1000) / 1000;
+// }
 
-/**
- * Random number generator between 1/2 and 1
- *
- * @return random  number
- */
-inline float getRandomUniformNumberBis(bool changeSeed = 1);
+// /**
+//  * Random number generator between 1/2 and 1
+//  *
+//  * @return random  number
+//  */
+// inline float getRandomUniformNumberBis(bool changeSeed) {
+//   if (changeSeed) {
+//     srand(time(NULL));
+//     std::this_thread::sleep_for(std::chrono::milliseconds(750));
+//     return (float)(rand() % 1000) / 2000 + 0.5;
+//   } else {
+//     return (float)(rand() % 1000) / 2000 + 0.5;
+//   }
+// }
 
 /**
  * Random int number generator
@@ -79,14 +110,37 @@ inline float getRandomUniformNumberBis(bool changeSeed = 1);
  * @param min min of generated number
  * @param max max of generated number
  *
- * @return random number
+ * @return random int number
  */
-inline int getRandomUniformInt(unsigned long int seed, int min, int max);
+inline int getRandomUniformInt(unsigned long int seed, int min, int max) {
+  srand(seed);
+  return min + rand() % (max - min);
+}
 
-inline float getRandomUniformFloat(unsigned long int seed, float min,
-                                   float max);
+/**
+ * Random float number generator
+ *
+ * @param seed to initiate the generator
+ * @param min min of generated number
+ * @param max max of generated number
+ *
+ * @return random float number
+ */
+inline float getRandomUniformFloat(unsigned long int seed, float min = 0,
+                                   float max = 1) {
+  srand(seed);
+  return min + (((float)rand()) / (float)RAND_MAX) * (max - min);
+}
 
+// Shouldn't this function be in Criteria?
 inline std::vector<float> randomCriteriaLimits(int nbCategories,
-                                               bool changeSeed = 1);
+                                               bool changeSeed) {
+  std::vector<float> critLimits;
+  for (int i = 0; i < nbCategories; i++) {
+    critLimits.push_back(getRandomUniformNumber(changeSeed));
+  }
+  sort(critLimits.begin(), critLimits.end());
+  return critLimits;
+}
 
 #endif

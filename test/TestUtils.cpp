@@ -14,10 +14,13 @@ TEST(TestUtils, TestRandomIntGenerator) {
 }
 
 TEST(TestUtils, TestRandomFloatGenerator) {
-  float random1 = getRandomUniformFloat(0, 0, 1);
-  float random2 = getRandomUniformFloat(0, 0, 1);
-  float random3 = getRandomUniformInt(40, 0, 1);
+  float random1 = getRandomUniformFloat(0, 1, 4);
+  float random2 = getRandomUniformFloat(0, 1, 4);
+  float random3 = getRandomUniformFloat(40, 1, 4);
+
+  float random4 = getRandomUniformFloat(10);
 
   EXPECT_EQ(random1, random2);
   EXPECT_NE(random1, random3);
+  EXPECT_TRUE(random4 >= 0 && random4 <= 1);
 }
