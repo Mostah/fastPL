@@ -120,10 +120,10 @@ void Criteria::normalizeWeights() {
   }
 }
 
-void Criteria::generateRandomCriteriaWeights(bool changeSeed) {
+void Criteria::generateRandomCriteriaWeights(unsigned long int seed) {
   std::vector<float> weights;
   for (int i = 0; i < criterion_vect_.size(); i++) {
-    weights.push_back(getRandomUniformNumber(changeSeed));
+    weights.push_back(getRandomUniformFloat(0, 1, seed));
   }
   float totSum = std::accumulate(weights.begin(), weights.end(), 0.00f);
   std::transform(weights.begin(), weights.end(), weights.begin(),

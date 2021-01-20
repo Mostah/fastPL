@@ -96,11 +96,9 @@ void PerformanceTable::generateRandomPerfValues(unsigned long int seed,
     throw std::invalid_argument(
         "Lower bound must be lower than the upper bound.");
   }
-  srand(seed);
   for (std::vector<Perf> &pv : pt_) {
     for (Perf &p : pv) {
-      p.setValue((float)lower_bound + ((float)rand() / RAND_MAX) *
-                                          (float)(upper_bound - lower_bound));
+      p.setValue(getRandomUniformFloat(lower_bound, upper_bound, seed));
     }
   }
   sorted_ = false;

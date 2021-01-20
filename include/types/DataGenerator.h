@@ -33,7 +33,7 @@ public:
    */
   void datasetGenerator(int nb_criteria, int nb_alternative, int nb_categories,
                         std::string datasetName = "", bool overwrite = 1,
-                        bool changeSeed = 0);
+                        unsigned long int seed = 0);
 
   /**
    * Generate a random model and puts it in a xml file
@@ -48,7 +48,7 @@ public:
    * generated name
    */
   void modelGenerator(int nb_criteria, int nb_categories, std::string modelName,
-                      bool overwrite = 1, bool changeSeed = 0);
+                      bool overwrite = 1, unsigned long int seed = 0);
 
   /**
    * Get data from xml file
