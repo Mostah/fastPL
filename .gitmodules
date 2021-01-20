@@ -11,3 +11,6 @@
 [submodule "extsrc/yaml-cpp"]
 	path = extsrc/yaml-cpp
 	url = git@github.com:jbeder/yaml-cpp.git
+[submodule "extsrc/ortools"]
+	path = extsrc/ortools
+	url = git@github.com:google/or-tools.git

@@ -7,6 +7,7 @@ add_subdirectory(extsrc/googletest)
 add_subdirectory(extsrc/spdlog)
 add_subdirectory(extsrc/pugixml)
 add_subdirectory(extsrc/yaml-cpp)
+add_subdirectory(extsrc/ortools)
 
 add_subdirectory(doc) # add doxygen doc generator
 
@@ -62,3 +63,6 @@ target_link_libraries(Main Core pugixml)
 
 target_link_libraries(Test Core yaml-cpp)
 target_link_libraries(Main Core yaml-cpp)
+
+target_link_libraries(Main Core ortools::ortools)
+target_link_libraries(Test Core ortools::ortools)
