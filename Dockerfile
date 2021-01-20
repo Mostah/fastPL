@@ -2,8 +2,7 @@
 FROM gcc:9.3
 
 # install cmake
-RUN apt-get update && apt-get -y install cmake git
-
+RUN apt-get update && apt-get -y install cmake git doxygen
 RUN git clone https://github.com/Mostah/fastPL.git
 
 # install & configure submodules 
@@ -17,4 +16,4 @@ WORKDIR /home/fastPL/build/
 RUN cmake .. && make
 
 # Run the program output from the previous step
-CMD ["./Test"]
+CMD ["./Main -h"]

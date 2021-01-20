@@ -7,6 +7,7 @@
 // line 48 #define PUGIXML_HEADER_ONLY
 
 #include "../../extsrc/pugixml/src/pugixml.hpp"
+#include "../app.h"
 #include "AlternativesPerformance.h"
 #include "Criterion.h"
 #include "Performance.h"
@@ -16,7 +17,7 @@
 
 class DataGenerator {
 public:
-  DataGenerator(){};
+  DataGenerator(Config &config);
 
   /**
    * Generate a random dataset and put it in a xml file
@@ -202,6 +203,9 @@ public:
    */
   std::vector<float> getCriterionCategoryLimits(std::string fileName,
                                                 std::string crit_id);
+
+private:
+  Config &conf;
 };
 
 #endif

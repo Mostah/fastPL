@@ -1,3 +1,4 @@
+#include "../../include/app.h"
 #include "../../include/types/DataGenerator.h"
 #include "../../include/utils.h"
 #include "gtest/gtest.h"
@@ -7,17 +8,25 @@
 #include <tuple>
 #include <utility>
 
+Config getTestConf() {
+  Config conf;
+  conf.data_dir = "../data/tests/";
+  return conf;
+}
+
 TEST(TestDataGenerator, TestDatasetGenerator) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   data.datasetGenerator(3, 5, 4, "test_dataset.xml", 1, 0);
-  bool u = fileExists("../data/test_dataset.xml");
+  bool u = fileExists(conf.data_dir + "test_dataset.xml");
   std::ostringstream os2;
   os2 << u;
   EXPECT_EQ(os2.str(), "1");
 }
 
 TEST(TestDataGenerator, TestDatasetGeneratorNotOverwrite) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   try {
     data.datasetGenerator(3, 5, 4, "test_dataset.xml", 0, 0);
     FAIL() << "should have throw invalid_argument error.";
@@ -32,9 +41,10 @@ TEST(TestDataGenerator, TestDatasetGeneratorNotOverwrite) {
 }
 
 TEST(TestDataGenerator, TestDatasetGeneratorOverwrite) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   data.datasetGenerator(3, 5, 4, "test_dataset.xml", 1, 0);
-  bool u = fileExists("../data/test_dataset.xml");
+  bool u = fileExists(conf.data_dir + "test_dataset.xml");
   std::ostringstream os2;
   os2 << u;
   EXPECT_EQ(os2.str(), "1");
@@ -42,9 +52,10 @@ TEST(TestDataGenerator, TestDatasetGeneratorOverwrite) {
 
 /**
 TEST(TestDataGenerator, TestModelGenerator) {
-  DataGenerator data = DataGenerator();
+    Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   data.modelGenerator(2, 3, "test_model.xml", 1, 0);
-  bool u = fileExists("../data/test_model.xml");
+  bool u = fileExists(conf.data_dir+"test_model.xml");
   std::ostringstream os2;
   os2 << u;
   EXPECT_EQ(os2.str(), "1");
@@ -52,7 +63,8 @@ TEST(TestDataGenerator, TestModelGenerator) {
 */
 
 TEST(TestDataGenerator, TestModelGeneratorNotOverwrite) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   try {
     data.modelGenerator(2, 3, "test_model.xml", 0, 0);
     FAIL() << "should have throw invalid_argument error.";
@@ -67,7 +79,8 @@ TEST(TestDataGenerator, TestModelGeneratorNotOverwrite) {
 }
 
 TEST(TestDataGenerator, TestXmlFileType) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   std::string type = data.getXmlFileType("test_model.xml");
   std::ostringstream os2;
   os2 << type;
@@ -75,7 +88,8 @@ TEST(TestDataGenerator, TestXmlFileType) {
 }
 
 TEST(TestDataGenerator, TestXmlFileType2) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   std::string type = data.getXmlFileType("test_dataset.xml");
   std::ostringstream os2;
   os2 << type;
@@ -83,9 +97,10 @@ TEST(TestDataGenerator, TestXmlFileType2) {
 }
 
 TEST(TestDataGenerator, TestXmlFileType3) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   try {
-    std::string type = data.getXmlFileType("wrong_structure.xml");
+    std::string type = data.getXmlFileType("test_wrong_structure.xml");
     FAIL() << "should have throw invalid_argument error.";
   } catch (std::invalid_argument const &err) {
     EXPECT_EQ(err.what(),
@@ -96,7 +111,8 @@ TEST(TestDataGenerator, TestXmlFileType3) {
 }
 
 TEST(TestDataGenerator, TestLoadModel) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   std::tuple<float, Criteria, PerformanceTable> t =
       data.loadModel("test_model.xml");
   float lambda = std::get<0>(t);
@@ -122,7 +138,8 @@ TEST(TestDataGenerator, TestLoadModel) {
 }
 
 TEST(TestDataGenerator, TestSaveModelWrongNumberCriteria) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   Criteria crit = Criteria(2, "a");
   float lambda = 0.1;
   PerformanceTable perf_table = PerformanceTable(3, crit, "test");
@@ -140,20 +157,22 @@ TEST(TestDataGenerator, TestSaveModelWrongNumberCriteria) {
 }
 
 TEST(TestDataGenerator, TestSaveModel) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   Criteria crit = Criteria(2, "a");
   crit.generateRandomCriteriaWeights(0);
   float lambda = 0.1;
   PerformanceTable perf_table = PerformanceTable(2, crit, "test");
   data.saveModel("test_save_model.xml", lambda, crit, perf_table, 1);
-  bool u = fileExists("../data/test_save_model.xml");
+  bool u = fileExists(conf.data_dir + "test_save_model.xml");
   std::ostringstream os2;
   os2 << u;
   EXPECT_EQ(os2.str(), "1");
 }
 
 TEST(TestDataGenerator, TestSaveModelCanttOverwrite) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   Criteria crit = Criteria(2, "a");
   float lambda = 0.1;
   PerformanceTable perf_table = PerformanceTable(2, crit, "test");
@@ -167,11 +186,13 @@ TEST(TestDataGenerator, TestSaveModelCanttOverwrite) {
   } catch (...) {
     FAIL() << "should have throw invalid_argument error.";
   }
-  std::remove("../data/test_save_model.xml");
+  std::string path_to_remove = conf.data_dir + "test_save_model.xml";
+  std::remove(path_to_remove.c_str());
 }
 
 TEST(TestDataGenerator, TestSaveDataset) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   Criteria crit = Criteria(3, "crit");
   crit.generateRandomCriteriaWeights(0);
   PerformanceTable perf_table = PerformanceTable(4, crit, "alt");
@@ -183,14 +204,15 @@ TEST(TestDataGenerator, TestSaveDataset) {
           {"alt0", cat0}, {"alt1", cat1}, {"alt2", cat0}, {"alt3", cat1}};
   AlternativesPerformance alt_perf = AlternativesPerformance(perf_table, map);
   data.saveDataset("test_save_dataset.xml", alt_perf, 2, 0);
-  bool u = fileExists("../data/dataset_alt4_crit3_cat2.xml");
+  bool u = fileExists(conf.data_dir + "dataset_alt4_crit3_cat2.xml");
   std::ostringstream os2;
   os2 << u;
   EXPECT_EQ(os2.str(), "1");
 }
 
 TEST(TestDataGenerator, TestSaveDatasetCanOverwrite) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   Criteria crit = Criteria(3, "crit");
   crit.generateRandomCriteriaWeights(0);
   PerformanceTable perf_table = PerformanceTable(4, crit, "alt");
@@ -203,14 +225,15 @@ TEST(TestDataGenerator, TestSaveDatasetCanOverwrite) {
   AlternativesPerformance alt_perf = AlternativesPerformance(perf_table, map);
 
   data.saveDataset("test_save_dataset.xml", alt_perf, 2, 1);
-  bool u = fileExists("../data/dataset_alt4_crit3_cat2.xml");
+  bool u = fileExists(conf.data_dir + "dataset_alt4_crit3_cat2.xml");
   std::ostringstream os2;
   os2 << u;
   EXPECT_EQ(os2.str(), "1");
 }
 
 TEST(TestDataGenerator, TestSaveDatasetCantOverwrite) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   Criteria crit = Criteria(3, "crit");
   crit.generateRandomCriteriaWeights(0);
   PerformanceTable perf_table = PerformanceTable(4, crit, "alt");
@@ -231,14 +254,16 @@ TEST(TestDataGenerator, TestSaveDatasetCantOverwrite) {
   } catch (...) {
     FAIL() << "should have throw invalid_argument error.";
   }
-  std::remove("../data/dataset_alt4_crit3_cat2.xml");
+  std::string path_to_remove = conf.data_dir + "dataset_alt4_crit3_cat2.xml";
+  std::remove(path_to_remove.c_str());
 }
 
 /*
 TEST(TestDataGenerator, TestLoadDataset) {
-  DataGenerator data = DataGenerator();
+    Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   std::tuple<PerformanceTable, std::unordered_map<std::string, Category>> t =
-      data.loadDataset("../data/test.xml");
+      data.loadDataset(conf.data_dir+"test.xml");
   PerformanceTable pt = std::get<0>(t);
   std::unordered_map<std::string, Category> altAssignments = std::get<1>(t);
   AlternativesPerformance alt_perf =
@@ -265,7 +290,8 @@ TEST(TestDataGenerator, TestLoadDataset) {
 **/
 
 TEST(TestDataGenerator, TestNumberOfCriteriaForModels) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   int crit = data.getNumberOfCriteria("test_model.xml");
   std::ostringstream os2;
   os2 << crit;
@@ -273,7 +299,8 @@ TEST(TestDataGenerator, TestNumberOfCriteriaForModels) {
 }
 
 TEST(TestDataGenerator, TestNumberOfCriteriaForData) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   int crit = data.getNumberOfCriteria("test_dataset.xml");
   std::ostringstream os2;
   os2 << crit;
@@ -281,7 +308,8 @@ TEST(TestDataGenerator, TestNumberOfCriteriaForData) {
 }
 
 TEST(TestDataGenerator, TestNumberOfCategoriesForModels) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   int crit = data.getNumberOfCategories("test_model.xml");
   std::ostringstream os2;
   os2 << crit;
@@ -289,7 +317,8 @@ TEST(TestDataGenerator, TestNumberOfCategoriesForModels) {
 }
 
 TEST(TestDataGenerator, TestNumberOfCategoriesForData) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   int crit = data.getNumberOfCategories("test_dataset.xml");
   std::ostringstream os2;
   os2 << crit;
@@ -297,7 +326,8 @@ TEST(TestDataGenerator, TestNumberOfCategoriesForData) {
 }
 
 TEST(TestDataGenerator, TestGetLambdaForData) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   try {
     int crit = data.getThresholdValue("test_dataset.xml");
     FAIL() << "should have throw invalid_argument error.";
@@ -310,7 +340,8 @@ TEST(TestDataGenerator, TestGetLambdaForData) {
 }
 
 TEST(TestDataGenerator, TestGetLambdaForModel) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   float lambda = data.getThresholdValue("test_model.xml");
   std::ostringstream os2;
   os2 << lambda;
@@ -318,7 +349,8 @@ TEST(TestDataGenerator, TestGetLambdaForModel) {
 }
 
 TEST(TestDataGenerator, TestGetNumerOfAlternativesForDataset) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   int nb_alternatives = data.getNumberOfAlternatives("test_dataset.xml");
   std::ostringstream os2;
   os2 << nb_alternatives;
@@ -326,7 +358,8 @@ TEST(TestDataGenerator, TestGetNumerOfAlternativesForDataset) {
 }
 
 TEST(TestDataGenerator, TestGetNumerOfAlternativesForModel) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   try {
     int nb_alt = data.getNumberOfAlternatives("test_model.xml");
     FAIL() << "should have throw invalid_argument error.";
@@ -340,7 +373,8 @@ TEST(TestDataGenerator, TestGetNumerOfAlternativesForModel) {
 }
 
 TEST(TestDataGenerator, TestGetAlternativePerformanceForDataset) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   Performance p = data.getAlternativePerformance("test_dataset.xml", "alt0");
   std::ostringstream os2;
   os2 << p;
@@ -350,7 +384,8 @@ TEST(TestDataGenerator, TestGetAlternativePerformanceForDataset) {
 }
 
 TEST(TestDataGenerator, TestGetAlternativePerformanceForModel) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   try {
     Performance p = data.getAlternativePerformance("test_model.xml", "alt0");
     FAIL() << "should have throw invalid_argument error.";
@@ -364,7 +399,8 @@ TEST(TestDataGenerator, TestGetAlternativePerformanceForModel) {
 }
 
 TEST(TestDataGenerator, TestGetAlternativePerformanceForModelFakeAltId) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   try {
     Performance p = data.getAlternativePerformance("test_dataset.xml", "hello");
     FAIL() << "should have throw invalid_argument error.";
@@ -378,7 +414,8 @@ TEST(TestDataGenerator, TestGetAlternativePerformanceForModelFakeAltId) {
 }
 
 TEST(TestDataGenerator, TestGetAlternativeIdsForDataset) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   std::vector<std::string> v = data.getAlternativeIds("test_dataset.xml");
   std::ostringstream os2;
   os2 << v;
@@ -386,7 +423,8 @@ TEST(TestDataGenerator, TestGetAlternativeIdsForDataset) {
 }
 
 TEST(TestDataGenerator, TestGetAlternativeIdsForModel) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   try {
     std::vector<std::string> v = data.getAlternativeIds("test_model.xml");
     FAIL() << "should have throw invalid_argument error.";
@@ -400,7 +438,8 @@ TEST(TestDataGenerator, TestGetAlternativeIdsForModel) {
 }
 
 TEST(TestDataGenerator, TestGetCriteriaIdsForDataset) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   std::vector<std::string> v = data.getCriteriaIds("test_dataset.xml");
   std::ostringstream os2;
   os2 << v;
@@ -408,7 +447,8 @@ TEST(TestDataGenerator, TestGetCriteriaIdsForDataset) {
 }
 
 TEST(TestDataGenerator, TestGetCriteriaIdsForModel) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   std::vector<std::string> v = data.getCriteriaIds("test_model.xml");
   std::ostringstream os2;
   os2 << v;
@@ -416,7 +456,8 @@ TEST(TestDataGenerator, TestGetCriteriaIdsForModel) {
 }
 
 TEST(TestDataGenerator, TestGetCriterionForDataset) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   try {
     Criterion v = data.getCriterion("test_dataset.xml", "crit1");
     FAIL() << "should have throw invalid_argument error.";
@@ -430,7 +471,8 @@ TEST(TestDataGenerator, TestGetCriterionForDataset) {
 }
 
 TEST(TestDataGenerator, TestGetCriterionForModel) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   Criterion crit1 = data.getCriterion("test_model.xml", "crit1");
   std::ostringstream os2;
   os2 << crit1;
@@ -438,7 +480,8 @@ TEST(TestDataGenerator, TestGetCriterionForModel) {
 }
 
 TEST(TestDataGenerator, TestGetCriterionForModelFakeCritId) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   try {
     Criterion crit1 = data.getCriterion("test_model.xml", "testing");
     FAIL() << "should have throw invalid_argument error.";
@@ -452,7 +495,8 @@ TEST(TestDataGenerator, TestGetCriterionForModelFakeCritId) {
 }
 
 TEST(TestDataGenerator, TestGetAlternativeAssignmentModel) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   try {
     int v = data.getAlternativeAssignment("test_model.xml", "alt0");
     FAIL() << "should have throw invalid_argument error.";
@@ -466,7 +510,8 @@ TEST(TestDataGenerator, TestGetAlternativeAssignmentModel) {
 }
 
 TEST(TestDataGenerator, TestGetAlternativeAssignmentDataset) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   int v = data.getAlternativeAssignment("test_dataset.xml", "alt0");
   std::ostringstream os2;
   os2 << v;
@@ -475,7 +520,8 @@ TEST(TestDataGenerator, TestGetAlternativeAssignmentDataset) {
 }
 
 TEST(TestDataGenerator, TestGetAlternativeAssignmentDatasetFakeAltId) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   try {
     int v = data.getAlternativeAssignment("test_dataset.xml", "hello");
     FAIL() << "should have throw invalid_argument error.";
@@ -488,7 +534,8 @@ TEST(TestDataGenerator, TestGetAlternativeAssignmentDatasetFakeAltId) {
 }
 
 TEST(TestDataGenerator, TestGetCriterionCategoryLimitsDataset) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   try {
     std::vector<float> v =
         data.getCriterionCategoryLimits("test_dataset.xml", "crit1");
@@ -504,7 +551,8 @@ TEST(TestDataGenerator, TestGetCriterionCategoryLimitsDataset) {
 }
 
 TEST(TestDataGenerator, TestGetCriterionCategoryLimitsModel) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   std::vector<float> v =
       data.getCriterionCategoryLimits("test_model.xml", "crit0");
   std::ostringstream os2;
@@ -513,7 +561,8 @@ TEST(TestDataGenerator, TestGetCriterionCategoryLimitsModel) {
 }
 
 TEST(TestDataGenerator, TestGetCriterionCategoryLimitsModelFakeCritId) {
-  DataGenerator data = DataGenerator();
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
   try {
     std::vector<float> v =
         data.getCriterionCategoryLimits("test_model.xml", "hello");
