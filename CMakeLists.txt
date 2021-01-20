@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.12) # version can be different
+cmake_minimum_required(VERSION 3.14) # version can be different
 
 project(fastPL) #name of your project
 
