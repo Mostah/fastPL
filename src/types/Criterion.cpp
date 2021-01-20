@@ -28,8 +28,8 @@ float Criterion::getWeight() const { return weight_; }
 void Criterion::setWeight(float weight) { weight_ = weight; }
 
 void Criterion::generateDirection(unsigned long int seed) {
-  srand(seed);
-  if (((float)rand() / RAND_MAX) < 0.5) {
+  float f = getRandomUniformFloat();
+  if (f < 0.5) {
     direction_ = -1;
   } else {
     direction_ = 1;
