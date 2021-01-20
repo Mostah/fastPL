@@ -1,7 +1,9 @@
 #ifndef InitializeProfile_H
 #define InitializeProfile_H
 
+#include "../app.h"
 #include "../types/AlternativesPerformance.h"
+#include "../types/Categories.h"
 
 class ProfileInitializer {
 public:
@@ -10,14 +12,14 @@ public:
    *
    * @return ProfileInitializer object
    */
-  ProfileInitializer(AlternativesPerformance &altPerfs);
+  ProfileInitializer(Config &config, AlternativesPerformance &altPerfs);
 
   /**
    * ProfileInitializer copy constructor
    *
    * @return ProfileInitializer object
    */
-  ProfileInitializer(const ProfileInitializer &profInit);
+  ProfileInitializer(Config &config, const ProfileInitializer &profInit);
 
   /**
    * ProfileInitializer standard deconstructor
@@ -76,7 +78,7 @@ public:
    * @return initialized profile performances for Criterion crit
    */
   std::vector<float>
-  initializeProfilePerformance(Criterion &crit, Categories const &categories,
+  initializeProfilePerformance(const Criterion &crit, Categories &categories,
                                const std::vector<float> &catFre);
 
   /**
@@ -87,6 +89,7 @@ public:
   PerformanceTable initializeProfiles();
 
 private:
+  Config &conf;
   AlternativesPerformance altPerformance_;
 };
 

@@ -33,6 +33,8 @@ Category Categories::operator[](int index) const {
   return categories_vector_[index];
 }
 
+int Categories::getNumberCategories() { return categories_vector_.size(); }
+
 Categories::~Categories() {
   // https://stackoverflow.com/questions/993590/should-i-delete-vectorstring
   std::vector<Category>().swap(categories_vector_);

@@ -2,20 +2,22 @@
 #define UTILS_H
 
 #include "../extsrc/pugixml/src/pugixml.hpp"
+#include "types/Category.h"
 #include <iostream>
 #include <vector>
 
-#include <fstream>
-#include <string>
-#include <sys/stat.h>
-#include <unistd.h>
-
 #include <algorithm>
 #include <chrono>
+#include <fstream>
+#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string>
+#include <sys/stat.h>
 #include <thread>
 #include <time.h>
+#include <unistd.h>
+#include <unordered_map>
 #include <vector>
 
 /**
@@ -111,6 +113,21 @@ randomCategoriesLimits(int nbCategories, unsigned long int seed = time(NULL)) {
   }
   sort(catLimits.begin(), catLimits.end());
   return catLimits;
+}
+/**
+ * Overloading << operator for std::unordered_map
+ *
+ * @param out ostream
+ * @param std::unordered_map  object
+ *
+ */
+template <typename K, typename V>
+std::ostream &operator<<(std::ostream &out, std::unordered_map<K, V> const &m) {
+  for (auto const &pair : m) {
+    out << "{, (" << pair.first << ": " << pair.second << "),";
+  }
+  out << "}";
+  return out;
 }
 
 #endif

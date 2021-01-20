@@ -1,5 +1,9 @@
+#include "../../extsrc/spdlog/include/spdlog/fmt/ostr.h"
+#include "../../extsrc/spdlog/include/spdlog/spdlog.h"
+
 #include "../../include/learning/InitializeProfile.h"
 #include "../../include/types/AlternativesPerformance.h"
+#include "../../include/types/Categories.h"
 #include "../../include/utils.h"
 
 #include <algorithm>
@@ -11,11 +15,17 @@
 #include <utility>
 #include <vector>
 
-ProfileInitializer::ProfileInitializer(AlternativesPerformance &altPerfs)
-    : altPerformance_(altPerfs) {}
+ProfileInitializer::ProfileInitializer(Config &config,
+                                       AlternativesPerformance &altPerfs)
+    : conf(config), altPerformance_(altPerfs) {
+  conf.logger->debug("Starting ProfileInitializer object...");
+}
 
-ProfileInitializer::ProfileInitializer(const ProfileInitializer &profInit)
-    : altPerformance_(profInit.getAlternativesPerformance()) {}
+ProfileInitializer::ProfileInitializer(Config &config,
+                                       const ProfileInitializer &profInit)
+    : conf(config), altPerformance_(profInit.getAlternativesPerformance()) {
+  conf.logger->debug("Starting ProfileInitializer object...");
+}
 
 AlternativesPerformance ProfileInitializer::getAlternativesPerformance() const {
   return altPerformance_;
@@ -57,7 +67,6 @@ std::vector<float> ProfileInitializer::categoryFrequency() {
     float c = pair.second;
     frequency.push_back(c / nbAlternatives);
   }
-
   return frequency;
 }
 
@@ -127,21 +136,35 @@ float ProfileInitializer::weightedProbability(
 }
 
 std::vector<float> ProfileInitializer::initializeProfilePerformance(
-    Criterion &crit, Categories const &categories,
+    const Criterion &crit, Categories &categories,
     const std::vector<float> &catFre) {
-  std::vector<float> CategoryLimits;
-  int nbCategories = categories.size();
+  std::vector<float> categoryLimits;
+  int nbCategories = categories.getNumberCategories();
 
   for (int i = 0; i < nbCategories - 1; i++) {
     std::vector<float> altProba;
     std::vector<std::string> candidates =
-        ProfileInitializer::getProfilePerformanceCandidates(
-            criterion, categories[i], nbCategories);
+        ProfileInitializer::getProfilePerformanceCandidates(crit, categories[i],
+                                                            nbCategories);
     for (std::string cand : candidates) {
       float proba = ProfileInitializer::weightedProbability(
-          cand.crit, categories[i], categories[i + 1], nbCategories, catFre);
+          cand, crit, categories[i], categories[i + 1], nbCategories, catFre);
       altProba.push_back(proba);
     }
-    float totProba = accumulate(altProba.begin(), altProba.end(), 0);
+    float totProba = std::accumulate(altProba.begin(), altProba.end(), 0);
+    float randomNumber = getRandomUniformFloat(0, 0, totProba);
+    float tmp = altProba[0];
+    int index;
+    for (int i = 1; i < candidates.size(); i++) {
+      if (tmp < randomNumber) {
+        tmp += altProba[i];
+      } else {
+        index = i - 1;
+        break;
+      }
+    }
+    categoryLimits.push_back(
+        altPerformance_.getPerf(candidates[i], crit.getId()).getValue());
   }
+  return categoryLimits;
 }

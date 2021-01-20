@@ -78,6 +78,14 @@ public:
   void setIdCategories(std::vector<std::string> &set_category_ids);
 
   /**
+   * Set a new values of Category ids from Categories object
+   *
+   * @param set_category_ids vector of new Category id for Categories object
+   *
+   */
+  int getNumberCategories();
+
+  /**
    * Overloading << operator for Categories class
    *
    * @param out ostream
