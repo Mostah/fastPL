@@ -24,7 +24,6 @@ set(Headers
     )
 
 set(Sources 
-    src/utils.cpp
     src/types/Criterion.cpp
     src/types/Criteria.cpp
     src/types/Perf.cpp
