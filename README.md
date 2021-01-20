@@ -81,7 +81,7 @@ cmake must have been installed in the machine. Run `sudo apt-get install cmake` 
 ```
 mkdir build
 cd build
-cmake .. -DBUILD_DEPS:BOOL=ON
+cmake .. -DBUILD_DEPS:BOOL=ON -DUSE_SCIP=OFF
 make
 ```
 

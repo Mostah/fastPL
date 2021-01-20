@@ -13,7 +13,7 @@ RUN cd fastPL && git submodule init && git submodule update
 COPY . /home/fastPL
 RUN rm -rf /home/fastPL/build && mkdir /home/fastPL/build
 WORKDIR /home/fastPL/build/
-RUN cmake .. -DBUILD_DEPS:BOOL=ON && make
+RUN cmake .. -DBUILD_DEPS:BOOL=ON -DUSE_SCIP=OFF && make
 
 # Run the program output from the previous step
 CMD ["./Main -h"]

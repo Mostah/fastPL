@@ -24,6 +24,7 @@ set(Headers
     include/types/Categories.h
     include/types/DataGenerator.h
     include/types/AlternativesPerformance.h
+    include/learning/LinearSolver.h
     include/app.h
     )
 
@@ -39,6 +40,7 @@ set(Sources
     src/types/Categories.cpp
     src/types/DataGenerator.cpp
     src/types/AlternativesPerformance.cpp
+    src/learning/LinearSolver.cpp
     src/app.cpp
     )
 
@@ -48,6 +50,7 @@ add_library(Core ${Headers} ${Sources})   # build a library with our header and 
 target_link_libraries(Core spdlog::spdlog_header_only)
 target_link_libraries(Core yaml-cpp)
 target_link_libraries(Core pugixml)
+target_link_libraries(Core ortools::ortools)
 
 
 # Add executables
