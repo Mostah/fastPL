@@ -1,10 +1,9 @@
 #ifndef CATEGORY_H
 #define CATEGORY_H
 
-#include "AtomicMCDAObject.h"
 #include <iostream>
 
-class Category : public AtomicMCDAObject {
+class Category {
 public:
   /**
    * Category standard constructor

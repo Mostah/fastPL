@@ -268,8 +268,3 @@ TEST(TestAlternativesPerformance, TestSetAlternativeAssignmentError) {
     FAIL() << "should have thrown invalid argument.";
   }
 }
-
-TEST(TestAlternativesPerformance, TestAllInstancesDestroyed) {
-  default_cat.~Category();
-  EXPECT_EQ(AtomicMCDAObject::get_nb_instances(), 0);
-}

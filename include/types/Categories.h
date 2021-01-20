@@ -5,6 +5,10 @@
 #include <iostream>
 #include <vector>
 
+/** Categories is a wrapper around a vector of category. The rank 0 is
+ * considered as the lowest one for the profiles
+ *
+ */
 class Categories {
 public:
   /**
@@ -13,7 +17,7 @@ public:
    * @param number_of_categories number of categories wanted
    * @param prefix prefix given to each category ids.
    */
-  Categories(int number_of_categories, std::string prefix = "cat");
+  Categories(int number_of_categories = 2, std::string prefix = "cat");
 
   /**
    * Categories standard constructor 2
@@ -76,6 +80,14 @@ public:
    *
    */
   void setIdCategories(std::vector<std::string> &set_category_ids);
+
+  /** getCategoryOfRank
+   * get the category corresponding to the requested rank in the vector.
+   *
+   * @param rank rank of the category to return
+   *
+   */
+  Category getCategoryOfRank(int rank);
 
   /**
    * Set a new values of Category ids from Categories object

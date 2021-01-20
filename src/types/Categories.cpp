@@ -88,6 +88,15 @@ void Categories::setIdCategories(std::vector<std::string> &set_category_ids) {
   }
 }
 
+Category Categories::getCategoryOfRank(int rank) {
+  for (Category cat : categories_vector_) {
+    if (cat.getCategoryRank() == rank) {
+      return cat;
+    }
+  }
+  throw std::invalid_argument("Category not found.");
+}
+
 std::ostream &operator<<(std::ostream &out, const Categories &cats) {
   out << "Categories(";
   for (int i = 0; i < cats.categories_vector_.size(); i++) {

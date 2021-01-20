@@ -240,7 +240,7 @@ std::vector<Perf> PerformanceTable::getAltBetween(std::string critId, float inf,
   }
 }
 
-std::vector<Perf> PerformanceTable::getBestPerfByCrit(Criteria crits) {
+std::vector<Perf> PerformanceTable::getBestPerfByCrit(Criteria &crits) {
   // ensure the right state
   this->changeMode("crit");
   std::vector<Perf> best_pv;
@@ -273,7 +273,7 @@ std::vector<Perf> PerformanceTable::getBestPerfByCrit(Criteria crits) {
   return best_pv;
 }
 
-std::vector<Perf> PerformanceTable::getWorstPerfByCrit(Criteria crits) {
+std::vector<Perf> PerformanceTable::getWorstPerfByCrit(Criteria &crits) {
   // ensure the right state
   this->changeMode("crit");
   std::vector<Perf> worst_pv;

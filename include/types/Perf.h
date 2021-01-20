@@ -1,11 +1,10 @@
 #ifndef PERF_H
 #define PERF_H
 
-#include "AtomicMCDAObject.h"
 #include <iostream>
 #include <string>
 
-class Perf : public AtomicMCDAObject {
+class Perf {
 public:
   /**
    * Perf standard constructor

@@ -132,6 +132,18 @@ TEST(TestCategories, TestSetId2) {
             ": fastpl, rank : 1))");
 }
 
-TEST(TestCategory, TestAllInstancesDestroyed) {
-  EXPECT_EQ(AtomicMCDAObject::get_nb_instances(), 0);
+TEST(TestCategories, TestGetCategoryOfRank) {
+  Categories categories1 = Categories(2);
+  std::vector<std::string> set_category_ids = {"helloworld", "fastpl"};
+  categories1.setIdCategories(set_category_ids);
+
+  Category cat0 = categories1.getCategoryOfRank(0);
+  Category cat1 = categories1.getCategoryOfRank(1);
+
+  std::ostringstream os1;
+  os1 << cat0;
+  EXPECT_EQ(os1.str(), "Category(id : helloworld, rank : 0)");
+  std::ostringstream os2;
+  os2 << cat1;
+  EXPECT_EQ(os2.str(), "Category(id : fastpl, rank : 1)");
 }

@@ -353,7 +353,3 @@ TEST(TestPerformanceTable, TestisAltInTable) {
   EXPECT_TRUE(perf_table.isAltInTable("a0"));
   EXPECT_FALSE(perf_table.isAltInTable("test8"));
 }
-
-TEST(TestPerformanceTable, TestAllInstancesDestroyed) {
-  EXPECT_EQ(AtomicMCDAObject::get_nb_instances(), 0);
-}
