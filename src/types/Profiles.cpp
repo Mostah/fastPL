@@ -1,5 +1,6 @@
 #include "../../include/types/Profiles.h"
 #include "../../include/types/PerformanceTable.h"
+#include "../../include/utils.h"
 #include <algorithm>
 #include <iostream>
 #include <string>
@@ -47,9 +48,7 @@ void Profiles::generateRandomPerfValues(unsigned long int seed, int lower_bound,
   for (int j = 0; j < pt_[0].size(); j++) {
     std::vector<float> r_vect;
     for (int i = 0; i < pt_.size(); i++) {
-      r_vect.push_back((float)lower_bound +
-                       ((float)rand() / RAND_MAX) *
-                           (float)(upper_bound - lower_bound));
+      r_vect.push_back(getRandomUniformFloat(seed, lower_bound, upper_bound));
     }
     std::sort(r_vect.begin(), r_vect.end());
     std::reverse(r_vect.begin(), r_vect.end());

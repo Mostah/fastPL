@@ -2,6 +2,7 @@
 #include "../../include/types/Category.h"
 #include "../../include/types/Criteria.h"
 #include "../../include/types/PerformanceTable.h"
+#include "../../include/utils.h"
 
 #include <cstdlib>
 #include <map>
@@ -31,11 +32,8 @@ MRSortModel::MRSortModel(int n_cat, int n_crit, std::string id)
   id_ = id;
   categories = Categories(n_cat);
 
-  srand(time(NULL));
-  lambda = ((float)rand() / RAND_MAX) / 2 + 0.5;
-
+  lambda = getRandomUniformFloat(time(NULL), 0.5, 1);
   criteria.generateRandomCriteriaWeights();
-
   profiles.generateRandomPerfValues();
 }
 
