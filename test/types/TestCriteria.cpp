@@ -195,7 +195,3 @@ TEST(TestCriteria, TestRandomWeights) {
   os << w;
   EXPECT_EQ(os.str(), "[0.333333,0.333333,0.333333]");
 }
-
-TEST(TestCriteria, TestAllInstancesDestroyed) {
-  EXPECT_EQ(AtomicMCDAObject::get_nb_instances(), 0);
-}

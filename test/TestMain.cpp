@@ -5,14 +5,14 @@
 #include "types/TestCriteria.cpp"
 #include "types/TestCriterion.cpp"
 #include "types/TestDataGenerator.cpp"
+#include "types/TestMRSortModel.cpp"
 #include "types/TestPerf.cpp"
 #include "types/TestPerformance.cpp"
 #include "types/TestPerformanceTable.cpp"
+#include "types/TestProfiles.cpp"
 #include "gtest/gtest.h"
 #include <sstream>
 #include <utility>
-
-int AtomicMCDAObject::nb_instances_{0};
 
 int main(int argc, char *argv[]) {
 

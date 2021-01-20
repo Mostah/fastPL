@@ -26,7 +26,3 @@ TEST(TestCategory, TestConstructorByCopy) {
   os << catCopied;
   EXPECT_EQ(os.str(), "Category(id : cat1, rank : 13)");
 }
-
-TEST(TestCategory, TestAllCategoryInstancesDestroyed) {
-  EXPECT_EQ(AtomicMCDAObject::get_nb_instances(), 0);
-}
