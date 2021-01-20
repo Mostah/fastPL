@@ -12,6 +12,7 @@ add_subdirectory(doc) # add doxygen doc generator
 
 set(Headers 
     include/types/MRSortModel.h
+    include/utils.h
     include/types/Criterion.h
     include/types/Criteria.h
     include/types/Perf.h
@@ -22,7 +23,6 @@ set(Headers
     include/types/Categories.h
     include/types/DataGenerator.h
     include/types/AlternativesPerformance.h
-    include/utils.h
     include/app.h
     )
 

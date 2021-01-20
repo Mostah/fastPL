@@ -15,20 +15,6 @@ Criterion::Criterion(const Criterion &crit) {
   weight_ = crit.getWeight();
 }
 
-void Criterion::generateDirection(unsigned long int seed) {
-  srand(seed);
-  if (((float)rand() / RAND_MAX) < 0.5) {
-    direction_ = -1;
-  } else {
-    direction_ = 1;
-  }
-}
-
-void Criterion::generateWeight(unsigned long int seed) {
-  srand(seed);
-  weight_ = (float)rand() / RAND_MAX;
-}
-
 std::string Criterion::getId() const { return id_; }
 
 void Criterion::setId(std::string id) { id_ = id; }
@@ -41,12 +27,17 @@ float Criterion::getWeight() const { return weight_; }
 
 void Criterion::setWeight(float weight) { weight_ = weight; }
 
-void Criterion::getRandomCriterionWeight(bool changeSeed) {
-  if (changeSeed) {
-    Criterion::setWeight(getRandomUniformNumber(1));
+void Criterion::generateDirection(unsigned long int seed) {
+  float f = getRandomUniformFloat();
+  if (f < 0.5) {
+    direction_ = -1;
   } else {
-    Criterion::setWeight(getRandomUniformNumber(0));
+    direction_ = 1;
   }
+}
+
+void Criterion::generateWeight(unsigned long int seed) {
+  weight_ = getRandomUniformFloat(seed);
 }
 
 std::ostream &operator<<(std::ostream &out, const Criterion &crit) {
