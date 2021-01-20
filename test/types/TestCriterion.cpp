@@ -45,7 +45,3 @@ TEST(TestCriterion, TestRandomWeightGeneration) {
   EXPECT_EQ(os.str(), "Criterion(id : crit1, direction : +, weight : 0.383)");
 }
 */
-
-TEST(TestCriterion, TestAllCriterionInstancesDestroyed) {
-  EXPECT_EQ(AtomicMCDAObject::get_nb_instances(), 0);
-}

@@ -80,7 +80,3 @@ TEST(TestPerformance, TestGetCriteriaVect) {
   std::vector<std::string> crit_vect = {"a0", "a1"};
   EXPECT_EQ(perf.getCriterionIds(), crit_vect);
 }
-
-TEST(TestPerformance, TestAllInstancesDestroyed) {
-  EXPECT_EQ(AtomicMCDAObject::get_nb_instances(), 0);
-}

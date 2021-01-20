@@ -9,14 +9,13 @@
 #include "../../extsrc/pugixml/src/pugixml.hpp"
 #include "../app.h"
 #include "AlternativesPerformance.h"
-#include "AtomicMCDAObject.h"
 #include "Criterion.h"
 #include "Performance.h"
 #include "PerformanceTable.h"
 #include <iostream>
 #include <tuple>
 
-class DataGenerator : public AtomicMCDAObject {
+class DataGenerator {
 public:
   DataGenerator(Config &config);
 
