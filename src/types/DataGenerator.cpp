@@ -138,7 +138,7 @@ void DataGenerator::modelGenerator(int nb_criteria, int nb_categories,
 
   // Giving lambda
   // Lambda is a value between 0.5 and 1
-  float lambda = getRandomUniformFloat(0.5, 1, seed);
+  float lambda = getRandomUniformFloat(seed, 0.5, 1);
 
   pugi::xml_node lambda_node = dataset_node.append_child("lambda");
   lambda_node.append_child(pugi::node_pcdata)

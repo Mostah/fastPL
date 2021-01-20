@@ -98,7 +98,7 @@ void PerformanceTable::generateRandomPerfValues(unsigned long int seed,
   }
   for (std::vector<Perf> &pv : pt_) {
     for (Perf &p : pv) {
-      p.setValue(getRandomUniformFloat(lower_bound, upper_bound, seed));
+      p.setValue(getRandomUniformFloat(seed, lower_bound, upper_bound));
     }
   }
   sorted_ = false;

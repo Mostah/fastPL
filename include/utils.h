@@ -76,13 +76,14 @@ inline bool fileExists(const std::string &name) {
 /**
  * Random int number generator
  *
- * @param min min of generated number
- * @param max max of generated number
- * @param seed to initiate the generator
+ * @param seed to initiate the generator, default 0
+ * @param min min of generated number, default 0
+ * @param max max of generated number, default 100
  *
  * @return random int number between min and max
  */
-inline int getRandomUniformInt(int min, int max, unsigned long int seed = 0) {
+inline int getRandomUniformInt(unsigned long int seed = 0, int min = 0,
+                               int max = 100) {
   srand(seed);
   return min + rand() % (max - min);
 }
@@ -90,14 +91,14 @@ inline int getRandomUniformInt(int min, int max, unsigned long int seed = 0) {
 /**
  * Random float number generator
  *
- * @param min min of generated number
- * @param max max of generated number
- * @param seed to initiate the generator
+ * @param seed to initiate the generator, default 0
+ * @param min min of generated number, default 0
+ * @param max max of generated number, default 1
  *
  * @return random float number between min and max
  */
-inline float getRandomUniformFloat(float min = 0, float max = 1,
-                                   unsigned long int seed = 0) {
+inline float getRandomUniformFloat(unsigned long int seed = 0, float min = 0,
+                                   float max = 1) {
   srand(seed);
   return min + (((float)rand()) / (float)RAND_MAX) * (max - min);
 }
@@ -106,7 +107,7 @@ inline std::vector<float>
 randomCategoriesLimits(int nbCategories, unsigned long int seed = time(NULL)) {
   std::vector<float> catLimits;
   for (int i = 0; i < nbCategories; i++) {
-    catLimits.push_back(getRandomUniformFloat(0, 1, seed));
+    catLimits.push_back(getRandomUniformFloat(seed));
   }
   sort(catLimits.begin(), catLimits.end());
   return catLimits;
