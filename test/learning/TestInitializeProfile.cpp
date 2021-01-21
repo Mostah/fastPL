@@ -125,10 +125,10 @@ TEST(TestProfileInitializer, TestInitializeProfilePerformance) {
       profInit.initializeProfilePerformance(crit[0], categories, freq);
   std::ostringstream os;
   os << profileCrit;
+  EXPECT_EQ(os.str(), "Performance(Perf( name : b_i, crit : crit0, value : 0.6 "
+                      "), Perf( name : b_i, crit : crit1, value : 0.8 ), )");
   EXPECT_EQ(profileCrit.getCriterionIds().size(),
             categories.getNumberCategories() - 1);
-  EXPECT_EQ(os.str(), "Performance(Perf( name : crit, crit : cat0, value : 0.6 "
-                      "), Perf( name : crit, crit : cat1, value : 0.8 ), )");
 }
 
 TEST(TestProfileInitializer, TestInitializeProfiles) {
@@ -143,9 +143,8 @@ TEST(TestProfileInitializer, TestInitializeProfiles) {
   AlternativesPerformance alt_perf =
       AlternativesPerformance(6, crit, "alt", map);
   alt_perf.generateRandomPerfValues(1);
-  std::cout << alt_perf;
   ProfileInitializer profInit = ProfileInitializer(conf, alt_perf);
   Profiles new_p = profInit.initializeProfiles(categories);
-  new_p.display();
+  // new_p.display();
   EXPECT_TRUE(new_p.isProfileOrdered());
 }
