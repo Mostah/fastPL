@@ -130,4 +130,10 @@ std::ostream &operator<<(std::ostream &out, std::unordered_map<K, V> const &m) {
   return out;
 }
 
+// something to do here for randomGeneration of vector
+// std::srand(unsigned(std::time(nullptr)));
+// std::vector<int> v(1000);
+// std::generate(v.begin(), v.end(), std::rand);
+// std::cout << v;
+
 #endif

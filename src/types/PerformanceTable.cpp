@@ -7,6 +7,9 @@
 #include <string>
 #include <vector>
 
+#include <chrono>
+#include <thread>
+
 PerformanceTable::PerformanceTable(std::vector<Performance> &perf_vect) {
   if (perf_vect.size() == 0) {
     throw std::invalid_argument("The vector must contain performances.");
@@ -94,6 +97,7 @@ std::vector<Perf> PerformanceTable::operator[](std::string name) const {
 void PerformanceTable::generateRandomPerfValues(unsigned long int seed,
                                                 int lower_bound,
                                                 int upper_bound) {
+  int i = 0;
   if (lower_bound > upper_bound) {
     throw std::invalid_argument(
         "Lower bound must be lower than the upper bound.");

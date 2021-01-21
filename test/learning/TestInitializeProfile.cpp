@@ -130,10 +130,13 @@ TEST(TestProfileInitializer, TestInitializeProfilePerformance) {
   EXPECT_EQ(profileCrit.getCriterionIds().size(),
             categories.getNumberCategories() - 1);
 }
+#include <algorithm>
+#include <ctime>
+#include <vector>
 
 TEST(TestProfileInitializer, TestInitializeProfiles) {
   Config conf = getTestConf();
-  Criteria crit = Criteria(2);
+  Criteria crit = Criteria(3);
   Categories categories = Categories(3);
   std::unordered_map<std::string, Category> map =
       std::unordered_map<std::string, Category>{
@@ -145,6 +148,8 @@ TEST(TestProfileInitializer, TestInitializeProfiles) {
   alt_perf.generateRandomPerfValues(1);
   ProfileInitializer profInit = ProfileInitializer(conf, alt_perf);
   Profiles new_p = profInit.initializeProfiles(categories);
-  // new_p.display();
+  new_p.display();
+  Profiles p = new_p.changeMode();
+  p.display();
   EXPECT_TRUE(new_p.isProfileOrdered());
 }
