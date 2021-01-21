@@ -99,20 +99,22 @@ std::vector<std::string> ProfileInitializer::getProfilePerformanceCandidates(
 float ProfileInitializer::weightedProbability(
     const std::string altId, const Criterion &crit, const Category &catAbove,
     const Category &catBelow, const int nbCategories,
-    const std::vector<float> &catFrequency, float delta) {
+    const std::vector<float> &catFrequency, std::vector<std::string> candidates,
+    float delta) {
   // creating imaginary profile performance for criterion crit
   std::string critId = crit.getId();
   float imaginaryProfilePerformance =
       altPerformance_.getPerf(altId, critId).getValue() + delta;
-  std::vector<std::string> candidates =
-      ProfileInitializer::getProfilePerformanceCandidates(crit, catBelow,
-                                                          nbCategories);
+
   // Creating 2 int that will count the number of correctly classified
   // alternatives for criterion crit for a profile performance of
   // imaginaryProfilePerformance.
   int catAboveCounter = 0;
   int catBelowCounter = 0;
 
+  // candidates are computed thanks to the method
+  // ProfileInitializer::getProfilePerformanceCandidates(crit, catBelow,
+  // nbCategories);
   for (std::string can : candidates) {
     // if the performance of the candidate is higher than the profile
     // performance and that the alternatives category is catAbove then we have
@@ -149,7 +151,8 @@ Performance ProfileInitializer::initializeProfilePerformance(
                                                             nbCategories);
     for (std::string cand : candidates) {
       float proba = ProfileInitializer::weightedProbability(
-          cand, crit, categories[i], categories[i + 1], nbCategories, catFre);
+          cand, crit, categories[i], categories[i + 1], nbCategories, catFre,
+          candidates);
       altProba.push_back(proba);
     }
     float totProba = std::accumulate(altProba.begin(), altProba.end(), 0);

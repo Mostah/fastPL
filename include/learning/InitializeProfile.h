@@ -71,6 +71,7 @@ public:
                             const Category &catAbove, const Category &catBelow,
                             const int nbCategories,
                             const std::vector<float> &catFrequency,
+                            std::vector<std::string> candidates,
                             float delta = 0.001);
 
   /**

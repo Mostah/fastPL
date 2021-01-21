@@ -93,8 +93,10 @@ TEST(TestProfileInitializer, TestWeightedProbability) {
   AlternativesPerformance alt_perf = AlternativesPerformance(perf_table, map);
   ProfileInitializer profInit = ProfileInitializer(conf, alt_perf);
   std::vector<float> freq = profInit.categoryFrequency();
-  float proba =
-      profInit.weightedProbability("alt0", crit[0], cat1, cat0, 3, freq);
+  std::vector<std::string> candidates =
+      profInit.getProfilePerformanceCandidates(crit[0], cat0, 3);
+  float proba = profInit.weightedProbability("alt0", crit[0], cat1, cat0, 3,
+                                             freq, candidates);
   EXPECT_EQ(proba, 6);
 }
 
