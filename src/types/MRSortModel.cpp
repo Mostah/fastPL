@@ -22,9 +22,8 @@ MRSortModel::MRSortModel(Criteria &crits, Profiles &profs, Categories &cats,
   id_ = id;
 }
 
-MRSortModel::MRSortModel(int n_cat, int n_crit, std::string mode,
-                         std::string id)
-    : criteria(n_crit), profiles(n_cat - 1, criteria, mode, "prof"),
+MRSortModel::MRSortModel(int n_cat, int n_crit, std::string id)
+    : criteria(n_crit), profiles(n_cat - 1, criteria, "prof"),
       categories(default_cats) {
   if (n_cat < 2) {
     throw std::invalid_argument(
@@ -91,8 +90,9 @@ MRSortModel::~MRSortModel() {}
 std::string MRSortModel::getId() const { return id_; }
 
 std::ostream &operator<<(std::ostream &out, const MRSortModel &mrsort) {
-  out << "Model( id : " << mrsort.id_ << ", lambda : " << mrsort.lambda
-      << ", crit : " << mrsort.criteria << ", profiles : " << mrsort.profiles
-      << ")";
+  out << "Model( id : " << mrsort.id_ << std::endl
+      << ", lambda : " << mrsort.lambda << std::endl
+      << ", crit : " << mrsort.criteria << std::endl
+      << ", profiles : " << mrsort.profiles << ")";
   return out;
 }

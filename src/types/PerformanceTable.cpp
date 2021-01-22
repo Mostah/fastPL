@@ -4,6 +4,7 @@
 #include <ctime>
 #include <iostream>
 #include <map>
+#include <random>
 #include <string>
 #include <vector>
 
@@ -102,9 +103,13 @@ void PerformanceTable::generateRandomPerfValues(unsigned long int seed,
     throw std::invalid_argument(
         "Lower bound must be lower than the upper bound.");
   }
+
+  std::mt19937 gen(seed);
+  std::uniform_real_distribution<> dis(lower_bound, upper_bound);
+
   for (std::vector<Perf> &pv : pt_) {
     for (Perf &p : pv) {
-      p.setValue(getRandomUniformFloat(seed, lower_bound, upper_bound));
+      p.setValue(dis(gen));
     }
   }
   sorted_ = false;

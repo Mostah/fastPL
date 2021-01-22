@@ -5,6 +5,7 @@
 #include "../../include/types/AlternativesPerformance.h"
 #include "../../include/types/Categories.h"
 #include "../../include/types/Criteria.h"
+#include "../../include/types/MRSortModel.h"
 #include "../../include/utils.h"
 
 #include <algorithm>
@@ -138,7 +139,7 @@ float ProfileInitializer::weightedProbability(
   return proba;
 }
 
-Performance ProfileInitializer::initializeProfilePerformance(
+std::vector<Perf> ProfileInitializer::initializeProfilePerformance(
     const Criterion &crit, Categories &categories,
     const std::vector<float> &catFre) {
   std::vector<float> categoryLimits;
@@ -149,6 +150,7 @@ Performance ProfileInitializer::initializeProfilePerformance(
     std::vector<std::string> candidates =
         ProfileInitializer::getProfilePerformanceCandidates(crit, categories[i],
                                                             nbCategories);
+    // OPTIM : POSSIBILITY parallelization synchrone
     for (std::string cand : candidates) {
       float proba = ProfileInitializer::weightedProbability(
           cand, crit, categories[i], categories[i + 1], nbCategories, catFre,
@@ -173,22 +175,29 @@ Performance ProfileInitializer::initializeProfilePerformance(
   std::reverse(categoryLimits.begin(), categoryLimits.end());
   // this is a work around since we would actually need to construct a
   // Performance with a categories object.
+  std::vector<Perf> vect_p;
+  for (int i = 0; i < categoryLimits.size(); i++) {
+    // Cannot give a nice name to it since each vector of Perf need to have same
+    // name
+    vect_p.push_back(
+        Perf("criteria", "cat" + std::to_string(i), categoryLimits[i]));
+  }
 
-  Criteria fictiveCategories = Criteria(categoryLimits.size(), "crit");
-  return Performance(fictiveCategories, categoryLimits, "b_i");
+  return vect_p;
 }
 
-Profiles ProfileInitializer::initializeProfiles(Categories &categories) {
+void ProfileInitializer::initializeProfiles(Categories &categories,
+                                            MRSortModel &model) {
   std::vector<Performance> perf_vec;
   Performance firstAltPerf = altPerformance_.getPerformanceTable()[0];
   std::vector<std::string> criteriaIds = firstAltPerf.getCriterionIds();
   std::vector<float> catFreq = ProfileInitializer::categoryFrequency();
   for (std::string criterion : criteriaIds) {
-    Performance p = ProfileInitializer::initializeProfilePerformance(
+    // OPTIM : POSSIBILITY parallelization asynchrone
+    std::vector<Perf> p = ProfileInitializer::initializeProfilePerformance(
         criterion, categories, catFreq);
     perf_vec.push_back(p);
   }
-  Profiles p = Profiles(perf_vec, "crit");
-  p.changeMode();
-  return p;
+  Profiles p = Profiles(perf_vec);
+  model.profiles = p;
 }

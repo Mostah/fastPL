@@ -13,13 +13,14 @@
 class Profiles : public PerformanceTable {
 public:
   /**
-   * Profiles standard constructor (PerformanceTable surcharged)
+   * Profiles standard constructor (PerformanceTable surcharged). A Profile type
+   * is always represented in the mode_ = "crit" of a PerformanceTable. There is
+   * no such thing as a Profile in "alt" mode.
    *
    * @param perf_vect Vector of performance that models category limits
-   * @param mode give the mode of the profile performance table
    *
    */
-  Profiles(std::vector<Performance> &perf_vect, std::string mode);
+  Profiles(std::vector<Performance> &perf_vect);
 
   /**
    * Profiles constructor without perf values but set of
@@ -28,16 +29,9 @@ public:
    * @param nb_of_prof Number of profile
    * @param crits Criteria to evaluate performance over
    * @param prefix Prefix to use for the name of each Performance created.
-   * @param mode give the mode of the profile performance table
-   * Default = "alt"
+   * Default = "crit"
    * */
-  Profiles(int nb_of_prof, Criteria &crits, std::string mode,
-           std::string prefix = "prof");
-
-  /**
-   * Method that changes Profile mode and gets the order of the profile PT
-   */
-  Profiles changeMode();
+  Profiles(int nb_of_prof, Criteria &crits, std::string prefix = "prof");
 
   /**
    * Profiles constructor by copy
@@ -48,12 +42,19 @@ public:
 
   ~Profiles(){};
 
+  /**
+   * Overloading << operator for Profile class
+   *
+   * @param out ostream
+   * @param profs Profile object
+   *
+   */
   friend std::ostream &operator<<(std::ostream &out, const Profiles &profs);
 
   /**
    * isProfileOrdered check if the performance table is ordered to be use as a
-   * profile type: each row must be ranked such that for each row i we have on
-   * each criterion j: v_i-1_j > v_i_j > v_i+1_j.
+   * profile type: each row must be ranked such that for each row i is sorted in
+   * ascending order.
    * Profiles are therefore ordered in a descending manner
    *
    * @return isOrdered

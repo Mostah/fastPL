@@ -33,8 +33,7 @@ public:
    * @param id optional name of the model
    * @param mode give the mode of the profile performance table
    */
-  MRSortModel(int n_cat, int n_crit, std::string mode,
-              std::string id = "model");
+  MRSortModel(int n_cat, int n_crit, std::string id = "model");
 
   /**
    * MRSortModel constructor by copy
