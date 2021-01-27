@@ -22,9 +22,7 @@ PerformanceTable::PerformanceTable(std::vector<Performance> &perf_vect) {
     // ensure there is no performance with dupplicated name
     if (std::find(perf_id_vect.begin(), perf_id_vect.end(), p.getId()) !=
         perf_id_vect.end()) {
-      // NEED TO REVIEW THING I THINK WE NEED TO TAKE IT OUT
-      // throw std::invalid_argument("Each performance must have different
-      // ids.");
+      throw std::invalid_argument("Each performance must have different ids.");
     }
     perf_id_vect.push_back(p.getId());
 
@@ -104,12 +102,9 @@ void PerformanceTable::generateRandomPerfValues(unsigned long int seed,
         "Lower bound must be lower than the upper bound.");
   }
 
-  std::mt19937 gen(seed);
-  std::uniform_real_distribution<> dis(lower_bound, upper_bound);
-
   for (std::vector<Perf> &pv : pt_) {
     for (Perf &p : pv) {
-      p.setValue(dis(gen));
+      p.setValue(getRandomUniformFloat(seed, lower_bound, upper_bound));
     }
   }
   sorted_ = false;

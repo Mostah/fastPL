@@ -1,5 +1,5 @@
 #include "../../include/app.h"
-#include "../../include/learning/InitializeProfile.h"
+#include "../../include/learning/ProfileInitializer.h"
 #include "../../include/types/MRSortModel.h"
 #include "../../include/types/Profiles.h"
 #include "../../include/utils.h"

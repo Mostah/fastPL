@@ -4,6 +4,7 @@
 #include "../extsrc/pugixml/src/pugixml.hpp"
 #include "types/Category.h"
 #include <iostream>
+#include <random>
 #include <vector>
 
 #include <algorithm>
@@ -86,8 +87,9 @@ inline bool fileExists(const std::string &name) {
  */
 inline int getRandomUniformInt(unsigned long int seed = 0, int min = 0,
                                int max = 100) {
-  srand(seed);
-  return min + rand() % (max - min);
+  std::mt19937 gen(seed);
+  std::uniform_int_distribution<> dis(min, max);
+  return dis(gen);
 }
 
 /**
@@ -101,8 +103,10 @@ inline int getRandomUniformInt(unsigned long int seed = 0, int min = 0,
  */
 inline float getRandomUniformFloat(unsigned long int seed = 0, float min = 0,
                                    float max = 1) {
-  srand(seed);
-  return min + (((float)rand()) / (float)RAND_MAX) * (max - min);
+
+  std::mt19937 gen(seed);
+  std::uniform_real_distribution<> dis(min, max);
+  return dis(gen);
 }
 
 inline std::vector<float>
@@ -129,11 +133,5 @@ std::ostream &operator<<(std::ostream &out, std::unordered_map<K, V> const &m) {
   out << "}";
   return out;
 }
-
-// something to do here for randomGeneration of vector
-// std::srand(unsigned(std::time(nullptr)));
-// std::vector<int> v(1000);
-// std::generate(v.begin(), v.end(), std::rand);
-// std::cout << v;
 
 #endif

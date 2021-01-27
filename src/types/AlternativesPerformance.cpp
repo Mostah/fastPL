@@ -1,4 +1,5 @@
 #include "../../include/types/AlternativesPerformance.h"
+#include "../../include/utils.h"
 #include <typeinfo>
 
 Category default_cat;
@@ -100,12 +101,7 @@ std::ostream &operator<<(std::ostream &out,
   }
   out << "], AlternativesAssignment{ ";
 
-  auto it = alt.alt_assignment_.begin();
-  while (it != alt.alt_assignment_.end()) {
-    out << it->first << "->" << it->second << " ";
-    it++;
-  }
-  out << "}";
+  out << alt.alt_assignment_;
   return out;
 }
 

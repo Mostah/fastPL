@@ -1,7 +1,7 @@
 #include "../../extsrc/spdlog/include/spdlog/fmt/ostr.h"
 #include "../../extsrc/spdlog/include/spdlog/spdlog.h"
 
-#include "../../include/learning/InitializeProfile.h"
+#include "../../include/learning/ProfileInitializer.h"
 #include "../../include/types/AlternativesPerformance.h"
 #include "../../include/types/Categories.h"
 #include "../../include/types/Criteria.h"
@@ -23,9 +23,8 @@ ProfileInitializer::ProfileInitializer(Config &config,
   conf.logger->debug("Starting ProfileInitializer object...");
 }
 
-ProfileInitializer::ProfileInitializer(Config &config,
-                                       const ProfileInitializer &profInit)
-    : conf(config), altPerformance_(profInit.getAlternativesPerformance()) {
+ProfileInitializer::ProfileInitializer(const ProfileInitializer &profInit)
+    : conf(profInit.conf), altPerformance_(profInit.altPerformance_) {
   conf.logger->debug("Starting ProfileInitializer object...");
 }
 
@@ -37,6 +36,8 @@ void ProfileInitializer::setAlternativesPerformance(
     AlternativesPerformance &newAltPerfs) {
   altPerformance_ = newAltPerfs;
 }
+
+ProfileInitializer::~ProfileInitializer() {}
 
 std::vector<float> ProfileInitializer::categoryFrequency() {
 
@@ -100,8 +101,8 @@ std::vector<std::string> ProfileInitializer::getProfilePerformanceCandidates(
 float ProfileInitializer::weightedProbability(
     const std::string altId, const Criterion &crit, const Category &catAbove,
     const Category &catBelow, const int nbCategories,
-    const std::vector<float> &catFrequency, std::vector<std::string> candidates,
-    float delta) {
+    const std::vector<float> &catFrequency,
+    std::vector<std::string> &candidates, float delta) {
   // creating imaginary profile performance for criterion crit
   std::string critId = crit.getId();
   float imaginaryProfilePerformance =
@@ -186,8 +187,7 @@ std::vector<Perf> ProfileInitializer::initializeProfilePerformance(
   return vect_p;
 }
 
-void ProfileInitializer::initializeProfiles(Categories &categories,
-                                            MRSortModel &model) {
+void ProfileInitializer::initializeProfiles(MRSortModel &model) {
   std::vector<Performance> perf_vec;
   Performance firstAltPerf = altPerformance_.getPerformanceTable()[0];
   std::vector<std::string> criteriaIds = firstAltPerf.getCriterionIds();
@@ -195,7 +195,7 @@ void ProfileInitializer::initializeProfiles(Categories &categories,
   for (std::string criterion : criteriaIds) {
     // OPTIM : POSSIBILITY parallelization asynchrone
     std::vector<Perf> p = ProfileInitializer::initializeProfilePerformance(
-        criterion, categories, catFreq);
+        criterion, model.categories, catFreq);
     perf_vec.push_back(p);
   }
   Profiles p = Profiles(perf_vec);

@@ -1,5 +1,5 @@
-#ifndef InitializeProfile_H
-#define InitializeProfile_H
+#ifndef PROFILEINITIALIZER_H
+#define PROFILEINITIALIZER_H
 
 #include "../app.h"
 #include "../types/AlternativesPerformance.h"
@@ -25,13 +25,13 @@ public:
    * @param config config setup for logging
    * @return ProfileInitializer object
    */
-  ProfileInitializer(Config &config, const ProfileInitializer &profInit);
+  ProfileInitializer(const ProfileInitializer &profInit);
 
   /**
    * ProfileInitializer standard deconstructor
    *
    */
-  ~ProfileInitializer(){};
+  ~ProfileInitializer();
 
   /**
    * Getter of the alternativePerformance class attribute
@@ -94,7 +94,7 @@ public:
                             const Category &catAbove, const Category &catBelow,
                             const int nbCategories,
                             const std::vector<float> &catFrequency,
-                            std::vector<std::string> candidates,
+                            std::vector<std::string> &candidates,
                             float delta = 0.001);
 
   /**
@@ -113,14 +113,13 @@ public:
    * Updates profile attribute from MRSortModel class with the a new profile
    * given by the metaheuristic.
    *
-   * @param categories Categories object
    * @param MRSortModel Mrsort model object
    */
-  void initializeProfiles(Categories &categories, MRSortModel &model);
+  void initializeProfiles(MRSortModel &model);
 
 private:
   Config &conf;
-  AlternativesPerformance altPerformance_;
+  AlternativesPerformance &altPerformance_;
 };
 
 #endif
