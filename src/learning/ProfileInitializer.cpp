@@ -209,7 +209,6 @@ void ProfileInitializer::initializeProfiles(MRSortModel &model) {
         criterion, model.categories, catFreq);
     perf_vec.push_back(Performance(p));
   }
-
   Profiles p = Profiles(perf_vec);
   model.profiles = p;
 }

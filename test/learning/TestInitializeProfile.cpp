@@ -1,12 +1,14 @@
 #include "../../include/app.h"
 #include "../../include/learning/ProfileInitializer.h"
 #include "../../include/types/MRSortModel.h"
+#include "../../include/types/Perf.h"
 #include "../../include/types/Profiles.h"
 #include "../../include/utils.h"
 #include "spdlog/spdlog.h"
 #include "gtest/gtest.h"
 #include <sstream>
 #include <utility>
+#include <vector>
 
 Config getTestConf() {
   Config conf;
@@ -25,18 +27,24 @@ TEST(TestProfileInitializer, TestComputeFrequency) {
   Config conf = getTestConf();
   Criteria crit = Criteria(3, "crit");
   crit.generateRandomCriteriaWeights(0);
-  PerformanceTable perf_table = PerformanceTable(4, crit, "alt");
+  PerformanceTable perf_table = PerformanceTable(5, crit, "alt");
   perf_table.generateRandomPerfValues();
   Category cat0 = Category("cat0", 0);
   Category cat1 = Category("cat1", 1);
+  Category cat2 = Category("cat2", 2);
+
   std::unordered_map<std::string, Category> map =
-      std::unordered_map<std::string, Category>{
-          {"alt0", cat0}, {"alt1", cat1}, {"alt2", cat0}, {"alt3", cat1}};
+      std::unordered_map<std::string, Category>{{"alt0", cat0},
+                                                {"alt1", cat1},
+                                                {"alt2", cat0},
+                                                {"alt3", cat1},
+                                                {"alt4", cat2}};
   AlternativesPerformance alt_perf = AlternativesPerformance(perf_table, map);
   ProfileInitializer profInit = ProfileInitializer(conf, alt_perf);
   std::vector<float> freq = profInit.categoryFrequency();
-  EXPECT_EQ(freq[0], 0.5);
-  EXPECT_EQ(freq[1], 0.5);
+  std::ostringstream os;
+  os << freq;
+  EXPECT_EQ(os.str(), "[0.4,0.4,0.2]");
 }
 
 TEST(TestProfileInitializer, TestGetProfileCandidates) {
@@ -54,20 +62,24 @@ TEST(TestProfileInitializer, TestGetProfileCandidates) {
           {"alt0", cat0}, {"alt1", cat2}, {"alt2", cat0}, {"alt3", cat1}};
   AlternativesPerformance alt_perf = AlternativesPerformance(perf_table, map);
   ProfileInitializer profInit = ProfileInitializer(conf, alt_perf);
-  std::vector<std::string> candidates =
+  std::vector<Perf> candidates =
       profInit.getProfilePerformanceCandidates(crit[0], cat0, 3);
-  std::sort(candidates.begin(), candidates.end());
-  EXPECT_EQ(candidates[0], "alt0");
-  EXPECT_EQ(candidates[1], "alt2");
-  EXPECT_EQ(candidates[2], "alt3");
+  std::vector<std::string> altId;
+  for (auto p : candidates)
+    altId.push_back(p.getName());
+  std::sort(altId.begin(), altId.end());
+  EXPECT_EQ(candidates[0].getName(), "alt0");
+  EXPECT_EQ(candidates[1].getName(), "alt2");
+  EXPECT_EQ(candidates[2].getName(), "alt3");
 
-  std::vector<std::string> candidates2 =
+  std::vector<std::string> altId2;
+  std::vector<Perf> candidates2 =
       profInit.getProfilePerformanceCandidates(crit[0], cat2, 3);
-  std::ostringstream os;
-  os << candidates2;
-  std::sort(candidates2.begin(), candidates2.end());
-  EXPECT_EQ(candidates2[0], "alt1");
-  EXPECT_EQ(candidates2[1], "alt3");
+  for (auto p : candidates2)
+    altId2.push_back(p.getName());
+  std::sort(altId2.begin(), altId2.end());
+  EXPECT_EQ(candidates2[0].getName(), "alt1");
+  EXPECT_EQ(candidates2[1].getName(), "alt3");
 }
 
 TEST(TestProfileInitializer, TestWeightedProbability) {
@@ -83,21 +95,24 @@ TEST(TestProfileInitializer, TestWeightedProbability) {
 
   PerformanceTable perf_table = PerformanceTable(perf_vect);
 
-  // perf_table.generateRandomPerfValues();
   Category cat0 = Category("cat0", 0);
   Category cat1 = Category("cat1", 1);
   Category cat2 = Category("cat2", 2);
 
   std::unordered_map<std::string, Category> map =
       std::unordered_map<std::string, Category>{
-          {"alt0", cat0}, {"alt1", cat2}, {"alt2", cat0}, {"alt3", cat1}};
+          {"alt0", cat0},
+          {"alt1", cat1},
+          {"alt2", cat0},
+          {"alt3", cat2},
+      };
   AlternativesPerformance alt_perf = AlternativesPerformance(perf_table, map);
   ProfileInitializer profInit = ProfileInitializer(conf, alt_perf);
   std::vector<float> freq = profInit.categoryFrequency();
-  std::vector<std::string> candidates =
+  std::vector<Perf> candidates =
       profInit.getProfilePerformanceCandidates(crit[0], cat0, 3);
-  float proba = profInit.weightedProbability("alt0", crit[0], cat1, cat0, 3,
-                                             freq, candidates);
+  float proba = profInit.weightedProbability(candidates[0], crit[0], cat1, cat0,
+                                             3, freq, candidates);
   EXPECT_EQ(proba, 6);
 }
 
@@ -128,28 +143,38 @@ TEST(TestProfileInitializer, TestInitializeProfilePerformance) {
       profInit.initializeProfilePerformance(crit[0], categories, freq);
   std::ostringstream os;
   os << profileCrit;
-  // EXPECT_EQ(os.str(), "[Perf( name : crit0, crit : cat0, value : 0.6 ),Perf(
-  // "
-  //                     "name : crit1, crit : cat1, value : 0.8 )]");
+  // EXPECT_EQ(os.str(), "[Perf( name : crit0, crit : cat0, value : 0.6
+  // ),Perf( name : crit1, crit : cat1, value : 0.8 )]");
   EXPECT_EQ(profileCrit.size(), categories.getNumberCategories() - 1);
 }
 
 TEST(TestProfileInitializer, TestInitializeProfiles) {
+  int nbAlt = 10;
   Config conf = getTestConf();
   Criteria crit = Criteria(4);
   Categories categories = Categories(3);
   std::unordered_map<std::string, Category> map =
       std::unordered_map<std::string, Category>{
-          {"alt0", categories[0]}, {"alt1", categories[1]},
+          {"alt0", categories[2]}, {"alt1", categories[2]},
           {"alt2", categories[2]}, {"alt3", categories[2]},
-          {"alt4", categories[1]}, {"alt5", categories[1]}};
-  AlternativesPerformance alt_perf =
-      AlternativesPerformance(6, crit, "alt", map);
-  alt_perf.generateRandomPerfValues(1);
+          {"alt4", categories[1]}, {"alt5", categories[1]},
+          {"alt6", categories[1]}, {"alt7", categories[0]},
+          {"alt8", categories[0]}, {"alt9", categories[0]}};
+
+  std::vector<Performance> perf_vect;
+  for (int i = 0; i < nbAlt; i++) {
+    std::vector<Perf> vp;
+    for (int c = 0; c < 4; c++) {
+      float given_perf = static_cast<float>(0.2 * (c + i + 1));
+      vp.push_back(Perf("alt" + std::to_string(i), "crit" + std::to_string(c),
+                        given_perf));
+    }
+    perf_vect.push_back(vp);
+  }
+  PerformanceTable perf_tab = PerformanceTable(perf_vect);
+  AlternativesPerformance alt_perf = AlternativesPerformance(perf_tab, map);
   ProfileInitializer profInit = ProfileInitializer(conf, alt_perf);
   MRSortModel model = MRSortModel(3, 4);
-  // profInit.initializeProfiles(categories, model);
-  // model.profiles.display();
+  profInit.initializeProfiles(model);
   // EXPECT_TRUE(model.profiles.isProfileOrdered());
-  EXPECT_EQ(1, 1);
 }
