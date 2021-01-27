@@ -314,3 +314,17 @@ bool PerformanceTable::isAltInTable(std::string altName) {
   }
   return (false);
 }
+
+int PerformanceTable::getNumberCrit() {
+  if (mode_ == "alt") {
+    return pt_[0].size();
+  }
+  return pt_.size();
+}
+
+int PerformanceTable::getNumberAlt() {
+  if (mode_ == "crit") {
+    return pt_[0].size();
+  }
+  return pt_.size();
+}

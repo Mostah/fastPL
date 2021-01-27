@@ -353,3 +353,16 @@ TEST(TestPerformanceTable, TestisAltInTable) {
   EXPECT_TRUE(perf_table.isAltInTable("a0"));
   EXPECT_FALSE(perf_table.isAltInTable("test8"));
 }
+
+TEST(TestPerformanceTable, TestNumbers) {
+  std::vector<Performance> perf_vect;
+  Criteria crit = Criteria(2, "crit");
+  std::vector<float> given_perf0 = {0.8, 0.4};
+  std::vector<float> given_perf1 = {0.2, 0.6};
+  perf_vect.push_back(Performance(crit, given_perf0, "a0"));
+  perf_vect.push_back(Performance(crit, given_perf1, "a1"));
+  PerformanceTable perf_table = PerformanceTable(perf_vect);
+
+  EXPECT_EQ(perf_table.getNumberAlt(), 2);
+  EXPECT_EQ(perf_table.getNumberCrit(), 2);
+}

@@ -153,6 +153,20 @@ public:
    */
   bool isAltInTable(std::string altName);
 
+  /**
+   * getNumberCrit return the amount of crits in the table
+   *
+   * @return n_crit
+   */
+  int getNumberCrit();
+
+  /**
+   * getNumberAlt return the amount of alts in the table
+   *
+   * @return n_alts
+   */
+  int getNumberAlt();
+
 protected:
   std::vector<std::vector<Perf>> pt_;
 
