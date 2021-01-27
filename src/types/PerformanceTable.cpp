@@ -58,13 +58,13 @@ PerformanceTable::PerformanceTable(const PerformanceTable &perfs) {
 PerformanceTable::~PerformanceTable() {}
 
 std::ostream &operator<<(std::ostream &out, const PerformanceTable &perfs) {
-  out << "PerformanceTable[ ";
+  out << "PerformanceTable[ " << std::endl;
   for (std::vector<Perf> p : perfs.pt_) {
     out << "Performance: ";
     for (Perf perf : p) {
       out << perf << " ";
     }
-    out << "| ";
+    out << "| " << std::endl;
   }
   out << "]";
   return out;

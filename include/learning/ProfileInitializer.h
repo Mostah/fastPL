@@ -5,6 +5,7 @@
 #include "../types/AlternativesPerformance.h"
 #include "../types/Categories.h"
 #include "../types/MRSortModel.h"
+#include "../types/Perf.h"
 #include "../types/Profiles.h"
 
 class ProfileInitializer {
@@ -66,9 +67,9 @@ public:
    *
    * @return vector of alternative ids
    */
-  std::vector<std::string>
-  getProfilePerformanceCandidates(const Criterion &crit, const Category &cat,
-                                  const int nbCategories);
+  std::vector<Perf> getProfilePerformanceCandidates(const Criterion &crit,
+                                                    const Category &cat,
+                                                    const int nbCategories);
 
   /**
    * Compute the likelihood of choosing the performance of the alternative
@@ -90,12 +91,11 @@ public:
    *
    * @return probability of choosing alt_id for crit.
    */
-  float weightedProbability(const std::string altId, const Criterion &crit,
+  float weightedProbability(const Perf perfAlt, const Criterion &crit,
                             const Category &catAbove, const Category &catBelow,
                             const int nbCategories,
                             const std::vector<float> &catFrequency,
-                            std::vector<std::string> &candidates,
-                            float delta = 0.001);
+                            std::vector<Perf> &candidates, float delta = 0.001);
 
   /**
    * Initialize all of the profile performance values for Criterion crit

@@ -6,11 +6,13 @@
 #include "../../include/types/Categories.h"
 #include "../../include/types/Criteria.h"
 #include "../../include/types/MRSortModel.h"
+#include "../../include/types/Perf.h"
 #include "../../include/utils.h"
 
 #include <algorithm>
 #include <iostream>
 #include <numeric>
+#include <random>
 #include <string>
 #include <typeinfo>
 #include <unordered_map>
@@ -54,8 +56,9 @@ std::vector<float> ProfileInitializer::categoryFrequency() {
 
   // Counting the number of occurence for each category rank
   std::unordered_map<int, int> counts;
-  for (auto v : values)
-    ++counts[v];
+  for (auto v : values) {
+    counts[v]++;
+  }
 
   // Counting the number of alternatives in the altPerformance object
   const int nbAlternatives = std::accumulate(
@@ -64,23 +67,26 @@ std::vector<float> ProfileInitializer::categoryFrequency() {
         return value + p.second;
       });
 
+  // Ordering the counts map
+  std::map<int, int> orderedCounts(counts.begin(), counts.end());
+
   // Computing the frequency
   std::vector<float> frequency;
-  for (auto const pair : counts) {
+  for (auto const pair : orderedCounts) {
     float c = pair.second;
     frequency.push_back(c / nbAlternatives);
   }
   return frequency;
 }
 
-std::vector<std::string> ProfileInitializer::getProfilePerformanceCandidates(
+std::vector<Perf> ProfileInitializer::getProfilePerformanceCandidates(
     const Criterion &crit, const Category &cat, const int nbCategories) {
 
   int catAbove;
   int catBelow;
-  std::vector<std::string> candidates;
+  std::vector<Perf> candidates;
 
-  // Category rank starts at 0
+  // Category rank starts at 0, worst category is 0
   if (cat.getCategoryRank() == nbCategories - 1) {
     catAbove = cat.getCategoryRank();
     catBelow = catAbove - 1;
@@ -88,25 +94,31 @@ std::vector<std::string> ProfileInitializer::getProfilePerformanceCandidates(
     catBelow = cat.getCategoryRank();
     catAbove = catBelow + 1;
   }
-
-  for (auto pair : altPerformance_.getAlternativesAssignments()) {
-    if (pair.second.getCategoryRank() == catBelow ||
-        pair.second.getCategoryRank() == catAbove) {
-      candidates.push_back(pair.first);
+  // std::cout << altPerformance_.getPerformanceTable();
+  for (std::vector<Perf> vPerf : altPerformance_.getPerformanceTable()) {
+    if (altPerformance_.getAlternativeAssignment(vPerf[0].getName())
+                .getCategoryRank() == catBelow ||
+        altPerformance_.getAlternativeAssignment(vPerf[0].getName())
+                .getCategoryRank() == catAbove) {
+      for (Perf p : vPerf) {
+        if (p.getCrit() == crit.getId()) {
+          candidates.push_back(p);
+          break;
+        }
+      }
     }
   }
   return candidates;
 }
 
 float ProfileInitializer::weightedProbability(
-    const std::string altId, const Criterion &crit, const Category &catAbove,
+    const Perf perfAlt, const Criterion &crit, const Category &catAbove,
     const Category &catBelow, const int nbCategories,
-    const std::vector<float> &catFrequency,
-    std::vector<std::string> &candidates, float delta) {
+    const std::vector<float> &catFrequency, std::vector<Perf> &candidates,
+    float delta) {
   // creating imaginary profile performance for criterion crit
   std::string critId = crit.getId();
-  float imaginaryProfilePerformance =
-      altPerformance_.getPerf(altId, critId).getValue() + delta;
+  float imaginaryProfilePerformance = perfAlt.getValue() + delta;
 
   // Creating 2 int that will count the number of correctly classified
   // alternatives for criterion crit for a profile performance of
@@ -117,20 +129,19 @@ float ProfileInitializer::weightedProbability(
   // candidates are computed thanks to the method
   // ProfileInitializer::getProfilePerformanceCandidates(crit, catBelow,
   // nbCategories);
-  for (std::string can : candidates) {
+  for (Perf can : candidates) {
     // if the performance of the candidate is higher than the profile
     // performance and that the alternatives category is catAbove then we have
     // correctly classified it
-    if (altPerformance_.getPerf(can, critId).getValue() >
-            imaginaryProfilePerformance and
-        altPerformance_.getAlternativeAssignment(can) == catAbove) {
+    if (can.getValue() > imaginaryProfilePerformance and
+        altPerformance_.getAlternativeAssignment(can.getName()) == catAbove) {
       ++catAboveCounter;
       // if the performance of the candidate is lower than the profile
-      // performance and that the alternatives category is catBelow then we have
-      // correctly classified it
-    } else if (altPerformance_.getPerf(can, critId).getValue() <
-                   imaginaryProfilePerformance and
-               altPerformance_.getAlternativeAssignment(can) == catBelow) {
+      // performance and that the alternatives category is catBelow then we
+      //  have correctly classified it
+    } else if (can.getValue() < imaginaryProfilePerformance and
+               altPerformance_.getAlternativeAssignment(can.getName()) ==
+                   catBelow) {
       ++catBelowCounter;
     }
   }
@@ -148,42 +159,42 @@ std::vector<Perf> ProfileInitializer::initializeProfilePerformance(
 
   for (int i = 0; i < nbCategories - 1; i++) {
     std::vector<float> altProba;
-    std::vector<std::string> candidates =
+    std::vector<Perf> candidates =
         ProfileInitializer::getProfilePerformanceCandidates(crit, categories[i],
                                                             nbCategories);
     // OPTIM : POSSIBILITY parallelization synchrone
-    for (std::string cand : candidates) {
+    for (Perf cand : candidates) {
       float proba = ProfileInitializer::weightedProbability(
           cand, crit, categories[i], categories[i + 1], nbCategories, catFre,
           candidates);
       altProba.push_back(proba);
     }
+
+    std::random_device rd;
     float totProba = std::accumulate(altProba.begin(), altProba.end(), 0);
-    float randomNumber = getRandomUniformFloat(0, 0, totProba);
-    float tmp = altProba[0];
+    float randomNumber = getRandomUniformInt(rd(), 0, totProba);
+    float tmp = 0;
     int index;
-    for (int i = 1; i < candidates.size(); i++) {
+    for (int i = 0; i < candidates.size(); i++) {
       if (tmp < randomNumber) {
         tmp += altProba[i];
+        index = i;
       } else {
-        index = i - 1;
         break;
       }
     }
-    categoryLimits.push_back(
-        altPerformance_.getPerf(candidates[index], crit.getId()).getValue());
+    categoryLimits.push_back(candidates[index].getValue());
   }
   std::reverse(categoryLimits.begin(), categoryLimits.end());
   // this is a work around since we would actually need to construct a
   // Performance with a categories object.
   std::vector<Perf> vect_p;
   for (int i = 0; i < categoryLimits.size(); i++) {
-    // Cannot give a nice name to it since each vector of Perf need to have same
-    // name
+    // Cannot give a nice name to it since each vector of Perf need to have
+    // same name
     vect_p.push_back(
-        Perf("criteria", "cat" + std::to_string(i), categoryLimits[i]));
+        Perf(crit.getId(), "cat" + std::to_string(i), categoryLimits[i]));
   }
-
   return vect_p;
 }
 
@@ -196,8 +207,9 @@ void ProfileInitializer::initializeProfiles(MRSortModel &model) {
     // OPTIM : POSSIBILITY parallelization asynchrone
     std::vector<Perf> p = ProfileInitializer::initializeProfilePerformance(
         criterion, model.categories, catFreq);
-    perf_vec.push_back(p);
+    perf_vec.push_back(Performance(p));
   }
+
   Profiles p = Profiles(perf_vec);
   model.profiles = p;
 }

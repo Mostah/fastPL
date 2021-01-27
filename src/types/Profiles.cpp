@@ -13,12 +13,12 @@
 Profiles::Profiles(std::vector<Performance> &perf_vect)
     : PerformanceTable(perf_vect) {
   mode_ = "crit";
-  if (!this->isProfileOrdered()) {
-    throw std::invalid_argument(
-        "The given performance vector cannot be used as a profiles performance "
-        "table. Each row must be ranked such that for each row i we have on "
-        "each criterion j : v_i - 1_j > v_i_j > v_i + 1_j");
-  }
+  // if (!this->isProfileOrdered()) {
+  //   throw std::invalid_argument(
+  //       "The given performance vector cannot be used as a profiles
+  //       performance " "table. Each row must be ranked such that for each row
+  //       i we have on " "each criterion j : v_i - 1_j > v_i_j > v_i + 1_j");
+  // }
 }
 
 Profiles::Profiles(int nb_of_prof, Criteria &crits, std::string prefix)
@@ -52,11 +52,12 @@ void Profiles::generateRandomPerfValues(unsigned long int seed, int lower_bound,
     throw std::invalid_argument(
         "Lower bound must be lower than the upper bound.");
   }
+  std::random_device rd;
 
   for (int j = 0; j < pt_[0].size(); j++) {
     std::vector<float> r_vect;
     for (int i = 0; i < pt_.size(); i++) {
-      r_vect.push_back(getRandomUniformFloat(seed, lower_bound, upper_bound));
+      r_vect.push_back(getRandomUniformFloat(rd(), lower_bound, upper_bound));
     }
     std::sort(r_vect.begin(), r_vect.end());
     std::reverse(r_vect.begin(), r_vect.end());
@@ -83,7 +84,7 @@ void Profiles::display() {
   if (tmp == lengthLongestCriteriaIds) {
     std::cout << std::string(lengthLongestAlternativeIds + 1, ' ');
     for (int i = 0; i < nbCriteria; i++) {
-      std::string crit = pt_[i][0].getCrit();
+      std::string crit = pt_[i][i].getCrit();
       std::cout << crit;
       std::cout << std::string(1, ' ');
     }
@@ -106,7 +107,7 @@ void Profiles::display() {
     std::cout << std::string(lengthLongestAlternativeIds + 1, ' ');
 
     for (int i = 0; i < nbCriteria; i++) {
-      std::string crit = pt_[i][0].getCrit();
+      std::string crit = pt_[i][i].getCrit();
       std::cout << crit;
       std::cout << std::string(lengthPerformanceValue - crit.size() + 1, ' ');
     }
@@ -125,9 +126,9 @@ void Profiles::display() {
 }
 
 bool Profiles::isProfileOrdered() {
-  for (int crit = 0; crit < pt_.size() - 1; crit++) {
-    for (int catLimit = 0; catLimit < pt_[crit].size(); catLimit++) {
-      if (pt_[crit][catLimit].getValue() < pt_[crit + 1][catLimit].getValue()) {
+  for (int crit = 0; crit < pt_.size(); crit++) {
+    for (int catLimit = 0; catLimit < pt_[crit].size() - 1; catLimit++) {
+      if (pt_[crit][catLimit].getValue() > pt_[crit][catLimit + 1].getValue()) {
         return false;
       }
     }
