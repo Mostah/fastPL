@@ -129,7 +129,7 @@ private:
   // constraints
   std::vector<operations_research::MPConstraint *> x_constraints;
   std::vector<operations_research::MPConstraint *> y_constraints;
-  operations_research::MPConstraint *weights_constraint;
+  std::vector<operations_research::MPConstraint *> weights_constraint;
 };
 
 #endif

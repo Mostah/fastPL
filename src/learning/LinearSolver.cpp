@@ -64,12 +64,20 @@ void LinearSolver::initializeSolver() {
   // lambda variable
   lambda = solver->MakeNumVar(0.5, 1.0, "lambda");
 
-  // sum weight equal 1 constraint
-  weights_constraint =
-      solver->MakeRowConstraint(1 - delta, 1, "weight_constraint");
+  const double infinity = solver->infinity();
+  // sum weight equal 1 constraint: -sum <= -1 and sum <= 1
+  // -sum <= -1
+  auto w_p = solver->MakeRowConstraint(-infinity, -1, "weight_constraint_p");
   for (operations_research::MPVariable *w_i : weights) {
-    weights_constraint->SetCoefficient(w_i, 1);
+    w_p->SetCoefficient(w_i, -1);
   }
+  weights_constraint.push_back(w_p);
+  // sum <= 1
+  auto w_m = solver->MakeRowConstraint(-infinity, 1, "weight_constraint_m");
+  for (operations_research::MPVariable *w_i : weights) {
+    w_m->SetCoefficient(w_i, 1);
+  }
+  weights_constraint.push_back(w_m);
 
   // objective function, minimize sum(xp + yp)
   operations_research::MPObjective *const objective =
@@ -90,6 +98,7 @@ void LinearSolver::updateConstraints(
   // reset constraints vectors
   x_constraints.clear();
   y_constraints.clear();
+  weights_constraint.clear();
 
   // reset variables vectors
   x_a.clear();
@@ -104,6 +113,8 @@ void LinearSolver::updateConstraints(
   // re-initialise solver with variable and default constraing
   this->initializeSolver();
 
+  const double infinity = solver->infinity();
+
   // add new constraints given the matrixs
 
   // Starting with x constraints
@@ -114,50 +125,75 @@ void LinearSolver::updateConstraints(
       // if alt is empty the alt was not assigned to this category (h)
       if (!x_matrix[h][alt].empty()) {
         // create constraint with name cst_x_b2_a6
-        operations_research::MPConstraint *cst = solver->MakeRowConstraint(
-            0 - delta, 0 + delta,
-            "cst_x_b" + std::to_string(h) + "_a" + std::to_string(alt));
-        // +lambda
-        cst->SetCoefficient(lambda, -1);
+        // as with ORTools, the form of the Linear Problem is cannonical, we
+        // need to add two constraints from the equality : cst_x_b2_a6 = 0 <-->
+        // cst_x_b2_a6_- <= 0 and cst_x_b2_a6_+ >= 0
+
+        // cst_x_b2_a6_+ : - cst_x_b2_a6 <= 0
+        operations_research::MPConstraint *cst_m = solver->MakeRowConstraint(
+            -infinity, -delta,
+            "cst_x_b" + std::to_string(h) + "_a" + std::to_string(alt) + "_+");
+
+        // cst_x_b2_a6_- : cst_x_b2_a6 <= 0
+        operations_research::MPConstraint *cst_p = solver->MakeRowConstraint(
+            -infinity, delta,
+            "cst_x_b" + std::to_string(h) + "_a" + std::to_string(alt) + "_-");
+
+        // -lambda
+        cst_m->SetCoefficient(lambda, -1);
+        cst_p->SetCoefficient(lambda, 1);
+
         // -x_a
+        cst_m->SetCoefficient(x_a[alt], -1);
+        cst_p->SetCoefficient(x_a[alt], 1);
+
         // +x_ap
-        cst->SetCoefficient(x_a[alt], -1);
-        cst->SetCoefficient(x_ap[alt], 1);
+        cst_m->SetCoefficient(x_ap[alt], 1);
+        cst_p->SetCoefficient(x_ap[alt], -1);
+
         // +sum(w_j(a_i, b_h-1) if a_i>=bi_h-1)
         for (int crit = 0; crit < x_matrix[h][alt].size(); crit++) {
           if (x_matrix[h][alt][crit]) {
-            cst->SetCoefficient(weights[crit], 1);
+            cst_m->SetCoefficient(weights[crit], 1);
+            cst_p->SetCoefficient(weights[crit], -1);
           }
         }
-        x_constraints.push_back(cst);
+        x_constraints.push_back(cst_m);
+        x_constraints.push_back(cst_p);
       }
     }
   }
 
   // Same for y constraints
-  // for all profiles
   for (int h = 0; h < y_matrix.size(); h++) {
-    // for all alternative assigned to category h
     for (int alt = 0; alt < y_matrix[h].size(); alt++) {
-      // if alt is empty the alt was not assigned to this category (h)
       if (!y_matrix[h][alt].empty()) {
         // create constraint with name cst_y_b2_a6 for ex
-        operations_research::MPConstraint *cst = solver->MakeRowConstraint(
-            0 - delta, 0 + delta,
+        operations_research::MPConstraint *cst_m = solver->MakeRowConstraint(
+            -infinity, 0,
             "cst_y_h" + std::to_string(h) + "_a" + std::to_string(alt));
-        // +lambda
-        cst->SetCoefficient(lambda, -1);
-        // y_a
-        // -x_ap
-        cst->SetCoefficient(y_a[alt], 1);
-        cst->SetCoefficient(y_ap[alt], -1);
-        // +sum(w_j(a_i, b_h-1) if a_i>=bi_h-1)
+        operations_research::MPConstraint *cst_p = solver->MakeRowConstraint(
+            -infinity, 0,
+            "cst_y_h" + std::to_string(h) + "_a" + std::to_string(alt));
+
+        cst_m->SetCoefficient(lambda, -1);
+        cst_p->SetCoefficient(lambda, 1);
+
+        cst_m->SetCoefficient(y_a[alt], 1);
+        cst_p->SetCoefficient(y_a[alt], -1);
+
+        cst_m->SetCoefficient(y_ap[alt], -1);
+        cst_p->SetCoefficient(y_ap[alt], 1);
+
         for (int crit = 0; crit < y_matrix[h][alt].size(); crit++) {
           if (y_matrix[h][alt][crit]) {
-            cst->SetCoefficient(weights[crit], 1);
+            cst_m->SetCoefficient(weights[crit], 1);
+            cst_p->SetCoefficient(weights[crit], -1);
           }
         }
-        y_constraints.push_back(cst);
+
+        y_constraints.push_back(cst_m);
+        y_constraints.push_back(cst_p);
       }
     }
   }
