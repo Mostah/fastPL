@@ -68,3 +68,31 @@ bool Profiles::isProfileOrdered() {
   }
   return true;
 }
+
+std::pair<std::vector<Perf>, std::vector<Perf>>
+Profiles::getBelowAndAboveProfile(std::string profName) {
+  std::vector<Perf> below;
+  std::vector<Perf> above;
+  if (mode_ == "alt") {
+    for (int h = 0; h < pt_.size(); h++) {
+      if (pt_[h][0].getName() == profName) {
+        if (h == 0) {
+          below = pt_[h];
+          above = pt_[h + 1];
+          return std::make_pair(below, above);
+        } else if (h == pt_.size() - 1) {
+          below = pt_[h - 1];
+          above = pt_[h];
+          return std::make_pair(below, above);
+        } else {
+          below = pt_[h - 1];
+          above = pt_[h + 1];
+          return std::make_pair(below, above);
+        }
+      }
+    }
+    throw std::invalid_argument("Profile not found.");
+  } else {
+    throw std::domain_error("Profiles perftable mode corrupted.");
+  }
+}

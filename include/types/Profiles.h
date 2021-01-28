@@ -61,6 +61,17 @@ public:
    */
   void generateRandomPerfValues(unsigned long int seed = time(NULL),
                                 int lower_bound = 0, int upper_bound = 1);
+
+  /**
+   * getBelowAndAboveProfile gets the profiles below and above the given
+   * profile. If given profile is the first or last, it will return itself
+   *
+   * @param profId id of the profile to get the above and below profiles
+   *
+   * @return profiles performances (below and above)
+   */
+  std::pair<std::vector<Perf>, std::vector<Perf>>
+  getBelowAndAboveProfile(std::string profName);
 };
 
 #endif
