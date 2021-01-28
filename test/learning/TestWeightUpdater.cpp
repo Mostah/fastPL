@@ -1,6 +1,7 @@
 #include "../../include/app.h"
 #include "../../include/learning/WeightUpdater.h"
 #include "../../include/types/AlternativesPerformance.h"
+#include "../../include/types/Categories.h"
 #include "../../include/types/Category.h"
 #include "../../include/types/Criteria.h"
 #include "../../include/types/MRSortModel.h"
@@ -41,29 +42,45 @@ AlternativesPerformance getAPTest() {
   return ap;
 }
 
-Model getModelTest() {
+MRSortModel getModelTest() {
   auto ap = getAPTest();
-  Category cat0 = Category("cat0", 0); // bad category
-  Category cat1 = Category("cat1", 1); // good category
-  std::vector<Category> cats_vect = {cat0, cat1};
+
+  std::vector<std::string> cats_vect = {"cat0", "cat1", "cat2"};
+
   Categories cats = Categories(cats_vect);
 
   Criteria crits = Criteria(2, "crit");
 
-  std::vector<float> vec0 = {0.3, 0.4};
   std::vector<float> vec1 = {0.7, 0.5};
+  std::vector<float> vec0 = {0.3, 0.4};
   std::vector<Performance> perf_vect;
-  perf_vect.push_back(Performance(crits, vec0, "prof0"));
-  perf_vect.push_back(Performance(crits, vec1, "prof1"));
-  Profiles profs = Profiles(erf_vect);
+  perf_vect.push_back(Performance(crits, vec1, "cat1"));
+  perf_vect.push_back(Performance(crits, vec0, "cat0"));
+  Profiles profs = Profiles(perf_vect);
 
   MRSortModel model = MRSortModel(crits, profs, cats, 0.6);
+  return model;
 }
 
 TEST(TestWeightUpdater, TestComputeXMatrix) {
-  Config conf = getWeightTestConf;
+  Config conf = getWeightTestConf();
   auto ap = getAPTest();
   auto model = getModelTest();
+  WeightUpdater wu = WeightUpdater(ap, conf);
+  auto x_matrix = wu.computeXMatrix(model);
+  std::vector<std::vector<std::vector<bool>>> x_matrix_expected = {
+      {{true, true}, {true, true}, {}}};
+  EXPECT_EQ(x_matrix, x_matrix_expected);
 }
 
-TEST(TestWeightUpdater, TestComputeYMatrix) {}
+TEST(TestWeightUpdater, TestComputeYMatrix) {
+  Config conf = getWeightTestConf();
+  auto ap = getAPTest();
+  auto model = getModelTest();
+  WeightUpdater wu = WeightUpdater(ap, conf);
+
+  auto y_matrix = wu.computeYMatrix(model);
+  std::vector<std::vector<std::vector<bool>>> y_matrix_expected = {
+      {{}, {}, {false, true}}};
+  EXPECT_EQ(y_matrix, y_matrix_expected);
+}

@@ -163,5 +163,9 @@ TEST(TestLinearSolver, TestSolve) {
   AlternativesPerformance ap = AlternativesPerformance(3, crits);
   LinearSolver ls = LinearSolver(ap, conf);
 
-  ls.solve(matrix_x, matrix_y);
+  auto res = ls.solve(matrix_x, matrix_y);
+  EXPECT_EQ(res.first, 1);
+  EXPECT_EQ(res.second[0], 1);
+  EXPECT_EQ(res.second[1], 0);
+  EXPECT_EQ(res.second[2], 0);
 }

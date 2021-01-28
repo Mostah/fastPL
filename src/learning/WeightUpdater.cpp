@@ -29,8 +29,10 @@ WeightUpdater::computeXMatrix(MRSortModel &model) {
   auto profs_pt = model.profiles.getPerformanceTable();
   auto alts_pt = ap.getPerformanceTable();
   auto alts_assign = ap.getAlternativesAssignments();
-
-  for (int h = 1; h < profs_pt.size(); h++) {
+  // As the profiles are stored in descending order (h = 0 is the highest
+  // profile, which is not the case in the theorical formulation), going in
+  // reverse.
+  for (int h = profs_pt.size() - 2; h >= 0; h--) {
     std::vector<std::vector<bool>> x_h;
     for (auto alt : alts_pt) {
       std::vector<bool> x_h_alt;
@@ -39,13 +41,15 @@ WeightUpdater::computeXMatrix(MRSortModel &model) {
           profs_pt[h][0].getName()) {
         for (int j = 0; j < alt.size(); j++) {
           // condition: aj >= bj_h-1
-          x_h_alt.push_back(alt[j].getValue() >= profs_pt[h - 1][j].getValue());
+          // h+1 because going through the vector in reverse (descending order).
+          x_h_alt.push_back(alt[j].getValue() >= profs_pt[h + 1][j].getValue());
         }
       }
       x_h.push_back(x_h_alt);
     }
     x_matrix.push_back(x_h);
   }
+  return x_matrix;
 }
 
 std::vector<std::vector<std::vector<bool>>>
@@ -56,7 +60,10 @@ WeightUpdater::computeYMatrix(MRSortModel &model) {
   auto alts_pt = ap.getPerformanceTable();
   auto alts_assign = ap.getAlternativesAssignments();
 
-  for (int h = 0; h < profs_pt.size() - 1; h++) {
+  // As the profiles are stored in descending order (h = 0 is the highest
+  // profile, which is not the case in the theorical formulation), going in
+  // reverse.
+  for (int h = profs_pt.size() - 1; h > 0; h--) {
     std::vector<std::vector<bool>> y_h;
     for (auto alt : alts_pt) {
       std::vector<bool> y_h_alt;
@@ -65,6 +72,7 @@ WeightUpdater::computeYMatrix(MRSortModel &model) {
           profs_pt[h][0].getName()) {
         for (int j = 0; j < alt.size(); j++) {
           // condition: aj >= bj_h
+          std::cout << alt[j].getValue() << " " << profs_pt[h][j].getValue();
           y_h_alt.push_back(alt[j].getValue() >= profs_pt[h][j].getValue());
         }
       }
@@ -72,4 +80,5 @@ WeightUpdater::computeYMatrix(MRSortModel &model) {
     }
     y_matrix.push_back(y_h);
   }
+  return y_matrix;
 }

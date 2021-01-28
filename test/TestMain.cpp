@@ -1,5 +1,6 @@
 #include "TestUtils.cpp"
 #include "learning/TestLinearSolver.cpp"
+#include "learning/TestWeightUpdater.cpp"
 #include "types/TestAlternativesPerformance.cpp"
 #include "types/TestCategories.cpp"
 #include "types/TestCategory.cpp"
