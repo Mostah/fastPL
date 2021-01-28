@@ -96,3 +96,61 @@ Profiles::getBelowAndAboveProfile(std::string profName) {
     throw std::domain_error("Profiles perftable mode corrupted.");
   }
 }
+
+void Profiles::setPerf(std::string name, std::string crit, float value) {
+  // supposing the pt is consistent:
+  // if in mode alt, each row contains 1 and only 1 (alternative or profile)
+  // if in mode crit, each row contains 1 and only 1 criterion
+  bool crit_found = false;
+  bool alt_found = false;
+  if (mode_ == "alt") {
+    int i = 0; // alt index
+    int j = 0; // crit index
+    for (std::vector<Perf> p : pt_) {
+      if (p[0].getName() == name) {
+        alt_found = true;
+        for (Perf perf : p) {
+          if (perf.getCrit() == crit) {
+            crit_found = true;
+            pt_[i][j].setValue(value);
+            break;
+          }
+          j = j + 1;
+        }
+        if (!crit_found) {
+          throw std::invalid_argument(
+              "Criterion not found in performance table");
+        }
+      }
+      i = i + 1;
+    }
+    if (!alt_found) {
+      throw std::invalid_argument("Name not found in performance table");
+    }
+  } else if (mode_ == "crit") {
+    int i = 0; // crit index
+    int j = 0; // alt index
+    for (std::vector<Perf> p : pt_) {
+      if (p[0].getCrit() == crit) {
+        crit_found = true;
+        for (Perf perf : p) {
+          if (perf.getName() == name) {
+            alt_found = true;
+            pt_[i][j].setValue(value);
+            break;
+          }
+          j = j + 1;
+        }
+        if (!alt_found) {
+          throw std::invalid_argument("Name not found in performance table");
+        }
+      }
+      i = i + 1;
+    }
+    if (!crit_found) {
+      throw std::invalid_argument("Criterion not found in performance table");
+    }
+  } else {
+    throw std::domain_error("Performance table mode corrupted.");
+  }
+}

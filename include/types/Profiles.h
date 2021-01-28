@@ -72,6 +72,15 @@ public:
    */
   std::pair<std::vector<Perf>, std::vector<Perf>>
   getBelowAndAboveProfile(std::string profName);
+
+  /**
+   * setPerf set a Perf given the alt name, crit and value
+   *
+   * @param name name of the alt or profile we want to update
+   * @param crit name of the crit we want to update
+   * @param value new perf value
+   */
+  void setPerf(std::string name, std::string crit, float value);
 };
 
 #endif

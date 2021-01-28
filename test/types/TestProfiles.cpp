@@ -142,3 +142,44 @@ TEST(TestProfiles, TestGetBelowAndAboveErrors) {
     FAIL() << "should have thrown domain error.";
   }
 }
+
+TEST(TestProfiles, TestSetPerfAndErrors) {
+  std::vector<Criterion> crit_vect;
+  crit_vect.push_back(Criterion("crit0", -1, 0.5));
+  crit_vect.push_back(Criterion("crit1", -1, 0.2));
+  crit_vect.push_back(Criterion("crit2", -1, 0.3));
+  Criteria crit = Criteria(crit_vect);
+
+  std::vector<Performance> perf_vect;
+  std::vector<float> given_perf0 = {0.8, 1, 0.4};
+  std::vector<float> given_perf1 = {0.8, 0.1, 0.3};
+  std::vector<float> given_perf2 = {0.6, 0, 0.2};
+  perf_vect.push_back(Performance(crit, given_perf0, "b0"));
+  perf_vect.push_back(Performance(crit, given_perf1, "b1"));
+  perf_vect.push_back(Performance(crit, given_perf2, "b2"));
+  Profiles profile = Profiles(perf_vect);
+
+  profile.setPerf("b0", "crit1", 0.98);
+
+  EXPECT_FLOAT_EQ(profile.getPerf("b0", "crit1").getValue(), 0.98);
+
+  // TEST ERRORS
+  try {
+    profile.setPerf("b22", "crit1", 0.98);
+    FAIL() << "should have thrown domain error.";
+  } catch (std::invalid_argument const &err) {
+    EXPECT_EQ(err.what(), std::string("Name not found in performance table"));
+  } catch (...) {
+    FAIL() << "should have thrown domain error.";
+  }
+
+  try {
+    profile.setPerf("b0", "crit31", 0.98);
+    FAIL() << "should have thrown domain error.";
+  } catch (std::invalid_argument const &err) {
+    EXPECT_EQ(err.what(),
+              std::string("Criterion not found in performance table"));
+  } catch (...) {
+    FAIL() << "should have thrown domain error.";
+  }
+}
