@@ -4,6 +4,7 @@
 #include "ortools/linear_solver/linear_solver.h"
 
 #include <sstream>
+#include <string>
 
 LinearSolver::LinearSolver(AlternativesPerformance &ap, Config &conf,
                            float delta, std::string solver_name)
@@ -65,7 +66,7 @@ void LinearSolver::initializeSolver() {
   lambda = solver->MakeNumVar(0.5, 1.0, "lambda");
 
   const double infinity = solver->infinity();
-  // sum weight equal 1 constraint: -sum <= -1 and sum <= 1
+  // sum weight = 1 constraint: -sum <= -1 and sum <= 1
   // -sum <= -1
   auto w_p = solver->MakeRowConstraint(-infinity, -1, "weight_constraint_p");
   for (operations_research::MPVariable *w_i : weights) {
@@ -131,12 +132,12 @@ void LinearSolver::updateConstraints(
 
         // cst_x_b2_a6_+ : - cst_x_b2_a6 <= 0
         operations_research::MPConstraint *cst_m = solver->MakeRowConstraint(
-            -infinity, -delta,
+            -infinity, 0,
             "cst_x_b" + std::to_string(h) + "_a" + std::to_string(alt) + "_+");
 
         // cst_x_b2_a6_- : cst_x_b2_a6 <= 0
         operations_research::MPConstraint *cst_p = solver->MakeRowConstraint(
-            -infinity, delta,
+            -infinity, 0,
             "cst_x_b" + std::to_string(h) + "_a" + std::to_string(alt) + "_-");
 
         // -lambda
@@ -170,10 +171,10 @@ void LinearSolver::updateConstraints(
       if (!y_matrix[h][alt].empty()) {
         // create constraint with name cst_y_b2_a6 for ex
         operations_research::MPConstraint *cst_m = solver->MakeRowConstraint(
-            -infinity, 0,
+            -infinity, -delta,
             "cst_y_h" + std::to_string(h) + "_a" + std::to_string(alt));
         operations_research::MPConstraint *cst_p = solver->MakeRowConstraint(
-            -infinity, 0,
+            -infinity, delta,
             "cst_y_h" + std::to_string(h) + "_a" + std::to_string(alt));
 
         cst_m->SetCoefficient(lambda, -1);
@@ -197,4 +198,27 @@ void LinearSolver::updateConstraints(
       }
     }
   }
+}
+
+std::pair<float, std::vector<float>>
+LinearSolver::solve(std::vector<std::vector<std::vector<bool>>> x_matrix,
+                    std::vector<std::vector<std::vector<bool>>> y_matrix) {
+  this->updateConstraints(x_matrix, y_matrix);
+  const operations_research::MPSolver::ResultStatus result_status =
+      solver->Solve();
+  if (result_status != operations_research::MPSolver::OPTIMAL) {
+    conf.logger->warn("Solver couldn't find an optimal solution.");
+    throw std::logic_error("Solver couldn't find an optimal solution");
+  }
+  std::ostringstream ss;
+  ss << "Problem solved - " << solver->wall_time() << " ms, "
+     << solver->iterations() << " iterations.";
+  conf.logger->info(ss.str());
+
+  std::vector<float> weight_values;
+  for (auto w_i : weights) {
+    weight_values.push_back(w_i->solution_value());
+  }
+  auto res = std::make_pair(lambda->solution_value(), weight_values);
+  return res;
 }

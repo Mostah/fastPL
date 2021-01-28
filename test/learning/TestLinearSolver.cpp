@@ -1,3 +1,4 @@
+#include "../../include/app.h"
 #include "../../include/learning/LinearSolver.h"
 #include "../../include/types/AlternativesPerformance.h"
 #include "../../include/types/Criteria.h"
@@ -5,6 +6,19 @@
 #include "gtest/gtest.h"
 #include <sstream>
 #include <utility>
+
+Config getSolverTestConf() {
+  Config conf;
+  conf.data_dir = "../data/tests/";
+  try {
+    conf.logger =
+        spdlog::basic_logger_mt("test_logger", "../logs/test_logger.txt");
+  } catch (const spdlog::spdlog_ex &ex) {
+    conf.logger = spdlog::get("test_logger");
+  }
+  spdlog::set_level(spdlog::level::debug);
+  return conf;
+}
 
 TEST(TestLinearSolver, TestInitializeSolver) {
   Criteria crits = Criteria(2);
@@ -123,4 +137,31 @@ TEST(TestLinearSolver, TestUpdateConstraints) {
   EXPECT_EQ(cst_y_b1_a2->GetCoefficient(weights[2]), 1);
   EXPECT_EQ(cst_y_b1_a2->GetCoefficient(y_a[2]), 1);
   EXPECT_EQ(cst_y_b1_a2->GetCoefficient(y_ap[2]), -1);
+
+  // check that everything from previous resolution was cleared
+  ls.updateConstraints(matrix_x, matrix_y);
+  EXPECT_EQ(solver->NumConstraints(), 14);
+  EXPECT_EQ(solver->NumVariables(), 16);
+}
+
+TEST(TestLinearSolver, TestSolve) {
+  // Will implement:
+  // cst_x_b0_a0 : w0 + w1
+  // cst_x_b0_a1 : w1
+  // cst_x_b1_a2 : w0 + w1 + w2
+  std::vector<std::vector<std::vector<bool>>> matrix_x{
+      {{true, true, false}, {false, true, false}, {}},
+      {{}, {}, {true, true, true}}};
+  // cst_y_b0_a0 : w2
+  // cst_y_b1_a0 : w1 + w2
+  // cst_y_b1_a2 : w0 + w2
+  std::vector<std::vector<std::vector<bool>>> matrix_y{
+      {{false, false, true}, {}, {}},
+      {{false, true, true}, {}, {true, false, true}}};
+  Criteria crits = Criteria(3);
+  Config conf = getSolverTestConf();
+  AlternativesPerformance ap = AlternativesPerformance(3, crits);
+  LinearSolver ls = LinearSolver(ap, conf);
+
+  ls.solve(matrix_x, matrix_y);
 }

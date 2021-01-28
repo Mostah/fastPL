@@ -35,19 +35,6 @@ public:
    */
   void updateWeightsAndLambda(MRSortModel &model);
 
-  /** solve Solve the linear problem given the constraint matrix.
-   *
-   * @param x_matrix matrix recapitulating the constraints to add to the linear
-   * problem for the x variables
-   * @param y_matrix matrix recapitulating the constraints to add to the linear
-   * problem for the y variables
-   *
-   * @return results contained in a pair of (lambda, vector of weights)
-   */
-  std::pair<float, std::vector<float>>
-  solve(std::vector<std::vector<std::vector<bool>>> x_matrix,
-        std::vector<std::vector<std::vector<bool>>> y_matrix);
-
   /** computexMatrixX Computes linear constraint matrix for x variables. X
    * Constraint matrix are of dimension (n_prof - 1, n_alt, n_crit). In
    * the first dimension, we have the n_prof - 1 profiles of the problem. Inside
