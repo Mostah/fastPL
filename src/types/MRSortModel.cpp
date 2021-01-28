@@ -37,46 +37,51 @@ MRSortModel::MRSortModel(int n_cat, int n_crit, std::string id)
   profiles.generateRandomPerfValues();
 }
 
-AlternativesPerformance MRSortModel::categoryAssignment(PerformanceTable &pt) {
+Category
+MRSortModel::categoryAssignment(std::vector<Perf> &alt,
+                                std::vector<std::vector<Perf>> &profiles_pt) {
+  bool assigned = false;
+  Category cat_assignment;
+  // For all alt, looping over all profiles in descending order
+  for (int h = 0; h < profiles_pt.size(); h++) {
+    // compute the concordance value:
+    float c = 0;
+    c = computeConcordance(profiles_pt[h], alt);
+    // if the value of the concordance is greater than the threshold, assign
+    // the category h to the alt.
+    // As we are going in descending order, the category assigned is the
+    // highest possible, guaranteeing that we have c > lamdba for profile h
+    // and c < lambda for profile h+1.
+    if (c >= lambda) {
+      cat_assignment = categories.getCategoryOfRank(profiles_pt.size() - h);
+      assigned = true;
+      break;
+    }
+  }
+  // if for all profile, the concordance is below the threshold, assigned the
+  // alt to the lowest category
+  if (!assigned) {
+    cat_assignment = categories.getCategoryOfRank(0);
+  }
+  return cat_assignment;
+}
+
+AlternativesPerformance MRSortModel::categoryAssignments(PerformanceTable &pt) {
   if (pt.getMode() != "alt") {
     throw std::invalid_argument(
         "Performance table set in wrong mode, should be alt.");
   }
-  std::unordered_map<std::string, Category> cat_assignment;
-
+  std::unordered_map<std::string, Category> cat_assignments;
+  std::vector<std::vector<Perf>> profiles_pt = profiles.getPerformanceTable();
   // Looping over all alternatives
   for (std::vector<Perf> alt : pt.getPerformanceTable()) {
-    bool assigned = false;
-    // For all alt, looping over all profiles in descending order
-    std::vector<std::vector<Perf>> profiles_pt = profiles.getPerformanceTable();
-    for (int h = 0; h < profiles_pt.size(); h++) {
-      // compute the concordance value:
-      float c = 0;
-      c = computeConcordance(profiles_pt[h], alt);
-      // if the value of the concordance is greater than the threshold, assign
-      // the category h to the alt.
-      // As we are going in descending order, the category assigned is the
-      // highest possible, guaranteeing that we have c > lamdba for profile h
-      // and c < lambda for profile h+1.
-      if (c >= lambda) {
-        cat_assignment[alt[0].getName()] =
-            categories.getCategoryOfRank(profiles_pt.size() - h);
-        assigned = true;
-        break;
-      }
-    }
-    // if for all profile, the concordance is below the threshold, assigned the
-    // alt to the lowest category
-    if (!assigned) {
-      cat_assignment[alt[0].getName()] = categories.getCategoryOfRank(0);
-    }
+    cat_assignments[alt[0].getName()] = categoryAssignment(alt, profiles_pt);
   }
-
-  return AlternativesPerformance(pt, cat_assignment);
+  return AlternativesPerformance(pt, cat_assignments);
 }
 
-float MRSortModel::computeConcordance(std::vector<Perf> prof,
-                                      std::vector<Perf> alt) {
+float MRSortModel::computeConcordance(std::vector<Perf> &prof,
+                                      std::vector<Perf> &alt) {
   float c = 0;
   for (Perf perf_j : alt) {
     for (Perf prof_i : prof) {

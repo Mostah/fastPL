@@ -52,7 +52,19 @@ public:
   std::string getId() const;
 
   /**
-   * categoryAssignment assign the categories given the performance table
+   * categoryAssignment assign the category given the alternative
+   * and the current state of the model.
+   *
+   * @param alt PerfVect of the alternative
+   * @param profiles_pt PerfTable of the profiles
+   *
+   * @return category_assignment Category object associated to the alternative
+   */
+  Category categoryAssignment(std::vector<Perf> &alt,
+                              std::vector<std::vector<Perf>> &profiles_pt);
+
+  /**
+   * categoryAssignments assign the categories given the performance table
    * and the current state of the model.
    *
    * @param pt PerformanceTable
@@ -60,7 +72,7 @@ public:
    * @return category_assignment AlternativeAssignment object containing the pt
    * given in args and the category assignment.
    */
-  AlternativesPerformance categoryAssignment(PerformanceTable &pt);
+  AlternativesPerformance categoryAssignments(PerformanceTable &pt);
 
   /**
    * computeConcordance computes the concordance value between a profile and an
@@ -71,7 +83,7 @@ public:
    *
    * @return concordance value
    */
-  float computeConcordance(std::vector<Perf> prof, std::vector<Perf> alt);
+  float computeConcordance(std::vector<Perf> &prof, std::vector<Perf> &alt);
 
   /**
    * computeConcordanceTable computes the concordance table of a performance

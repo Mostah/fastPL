@@ -52,7 +52,7 @@ TEST(TestMRSortModel, TestBaseConstructorError) {
   }
 }
 
-TEST(TestMRSortModel, TestCategoryAssignment) {
+TEST(TestMRSortModel, TestCategoryAssignments) {
   Profiles profile = getTestProfile();
   Criteria criteria = getTestCriteria();
   Categories categories = getTestCategories();
@@ -75,7 +75,14 @@ TEST(TestMRSortModel, TestCategoryAssignment) {
   expected_assignment["alt2"] = categories.getCategoryOfRank(1);
   expected_assignment["alt3"] = categories.getCategoryOfRank(0);
 
-  AlternativesPerformance ap = mrsort.categoryAssignment(pt_);
+  // TEST CATEGORY ASSIGNMENT
+  std::vector<Perf> a0 = pt_["alt0"];
+  std::vector<std::vector<Perf>> profile_pt = profile.getPerformanceTable();
+  Category cat = mrsort.categoryAssignment(a0, profile_pt);
+  EXPECT_EQ(cat, expected_assignment["alt0"]);
+
+  // TEST CATEGORY ASSIGNMENTS
+  AlternativesPerformance ap = mrsort.categoryAssignments(pt_);
   EXPECT_EQ(expected_assignment, ap.getAlternativesAssignments());
 }
 
@@ -97,8 +104,12 @@ TEST(TestMRSortModel, TestConcordance) {
   PerformanceTable pt_ = PerformanceTable(perf_vect);
 
   // TEST COMPUTE CONCORDANCE
-  float c_alt0_b0 = mrsort.computeConcordance(profile["b0"], pt_["alt0"]);
-  float c_alt1_b2 = mrsort.computeConcordance(profile["b2"], pt_["alt1"]);
+  std::vector<Perf> b0 = profile["b0"];
+  std::vector<Perf> a0 = pt_["alt0"];
+  std::vector<Perf> b2 = profile["b2"];
+  std::vector<Perf> a1 = pt_["alt1"];
+  float c_alt0_b0 = mrsort.computeConcordance(b0, a0);
+  float c_alt1_b2 = mrsort.computeConcordance(b2, a1);
   EXPECT_FLOAT_EQ(c_alt0_b0, 0.8);
   EXPECT_FLOAT_EQ(c_alt1_b2, 1);
 
