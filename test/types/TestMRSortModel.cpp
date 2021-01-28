@@ -28,9 +28,9 @@ Profiles getTestProfile() {
   std::vector<float> given_perf0 = {0.8, 1, 0.4};
   std::vector<float> given_perf1 = {0.8, 0.1, 0.3};
   std::vector<float> given_perf2 = {0.6, 0, 0.2};
-  perf_vect.push_back(Performance(crit, given_perf0, "cat0"));
-  perf_vect.push_back(Performance(crit, given_perf1, "cat1"));
-  perf_vect.push_back(Performance(crit, given_perf2, "cat2"));
+  perf_vect.push_back(Performance(crit, given_perf0, "b0"));
+  perf_vect.push_back(Performance(crit, given_perf1, "b1"));
+  perf_vect.push_back(Performance(crit, given_perf2, "b2"));
   return Profiles(perf_vect);
 }
 
@@ -77,4 +77,46 @@ TEST(TestMRSortModel, TestCategoryAssignment) {
 
   AlternativesPerformance ap = mrsort.categoryAssignment(pt_);
   EXPECT_EQ(expected_assignment, ap.getAlternativesAssignments());
+}
+
+TEST(TestMRSortModel, TestConcordance) {
+  Profiles profile = getTestProfile();
+  Criteria criteria = getTestCriteria();
+  Categories categories = getTestCategories();
+  MRSortModel mrsort = MRSortModel(criteria, profile, categories, 0.6);
+
+  std::vector<Performance> perf_vect;
+  std::vector<float> alt0 = {0.9, 0.6, 0.5};
+  std::vector<float> alt1 = {0.9, 0.05, 0.35};
+  std::vector<float> alt2 = {0.7, 1, 0.5};
+  std::vector<float> alt3 = {0.5, 0, 0.6};
+  perf_vect.push_back(Performance(criteria, alt0, "alt0"));
+  perf_vect.push_back(Performance(criteria, alt1, "alt1"));
+  perf_vect.push_back(Performance(criteria, alt2, "alt2"));
+  perf_vect.push_back(Performance(criteria, alt3, "alt3"));
+  PerformanceTable pt_ = PerformanceTable(perf_vect);
+
+  // TEST COMPUTE CONCORDANCE
+  float c_alt0_b0 = mrsort.computeConcordance(profile["b0"], pt_["alt0"]);
+  float c_alt1_b2 = mrsort.computeConcordance(profile["b2"], pt_["alt1"]);
+  EXPECT_FLOAT_EQ(c_alt0_b0, 0.8);
+  EXPECT_FLOAT_EQ(c_alt1_b2, 1);
+
+  // TEST COMPUTE CONCORDANCE TABLE
+  std::unordered_map<std::string, std::unordered_map<std::string, float>> ct =
+      mrsort.computeConcordanceTable(pt_);
+
+  EXPECT_FLOAT_EQ(ct["b0"]["alt0"], 0.8);
+  EXPECT_FLOAT_EQ(ct["b2"]["alt1"], 1);
+
+  // Display ct
+  // for (std::pair<std::string,
+  // std::unordered_map<std::string, float>> element
+  // :
+  //      ct) {
+  //   std::cout << "profile " << element.first << std::endl;
+  //   for (std::pair<std::string, float> conc : element.second) {
+  //     std::cout << conc.first << " conc " << conc.second << std::endl;
+  //   }
+  // }
 }

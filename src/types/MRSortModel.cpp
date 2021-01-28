@@ -50,19 +50,9 @@ AlternativesPerformance MRSortModel::categoryAssignment(PerformanceTable &pt) {
     // For all alt, looping over all profiles in descending order
     std::vector<std::vector<Perf>> profiles_pt = profiles.getPerformanceTable();
     for (int h = 0; h < profiles_pt.size(); h++) {
-      float c = 0;
       // compute the concordance value:
-      for (Perf perf_j : alt) {
-        for (Perf prof_i : profiles_pt[h]) {
-          // If the value of the alt on criterion j is greater than the one of
-          // the profile h, add the weight of the criterion j to the concordance
-          // value.
-          if ((prof_i.getCrit() == perf_j.getCrit()) &&
-              (perf_j.getValue() > prof_i.getValue())) {
-            c = c + criteria[perf_j.getCrit()].getWeight();
-          }
-        }
-      }
+      float c = 0;
+      c = computeConcordance(profiles_pt[h], alt);
       // if the value of the concordance is greater than the threshold, assign
       // the category h to the alt.
       // As we are going in descending order, the category assigned is the
@@ -83,6 +73,44 @@ AlternativesPerformance MRSortModel::categoryAssignment(PerformanceTable &pt) {
   }
 
   return AlternativesPerformance(pt, cat_assignment);
+}
+
+float MRSortModel::computeConcordance(std::vector<Perf> prof,
+                                      std::vector<Perf> alt) {
+  float c = 0;
+  for (Perf perf_j : alt) {
+    for (Perf prof_i : prof) {
+      // If the value of the alt on criterion j is greater than the one of
+      // the profile h, add the weight of the criterion j to the concordance
+      // value.
+      if ((prof_i.getCrit() == perf_j.getCrit()) &&
+          (perf_j.getValue() > prof_i.getValue())) {
+        c = c + criteria[perf_j.getCrit()].getWeight();
+      }
+    }
+  }
+  return c;
+}
+
+std::unordered_map<std::string, std::unordered_map<std::string, float>>
+MRSortModel::computeConcordanceTable(PerformanceTable &pt) {
+  if (pt.getMode() != "alt") {
+    throw std::invalid_argument(
+        "Performance table set in wrong mode, should be alt.");
+  }
+  std::unordered_map<std::string, std::unordered_map<std::string, float>> ct;
+  std::vector<std::vector<Perf>> profiles_pt = profiles.getPerformanceTable();
+  // Looping over all profiles
+  for (int h = 0; h < profiles_pt.size(); h++) {
+    std::unordered_map<std::string, float> prof_concordances;
+    // Looping over all alternatives
+    for (std::vector<Perf> alt : pt.getPerformanceTable()) {
+      prof_concordances[alt[0].getName()] =
+          computeConcordance(profiles_pt[h], alt);
+    }
+    ct[profiles_pt[h][0].getName()] = prof_concordances;
+  }
+  return ct;
 }
 
 MRSortModel::~MRSortModel() {}

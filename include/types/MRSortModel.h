@@ -62,6 +62,31 @@ public:
    */
   AlternativesPerformance categoryAssignment(PerformanceTable &pt);
 
+  /**
+   * computeConcordance computes the concordance value between a profile and an
+   * alternative
+   *
+   * @param prof profile
+   * @param alt alternative
+   *
+   * @return concordance value
+   */
+  float computeConcordance(std::vector<Perf> prof, std::vector<Perf> alt);
+
+  /**
+   * computeConcordanceTable computes the concordance table of a performance
+   * table
+   *
+   * @param pt PerformanceTable
+   *
+   * @return concordance table giving the concordance value for each profile,
+   * alternative tupple, displayed in a map { prof_id1 : {alt_id1 : c1,
+   alt_id2:
+   * c2, ...}, ...}
+   */
+  std::unordered_map<std::string, std::unordered_map<std::string, float>>
+  computeConcordanceTable(PerformanceTable &pt);
+
   Criteria criteria;
   Profiles profiles;
   float lambda;
