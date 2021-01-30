@@ -3,20 +3,18 @@ version: 2.1
 jobs:
   compile:
     docker:
-      - image: ubuntu:groovy
+      - image: mostah/fastpl:latest
     steps:
       - checkout
       # command to build all files
-      - run: apt-get update && apt-get -y install build-essential cmake git doxygen
-      - run: git submodule init; git submodule update
-      - run: mkdir build; cd build; cmake .. -DBUILD_DEPS:BOOL=ON -DUSE_SCIP=OFF; make
+      - run: cd build; make
       - persist_to_workspace:
           root: ./
           paths: 
             - ./
   test:
     docker:
-      - image: gcc:9.3
+      - image: mostah/fastpl:latest
     steps:
       # instead of checking out, restore workspace (will merge all parallel containers from previous job)
       - attach_workspace:
@@ -25,7 +23,7 @@ jobs:
 
   doc_generation:
     docker:
-      - image: gcc:9.3
+      - image: mostah/fastpl:latest
     steps:
       # instead of checking out, restore workspace (will merge all parallel containers from previous job)
       - attach_workspace:
