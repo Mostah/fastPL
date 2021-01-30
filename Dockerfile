@@ -3,7 +3,7 @@ FROM gcc:10.2
 
 # install cmake
 RUN apt-get update && apt-get -y install cmake git doxygen
-RUN git clone https://github.com/Mostah/fastPL.git
+RUN git clone --branch thomas/linearsolver https://github.com/Mostah/fastPL.git 
 
 # install & configure submodules 
 RUN cd fastPL && git submodule init && git submodule update
