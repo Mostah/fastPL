@@ -29,7 +29,7 @@ jobs:
       # instead of checking out, restore workspace (will merge all parallel containers from previous job)
       - attach_workspace:
           at: ./
-      - run: cd cd /home/fastPL/doc; cmake .; doxygen Doxyfile.Doxygen 
+      - run: cd /home/fastPL/doc; cmake .; doxygen Doxyfile.Doxygen 
 
 
 # Orchestrate our job run sequence
