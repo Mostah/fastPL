@@ -7,7 +7,8 @@ jobs:
     steps:
       - checkout
       # command to build all files
-      - run: cd build; make
+      - run: ls
+      - run: cd /home/fastPL/build; make
       - persist_to_workspace:
           root: ./
           paths: 
