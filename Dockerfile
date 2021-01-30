@@ -1,8 +1,8 @@
 # Get the GCC preinstalled image from Docker Hub
-FROM gcc:10.2
+FROM ubuntu:groovy
 
 # install cmake
-RUN apt-get update && apt-get -y install cmake git doxygen
+RUN apt-get update && apt-get -y install build-essential cmake git doxygen
 RUN git clone --branch thomas/linearsolver https://github.com/Mostah/fastPL.git 
 
 # install & configure submodules 
