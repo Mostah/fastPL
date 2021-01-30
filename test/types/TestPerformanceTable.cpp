@@ -363,6 +363,6 @@ TEST(TestPerformanceTable, TestNumbers) {
   perf_vect.push_back(Performance(crit, given_perf1, "a1"));
   PerformanceTable perf_table = PerformanceTable(perf_vect);
 
-  EXPECT_EQ(perf_table.getNumberAlt(), 2);
+  EXPECT_EQ(perf_table.getNumberAlt(), 3);
   EXPECT_EQ(perf_table.getNumberCrit(), 2);
 }
