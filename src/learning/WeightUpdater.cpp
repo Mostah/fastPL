@@ -10,6 +10,12 @@ WeightUpdater::WeightUpdater(const WeightUpdater &wu)
 WeightUpdater::~WeightUpdater() {}
 
 void WeightUpdater::updateWeightsAndLambda(MRSortModel &model) {
+
+  if (!this->modelCheck(model)) {
+    throw std::invalid_argument("Model's profile doesn't suite the alternative "
+                                "performance of this WeightUpdater");
+  }
+
   auto matrix_x = this->computeXMatrix(model);
   auto matrix_y = this->computeYMatrix(model);
   std::pair<float, std::vector<float>> res = solver.solve(matrix_x, matrix_y);
@@ -81,4 +87,19 @@ WeightUpdater::computeYMatrix(MRSortModel &model) {
     y_matrix.push_back(y_h);
   }
   return y_matrix;
+}
+
+bool WeightUpdater::modelCheck(MRSortModel &model) {
+  if (model.profiles.getNumberCrit() != ap.getNumberCrit()) {
+    return false;
+  }
+  // both are supposed to be in mode alt
+  auto profs = model.profiles.getPerformanceTable();
+  auto ap_pt = ap.getPerformanceTable();
+  for (int i = 0; i < ap.getNumberCrit(); i++) {
+    if (profs[0][i].getCrit() != ap_pt[0][i].getCrit()) {
+      return false;
+    }
+  }
+  return true;
 }

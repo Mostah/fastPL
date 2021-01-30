@@ -13,23 +13,25 @@ public:
   /**
    * LinearSolver standard constructor.
    *
-   * @param ap AlternativesPerformance objet that represents our dataset
-   * @param config config setup of the app
-   * @param solver solver type to use. Currently only GLOP is implemented
+   * @param ap AlternativesPerformance objet that represents the dataset of the
+   * problem
+   * @param config config setup from the app
+   * @param solver solver type to use. Currently only "GLOP" is implemented
    */
   LinearSolver(AlternativesPerformance &ap, Config &conf,
                float delta = 0.000001, std::string solver = "GLOP");
 
   ~LinearSolver();
 
-  /** initializeSolver Initialise the solver given the ap: add variables and
-   * constraints that are not changing given a model.
+  /** initializeSolver Initialise the solver given the alternative performance
+   * (dataset): add variables and constraints that are not changing given a
+   * particular model.
    *
    */
   void initializeSolver();
 
   /** updateConstraints reset the previous constraints and add the new ones
-   * given by the matrixs
+   * given by the matrixes
    *
    * @param x_matrix matrix recapitulating the constraints to add to the linear
    * problem for the x variables
@@ -115,7 +117,7 @@ private:
   std::string solver_name;
   Config &conf;
 
-  // value use to transform equalities in two inequalities
+  // value use to transform strict equalities into non-strict ones
   float delta;
 
   // variables

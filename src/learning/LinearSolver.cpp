@@ -49,6 +49,21 @@ std::vector<operations_research::MPVariable *> LinearSolver::getYap() const {
 
 void LinearSolver::initializeSolver() {
 
+  // reset constraints vectors
+  x_constraints.clear();
+  y_constraints.clear();
+  weights_constraint.clear();
+
+  // reset variables vectors
+  x_a.clear();
+  x_ap.clear();
+  y_a.clear();
+  y_ap.clear();
+  weights.clear();
+
+  // reset previous solver
+  solver->Clear();
+
   // weight variables
   for (int i = 0; i < ap.getNumberCrit(); i++) {
     weights.push_back(solver->MakeNumVar(0., 1.0, "w" + std::to_string(i)));
@@ -96,22 +111,7 @@ void LinearSolver::updateConstraints(
     std::vector<std::vector<std::vector<bool>>> x_matrix,
     std::vector<std::vector<std::vector<bool>>> y_matrix) {
 
-  // reset constraints vectors
-  x_constraints.clear();
-  y_constraints.clear();
-  weights_constraint.clear();
-
-  // reset variables vectors
-  x_a.clear();
-  x_ap.clear();
-  y_a.clear();
-  y_ap.clear();
-  weights.clear();
-
-  // reset previous solver
-  solver->Clear();
-
-  // re-initialise solver with variable and default constraing
+  // re-initialise solver with variable and default constraint
   this->initializeSolver();
 
   const double infinity = solver->infinity();
