@@ -17,7 +17,7 @@ TEST(TestAlternativesPerformance, TestConstructorBaseConstructor) {
       os.str(),
       "AlternativesPerformance( PerformanceTable[ Performance: Perf( name : "
       "a0, crit : crit0, value : 0 ) Perf( name : a0, crit : crit1, value : 0 "
-      ") | ], AlternativesAssignment{ a0->Category(id : , rank : -1) }");
+      ") | ], AlternativesAssignment{ {, (a0: Category(id : , rank : -1)),}");
   EXPECT_EQ(alt_perf.getMode(), "alt");
 
   std::unordered_map<std::string, Category> map =
@@ -26,11 +26,11 @@ TEST(TestAlternativesPerformance, TestConstructorBaseConstructor) {
       AlternativesPerformance(1, crit, "a", map);
   std::ostringstream os2;
   os2 << alt_perf2;
-  EXPECT_EQ(
-      os2.str(),
-      "AlternativesPerformance( PerformanceTable[ Performance: Perf( name : "
-      "a0, crit : crit0, value : 0 ) Perf( name : a0, crit : crit1, value : 0 "
-      ") | ], AlternativesAssignment{ a0->Category(id : cat0, rank : 0) }");
+  EXPECT_EQ(os2.str(),
+            "AlternativesPerformance( PerformanceTable[ Performance: Perf( "
+            "name : a0, crit : crit0, value : 0 ) Perf( name : a0, crit : "
+            "crit1, value : 0 ) | ], AlternativesAssignment{ {, (a0: "
+            "Category(id : cat0, rank : 0)),}");
   EXPECT_EQ(alt_perf2.getMode(), "alt");
 }
 
@@ -66,7 +66,7 @@ TEST(TestAlternativesPerformance, TestConstructorWithPerfVect) {
       os.str(),
       "AlternativesPerformance( PerformanceTable[ Performance: Perf( name : "
       "a0, crit : crit0, value : 0 ) Perf( name : a0, crit : crit1, value : 0 "
-      ") | ], AlternativesAssignment{ a0->Category(id : , rank : -1) }");
+      ") | ], AlternativesAssignment{ {, (a0: Category(id : , rank : -1)),}");
   EXPECT_EQ(alt_perf.getMode(), "alt");
 
   Category cat0 = Category("cat0", 0);
@@ -76,11 +76,11 @@ TEST(TestAlternativesPerformance, TestConstructorWithPerfVect) {
   AlternativesPerformance alt_perf2 = AlternativesPerformance(perf_vect, map);
   std::ostringstream os2;
   os2 << alt_perf2;
-  EXPECT_EQ(
-      os2.str(),
-      "AlternativesPerformance( PerformanceTable[ Performance: Perf( name : "
-      "a0, crit : crit0, value : 0 ) Perf( name : a0, crit : crit1, value : 0 "
-      ") | ], AlternativesAssignment{ a0->Category(id : cat0, rank : 0) }");
+  EXPECT_EQ(os2.str(),
+            "AlternativesPerformance( PerformanceTable[ Performance: Perf( "
+            "name : a0, crit : crit0, value : 0 ) Perf( name : a0, crit : "
+            "crit1, value : 0 ) | ], AlternativesAssignment{ {, (a0: "
+            "Category(id : cat0, rank : 0)),}");
 }
 
 TEST(TestAlternativesPerformance, TestConstructorWithPerfVectMapErrors) {
@@ -119,7 +119,7 @@ TEST(TestAlternativesPerformance, TestConstructorWithPerfTable) {
       os.str(),
       "AlternativesPerformance( PerformanceTable[ Performance: Perf( name : "
       "a0, crit : crit0, value : 0 ) Perf( name : a0, crit : crit1, value : 0 "
-      ") | ], AlternativesAssignment{ a0->Category(id : , rank : -1) }");
+      ") | ], AlternativesAssignment{ {, (a0: Category(id : , rank : -1)),}");
   EXPECT_EQ(alt_perf.getMode(), "alt");
 
   Category cat0 = Category("cat0", 0);
@@ -132,7 +132,8 @@ TEST(TestAlternativesPerformance, TestConstructorWithPerfTable) {
       os2.str(),
       "AlternativesPerformance( PerformanceTable[ Performance: Perf( name : "
       "a0, crit : crit0, value : 0 ) Perf( name : a0, crit : crit1, value : 0 "
-      ") | ], AlternativesAssignment{ a0->Category(id : cat0, rank : 0) }");
+      ") | ], AlternativesAssignment{ {, (a0: Category(id : cat0, rank : "
+      "0)),}");
   EXPECT_EQ(alt_perf2.getMode(), "alt");
 }
 

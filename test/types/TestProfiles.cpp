@@ -31,8 +31,8 @@ TEST(TestProfiles, TestConstructorWithPerfVectError) {
 TEST(TestProfiles, TestIsOrdered) {
   std::vector<Performance> perf_vect;
   Criteria crit = Criteria(3, "crit");
-  std::vector<float> given_perf0 = {0.8, 0.9, 0.4};
-  std::vector<float> given_perf1 = {0.8, 0.1, 0.3};
+  std::vector<float> given_perf0 = {0.1, 0.2, 0.3};
+  std::vector<float> given_perf1 = {0.3, 0.5, 0.6};
   perf_vect.push_back(Performance(crit, given_perf0, "alt0"));
   perf_vect.push_back(Performance(crit, given_perf1, "alt1"));
   Profiles profile = Profiles(perf_vect, "alt");
@@ -57,7 +57,7 @@ TEST(TestProfiles, TestIsOrdered) {
 
 TEST(TestProfiles, TestGenerateRandomOrderedPerfValues) {
   Criteria crit = Criteria(4, "crit");
-  Profiles profs = Profiles(12, crit, "alt");
+  Profiles profs = Profiles(12, crit, "b");
   profs.generateRandomPerfValues();
   EXPECT_TRUE(profs.isProfileOrdered());
 }
@@ -67,9 +67,9 @@ TEST(TestProfiles, TestChangeMode) {
   Criteria crit = Criteria(3, "crit");
   std::vector<float> given_perf0 = {1.1, 0.8, 0.4};
   std::vector<float> given_perf1 = {0.8, 0.3, 0.1};
-  perf_vect.push_back(Performance(crit, given_perf0, "alt0"));
-  perf_vect.push_back(Performance(crit, given_perf1, "alt1"));
+  perf_vect.push_back(Performance(crit, given_perf1, "alt0"));
+  perf_vect.push_back(Performance(crit, given_perf0, "alt1"));
   Profiles profile = Profiles(perf_vect, "alt");
-  Profiles new_p = profile.changeMode();
-  EXPECT_TRUE(new_p.isProfileOrdered());
+  profile.changeMode("crit");
+  EXPECT_TRUE(profile.isProfileOrdered());
 }

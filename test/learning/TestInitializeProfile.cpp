@@ -165,7 +165,7 @@ TEST(TestProfileInitializer, TestInitializeProfiles) {
   for (int i = 0; i < nbAlt; i++) {
     std::vector<Perf> vp;
     for (int c = 0; c < 4; c++) {
-      float given_perf = static_cast<float>(0.2 * (c + i + 1));
+      float given_perf = static_cast<float>(0.2 * (c + i + 1 + 0.06) + 0.1 * i);
       vp.push_back(Perf("alt" + std::to_string(i), "crit" + std::to_string(c),
                         given_perf));
     }
@@ -176,5 +176,9 @@ TEST(TestProfileInitializer, TestInitializeProfiles) {
   ProfileInitializer profInit = ProfileInitializer(conf, alt_perf);
   MRSortModel model = MRSortModel(3, 4);
   profInit.initializeProfiles(model);
-  // EXPECT_TRUE(model.profiles.isProfileOrdered());
+  EXPECT_TRUE(model.profiles.isProfileOrdered());
+  // model.profiles.display();
+  model.profiles.changeMode("alt");
+  // model.profiles.display();
+  EXPECT_TRUE(model.profiles.isProfileOrdered());
 }

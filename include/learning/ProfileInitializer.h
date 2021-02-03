@@ -15,7 +15,7 @@ public:
    *
    * @param altPerfs AlternativesPerformance objet that represents our dataset
    * @param config config setup for logging
-   * @return ProfileInitializer object
+   *
    */
   ProfileInitializer(Config &config, AlternativesPerformance &altPerfs);
 
@@ -24,7 +24,7 @@ public:
    *
    * @param profInit ProfileInitializer object
    * @param config config setup for logging
-   * @return ProfileInitializer object
+   *
    */
   ProfileInitializer(const ProfileInitializer &profInit);
 
@@ -76,7 +76,7 @@ public:
    * identified by its altId as the performance value for profile delimiting
    * catAbove and catBelow for criterion crit.
    *
-   * @param altId alternative id
+   * @param perfAlt Perf object of an alternative
    * @param crit Criterion object
    * @param catAbove Category object category above imaginary profile
    * performance (ie performance of altId)

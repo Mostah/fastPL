@@ -5,6 +5,7 @@
 #include <iostream>
 #include <map>
 #include <random>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -58,13 +59,13 @@ PerformanceTable::PerformanceTable(const PerformanceTable &perfs) {
 PerformanceTable::~PerformanceTable() {}
 
 std::ostream &operator<<(std::ostream &out, const PerformanceTable &perfs) {
-  out << "PerformanceTable[ " << std::endl;
+  out << "PerformanceTable[ ";
   for (std::vector<Perf> p : perfs.pt_) {
     out << "Performance: ";
     for (Perf perf : p) {
       out << perf << " ";
     }
-    out << "| " << std::endl;
+    out << "| ";
   }
   out << "]";
   return out;
@@ -96,15 +97,14 @@ std::vector<Perf> PerformanceTable::operator[](std::string name) const {
 void PerformanceTable::generateRandomPerfValues(unsigned long int seed,
                                                 int lower_bound,
                                                 int upper_bound) {
-  int i = 0;
   if (lower_bound > upper_bound) {
     throw std::invalid_argument(
         "Lower bound must be lower than the upper bound.");
   }
-
+  std::random_device rd;
   for (std::vector<Perf> &pv : pt_) {
     for (Perf &p : pv) {
-      p.setValue(getRandomUniformFloat(seed, lower_bound, upper_bound));
+      p.setValue(getRandomUniformFloat(rd(), lower_bound, upper_bound));
     }
   }
   sorted_ = false;
@@ -164,36 +164,19 @@ void PerformanceTable::changeMode(std::string mode) {
   // not call this method often.
   std::vector<std::vector<Perf>> new_pt;
   std::map<std::string, int> index;
-  if (mode == "crit") {
-    for (std::vector<Perf> pv : pt_) {
-      for (Perf p : pv) {
-        if (index.count(p.getCrit()) > 0) {
-          // if criterion already seen, add Perf to the right row
-          new_pt[index[p.getCrit()]].push_back(p);
-        } else {
-          // create a new row for this criterion and add Perf
-          std::vector<Perf> v = {p};
-          new_pt.push_back(v);
-          index[p.getCrit()] = new_pt.size() - 1; // index of crit in the new_pt
-        }
-      }
-    }
-  } else {
-    for (std::vector<Perf> pv : pt_) {
-      for (Perf p : pv) {
-        if (index.count(p.getName()) > 0) {
-          // if alternative (or profile) already seen, add Perf to the right row
-          new_pt[index[p.getName()]].push_back(p);
-        } else {
-          // if alternative (or profile) already seen, add Perf to the right row
-          std::vector<Perf> v = {p};
-          new_pt.push_back(v);
-          index[p.getName()] = new_pt.size() - 1; // index of crit in the new_pt
-        }
+  for (std::vector<Perf> pv : pt_) {
+    for (Perf p : pv) {
+      if (index.count(p.getCrit()) > 0) {
+        // if criterion already seen, add Perf to the right row
+        new_pt[index[p.getCrit()]].push_back(p);
+      } else {
+        // create a new row for this criterion and add Perf
+        std::vector<Perf> v = {p};
+        new_pt.push_back(v);
+        index[p.getCrit()] = new_pt.size() - 1; // index of crit in the new_pt
       }
     }
   }
-
   pt_ = new_pt;
   mode_ = mode;
   sorted_ = false;
@@ -319,4 +302,60 @@ bool PerformanceTable::isAltInTable(std::string altName) {
     }
   }
   return (false);
+}
+
+void PerformanceTable::display() {
+  int nbFictAlt = pt_.size();
+  int nbCriteria = pt_[0].size();
+
+  int lengthLongestCriteriaIds = pt_.back().back().getCrit().size();
+  int lengthLongestAlternativeIds = pt_[0].back().getName().size();
+  float PerformanceValue = pt_[0].front().getValue();
+  std::stringstream ss1;
+  ss1 << PerformanceValue;
+  std::string str1 = ss1.str();
+  int lengthPerformanceValue = str1.size();
+  int tmp = std::max(lengthLongestCriteriaIds, lengthPerformanceValue);
+  if (tmp == lengthLongestCriteriaIds) {
+    std::cout << std::string(lengthLongestAlternativeIds + 1, ' ');
+    for (int i = 0; i < nbCriteria; i++) {
+      std::string crit = pt_[0][i].getCrit();
+      std::cout << crit;
+      std::cout << std::string(1, ' ');
+    }
+    std::cout << std::endl;
+
+    for (int i = 0; i < nbFictAlt; i++) {
+      std::cout << pt_[i][0].getName() << std::string(1, ' ');
+      for (int j = 0; j < nbCriteria; j++) {
+        float value = pt_[i][j].getValue();
+        std::stringstream ss1;
+        ss1 << value;
+        std::string str1 = ss1.str();
+        std::cout << value;
+        std::cout << std::string(
+            lengthLongestCriteriaIds - ss1.str().size() + 1, ' ');
+      }
+      std::cout << std::endl;
+    }
+  } else {
+    std::cout << std::string(lengthLongestAlternativeIds + 1, ' ');
+
+    for (int i = 0; i < nbCriteria; i++) {
+      std::string crit = pt_[0][i].getCrit();
+      std::cout << crit;
+      std::cout << std::string(lengthPerformanceValue - crit.size() + 1, ' ');
+    }
+    std::cout << std::endl;
+
+    for (int i = 0; i < nbFictAlt; i++) {
+      std::cout << pt_[i][0].getName();
+      std::cout << std::string(1, ' ');
+      for (int j = 0; j < nbCriteria; j++) {
+        std::cout << pt_[i][j].getValue();
+        std::cout << std::string(1, ' ');
+      }
+      std::cout << std::endl;
+    }
+  }
 }

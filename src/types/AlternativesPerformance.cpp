@@ -91,13 +91,13 @@ AlternativesPerformance::~AlternativesPerformance() {}
 
 std::ostream &operator<<(std::ostream &out,
                          const AlternativesPerformance &alt) {
-  out << "AlternativesPerformance( PerformanceTable[ " << std::endl;
+  out << "AlternativesPerformance( PerformanceTable[ ";
   for (std::vector<Perf> p : alt.pt_) {
     out << "Performance: ";
     for (Perf perf : p) {
       out << perf << " ";
     }
-    out << "| " << std::endl;
+    out << "| ";
   }
   out << "], AlternativesAssignment{ ";
 

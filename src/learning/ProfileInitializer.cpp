@@ -44,6 +44,8 @@ ProfileInitializer::~ProfileInitializer() {}
 std::vector<float> ProfileInitializer::categoryFrequency() {
 
   // Extraction category rank from each alternative and storing it in values
+  // SOMETIMES THIS DOESNT WORK this is seen as Segmentation Fault when using
+  // InitProfile
   std::unordered_map<std::string, Category> map =
       altPerformance_.getAlternativesAssignments();
   std::vector<int> values(map.size());
@@ -94,7 +96,7 @@ std::vector<Perf> ProfileInitializer::getProfilePerformanceCandidates(
     catBelow = cat.getCategoryRank();
     catAbove = catBelow + 1;
   }
-  // std::cout << altPerformance_.getPerformanceTable();
+
   for (std::vector<Perf> vPerf : altPerformance_.getPerformanceTable()) {
     if (altPerformance_.getAlternativeAssignment(vPerf[0].getName())
                 .getCategoryRank() == catBelow ||
@@ -199,16 +201,25 @@ std::vector<Perf> ProfileInitializer::initializeProfilePerformance(
 }
 
 void ProfileInitializer::initializeProfiles(MRSortModel &model) {
-  std::vector<Performance> perf_vec;
-  Performance firstAltPerf = altPerformance_.getPerformanceTable()[0];
-  std::vector<std::string> criteriaIds = firstAltPerf.getCriterionIds();
-  std::vector<float> catFreq = ProfileInitializer::categoryFrequency();
-  for (std::string criterion : criteriaIds) {
-    // OPTIM : POSSIBILITY parallelization asynchrone
-    std::vector<Perf> p = ProfileInitializer::initializeProfilePerformance(
-        criterion, model.categories, catFreq);
-    perf_vec.push_back(Performance(p));
+  bool ordered = 0;
+  while (!ordered) {
+    std::vector<Performance> perf_vec;
+    Performance firstAltPerf = altPerformance_.getPerformanceTable()[0];
+    std::vector<std::string> criteriaIds = firstAltPerf.getCriterionIds();
+    std::vector<float> catFreq = ProfileInitializer::categoryFrequency();
+    // CatFreq has a problem
+    for (std::string criterion : criteriaIds) {
+      // OPTIM : POSSIBILITY parallelization asynchrone
+      std::vector<Perf> p = this->initializeProfilePerformance(
+          criterion, model.categories, catFreq);
+      perf_vec.push_back(Performance(p));
+    }
+    try {
+      Profiles p = Profiles(perf_vec, "crit");
+      model.profiles = p;
+      ordered = 1;
+    } catch (std::invalid_argument const &err) {
+      ordered = 0;
+    }
   }
-  Profiles p = Profiles(perf_vec);
-  model.profiles = p;
 }
