@@ -177,8 +177,7 @@ TEST(TestProfileInitializer, TestInitializeProfiles) {
   MRSortModel model = MRSortModel(3, 4);
   profInit.initializeProfiles(model);
   EXPECT_TRUE(model.profiles.isProfileOrdered());
-  // model.profiles.display();
-  model.profiles.changeMode("alt");
-  // model.profiles.display();
-  EXPECT_TRUE(model.profiles.isProfileOrdered());
+  // To be uncommented when performance type no longer exist
+  // model.profiles.changeMode("alt");
+  // EXPECT_TRUE(model.profiles.isProfileOrdered());
 }

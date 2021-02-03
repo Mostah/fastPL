@@ -8,12 +8,6 @@
 #include <tuple>
 #include <utility>
 
-// Config getTestConf() {
-//   Config conf;
-//   conf.data_dir = "../data/tests/";
-//   return conf;
-// }
-
 TEST(TestDataGenerator, TestDatasetGenerator) {
   Config conf = getTestConf();
   DataGenerator data = DataGenerator(conf);

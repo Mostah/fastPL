@@ -164,19 +164,36 @@ void PerformanceTable::changeMode(std::string mode) {
   // not call this method often.
   std::vector<std::vector<Perf>> new_pt;
   std::map<std::string, int> index;
-  for (std::vector<Perf> pv : pt_) {
-    for (Perf p : pv) {
-      if (index.count(p.getCrit()) > 0) {
-        // if criterion already seen, add Perf to the right row
-        new_pt[index[p.getCrit()]].push_back(p);
-      } else {
-        // create a new row for this criterion and add Perf
-        std::vector<Perf> v = {p};
-        new_pt.push_back(v);
-        index[p.getCrit()] = new_pt.size() - 1; // index of crit in the new_pt
+  if (mode == "crit") {
+    for (std::vector<Perf> pv : pt_) {
+      for (Perf p : pv) {
+        if (index.count(p.getCrit()) > 0) {
+          // if criterion already seen, add Perf to the right row
+          new_pt[index[p.getCrit()]].push_back(p);
+        } else {
+          // create a new row for this criterion and add Perf
+          std::vector<Perf> v = {p};
+          new_pt.push_back(v);
+          index[p.getCrit()] = new_pt.size() - 1; // index of crit in the new_pt
+        }
+      }
+    }
+  } else {
+    for (std::vector<Perf> pv : pt_) {
+      for (Perf p : pv) {
+        if (index.count(p.getName()) > 0) {
+          // if alternative (or profile) already seen, add Perf to the right row
+          new_pt[index[p.getName()]].push_back(p);
+        } else {
+          // if alternative (or profile) already seen, add Perf to the right row
+          std::vector<Perf> v = {p};
+          new_pt.push_back(v);
+          index[p.getName()] = new_pt.size() - 1; // index of crit in the new_pt
+        }
       }
     }
   }
+
   pt_ = new_pt;
   mode_ = mode;
   sorted_ = false;

@@ -190,8 +190,8 @@ TEST(TestPerformanceTable, TestChangeMode) {
   os2 << perf_table;
   EXPECT_EQ(os2.str(),
             "PerformanceTable[ Performance: Perf( name : a0, crit : crit0, "
-            "value : 0 ) Perf( name : a1, crit : crit0, value : 0 ) | "
-            "Performance: Perf( name : a0, crit : crit1, value : 0 ) Perf( "
+            "value : 0 ) Perf( name : a0, crit : crit1, value : 0 ) | "
+            "Performance: Perf( name : a1, crit : crit0, value : 0 ) Perf( "
             "name : a1, crit : crit1, value : 0 ) | ]");
   EXPECT_EQ(perf_table.getMode(), "alt");
 

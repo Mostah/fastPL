@@ -201,12 +201,13 @@ std::vector<Perf> ProfileInitializer::initializeProfilePerformance(
 }
 
 void ProfileInitializer::initializeProfiles(MRSortModel &model) {
+  int nbIterations = 0;
   bool ordered = 0;
   while (!ordered) {
     std::vector<Performance> perf_vec;
     Performance firstAltPerf = altPerformance_.getPerformanceTable()[0];
     std::vector<std::string> criteriaIds = firstAltPerf.getCriterionIds();
-    std::vector<float> catFreq = ProfileInitializer::categoryFrequency();
+    std::vector<float> catFreq = this->categoryFrequency();
     // CatFreq has a problem
     for (std::string criterion : criteriaIds) {
       // OPTIM : POSSIBILITY parallelization asynchrone
@@ -218,8 +219,12 @@ void ProfileInitializer::initializeProfiles(MRSortModel &model) {
       Profiles p = Profiles(perf_vec, "crit");
       model.profiles = p;
       ordered = 1;
+      nbIterations++;
+      if (nbIterations > 100) {
+        throw std::domain_error("After 100 intialization can't get an valid "
+                                "(orderred) Profiles object ");
+      }
     } catch (std::invalid_argument const &err) {
-      ordered = 0;
     }
   }
 }
