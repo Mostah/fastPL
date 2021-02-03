@@ -3,6 +3,8 @@
 
 #include "../extsrc/pugixml/src/pugixml.hpp"
 #include "types/Category.h"
+#include "types/Criteria.h"
+#include "types/Perf.h"
 #include <iostream>
 #include <random>
 #include <vector>
@@ -132,6 +134,38 @@ std::ostream &operator<<(std::ostream &out, std::unordered_map<K, V> const &m) {
   }
   out << "}";
   return out;
+}
+
+inline std::vector<std::string> getCriterionIds(std::vector<Perf> vectPerf) {
+  std::vector<std::string> criterionIds;
+  for (auto p : vectPerf) {
+    criterionIds.push_back(p.getCrit());
+  }
+  return criterionIds;
+};
+
+inline std::vector<Perf> createVectorPerf(std::string id, Criteria &criteria,
+                                          std::vector<float> &given_perf) {
+  if (criteria.getCriterionVect().size() != given_perf.size()) {
+    throw std::invalid_argument(
+        "You must have the same number of performance value and criterias");
+  }
+  std::vector<Perf> vp;
+  std::vector<Criterion> criterion_vect = criteria.getCriterionVect();
+  for (int i = 0; i < criterion_vect.size(); i++) {
+    vp.push_back(Perf(id, criterion_vect[i].getId(), given_perf[i]));
+  }
+  return vp;
+}
+
+inline std::vector<Perf> createVectorPerfWithNoPerf(std::string id,
+                                                    Criteria &criteria) {
+  std::vector<Perf> vp;
+  std::vector<Criterion> criterion_vect = criteria.getCriterionVect();
+  for (int i = 0; i < criterion_vect.size(); i++) {
+    vp.push_back(Perf(id, criterion_vect[i].getId(), 0));
+  }
+  return vp;
 }
 
 #endif

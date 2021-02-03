@@ -369,19 +369,22 @@ TEST(TestDataGenerator, TestGetNumerOfAlternativesForModel) {
 TEST(TestDataGenerator, TestGetAlternativePerformanceForDataset) {
   Config conf = getTestConf();
   DataGenerator data = DataGenerator(conf);
-  Performance p = data.getAlternativePerformance("test_dataset.xml", "alt0");
+  std::vector<Perf> p =
+      data.getAlternativePerformance("test_dataset.xml", "alt0");
   std::ostringstream os2;
   os2 << p;
-  EXPECT_EQ(os2.str(), "Performance(Perf( name : alt0, crit : crit0, value : 0 "
-                       "), Perf( name : alt0, crit : crit1, value : 0 ), Perf( "
-                       "name : alt0, crit : crit2, value : 0 ), )");
+  EXPECT_EQ(
+      os2.str(),
+      "[Perf( name : alt0, crit : crit0, value : 0 ),Perf( name : alt0, crit : "
+      "crit1, value : 0 ),Perf( name : alt0, crit : crit2, value : 0 )]");
 }
 
 TEST(TestDataGenerator, TestGetAlternativePerformanceForModel) {
   Config conf = getTestConf();
   DataGenerator data = DataGenerator(conf);
   try {
-    Performance p = data.getAlternativePerformance("test_model.xml", "alt0");
+    std::vector<Perf> p =
+        data.getAlternativePerformance("test_model.xml", "alt0");
     FAIL() << "should have throw invalid_argument error.";
   } catch (std::invalid_argument const &err) {
     EXPECT_EQ(err.what(),
@@ -396,7 +399,8 @@ TEST(TestDataGenerator, TestGetAlternativePerformanceForModelFakeAltId) {
   Config conf = getTestConf();
   DataGenerator data = DataGenerator(conf);
   try {
-    Performance p = data.getAlternativePerformance("test_dataset.xml", "hello");
+    std::vector<Perf> p =
+        data.getAlternativePerformance("test_dataset.xml", "hello");
     FAIL() << "should have throw invalid_argument error.";
   } catch (std::invalid_argument const &err) {
     EXPECT_EQ(err.what(),

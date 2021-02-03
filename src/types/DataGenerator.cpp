@@ -4,7 +4,6 @@
 #include "../../include/types/Criteria.h"
 #include "../../include/types/Criterion.h"
 #include "../../include/types/Perf.h"
-#include "../../include/types/Performance.h"
 #include "../../include/types/PerformanceTable.h"
 #include "../../include/utils.h"
 #include <fstream>
@@ -62,13 +61,15 @@ void DataGenerator::datasetGenerator(int nb_criteria, int nb_alternative,
   for (int i = 0; i < nb_alternative; i++) {
     pugi::xml_node alternative_node = dataset_node.append_child("alternative");
 
-    Performance alternative = Performance(criterias, "alt" + std::to_string(i));
+    std::vector<Perf> alternative;
+    alternative =
+        createVectorPerfWithNoPerf("alt" + std::to_string(i), criterias);
 
     // getting alternative id
     alternative_node.append_child(pugi::node_pcdata)
-        .set_value(alternative.getId().c_str());
+        .set_value(alternative[0].getName().c_str());
 
-    for (Perf perf : alternative.getPerf()) {
+    for (Perf perf : alternative) {
       // for each criteria give its correspondant performace
       pugi::xml_node alternative_criteria_node =
           alternative_node.append_child(perf.getCrit().c_str());
@@ -232,10 +233,14 @@ DataGenerator::loadModel(std::string fileName) {
       fictPerformances.push_back(tmp);
     }
 
-    std::vector<Performance> vecPerformance;
+    std::vector<std::vector<Perf>> vecPerformance;
     for (int i = 0; i < nbFictionalAlternatives; i++) {
-      vecPerformance.push_back(Performance(criteria, fictPerformances[i],
-                                           "prof" + std::to_string(i)));
+      std::vector<Perf> p;
+      for (int j = 0; j < fictPerformances[i].size(); j++) {
+        p.push_back(Perf("prof" + std::to_string(i), criteria[j].getId(),
+                         fictPerformances[i][j]));
+      }
+      vecPerformance.push_back(p);
     }
     PerformanceTable perftab = PerformanceTable(vecPerformance);
     return std::make_tuple(lambda, criteria, perftab);
@@ -342,7 +347,7 @@ AlternativesPerformance DataGenerator::loadDataset(std::string fileName) {
   std::unordered_map<std::string, Category> altAssignments;
   int nb_criteria = DataGenerator::getNumberOfCriteria(fileName);
   Criteria criteria = Criteria(nb_criteria, "crit");
-  std::vector<Performance> vecPerformances;
+  std::vector<std::vector<Perf>> vecPerformances;
 
   pugi::xml_node node_dataset = doc.child("dataset");
   for (pugi::xml_node_iterator it = node_dataset.begin();
@@ -370,7 +375,7 @@ AlternativesPerformance DataGenerator::loadDataset(std::string fileName) {
               {altId, Category("cat" + std::to_string(rank), rank)});
         }
       }
-      vecPerformances.push_back(Performance(criteria, altPerf, altId));
+      vecPerformances.push_back(createVectorPerf(altId, criteria, altPerf));
     }
   }
   return AlternativesPerformance(PerformanceTable(vecPerformances),
@@ -569,8 +574,8 @@ int DataGenerator::getNumberOfAlternatives(std::string fileName) {
   }
 }
 
-Performance DataGenerator::getAlternativePerformance(std::string fileName,
-                                                     std::string alt_id) {
+std::vector<Perf> DataGenerator::getAlternativePerformance(std::string fileName,
+                                                           std::string alt_id) {
 
   pugi::xml_document doc = DataGenerator::openXmlFile(fileName);
 
@@ -595,7 +600,8 @@ Performance DataGenerator::getAlternativePerformance(std::string fileName,
         for (pugi::xml_node_iterator al_it = alternative_node.begin();
              al_it != alternative_node.end(); ++al_it) {
 
-          if (strcmp(al_it->child_value(), "assignment") != 0) {
+          if (strcmp(al_it->name(), "assignment") != 0 &&
+              strcmp(al_it->name(), "") != 0) {
             float perf = atof(al_it->child_value());
             alt_perf.push_back(perf);
           }
@@ -603,12 +609,14 @@ Performance DataGenerator::getAlternativePerformance(std::string fileName,
         break;
       }
     }
+    std::cout << alt_perf;
     if (alt_perf.empty()) {
       throw std::invalid_argument("Cannot find performance associated to the "
                                   "alternative identified by "
                                   "alt_id in xml file.");
     }
-    return Performance(criteria, alt_perf, alt_id);
+    std::cout << criteria.getCriterionVect().size() << "  " << alt_perf.size();
+    return createVectorPerf(alt_id, criteria, alt_perf);
   }
 }
 

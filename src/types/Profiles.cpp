@@ -1,6 +1,5 @@
 #include "../../include/types/Profiles.h"
 #include "../../include/types/Perf.h"
-#include "../../include/types/Performance.h"
 #include "../../include/types/PerformanceTable.h"
 #include "../../include/utils.h"
 #include <algorithm>
@@ -10,7 +9,7 @@
 #include <string>
 #include <vector>
 
-Profiles::Profiles(std::vector<Performance> &perf_vect, std::string mode)
+Profiles::Profiles(std::vector<std::vector<Perf>> &perf_vect, std::string mode)
     : PerformanceTable(perf_vect) {
   mode_ = mode;
   if (!this->isProfileOrdered()) {

@@ -6,7 +6,7 @@ Category default_cat;
 std::unordered_map<std::string, Category> default_map;
 
 AlternativesPerformance::AlternativesPerformance(
-    std::vector<Performance> &perf_vect,
+    std::vector<std::vector<Perf>> &perf_vect,
     std::unordered_map<std::string, Category> &alt_assignment)
     : PerformanceTable(perf_vect) {
   if (mode_ != "alt") {

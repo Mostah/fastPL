@@ -1,7 +1,8 @@
 #include "../../include/types/AlternativesPerformance.h"
 #include "../../include/types/Criteria.h"
-#include "../../include/types/Performance.h"
 #include "../../include/types/PerformanceTable.h"
+#include "../../include/utils.h"
+
 #include "gtest/gtest.h"
 #include <sstream>
 #include <utility>
@@ -54,9 +55,9 @@ TEST(TestAlternativesPerformance, TestConstructorMapErrors) {
 }
 
 TEST(TestAlternativesPerformance, TestConstructorWithPerfVect) {
-  std::vector<Performance> perf_vect;
+  std::vector<std::vector<Perf>> perf_vect;
   Criteria crit = Criteria(2, "crit");
-  perf_vect.push_back(Performance(crit, "a0"));
+  perf_vect.push_back(createVectorPerfWithNoPerf("a0", crit));
   // perf_vect.push_back(Performance(crit, "a1"));
 
   AlternativesPerformance alt_perf = AlternativesPerformance(perf_vect);
@@ -84,10 +85,10 @@ TEST(TestAlternativesPerformance, TestConstructorWithPerfVect) {
 }
 
 TEST(TestAlternativesPerformance, TestConstructorWithPerfVectMapErrors) {
-  std::vector<Performance> perf_vect;
+  std::vector<std::vector<Perf>> perf_vect;
   Criteria crit = Criteria(2, "crit");
-  perf_vect.push_back(Performance(crit, "a0"));
-  perf_vect.push_back(Performance(crit, "a1"));
+  perf_vect.push_back(createVectorPerfWithNoPerf("a0", crit));
+  perf_vect.push_back(createVectorPerfWithNoPerf("a1", crit));
   Category cat0 = Category("cat0", 0);
   Category cat1 = Category("cat1", 1);
 
@@ -106,9 +107,9 @@ TEST(TestAlternativesPerformance, TestConstructorWithPerfVectMapErrors) {
 }
 
 TEST(TestAlternativesPerformance, TestConstructorWithPerfTable) {
-  std::vector<Performance> perf_vect;
+  std::vector<std::vector<Perf>> perf_vect;
   Criteria crit = Criteria(2, "crit");
-  perf_vect.push_back(Performance(crit, "a0"));
+  perf_vect.push_back(createVectorPerfWithNoPerf("a0", crit));
   PerformanceTable perf_table = PerformanceTable(perf_vect);
 
   AlternativesPerformance alt_perf = AlternativesPerformance(perf_table);
@@ -138,10 +139,10 @@ TEST(TestAlternativesPerformance, TestConstructorWithPerfTable) {
 }
 
 TEST(TestAlternativesPerformance, TestConstructorWithPerfTableMapErrors) {
-  std::vector<Performance> perf_vect;
+  std::vector<std::vector<Perf>> perf_vect;
   Criteria crit = Criteria(2, "crit");
-  perf_vect.push_back(Performance(crit, "a0"));
-  perf_vect.push_back(Performance(crit, "a1"));
+  perf_vect.push_back(createVectorPerfWithNoPerf("a0", crit));
+  perf_vect.push_back(createVectorPerfWithNoPerf("a1", crit));
   PerformanceTable perf_table = PerformanceTable(perf_vect);
 
   Category cat0 = Category("cat0", 0);
@@ -161,9 +162,9 @@ TEST(TestAlternativesPerformance, TestConstructorWithPerfTableMapErrors) {
 }
 
 TEST(TestAlternativesPerformance, TestCopyConstructor) {
-  std::vector<Performance> perf_vect;
+  std::vector<std::vector<Perf>> perf_vect;
   Criteria crit = Criteria(2, "crit");
-  perf_vect.push_back(Performance(crit, "a0"));
+  perf_vect.push_back(createVectorPerfWithNoPerf("a0", crit));
   PerformanceTable perf_table = PerformanceTable(perf_vect);
   AlternativesPerformance alt_perf = AlternativesPerformance(perf_table);
 
