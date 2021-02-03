@@ -4,28 +4,33 @@
 #include <map>
 #include <string>
 
-ProfileUpdater::ProfileUpdater(float delta = 0.00001) { delta_ = delta; }
+ProfileUpdater::ProfileUpdater(AlternativesPerformance &altPerf_data,
+                               float delta) {
+  altPerf_data_ = altPerf_data;
+  delta_ = delta;
+}
 
 ProfileUpdater::ProfileUpdater(const ProfileUpdater &profUp) {
+  altPerf_data_ = profUp.altPerf_data_;
   delta_ = profUp.delta_;
 }
 
 ProfileUpdater::ProfileUpdater() {}
 
 std::unordered_map<std::string, float> ProfileUpdater::computeAboveDesirability(
-    MRSortModel model, AlternativeAssignment altPerf_data, std::string critId,
-    Perf perf_prof, Perf perf_prof_above, Category cat_below,
-    Category cat_above, std::unordered_map<std::string, float> ct_prof) {
-  // Problem data
+    MRSortModel model, std::string critId, Perf perf_prof, Perf perf_prof_above,
+    Category cat_below, Category cat_above,
+    std::unordered_map<std::string, float> ct_prof) {
+  // Data from the problem
   float lambda = model.lambda;
-  float weight = model.criteria[critId];
+  float weight = model.criteria[critId].getWeight();
   int direction = model.criteria[critId].getDirection();
   float delta = direction * this.delta_;
   std::vector<std::vector<Perf>> altPerfTable_data =
-      altPerf_data.getPerformanceTable();
+      this.altPerf_data_.getPerformanceTable();
   Profiles profiles_data = model.profiles;
 
-  // Model data
+  // Data calculated from the model
   AlternativesPerformance altPerf_model =
       model.categoryAssignments(altPerfTable_data);
 
@@ -42,7 +47,6 @@ std::unordered_map<std::string, float> ProfileUpdater::computeAboveDesirability(
 
   for (Perf alt : alt_between) {
     if ((alt.getValue() + delta) * direction > perf_prof_above * direction) {
-
       std::string altName = alt.getName();
       float c = ct_prof[altName];
       std::string aa_model =
