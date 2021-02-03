@@ -1,17 +1,22 @@
-# Get the GCC preinstalled image from Docker Hub
 FROM gcc:9.3
 
-# install cmake
-RUN apt-get update && apt-get -y install cmake git doxygen
-RUN git clone https://github.com/Mostah/fastPL.git
+# install c++ tools
+RUN apt-get update && apt-get -y install build-essential cmake git doxygen
 
-# install & configure submodules 
-RUN cd fastPL && git submodule init && git submodule update
+# install google profiler: gperftools
+RUN apt-get install -y gperf libgoogle-perftools-dev google-perftools
+#RUN apt install -yq golang
+#RUN go get -u github.com/google/pprof
 
 # Copy the current folder which contains C++ source code to the Docker image under /usr/src
-#COPY <src> … <dest> 
 COPY . /home/fastPL
-RUN rm -rf /home/fastPL/build && mkdir /home/fastPL/build
+WORKDIR /home/fastPL/
+
+# install & configure submodules 
+RUN git submodule init && git submodule update
+
+# build c++ programs
+RUN mkdir -p /home/fastPL/build
 WORKDIR /home/fastPL/build/
 RUN cmake .. && make
 
