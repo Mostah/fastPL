@@ -84,3 +84,16 @@ TEST(TestWeightUpdater, TestComputeYMatrix) {
       {{}, {}, {false, true}}};
   EXPECT_EQ(y_matrix, y_matrix_expected);
 }
+
+TEST(TestWeightUpdater, TestCompleteSolve) {
+  Config conf = getWeightTestConf();
+  auto ap = getAPTest();
+  auto model = getModelTest();
+  WeightUpdater wu = WeightUpdater(ap, conf);
+  wu.updateWeightsAndLambda(model);
+
+  // results for y_a2 = 1, the rest is 0
+  EXPECT_EQ(1, model.lambda);
+  EXPECT_EQ(1, model.criteria[0].getWeight());
+  EXPECT_EQ(0, model.criteria[1].getWeight());
+}

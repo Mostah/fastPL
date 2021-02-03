@@ -1,6 +1,8 @@
 #include "../../include/learning/WeightUpdater.h"
 #include "../../include/learning/LinearSolver.h"
 
+#include <sstream>
+
 WeightUpdater::WeightUpdater(AlternativesPerformance &ap, Config &conf)
     : ap(ap), conf(conf), solver(ap, conf) {}
 
@@ -20,12 +22,18 @@ void WeightUpdater::updateWeightsAndLambda(MRSortModel &model) {
   auto matrix_y = this->computeYMatrix(model);
   std::pair<float, std::vector<float>> res = solver.solve(matrix_x, matrix_y);
 
+  std::ostringstream ss;
+  ss << "Linear problem results - ";
+
   // update lambda
   model.lambda = res.first;
+  ss << "Lambda: " << res.first;
   // update all weights in order
-  for (int i = 0; i < model.criteria.getCriterionVect().size(); i++) {
-    model.criteria[i].setWeight(res.second[i]);
+  model.criteria.setWeights(res.second);
+  for (int i = 0; i < res.second.size(); i++) {
+    ss << " - w" << i << ": " << model.criteria[i].getWeight();
   }
+  conf.logger->info(ss.str());
 }
 
 std::vector<std::vector<std::vector<bool>>>
@@ -78,7 +86,6 @@ WeightUpdater::computeYMatrix(MRSortModel &model) {
           profs_pt[h][0].getName()) {
         for (int j = 0; j < alt.size(); j++) {
           // condition: aj >= bj_h
-          std::cout << alt[j].getValue() << " " << profs_pt[h][j].getValue();
           y_h_alt.push_back(alt[j].getValue() >= profs_pt[h][j].getValue());
         }
       }
