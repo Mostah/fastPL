@@ -41,7 +41,7 @@ set(Sources
     src/app.cpp
     )
 
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17" )
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -pg" )
 
 add_library(Core ${Headers} ${Sources})   # build a library with our header and source files
 target_link_libraries(Core spdlog::spdlog_header_only)
