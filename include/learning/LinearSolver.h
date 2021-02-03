@@ -117,7 +117,7 @@ private:
   std::string solver_name;
   Config &conf;
 
-  // value use to transform strict equalities into non-strict ones
+  // value use to transform strict inequalities into non-strict ones
   float delta;
 
   // variables
