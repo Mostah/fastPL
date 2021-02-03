@@ -152,3 +152,37 @@ doxygen Doxyfile.Doxigen
 cd html
 google-chrome index.html
 ```
+
+## Profiling
+
+### Profiling with GPROF
+
+Running the docker container and ssh into it:
+```
+docker run -it fastpl /bin/bash
+```
+
+Now we are inside the container:
+
+
+Executing the program we want to profile
+```
+./{$PROGRAM}
+```
+
+Creating the profiling data
+```
+gprof {$PROGRAM} gmon.out > analysis.txt
+```
+
+Keep this terminal open, and open a new one:
+
+copy the analysis from the docker container into your machine:
+
+Get the {$ID) of the fastpl container running with `docker ps`
+copy the file from the docker container into your machine:
+```
+docker cp {$ID}:/home/fastPL/build/analysis.txt {$YOUR_PATH_TO_STORE_IT}
+```
+
+The profiling data should now be in {$YOUR_PATH_TO_STORE_IT} in your machine.

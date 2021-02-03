@@ -3,7 +3,7 @@ FROM gcc:9.3
 
 # install cmake
 RUN apt-get update && apt-get -y install cmake git doxygen
-RUN git clone --branch thomas/gperftools https://github.com/Mostah/fastPL.git
+RUN git clone https://github.com/Mostah/fastPL.git
 
 # install & configure submodules 
 RUN cd fastPL && git submodule init && git submodule update
@@ -14,8 +14,6 @@ COPY . /home/fastPL
 RUN rm -rf /home/fastPL/build && mkdir /home/fastPL/build
 WORKDIR /home/fastPL/build/
 RUN cmake .. && make
-
-RUN ./Test
 
 # Run the program output from the previous step
 CMD ["./Main -h"]
