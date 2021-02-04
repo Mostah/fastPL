@@ -184,10 +184,10 @@ Keep this terminal open, and open a new one:
 
 copy the analysis from the docker container into your machine:
 
-Get the {$ID) of the fastpl container running with `docker ps`
+Get the $ID of the fastpl container running with `docker ps`
 copy the file from the docker container into your machine:
 ```
-docker cp {$ID}:/home/fastPL/build/analysis.{txt or png} {$YOUR_PATH_TO_STORE_IT}
+docker cp $ID:/home/fastPL/build/analysis.{txt or png} $YOUR_PATH
 ```
 
-The profiling data should now be in {$YOUR_PATH_TO_STORE_IT} in your machine.
+The profiling data should now be in $YOUR_PATH in your machine.
