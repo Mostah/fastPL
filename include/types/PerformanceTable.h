@@ -1,3 +1,9 @@
+/**
+ * @file PerformanceTable.h
+ * @brief PerformanceTable data structure.
+ *
+ */
+
 #ifndef PERFORMANCETABLE_H
 #define PERFORMANCETABLE_H
 
@@ -7,6 +13,26 @@
 #include <iostream>
 #include <vector>
 
+/**
+ * @class PerformanceTable PerformanceTable.h
+ *
+ * PerformanceTable is a table of Perf objects. It is a Mathematical
+ * datastructure that can be interpreted as a Matrix if a few conditions are
+ * met, or a vector of vector if the column order cannot be guaranteed.
+ *
+ * The PerformanceTable has to mode of representation: crit and alt.
+ *   -  In crit mode, the table is index by crit in the first dimension (in one
+ * row we have all perf of a certain crit), the second dimension beeing alt.
+ *   -  In alt mode, the table is index by alt in the first dimension (in one
+ * row we have all perf of a certain alt), the second dimension beeing crit.
+ *
+ * The Perf table can be interpreted as a Matrix if the second dimension has the
+ * same order for all row.
+ *
+ * This datastructure was designed to be itterated over easily, thus the access
+ * time of a certain element (like in a hashmap) is in O(n_crit * n_alt) which
+ * is absolutely inefficient and should be avoided.
+ */
 class PerformanceTable {
 public:
   /**

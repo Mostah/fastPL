@@ -1,3 +1,10 @@
+/**
+ * @file utils.h
+ * @brief utility functions used by our programs.
+ *
+ * All utility fonctions are referenced and implemented inside this file.
+ */
+
 #ifndef UTILS_H
 #define UTILS_H
 

@@ -1,3 +1,10 @@
+/**
+ * @file app.h
+ * @brief app container responsible of handling everything related to fastpl.
+ *
+ * The app file hold the Config structure as well as the App class.
+ */
+
 #ifndef APP_H
 #define APP_H
 
@@ -5,12 +12,31 @@
 #include "spdlog/spdlog.h"
 #include "yaml-cpp/yaml.h"
 
+/**
+ * @struct Config app.h
+ * @brief High level configuration of the app.
+ *
+ * Config structure is responsible for holding the high level configuration
+ * defined by the user to run the application and to apply over the whole
+ * pipeline.
+ */
 struct Config {
-  std::shared_ptr<spdlog::logger> logger;
-  std::string data_dir = "../data/";
-  std::string env = "staging";
+  std::shared_ptr<spdlog::logger>
+      logger; /*!< Logger pointer when logging is requested. */
+  std::string data_dir = "../data/"; /*!< Directory where the data is stored */
+  std::string env =
+      "staging"; /*!< Environment (defining the set of config) to use */
 };
 
+/**
+ * @class App app.h
+ * @brief App container of the fastpl project.
+ *
+ * App is responsible of setting up the right environment of execution given by
+the config and launch the fastpl pipeline to solve the problem. It is also
+responsible for error handling to avoid crashing the whole application and
+terminating everything properly.
+*/
 class App {
 
 public:

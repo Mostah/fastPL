@@ -1,9 +1,22 @@
+/**
+ * @file Perf.h
+ * @brief Perf (single performance) data structure.
+ *
+ */
+
 #ifndef PERF_H
 #define PERF_H
 
 #include <iostream>
 #include <string>
 
+/** @class Perf Perf.h
+ * Perf object is the representation of a single performance of an alternative
+ * on a criterion: a_i_j A Perf is thus identified by a name (name of the
+ * profile or the alternative), the name of the criterion on which the
+ * performance was evaluated, and the value of the performance.
+ *
+ */
 class Perf {
 public:
   /**
