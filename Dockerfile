@@ -1,12 +1,7 @@
-FROM gcc:9.3
+FROM ubuntu:groovy
 
 # install c++ tools
-RUN apt-get update && apt-get -y install build-essential cmake git doxygen
-
-# install google profiler: gperftools
-RUN apt-get install -y gperf libgoogle-perftools-dev google-perftools
-#RUN apt install -yq golang
-#RUN go get -u github.com/google/pprof
+RUN apt-get update && apt-get -y install build-essential cmake git graphviz python3 doxygen
 
 # Copy the current folder which contains C++ source code to the Docker image under /usr/src
 COPY . /home/fastPL
@@ -20,5 +15,7 @@ RUN mkdir -p /home/fastPL/build
 WORKDIR /home/fastPL/build/
 RUN cmake .. && make
 
-# Run the program output from the previous step
+# To visualize profiling data
+RUN git clone https://github.com/jrfonseca/gprof2dot.git
+
 CMD ["./Main -h"]

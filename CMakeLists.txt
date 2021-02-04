@@ -41,7 +41,12 @@ set(Sources
     src/app.cpp
     )
 
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -pg -Wl,--no-as-needed,-lprofiler,--as-needed" )
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17" )
+
+# enable profiling on linux macchine
+if(UNIX AND NOT APPLE)
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pg" )
+endif()
 
 add_library(Core ${Headers} ${Sources})   # build a library with our header and source files
 target_link_libraries(Core spdlog::spdlog_header_only)
@@ -65,5 +70,3 @@ target_link_libraries(Main Core pugixml)
 target_link_libraries(Test Core yaml-cpp)
 target_link_libraries(Main Core yaml-cpp)
 
-target_link_libraries(Main Core -lprofiler)
-target_link_libraries(Test Core -lprofiler)
