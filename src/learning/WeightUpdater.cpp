@@ -100,6 +100,13 @@ bool WeightUpdater::modelCheck(MRSortModel &model) {
   if (model.profiles.getNumberCrit() != ap.getNumberCrit()) {
     return false;
   }
+  if (model.profiles.getMode() != "alt") {
+    std::invalid_argument("Model's profile should be in alt mode.");
+  }
+  if (ap.getMode() != "alt") {
+    std::invalid_argument(
+        "AlternativesPerformance's profile should be in alt mode.");
+  }
   // both are supposed to be in mode alt
   auto profs = model.profiles.getPerformanceTable();
   auto ap_pt = ap.getPerformanceTable();

@@ -28,7 +28,9 @@ TEST(TestLinearSolver, TestInitializeSolver) {
   ls.initializeSolver();
 
   operations_research::MPSolver *solver = ls.getSolver();
+  // 1 (lambda) + 2 (weights) + 4 * 4 (xp, x, yp, y)
   EXPECT_EQ(solver->NumVariables(), 19);
+  // sum of weight = 1 : two ineauqlities
   EXPECT_EQ(solver->NumConstraints(), 2);
 }
 
