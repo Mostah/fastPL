@@ -2,6 +2,7 @@
 #include "../../include/types/DataGenerator.h"
 #include "../../include/utils.h"
 #include "gtest/gtest.h"
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -571,4 +572,22 @@ TEST(TestDataGenerator, TestGetCriterionCategoryLimitsModelFakeCritId) {
   } catch (...) {
     FAIL() << "should have throw invalid_argument error.";
   }
+}
+
+TEST(TestDataGenerator, TestImportedDataset) {
+  // IMPORTANT NOTE : cannot have any xml tag with only digits ie <1> c++ cant
+  // read
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
+  std::string filename = "in1dataset.xml";
+  AlternativesPerformance ap = data.loadDataset(filename);
+}
+
+TEST(TestDataGenerator, TestImportedModel) {
+  // IMPORTANT NOTE : cannot have any xml tag with only digits ie <1> c++ cant
+  // read
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
+  std::string filename = "out1modelcrit.xml";
+  std::tuple<float, Criteria, PerformanceTable> t = data.loadModel(filename);
 }

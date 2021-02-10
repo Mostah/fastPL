@@ -146,6 +146,7 @@ inline std::vector<std::string> getCriterionIds(std::vector<Perf> vectPerf) {
 
 inline std::vector<Perf> createVectorPerf(std::string id, Criteria &criteria,
                                           std::vector<float> &given_perf) {
+  // std::cout << criteria << " -" << given_perf;
   if (criteria.getCriterionVect().size() != given_perf.size()) {
     throw std::invalid_argument(
         "You must have the same number of performance value and criterias");

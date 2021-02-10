@@ -362,9 +362,8 @@ AlternativesPerformance DataGenerator::loadDataset(std::string fileName) {
       for (pugi::xml_node_iterator it = alternative_node.begin();
            it != alternative_node.end(); ++it) {
 
-        if (strcmp(it->name(), "assignment") != 0 ||
+        if (strcmp(it->name(), "assignment") != 0 &&
             strcmp(it->name(), "") != 0) {
-
           float perf = atof(it->child_value());
           altPerf.push_back(perf);
 
@@ -478,8 +477,11 @@ void DataGenerator::saveDataset(std::string fileName,
 pugi::xml_document DataGenerator::openXmlFile(std::string fileName) {
   pugi::xml_document doc;
   std::string path = conf.data_dir + fileName;
-  if (!doc.load_file(path.c_str()))
+  if (!doc.load_file(path.c_str())) {
+    std::cout << "path : " << path << std::endl;
     throw std::invalid_argument("Cannot open xml file, please check path");
+  }
+
   return doc;
 }
 
