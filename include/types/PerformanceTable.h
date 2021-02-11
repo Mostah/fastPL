@@ -1,11 +1,11 @@
+#ifndef PERFORMANCETABLE_H
+#define PERFORMANCETABLE_H
+
 /**
  * @file PerformanceTable.h
  * @brief PerformanceTable data structure.
  *
  */
-
-#ifndef PERFORMANCETABLE_H
-#define PERFORMANCETABLE_H
 
 #include "Criteria.h"
 #include "Performance.h"
@@ -15,6 +15,7 @@
 
 /**
  * @class PerformanceTable PerformanceTable.h
+ * @brief PerformanceTable data structure.
  *
  * PerformanceTable is a table of Perf objects. It is a Mathematical
  * datastructure that can be interpreted as a Matrix if a few conditions are

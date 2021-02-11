@@ -12,4 +12,5 @@ doxygen_add_docs(Doxygen ALL
   COMMENT "Generating documentation"
   ../README.md
   ../include/
+  ./pages/
 )

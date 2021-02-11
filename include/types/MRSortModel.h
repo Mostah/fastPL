@@ -1,6 +1,12 @@
 #ifndef MRSORTMODEL_H
 #define MRSORTMODEL_H
 
+/**
+ * @file MRSortModel.h
+ * @brief Model datastructre that will learn from the problem.
+ *
+ */
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -11,6 +17,23 @@
 #include "PerformanceTable.h"
 #include "Profiles.h"
 
+/** @class MRSortModel MRSortModel.h
+ * @brief Datastructure of the model to learn
+ *
+ * The MRSortModel is the datastructure that represents a complete modelisation
+ * of the problem to learn.
+ * The state of a model is defined by lambda, a Criteria object and a Profile
+ * object. Lambda is a float representing the global threshold of the problem,
+ * the Profile object hold the values that defined the profiles delimiting all
+ * the categories, and Criteria holds the weights of each Criterion.
+ *
+ * The model is the "atomic" object that we use in the metaheuristic, it is the
+ * datastructure running trough the different pipeline and modified by the
+ * learning algorithms.
+ *
+ * The performance of the model is evaluated by running the ground truth dataset
+ * into the model and looking at the category assignment.
+ */
 class MRSortModel {
 public:
   /**

@@ -1,12 +1,12 @@
+#ifndef APP_H
+#define APP_H
+
 /**
  * @file app.h
  * @brief app container responsible of handling everything related to fastpl.
  *
  * The app file hold the Config structure as well as the App class.
  */
-
-#ifndef APP_H
-#define APP_H
 
 #include "spdlog/sinks/basic_file_sink.h"
 #include "spdlog/spdlog.h"
