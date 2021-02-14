@@ -120,21 +120,6 @@ randomCategoriesLimits(int nbCategories, unsigned long int seed = time(NULL)) {
   sort(catLimits.begin(), catLimits.end());
   return catLimits;
 }
-/**
- * Overloading << operator for std::unordered_map
- *
- * @param out ostream
- * @param std::unordered_map  object
- *
- */
-template <typename K, typename V>
-std::ostream &operator<<(std::ostream &out, std::unordered_map<K, V> const &m) {
-  for (auto const &pair : m) {
-    out << "{, (" << pair.first << ": " << pair.second << "),";
-  }
-  out << "}";
-  return out;
-}
 
 inline std::vector<std::string> getCriterionIds(std::vector<Perf> vectPerf) {
   std::vector<std::string> criterionIds;

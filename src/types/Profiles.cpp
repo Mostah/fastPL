@@ -11,6 +11,9 @@
 
 Profiles::Profiles(std::vector<std::vector<Perf>> &perf_vect, std::string mode)
     : PerformanceTable(perf_vect) {
+  if (mode != "alt" || model != "crit") {
+    throw std::invalid_argument("Invalid Profile mode given.");
+  }
   mode_ = mode;
   if (!this->isProfileOrdered()) {
     throw std::invalid_argument(
@@ -24,6 +27,9 @@ Profiles::Profiles(int nb_of_prof, Criteria &crits, std::string mode,
                    std::string prefix)
     : PerformanceTable(nb_of_prof, crits, prefix) {
   this->generateRandomPerfValues();
+  if (mode != "alt" || model != "crit") {
+    throw std::invalid_argument("Invalid Profile mode given.");
+  }
   mode_ = mode;
   sorted_ = 1;
 }

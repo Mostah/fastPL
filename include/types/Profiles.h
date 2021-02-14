@@ -13,9 +13,7 @@
 class Profiles : public PerformanceTable {
 public:
   /**
-   * Profiles standard constructor (PerformanceTable surcharged). A Profile type
-   * is always represented in the mode_ = "crit" of a PerformanceTable. There is
-   * no such thing as a Profile in "alt" mode.
+   * Profiles standard constructor (PerformanceTable surcharged).
    *
    * @param perf_vect Vector of performance that models category limits or a
    * PerformanceTable Profiles in "alt"
