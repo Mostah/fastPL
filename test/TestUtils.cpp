@@ -28,3 +28,16 @@ TEST(TestUtils, TestRandomFloatGenerator) {
   EXPECT_NE(random1, random3);
   EXPECT_TRUE(random4 >= 0 && random4 <= 1);
 }
+
+TEST(TestUtils, TestUtilsVectorPerf) {
+  std::string id = "alt1";
+  Criteria crit = Criteria(3);
+  std::vector<float> givenPerf = {1, 3, 4};
+  std::vector<Perf> vecp = createVectorPerf(id, crit, givenPerf);
+  std::ostringstream os;
+  os << vecp;
+  EXPECT_EQ(
+      os.str(),
+      "[Perf( name : alt1, crit : crit0, value : 1 ),Perf( name : alt1, crit : "
+      "crit1, value : 3 ),Perf( name : alt1, crit : crit2, value : 4 )]");
+}

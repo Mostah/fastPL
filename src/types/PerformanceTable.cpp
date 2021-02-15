@@ -1,40 +1,51 @@
 #include "../../include/types/PerformanceTable.h"
+#include "../../include/types/Perf.h"
 #include "../../include/utils.h"
 #include <algorithm>
 #include <ctime>
 #include <iostream>
 #include <map>
+#include <random>
+#include <sstream>
 #include <string>
 #include <vector>
 
-PerformanceTable::PerformanceTable(std::vector<Performance> &perf_vect) {
+#include <chrono>
+#include <thread>
+
+PerformanceTable::PerformanceTable(std::vector<std::vector<Perf>> &perf_vect) {
   if (perf_vect.size() == 0) {
     throw std::invalid_argument("The vector must contain performances.");
   }
   std::vector<std::string> perf_id_vect;
-  std::vector<std::string> crit_vect = perf_vect[0].getCriterionIds();
+  std::vector<std::string> crit_vect = getCriterionIds(perf_vect[0]);
 
-  for (Performance p : perf_vect) {
+  for (std::vector<Perf> p : perf_vect) {
     // ensure there is no performance with dupplicated name
-    if (std::find(perf_id_vect.begin(), perf_id_vect.end(), p.getId()) !=
+
+    if (std::find(perf_id_vect.begin(), perf_id_vect.end(), p[0].getName()) !=
         perf_id_vect.end()) {
       throw std::invalid_argument("Each performance must have different ids.");
     }
-    perf_id_vect.push_back(p.getId());
+    perf_id_vect.push_back(p[0].getName());
 
     // ensure all the performance are based on the same set of criterion
-    if (p.getCriterionIds() != crit_vect) {
+    if (getCriterionIds(p) != crit_vect) {
       throw std::invalid_argument("Each performance must be based on the same "
                                   "set of criterion, in the same order.");
     }
-    pt_.push_back(Performance(p).getPerf());
+    pt_.push_back(p);
   }
 }
 
 PerformanceTable::PerformanceTable(int nb_of_perfs, Criteria &crits,
                                    std::string prefix) {
   for (int i = 0; i < nb_of_perfs; i++) {
-    pt_.push_back(Performance(crits, prefix + std::to_string(i)).getPerf());
+    std::vector<Perf> alt;
+    for (Criterion criterion : crits.getCriterionVect()) {
+      alt.push_back(Perf(prefix + std::to_string(i), criterion.getId(), 0));
+    }
+    pt_.push_back(alt);
   }
 }
 
@@ -96,9 +107,10 @@ void PerformanceTable::generateRandomPerfValues(unsigned long int seed,
     throw std::invalid_argument(
         "Lower bound must be lower than the upper bound.");
   }
+  std::random_device rd;
   for (std::vector<Perf> &pv : pt_) {
     for (Perf &p : pv) {
-      p.setValue(getRandomUniformFloat(seed, lower_bound, upper_bound));
+      p.setValue(getRandomUniformFloat(rd(), lower_bound, upper_bound));
     }
   }
   sorted_ = false;
@@ -327,4 +339,60 @@ int PerformanceTable::getNumberAlt() {
     return pt_[0].size();
   }
   return pt_.size();
+
+void PerformanceTable::display() {
+  int nbFictAlt = pt_.size();
+  int nbCriteria = pt_[0].size();
+
+  int lengthLongestCriteriaIds = pt_.back().back().getCrit().size();
+  int lengthLongestAlternativeIds = pt_[0].back().getName().size();
+  float PerformanceValue = pt_[0].front().getValue();
+  std::stringstream ss1;
+  ss1 << PerformanceValue;
+  std::string str1 = ss1.str();
+  int lengthPerformanceValue = str1.size();
+  int tmp = std::max(lengthLongestCriteriaIds, lengthPerformanceValue);
+  if (tmp == lengthLongestCriteriaIds) {
+    std::cout << std::string(lengthLongestAlternativeIds + 1, ' ');
+    for (int i = 0; i < nbCriteria; i++) {
+      std::string crit = pt_[0][i].getCrit();
+      std::cout << crit;
+      std::cout << std::string(1, ' ');
+    }
+    std::cout << std::endl;
+
+    for (int i = 0; i < nbFictAlt; i++) {
+      std::cout << pt_[i][0].getName() << std::string(1, ' ');
+      for (int j = 0; j < nbCriteria; j++) {
+        float value = pt_[i][j].getValue();
+        std::stringstream ss1;
+        ss1 << value;
+        std::string str1 = ss1.str();
+        std::cout << value;
+        std::cout << std::string(
+            lengthLongestCriteriaIds - ss1.str().size() + 1, ' ');
+      }
+      std::cout << std::endl;
+    }
+  } else {
+    std::cout << std::string(lengthLongestAlternativeIds + 1, ' ');
+
+    for (int i = 0; i < nbCriteria; i++) {
+      std::string crit = pt_[0][i].getCrit();
+      std::cout << crit;
+      std::cout << std::string(lengthPerformanceValue - crit.size() + 1, ' ');
+    }
+    std::cout << std::endl;
+
+    for (int i = 0; i < nbFictAlt; i++) {
+      std::cout << pt_[i][0].getName();
+      std::cout << std::string(1, ' ');
+      for (int j = 0; j < nbCriteria; j++) {
+        std::cout << pt_[i][j].getValue();
+        std::cout << std::string(1, ' ');
+      }
+      std::cout << std::endl;
+    }
+  }
+
 }

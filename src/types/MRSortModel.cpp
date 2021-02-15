@@ -90,8 +90,9 @@ MRSortModel::~MRSortModel() {}
 std::string MRSortModel::getId() const { return id_; }
 
 std::ostream &operator<<(std::ostream &out, const MRSortModel &mrsort) {
-  out << "Model( id : " << mrsort.id_ << ", lambda : " << mrsort.lambda
-      << ", crit : " << mrsort.criteria << ", profiles : " << mrsort.profiles
-      << ")";
+  out << "Model( id : " << mrsort.id_ << std::endl
+      << ", lambda : " << mrsort.lambda << std::endl
+      << ", crit : " << mrsort.criteria << std::endl
+      << ", profiles : " << mrsort.profiles << ")";
   return out;
 }

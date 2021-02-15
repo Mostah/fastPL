@@ -1,11 +1,12 @@
 #include "../../include/types/AlternativesPerformance.h"
+#include "../../include/utils.h"
 #include <typeinfo>
 
 Category default_cat;
 std::unordered_map<std::string, Category> default_map;
 
 AlternativesPerformance::AlternativesPerformance(
-    std::vector<Performance> &perf_vect,
+    std::vector<std::vector<Perf>> &perf_vect,
     std::unordered_map<std::string, Category> &alt_assignment)
     : PerformanceTable(perf_vect) {
   if (mode_ != "alt") {
@@ -100,12 +101,7 @@ std::ostream &operator<<(std::ostream &out,
   }
   out << "], AlternativesAssignment{ ";
 
-  auto it = alt.alt_assignment_.begin();
-  while (it != alt.alt_assignment_.end()) {
-    out << it->first << "->" << it->second << " ";
-    it++;
-  }
-  out << "}";
+  out << alt.alt_assignment_;
   return out;
 }
 

@@ -1,6 +1,7 @@
 #include "../../include/types/Criteria.h"
-#include "../../include/types/Performance.h"
 #include "../../include/types/PerformanceTable.h"
+#include "../../include/utils.h"
+
 #include "gtest/gtest.h"
 #include <sstream>
 #include <utility>
@@ -20,10 +21,10 @@ TEST(TestPerformanceTable, TestBaseConstructor) {
 }
 
 TEST(TestPerformanceTable, TestConstructorWithPerfVect) {
-  std::vector<Performance> perf_vect;
+  std::vector<std::vector<Perf>> perf_vect;
   Criteria crit = Criteria(2, "crit");
-  perf_vect.push_back(Performance(crit, "a0"));
-  perf_vect.push_back(Performance(crit, "a1"));
+  perf_vect.push_back(createVectorPerfWithNoPerf("a0", crit));
+  perf_vect.push_back(createVectorPerfWithNoPerf("a1", crit));
   PerformanceTable perf_table = PerformanceTable(perf_vect);
 
   std::ostringstream os;
@@ -38,7 +39,7 @@ TEST(TestPerformanceTable, TestConstructorWithPerfVect) {
 }
 
 TEST(TestPerformanceTable, TestConstructorWithPerfVectErrors) {
-  std::vector<Performance> perf_vect;
+  std::vector<std::vector<Perf>> perf_vect;
 
   try {
     PerformanceTable perf_table_0 = PerformanceTable(perf_vect);
@@ -51,8 +52,8 @@ TEST(TestPerformanceTable, TestConstructorWithPerfVectErrors) {
 
   Criteria crit_a = Criteria(2, "crit");
   Criteria crit_b = Criteria(2, "b");
-  perf_vect.push_back(Performance(crit_a, "a0"));
-  perf_vect.push_back(Performance(crit_b, "a1"));
+  perf_vect.push_back(createVectorPerfWithNoPerf("a0", crit_a));
+  perf_vect.push_back(createVectorPerfWithNoPerf("a1", crit_b));
 
   try {
     PerformanceTable perf_table_1 = PerformanceTable(perf_vect);
@@ -66,7 +67,7 @@ TEST(TestPerformanceTable, TestConstructorWithPerfVectErrors) {
   }
 
   Criteria crit_c = Criteria(1, "c");
-  perf_vect[1] = Performance(crit_c, "test2");
+  perf_vect[1] = createVectorPerfWithNoPerf("test2", crit_c);
   try {
     PerformanceTable perf_table_2 = PerformanceTable(perf_vect);
     FAIL() << "should have throw invalid argument.";
@@ -78,9 +79,9 @@ TEST(TestPerformanceTable, TestConstructorWithPerfVectErrors) {
     FAIL() << "should have throw invalid argument.";
   }
 
-  std::vector<Performance> perf_vect_err;
-  perf_vect_err.push_back(Performance(crit_c, "a0"));
-  perf_vect_err.push_back(Performance(crit_c, "a0"));
+  std::vector<std::vector<Perf>> perf_vect_err;
+  perf_vect_err.push_back(createVectorPerfWithNoPerf("a0", crit_c));
+  perf_vect_err.push_back(createVectorPerfWithNoPerf("a0", crit_c));
 
   try {
     PerformanceTable pt_err = PerformanceTable(perf_vect_err);
@@ -94,10 +95,10 @@ TEST(TestPerformanceTable, TestConstructorWithPerfVectErrors) {
 }
 
 TEST(TestPerformanceTable, TestConstructorByCopy) {
-  std::vector<Performance> perf_vect;
+  std::vector<std::vector<Perf>> perf_vect;
   Criteria crit = Criteria(2, "crit");
-  perf_vect.push_back(Performance(crit, "a0"));
-  perf_vect.push_back(Performance(crit, "a1"));
+  perf_vect.push_back(createVectorPerfWithNoPerf("a0", crit));
+  perf_vect.push_back(createVectorPerfWithNoPerf("a1", crit));
   PerformanceTable perf_table = PerformanceTable(perf_vect);
 
   std::ostringstream os;
@@ -114,17 +115,17 @@ TEST(TestPerformanceTable, TestConstructorByCopy) {
 }
 
 TEST(TestPerformanceTable, TestAccessOperator) {
-  std::vector<Performance> perf_vect;
+  std::vector<std::vector<Perf>> perf_vect;
   Criteria crit = Criteria(2, "crit");
-  perf_vect.push_back(Performance(crit, "a0"));
-  perf_vect.push_back(Performance(crit, "a1"));
+  perf_vect.push_back(createVectorPerfWithNoPerf("a0", crit));
+  perf_vect.push_back(createVectorPerfWithNoPerf("a1", crit));
   PerformanceTable perf_table = PerformanceTable(perf_vect);
 
   std::vector<Perf> p0 = perf_table["a0"];
   std::ostringstream os;
-  os << Performance(p0);
-  EXPECT_EQ(os.str(), "Performance(Perf( name : a0, crit : crit0, value : 0 "
-                      "), Perf( name : a0, crit : crit1, value : 0 ), )");
+  os << p0;
+  EXPECT_EQ(os.str(), "[Perf( name : a0, crit : crit0, value : 0 ),Perf( name "
+                      ": a0, crit : crit1, value : 0 )]");
 
   try {
     std::vector<Perf> p_z = perf_table["z"];
@@ -137,10 +138,10 @@ TEST(TestPerformanceTable, TestAccessOperator) {
 }
 
 TEST(TestPerformanceTable, TestGetPerf) {
-  std::vector<Performance> perf_vect;
+  std::vector<std::vector<Perf>> perf_vect;
   Criteria crit = Criteria(2, "crit");
-  perf_vect.push_back(Performance(crit, "a0"));
-  perf_vect.push_back(Performance(crit, "a1"));
+  perf_vect.push_back(createVectorPerfWithNoPerf("a0", crit));
+  perf_vect.push_back(createVectorPerfWithNoPerf("a1", crit));
   PerformanceTable perf_table = PerformanceTable(perf_vect);
 
   Perf p = perf_table.getPerf("a1", "crit0");
@@ -169,10 +170,10 @@ TEST(TestPerformanceTable, TestGetPerf) {
 }
 
 TEST(TestPerformanceTable, TestChangeMode) {
-  std::vector<Performance> perf_vect;
+  std::vector<std::vector<Perf>> perf_vect;
   Criteria crit = Criteria(2, "crit");
-  perf_vect.push_back(Performance(crit, "a0"));
-  perf_vect.push_back(Performance(crit, "a1"));
+  perf_vect.push_back(createVectorPerfWithNoPerf("a0", crit));
+  perf_vect.push_back(createVectorPerfWithNoPerf("a1", crit));
   PerformanceTable perf_table = PerformanceTable(perf_vect);
 
   perf_table.changeMode("crit");
@@ -206,12 +207,12 @@ TEST(TestPerformanceTable, TestChangeMode) {
 }
 
 TEST(TestPerformanceTable, TestSort) {
-  std::vector<Performance> perf_vect;
+  std::vector<std::vector<Perf>> perf_vect;
   Criteria crit = Criteria(2, "crit");
   std::vector<float> given_perf0 = {0.8, 0.4};
   std::vector<float> given_perf1 = {0.2, 0.6};
-  perf_vect.push_back(Performance(crit, given_perf0, "a0"));
-  perf_vect.push_back(Performance(crit, given_perf1, "a1"));
+  perf_vect.push_back(createVectorPerf("a0", crit, given_perf0));
+  perf_vect.push_back(createVectorPerf("a1", crit, given_perf1));
   PerformanceTable perf_table = PerformanceTable(perf_vect);
 
   EXPECT_EQ(perf_table.isSorted(), false);
@@ -219,12 +220,11 @@ TEST(TestPerformanceTable, TestSort) {
   perf_table.sort("alt");
   std::ostringstream os;
   os << perf_table;
-  EXPECT_EQ(
-      os.str(),
-      "PerformanceTable[ Performance: Perf( name : a0, crit : crit1, value "
-      ": 0.4 ) Perf( name : a0, crit : crit0, value : 0.8 ) | "
-      "Performance: Perf( name : a1, crit : crit0, value : 0.2 ) Perf( "
-      "name : a1, crit : crit1, value : 0.6 ) | ]");
+  EXPECT_EQ(os.str(),
+            "PerformanceTable[ Performance: Perf( name : a0, crit : crit1, "
+            "value : 0.4 ) Perf( name : a0, crit : crit0, value : 0.8 ) | "
+            "Performance: Perf( name : a1, crit : crit0, value : 0.2 ) Perf( "
+            "name : a1, crit : crit1, value : 0.6 ) | ]");
   EXPECT_EQ(perf_table.getMode(), "alt");
   EXPECT_EQ(perf_table.isSorted(), true);
 
@@ -232,27 +232,26 @@ TEST(TestPerformanceTable, TestSort) {
   perf_table.sort("crit");
   std::ostringstream os2;
   os2 << perf_table;
-  EXPECT_EQ(
-      os2.str(),
-      "PerformanceTable[ Performance: Perf( name : a1, crit : crit0, value "
-      ": 0.2 ) Perf( name : a0, crit : crit0, value : 0.8 ) | "
-      "Performance: Perf( name : a0, crit : crit1, value : 0.4 ) Perf( "
-      "name : a1, crit : crit1, value : 0.6 ) | ]");
+  EXPECT_EQ(os2.str(),
+            "PerformanceTable[ Performance: Perf( name : a1, crit : crit0, "
+            "value : 0.2 ) Perf( name : a0, crit : crit0, value : 0.8 ) | "
+            "Performance: Perf( name : a0, crit : crit1, value : 0.4 ) Perf( "
+            "name : a1, crit : crit1, value : 0.6 ) | ]");
   EXPECT_EQ(perf_table.getMode(), "crit");
   EXPECT_EQ(perf_table.isSorted(), true);
 }
 
 TEST(TestPerformanceTable, TestGetAltBetween) {
-  std::vector<Performance> perf_vect;
+  std::vector<std::vector<Perf>> perf_vect;
   Criteria crit = Criteria(2, "crit");
   std::vector<float> given_perf0 = {0.2, 0};
   std::vector<float> given_perf1 = {0.8, 1};
   std::vector<float> given_perf2 = {0.4, 0.4};
   std::vector<float> given_perf3 = {0.6, 0.6};
-  perf_vect.push_back(Performance(crit, given_perf0, "a0"));
-  perf_vect.push_back(Performance(crit, given_perf1, "a1"));
-  perf_vect.push_back(Performance(crit, given_perf2, "test2"));
-  perf_vect.push_back(Performance(crit, given_perf3, "test3"));
+  perf_vect.push_back(createVectorPerf("a0", crit, given_perf0));
+  perf_vect.push_back(createVectorPerf("a1", crit, given_perf1));
+  perf_vect.push_back(createVectorPerf("test2", crit, given_perf2));
+  perf_vect.push_back(createVectorPerf("test3", crit, given_perf3));
   PerformanceTable perf_table = PerformanceTable(perf_vect);
 
   try {
@@ -302,12 +301,12 @@ TEST(TestPerformanceTable, TestGetAltBetween) {
 }
 
 TEST(TestPerformanceTable, TestGetBestPerfByCrit) {
-  std::vector<Performance> perf_vect;
+  std::vector<std::vector<Perf>> perf_vect;
   Criteria crit = Criteria(2, "crit");
   std::vector<float> given_perf0 = {0.2, 1};
   std::vector<float> given_perf1 = {0.8, 0};
-  perf_vect.push_back(Performance(crit, given_perf0, "a0"));
-  perf_vect.push_back(Performance(crit, given_perf1, "a1"));
+  perf_vect.push_back(createVectorPerf("a0", crit, given_perf0));
+  perf_vect.push_back(createVectorPerf("a1", crit, given_perf1));
   PerformanceTable perf_table = PerformanceTable(perf_vect);
   std::ostringstream os;
   os << perf_table.getBestPerfByCrit(crit);
@@ -322,12 +321,12 @@ TEST(TestPerformanceTable, TestGetBestPerfByCrit) {
 }
 
 TEST(TestPerformanceTable, TestGetWorstPerfByCrit) {
-  std::vector<Performance> perf_vect;
+  std::vector<std::vector<Perf>> perf_vect;
   Criteria crit = Criteria(2, "crit");
   std::vector<float> given_perf0 = {0.2, 1};
   std::vector<float> given_perf1 = {0.8, 0};
-  perf_vect.push_back(Performance(crit, given_perf0, "a0"));
-  perf_vect.push_back(Performance(crit, given_perf1, "a1"));
+  perf_vect.push_back(createVectorPerf("a0", crit, given_perf0));
+  perf_vect.push_back(createVectorPerf("a1", crit, given_perf1));
   PerformanceTable perf_table = PerformanceTable(perf_vect);
   std::ostringstream os;
   os << perf_table.getWorstPerfByCrit(crit);
@@ -342,12 +341,12 @@ TEST(TestPerformanceTable, TestGetWorstPerfByCrit) {
 }
 
 TEST(TestPerformanceTable, TestisAltInTable) {
-  std::vector<Performance> perf_vect;
+  std::vector<std::vector<Perf>> perf_vect;
   Criteria crit = Criteria(2, "crit");
   std::vector<float> given_perf0 = {0.8, 0.4};
   std::vector<float> given_perf1 = {0.2, 0.6};
-  perf_vect.push_back(Performance(crit, given_perf0, "a0"));
-  perf_vect.push_back(Performance(crit, given_perf1, "a1"));
+  perf_vect.push_back(createVectorPerf("a0", crit, given_perf0));
+  perf_vect.push_back(createVectorPerf("a1", crit, given_perf1));
   PerformanceTable perf_table = PerformanceTable(perf_vect);
 
   EXPECT_TRUE(perf_table.isAltInTable("a0"));
@@ -366,3 +365,6 @@ TEST(TestPerformanceTable, TestNumbers) {
   EXPECT_EQ(perf_table.getNumberAlt(), 2);
   EXPECT_EQ(perf_table.getNumberCrit(), 2);
 }
+
+}
+

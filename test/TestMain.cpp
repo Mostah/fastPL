@@ -1,6 +1,8 @@
 #include "TestUtils.cpp"
 #include "learning/TestLinearSolver.cpp"
 #include "learning/TestWeightUpdater.cpp"
+#include "learning/TestInitializeProfile.cpp"
+
 #include "types/TestAlternativesPerformance.cpp"
 #include "types/TestCategories.cpp"
 #include "types/TestCategory.cpp"
@@ -9,7 +11,6 @@
 #include "types/TestDataGenerator.cpp"
 #include "types/TestMRSortModel.cpp"
 #include "types/TestPerf.cpp"
-#include "types/TestPerformance.cpp"
 #include "types/TestPerformanceTable.cpp"
 #include "types/TestProfiles.cpp"
 #include "gtest/gtest.h"
