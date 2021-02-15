@@ -8,7 +8,6 @@
 #include "types/TestDataGenerator.cpp"
 #include "types/TestMRSortModel.cpp"
 #include "types/TestPerf.cpp"
-#include "types/TestPerformance.cpp"
 #include "types/TestPerformanceTable.cpp"
 #include "types/TestProfiles.cpp"
 #include "gtest/gtest.h"

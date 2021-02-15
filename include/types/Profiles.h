@@ -3,7 +3,7 @@
 
 #include "Category.h"
 #include "Criteria.h"
-#include "Performance.h"
+#include "Perf.h"
 #include "PerformanceTable.h"
 #include <iostream>
 #include <ostream>
@@ -22,7 +22,7 @@ public:
    * @param mode refers the mode of the Profiles
    *
    */
-  Profiles(std::vector<Performance> &perf_vect, std::string mode);
+  Profiles(std::vector<std::vector<Perf>> &perf_vect, std::string mode);
 
   /**
    * Profiles constructor without perf values but set of

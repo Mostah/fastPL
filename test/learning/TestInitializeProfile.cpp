@@ -3,7 +3,6 @@
 #include "../../include/types/MRSortModel.h"
 #include "../../include/types/Perf.h"
 #include "../../include/types/Profiles.h"
-#include "../../include/utils.h"
 #include "spdlog/spdlog.h"
 #include "gtest/gtest.h"
 #include <sstream>
@@ -86,11 +85,11 @@ TEST(TestProfileInitializer, TestWeightedProbability) {
   Config conf = getTestConf();
   Criteria crit = Criteria(1, "crit");
   crit.generateRandomCriteriaWeights(0);
-  std::vector<Performance> perf_vect;
+  std::vector<std::vector<Perf>> perf_vect;
   for (int i = 0; i < 4; i++) {
     std::vector<float> given_perf = {static_cast<float>(0.2 * (i + 1))};
     perf_vect.push_back(
-        Performance(crit, given_perf, "alt" + std::to_string(i)));
+        createVectorPerf("alt" + std::to_string(i), crit, given_perf));
   }
 
   PerformanceTable perf_table = PerformanceTable(perf_vect);
@@ -120,11 +119,11 @@ TEST(TestProfileInitializer, TestInitializeProfilePerformance) {
   Config conf = getTestConf();
   Criteria crit = Criteria(1, "crit");
   crit.generateRandomCriteriaWeights(0);
-  std::vector<Performance> perf_vect;
+  std::vector<std::vector<Perf>> perf_vect;
   for (int i = 0; i < 4; i++) {
     std::vector<float> given_perf = {static_cast<float>(0.2 * (i + 1))};
     perf_vect.push_back(
-        Performance(crit, given_perf, "alt" + std::to_string(i)));
+        createVectorPerf("alt" + std::to_string(i), crit, given_perf));
   }
 
   PerformanceTable perf_table = PerformanceTable(perf_vect);
@@ -161,7 +160,7 @@ TEST(TestProfileInitializer, TestInitializeProfiles) {
           {"alt6", categories[1]}, {"alt7", categories[0]},
           {"alt8", categories[0]}, {"alt9", categories[0]}};
 
-  std::vector<Performance> perf_vect;
+  std::vector<std::vector<Perf>> perf_vect;
   for (int i = 0; i < nbAlt; i++) {
     std::vector<Perf> vp;
     for (int c = 0; c < 4; c++) {

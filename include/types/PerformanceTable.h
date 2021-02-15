@@ -2,7 +2,7 @@
 #define PERFORMANCETABLE_H
 
 #include "Criteria.h"
-#include "Performance.h"
+#include "Perf.h"
 #include <ctime>
 #include <iostream>
 #include <vector>
@@ -15,7 +15,7 @@ public:
    *
    * @param perf_vect Vector of performance
    */
-  PerformanceTable(std::vector<Performance> &perf_vect);
+  PerformanceTable(std::vector<std::vector<Perf>> &perf_vect);
 
   /**
    * PerformanceTable constructor without perf values but set of criteria to

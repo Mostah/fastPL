@@ -1,4 +1,5 @@
 #include "../../include/types/PerformanceTable.h"
+#include "../../include/types/Perf.h"
 #include "../../include/utils.h"
 #include <algorithm>
 #include <ctime>
@@ -12,34 +13,39 @@
 #include <chrono>
 #include <thread>
 
-PerformanceTable::PerformanceTable(std::vector<Performance> &perf_vect) {
+PerformanceTable::PerformanceTable(std::vector<std::vector<Perf>> &perf_vect) {
   if (perf_vect.size() == 0) {
     throw std::invalid_argument("The vector must contain performances.");
   }
   std::vector<std::string> perf_id_vect;
-  std::vector<std::string> crit_vect = perf_vect[0].getCriterionIds();
+  std::vector<std::string> crit_vect = getCriterionIds(perf_vect[0]);
 
-  for (Performance p : perf_vect) {
+  for (std::vector<Perf> p : perf_vect) {
     // ensure there is no performance with dupplicated name
-    if (std::find(perf_id_vect.begin(), perf_id_vect.end(), p.getId()) !=
+
+    if (std::find(perf_id_vect.begin(), perf_id_vect.end(), p[0].getName()) !=
         perf_id_vect.end()) {
       throw std::invalid_argument("Each performance must have different ids.");
     }
-    perf_id_vect.push_back(p.getId());
+    perf_id_vect.push_back(p[0].getName());
 
     // ensure all the performance are based on the same set of criterion
-    if (p.getCriterionIds() != crit_vect) {
+    if (getCriterionIds(p) != crit_vect) {
       throw std::invalid_argument("Each performance must be based on the same "
                                   "set of criterion, in the same order.");
     }
-    pt_.push_back(Performance(p).getPerf());
+    pt_.push_back(p);
   }
 }
 
 PerformanceTable::PerformanceTable(int nb_of_perfs, Criteria &crits,
                                    std::string prefix) {
   for (int i = 0; i < nb_of_perfs; i++) {
-    pt_.push_back(Performance(crits, prefix + std::to_string(i)).getPerf());
+    std::vector<Perf> alt;
+    for (Criterion criterion : crits.getCriterionVect()) {
+      alt.push_back(Perf(prefix + std::to_string(i), criterion.getId(), 0));
+    }
+    pt_.push_back(alt);
   }
 }
 

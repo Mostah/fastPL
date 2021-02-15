@@ -204,16 +204,16 @@ void ProfileInitializer::initializeProfiles(MRSortModel &model) {
   int nbIterations = 0;
   bool ordered = 0;
   while (!ordered) {
-    std::vector<Performance> perf_vec;
-    Performance firstAltPerf = altPerformance_.getPerformanceTable()[0];
-    std::vector<std::string> criteriaIds = firstAltPerf.getCriterionIds();
+    std::vector<std::vector<Perf>> perf_vec;
+    std::vector<Perf> firstAltPerf = altPerformance_.getPerformanceTable()[0];
+    std::vector<std::string> criteriaIds = getCriterionIds(firstAltPerf);
     std::vector<float> catFreq = this->categoryFrequency();
     // CatFreq has a problem
     for (std::string criterion : criteriaIds) {
       // OPTIM : POSSIBILITY parallelization asynchrone
       std::vector<Perf> p = this->initializeProfilePerformance(
           criterion, model.categories, catFreq);
-      perf_vec.push_back(Performance(p));
+      perf_vec.push_back(p);
     }
     try {
       Profiles p = Profiles(perf_vec, "crit");
