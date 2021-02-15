@@ -2,20 +2,23 @@
 #define UTILS_H
 
 #include "../extsrc/pugixml/src/pugixml.hpp"
+#include "types/Category.h"
 #include <iostream>
+#include <random>
 #include <vector>
-
-#include <fstream>
-#include <string>
-#include <sys/stat.h>
-#include <unistd.h>
 
 #include <algorithm>
 #include <chrono>
+#include <fstream>
+#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string>
+#include <sys/stat.h>
 #include <thread>
 #include <time.h>
+#include <unistd.h>
+#include <unordered_map>
 #include <vector>
 
 /**
@@ -84,8 +87,9 @@ inline bool fileExists(const std::string &name) {
  */
 inline int getRandomUniformInt(unsigned long int seed = 0, int min = 0,
                                int max = 100) {
-  srand(seed);
-  return min + rand() % (max - min);
+  std::mt19937 gen(seed);
+  std::uniform_int_distribution<> dis(min, max);
+  return dis(gen);
 }
 
 /**
@@ -99,8 +103,10 @@ inline int getRandomUniformInt(unsigned long int seed = 0, int min = 0,
  */
 inline float getRandomUniformFloat(unsigned long int seed = 0, float min = 0,
                                    float max = 1) {
-  srand(seed);
-  return min + (((float)rand()) / (float)RAND_MAX) * (max - min);
+
+  std::mt19937 gen(seed);
+  std::uniform_real_distribution<> dis(min, max);
+  return dis(gen);
 }
 
 inline std::vector<float>
@@ -111,6 +117,21 @@ randomCategoriesLimits(int nbCategories, unsigned long int seed = time(NULL)) {
   }
   sort(catLimits.begin(), catLimits.end());
   return catLimits;
+}
+/**
+ * Overloading << operator for std::unordered_map
+ *
+ * @param out ostream
+ * @param std::unordered_map  object
+ *
+ */
+template <typename K, typename V>
+std::ostream &operator<<(std::ostream &out, std::unordered_map<K, V> const &m) {
+  for (auto const &pair : m) {
+    out << "{, (" << pair.first << ": " << pair.second << "),";
+  }
+  out << "}";
+  return out;
 }
 
 #endif

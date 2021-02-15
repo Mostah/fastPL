@@ -1,4 +1,5 @@
 #include "TestUtils.cpp"
+#include "learning/TestInitializeProfile.cpp"
 #include "types/TestAlternativesPerformance.cpp"
 #include "types/TestCategories.cpp"
 #include "types/TestCategory.cpp"

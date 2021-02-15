@@ -219,12 +219,11 @@ TEST(TestPerformanceTable, TestSort) {
   perf_table.sort("alt");
   std::ostringstream os;
   os << perf_table;
-  EXPECT_EQ(
-      os.str(),
-      "PerformanceTable[ Performance: Perf( name : a0, crit : crit1, value "
-      ": 0.4 ) Perf( name : a0, crit : crit0, value : 0.8 ) | "
-      "Performance: Perf( name : a1, crit : crit0, value : 0.2 ) Perf( "
-      "name : a1, crit : crit1, value : 0.6 ) | ]");
+  EXPECT_EQ(os.str(),
+            "PerformanceTable[ Performance: Perf( name : a0, crit : crit1, "
+            "value : 0.4 ) Perf( name : a0, crit : crit0, value : 0.8 ) | "
+            "Performance: Perf( name : a1, crit : crit0, value : 0.2 ) Perf( "
+            "name : a1, crit : crit1, value : 0.6 ) | ]");
   EXPECT_EQ(perf_table.getMode(), "alt");
   EXPECT_EQ(perf_table.isSorted(), true);
 
@@ -232,12 +231,11 @@ TEST(TestPerformanceTable, TestSort) {
   perf_table.sort("crit");
   std::ostringstream os2;
   os2 << perf_table;
-  EXPECT_EQ(
-      os2.str(),
-      "PerformanceTable[ Performance: Perf( name : a1, crit : crit0, value "
-      ": 0.2 ) Perf( name : a0, crit : crit0, value : 0.8 ) | "
-      "Performance: Perf( name : a0, crit : crit1, value : 0.4 ) Perf( "
-      "name : a1, crit : crit1, value : 0.6 ) | ]");
+  EXPECT_EQ(os2.str(),
+            "PerformanceTable[ Performance: Perf( name : a1, crit : crit0, "
+            "value : 0.2 ) Perf( name : a0, crit : crit0, value : 0.8 ) | "
+            "Performance: Perf( name : a0, crit : crit1, value : 0.4 ) Perf( "
+            "name : a1, crit : crit1, value : 0.6 ) | ]");
   EXPECT_EQ(perf_table.getMode(), "crit");
   EXPECT_EQ(perf_table.isSorted(), true);
 }

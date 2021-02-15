@@ -28,10 +28,10 @@ Profiles getTestProfile() {
   std::vector<float> given_perf0 = {0.8, 1, 0.4};
   std::vector<float> given_perf1 = {0.8, 0.1, 0.3};
   std::vector<float> given_perf2 = {0.6, 0, 0.2};
-  perf_vect.push_back(Performance(crit, given_perf0, "cat0"));
+  perf_vect.push_back(Performance(crit, given_perf2, "cat0"));
   perf_vect.push_back(Performance(crit, given_perf1, "cat1"));
-  perf_vect.push_back(Performance(crit, given_perf2, "cat2"));
-  return Profiles(perf_vect);
+  perf_vect.push_back(Performance(crit, given_perf0, "cat2"));
+  return Profiles(perf_vect, "alt");
 }
 
 Categories getTestCategories() { return Categories(4); }
@@ -71,8 +71,8 @@ TEST(TestMRSortModel, TestCategoryAssignment) {
 
   std::unordered_map<std::string, Category> expected_assignment;
   expected_assignment["alt0"] = categories.getCategoryOfRank(3);
-  expected_assignment["alt1"] = categories.getCategoryOfRank(2);
-  expected_assignment["alt2"] = categories.getCategoryOfRank(1);
+  expected_assignment["alt1"] = categories.getCategoryOfRank(3);
+  expected_assignment["alt2"] = categories.getCategoryOfRank(3);
   expected_assignment["alt3"] = categories.getCategoryOfRank(0);
 
   AlternativesPerformance ap = mrsort.categoryAssignment(pt_);
