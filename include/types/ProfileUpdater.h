@@ -28,8 +28,12 @@ public:
 
   std::unordered_map<float, float>
   computeAboveDesirability(MRSortModel &model, std::string critId, Perf &b,
-                           Perf &b_above, Category &cat_below,
-                           Category &cat_above,
+                           Perf &b_above, Category &cat, Category &cat_above,
+                           std::unordered_map<std::string, float> &ct_prof);
+
+  std::unordered_map<float, float>
+  computeBelowDesirability(MRSortModel &model, std::string critId, Perf &b,
+                           Perf &b_below, Category &cat, Category &cat_above,
                            std::unordered_map<std::string, float> &ct_prof);
 
 private:

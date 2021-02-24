@@ -110,3 +110,23 @@ TEST(TestProfileUpdater, TestComputeAboveDesirability) {
       above_des_bis[altPerf_data.getPerf("alt1", "crit3").getValue() + epsilon],
       0.25);
 }
+
+TEST(TestProfileUpdater, TestComputeBelowDesirability) {
+  Categories categories = newTestCategories();
+  MRSortModel model = newTestModel(categories);
+  AlternativesPerformance altPerf_data = newTestAltPerf();
+  std::unordered_map<std::string, std::unordered_map<std::string, float>> ct =
+      model.computeConcordanceTable(altPerf_data);
+  std::unordered_map<std::string, float> ct_b0 = ct["b0"];
+  ProfileUpdater profUpdater = ProfileUpdater(altPerf_data);
+  Perf b0_c1 = Perf("b0", "crit1", 0.3);
+  Perf base = Perf("base", "crit1", 0);
+  Category cat = categories.getCategoryOfRank(0);
+  Category cat_above = categories.getCategoryOfRank(1);
+
+  std::unordered_map<float, float> below_des =
+      profUpdater.computeBelowDesirability(model, "crit1", b0_c1, base, cat,
+                                           cat_above, ct_b0);
+  EXPECT_FLOAT_EQ(below_des[altPerf_data.getPerf("alt2", "crit1").getValue()],
+                  2);
+}
