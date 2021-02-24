@@ -14,7 +14,7 @@ public:
    *
    * @param delta
    */
-  ProfileUpdater(AlternativesPerformance &altPerf, float delta = 0.00001);
+  ProfileUpdater(AlternativesPerformance &altPerf_data, float delta = 0.00001);
 
   /**
    * ProfileUpdater copy constructor
@@ -25,15 +25,15 @@ public:
 
   ~ProfileUpdater();
 
-  std::unordered_map<std::string, float>
-  computeAboveDesirability(MRSortModel model, std::string critId,
-                           Perf perf_prof, Perf perf_prof_above,
-                           Category cat_below, Category cat_above,
-                           std::unordered_map<std::string, float> ct_prof);
+  std::unordered_map<float, float>
+  computeAboveDesirability(MRSortModel &model, std::string critId, Perf &b,
+                           Perf &b_above, Category &cat_below,
+                           Category &cat_above,
+                           std::unordered_map<std::string, float> &ct_prof);
 
 private:
   float delta_;
-  AlternativesPerformance &altPerf_data_;
+  AlternativesPerformance &altPerf_data;
 };
 
 #endif
