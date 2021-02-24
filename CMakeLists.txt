@@ -23,6 +23,7 @@ set(Headers
     include/types/Categories.h
     include/types/DataGenerator.h
     include/types/AlternativesPerformance.h
+    include/types/ProfileUpdater.h
     include/app.h
     )
 
@@ -38,6 +39,7 @@ set(Sources
     src/types/Categories.cpp
     src/types/DataGenerator.cpp
     src/types/AlternativesPerformance.cpp
+    src/types/ProfileUpdater.cpp
     src/app.cpp
     )
 
