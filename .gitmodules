@@ -10,4 +10,4 @@
 	url = https://github.com/gabime/spdlog.git
 [submodule "extsrc/yaml-cpp"]
 	path = extsrc/yaml-cpp
-	url = git@github.com:jbeder/yaml-cpp.git
+	url = https://github.com/jbeder/yaml-cpp.git

@@ -2,20 +2,25 @@
 #define UTILS_H
 
 #include "../extsrc/pugixml/src/pugixml.hpp"
+#include "types/Category.h"
+#include "types/Criteria.h"
+#include "types/Perf.h"
 #include <iostream>
+#include <random>
 #include <vector>
-
-#include <fstream>
-#include <string>
-#include <sys/stat.h>
-#include <unistd.h>
 
 #include <algorithm>
 #include <chrono>
+#include <fstream>
+#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string>
+#include <sys/stat.h>
 #include <thread>
 #include <time.h>
+#include <unistd.h>
+#include <unordered_map>
 #include <vector>
 
 /**
@@ -84,8 +89,9 @@ inline bool fileExists(const std::string &name) {
  */
 inline int getRandomUniformInt(unsigned long int seed = 0, int min = 0,
                                int max = 100) {
-  srand(seed);
-  return min + rand() % (max - min);
+  std::mt19937 gen(seed);
+  std::uniform_int_distribution<> dis(min, max);
+  return dis(gen);
 }
 
 /**
@@ -99,8 +105,10 @@ inline int getRandomUniformInt(unsigned long int seed = 0, int min = 0,
  */
 inline float getRandomUniformFloat(unsigned long int seed = 0, float min = 0,
                                    float max = 1) {
-  srand(seed);
-  return min + (((float)rand()) / (float)RAND_MAX) * (max - min);
+
+  std::mt19937 gen(seed);
+  std::uniform_real_distribution<> dis(min, max);
+  return dis(gen);
 }
 
 inline std::vector<float>
@@ -111,6 +119,53 @@ randomCategoriesLimits(int nbCategories, unsigned long int seed = time(NULL)) {
   }
   sort(catLimits.begin(), catLimits.end());
   return catLimits;
+}
+/**
+ * Overloading << operator for std::unordered_map
+ *
+ * @param out ostream
+ * @param std::unordered_map  object
+ *
+ */
+template <typename K, typename V>
+std::ostream &operator<<(std::ostream &out, std::unordered_map<K, V> const &m) {
+  for (auto const &pair : m) {
+    out << "{, (" << pair.first << ": " << pair.second << "),";
+  }
+  out << "}";
+  return out;
+}
+
+inline std::vector<std::string> getCriterionIds(std::vector<Perf> vectPerf) {
+  std::vector<std::string> criterionIds;
+  for (auto p : vectPerf) {
+    criterionIds.push_back(p.getCrit());
+  }
+  return criterionIds;
+};
+
+inline std::vector<Perf> createVectorPerf(std::string id, Criteria &criteria,
+                                          std::vector<float> &given_perf) {
+  if (criteria.getCriterionVect().size() != given_perf.size()) {
+    throw std::invalid_argument(
+        "You must have the same number of performance value and criterias");
+  }
+  std::vector<Perf> vp;
+  std::vector<Criterion> criterion_vect = criteria.getCriterionVect();
+  for (int i = 0; i < criterion_vect.size(); i++) {
+    vp.push_back(Perf(id, criterion_vect[i].getId(), given_perf[i]));
+  }
+  return vp;
+}
+
+inline std::vector<Perf> createVectorPerfWithNoPerf(std::string id,
+                                                    Criteria &criteria) {
+  std::vector<Perf> vp;
+  std::vector<Criterion> criterion_vect = criteria.getCriterionVect();
+  for (int i = 0; i < criterion_vect.size(); i++) {
+    vp.push_back(Perf(id, criterion_vect[i].getId(), 0));
+  }
+  return vp;
 }
 
 #endif
