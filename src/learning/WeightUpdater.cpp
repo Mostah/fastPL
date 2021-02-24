@@ -38,7 +38,6 @@ void WeightUpdater::updateWeightsAndLambda(MRSortModel &model) {
 
 std::vector<std::vector<std::vector<bool>>>
 WeightUpdater::computeXMatrix(MRSortModel &model) {
-
   std::vector<std::vector<std::vector<bool>>> x_matrix;
   auto profs_pt = model.profiles.getPerformanceTable();
   auto alts_pt = ap.getPerformanceTable();
@@ -53,7 +52,7 @@ WeightUpdater::computeXMatrix(MRSortModel &model) {
           profs_pt[h][0].getName()) {
         for (int j = 0; j < alt.size(); j++) {
           // condition: aj >= bj_h-1
-          x_h_alt.push_back(alt[j].getValue() >= profs_pt[h + 1][j].getValue());
+          x_h_alt.push_back(alt[j].getValue() >= profs_pt[h - 1][j].getValue());
         }
       }
       x_h.push_back(x_h_alt);
@@ -79,8 +78,6 @@ WeightUpdater::computeYMatrix(MRSortModel &model) {
           profs_pt[h][0].getName()) {
         for (int j = 0; j < alt.size(); j++) {
           // condition: aj >= bj_h
-          std::cout << "h" << h << " j" << j << " : " << alt[j].getValue()
-                    << " " << profs_pt[h][j].getValue() << std::endl;
           y_h_alt.push_back(alt[j].getValue() >= profs_pt[h][j].getValue());
         }
       }
