@@ -44,16 +44,17 @@ MRSortModel::categoryAssignment(std::vector<Perf> &alt,
   Category cat_assignment;
   // For all alt, looping over all profiles in descending order
   for (int h = 0; h < profiles_pt.size(); h++) {
+    int prof_index = profiles_pt.size() - 1 - h;
     // compute the concordance value:
     float c = 0;
-    c = computeConcordance(profiles_pt[h], alt);
+    c = computeConcordance(profiles_pt[prof_index], alt);
     // if the value of the concordance is greater than the threshold, assign
     // the category h to the alt.
     // As we are going in descending order, the category assigned is the
     // highest possible, guaranteeing that we have c > lamdba for profile h
     // and c < lambda for profile h+1.
     if (c >= lambda) {
-      cat_assignment = categories.getCategoryOfRank(profiles_pt.size() - h);
+      cat_assignment = categories.getCategoryOfRank(prof_index + 1);
       assigned = true;
       break;
     }
