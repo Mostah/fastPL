@@ -61,9 +61,9 @@ void DataGenerator::datasetGenerator(int nb_criteria, int nb_alternative,
   for (int i = 0; i < nb_alternative; i++) {
     pugi::xml_node alternative_node = dataset_node.append_child("alternative");
 
-    std::vector<Perf> alternative;
-    alternative =
-        createVectorPerfWithNoPerf("alt" + std::to_string(i), criterias);
+    std::vector<float> rdmFloats = randomCategoriesLimits(nb_criteria, 0);
+    std::vector<Perf> alternative =
+        createVectorPerf("alt" + std::to_string(i), criterias, rdmFloats);
 
     // getting alternative id
     alternative_node.append_child(pugi::node_pcdata)
@@ -82,9 +82,10 @@ void DataGenerator::datasetGenerator(int nb_criteria, int nb_alternative,
     pugi::xml_node alternative_assignment =
         alternative_node.append_child("assignment");
 
+    // generating random categories
+    int randomCat = getRandomUniformInt(0, 0, nb_categories);
     alternative_assignment.append_child(pugi::node_pcdata)
-        .set_value(
-            "need to get category for it modify performance or other types");
+        .set_value(std::to_string(randomCat).c_str());
   }
 
   std::string modelpath;
@@ -343,6 +344,7 @@ AlternativesPerformance DataGenerator::loadDataset(std::string fileName) {
     throw std::invalid_argument("Cannot find any alternatives in xml file, "
                                 "most likely have a xml model file");
   }
+
   // creating type blocks to return Performance object
   std::unordered_map<std::string, Category> altAssignments;
   int nb_criteria = DataGenerator::getNumberOfCriteria(fileName);
@@ -350,26 +352,24 @@ AlternativesPerformance DataGenerator::loadDataset(std::string fileName) {
   std::vector<std::vector<Perf>> vecPerformances;
 
   pugi::xml_node node_dataset = doc.child("dataset");
-  for (pugi::xml_node_iterator it = node_dataset.begin();
-       it != node_dataset.end(); ++it) {
+  for (pugi::xml_node child_node : node_dataset.children()) {
     std::vector<float> altPerf;
+    std::string altId;
+    if (strcmp(child_node.name(), "alternative") == 0) {
 
-    if (strcmp(it->name(), "alternative") == 0) {
+      pugi::xml_node alt_node = child_node.child("alternative");
+      altId = child_node.child_value();
 
-      pugi::xml_node alternative_node = node_dataset.child(it->name());
-      std::string altId = it->child_value();
+      for (pugi::xml_node grand_child : child_node.children()) {
 
-      for (pugi::xml_node_iterator it = alternative_node.begin();
-           it != alternative_node.end(); ++it) {
+        if (strcmp(grand_child.name(), "assignment") != 0 &&
+            strcmp(grand_child.name(), "") != 0) {
 
-        if (strcmp(it->name(), "assignment") != 0 &&
-            strcmp(it->name(), "") != 0) {
-          float perf = atof(it->child_value());
+          float perf = atof(grand_child.child_value());
           altPerf.push_back(perf);
+        } else if (strcmp(grand_child.name(), "assignment") == 0) {
 
-        } else if (strcmp(it->name(), "assignment") == 0) {
-
-          float rank = atof(it->child_value());
+          float rank = atof(grand_child.child_value());
           altAssignments.insert(
               {altId, Category("cat" + std::to_string(rank), rank)});
         }
@@ -478,7 +478,7 @@ pugi::xml_document DataGenerator::openXmlFile(std::string fileName) {
   pugi::xml_document doc;
   std::string path = conf.data_dir + fileName;
   if (!doc.load_file(path.c_str())) {
-    std::cout << "path : " << path << std::endl;
+    // std::cout << "path : " << path << std::endl;
     throw std::invalid_argument("Cannot open xml file, please check path");
   }
 
@@ -611,13 +611,11 @@ std::vector<Perf> DataGenerator::getAlternativePerformance(std::string fileName,
         break;
       }
     }
-    std::cout << alt_perf;
     if (alt_perf.empty()) {
       throw std::invalid_argument("Cannot find performance associated to the "
                                   "alternative identified by "
                                   "alt_id in xml file.");
     }
-    std::cout << criteria.getCriterionVect().size() << "  " << alt_perf.size();
     return createVectorPerf(alt_id, criteria, alt_perf);
   }
 }

@@ -10,6 +10,7 @@ add_subdirectory(extsrc/yaml-cpp)
 
 add_subdirectory(doc) # add doxygen doc generator
 
+
 set(Headers 
     include/learning/ProfileInitializer.h
     include/types/MRSortModel.h

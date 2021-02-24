@@ -1,7 +1,10 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+//#include "../extsrc/matplotlib-cpp/matplotlibcpp.h"
 #include "../extsrc/pugixml/src/pugixml.hpp"
+#include "types/AlternativesPerformance.h"
+
 #include "types/Category.h"
 #include "types/Criteria.h"
 #include "types/Perf.h"
@@ -13,14 +16,18 @@
 #include <chrono>
 #include <fstream>
 #include <iostream>
+#include <numeric>
+#include <random>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
 #include <sys/stat.h>
 #include <thread>
 #include <time.h>
+#include <typeinfo>
 #include <unistd.h>
 #include <unordered_map>
+#include <utility>
 #include <vector>
 
 /**
@@ -131,7 +138,7 @@ inline std::vector<std::string> getCriterionIds(std::vector<Perf> vectPerf) {
 
 inline std::vector<Perf> createVectorPerf(std::string id, Criteria &criteria,
                                           std::vector<float> &given_perf) {
-  // std::cout << criteria << " -" << given_perf;
+
   if (criteria.getCriterionVect().size() != given_perf.size()) {
     throw std::invalid_argument(
         "You must have the same number of performance value and criterias");
@@ -154,4 +161,18 @@ inline std::vector<Perf> createVectorPerfWithNoPerf(std::string id,
   return vp;
 }
 
+/**
+ * Plots data distribution for a AlternativesPerformance object in order to see
+ * if populations are separable. This is useful for ProfileInitialization for
+ * example
+ *
+ * @param ap AlternativesPerformance object
+ *
+ */
+inline void plotData(AlternativesPerformance &ap) {
+
+  std::unordered_map<std::string, Category> map =
+      ap.getAlternativesAssignments();
+  // needs to be filled with matplotliblibrary linked
+}
 #endif

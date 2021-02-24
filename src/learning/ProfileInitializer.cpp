@@ -121,7 +121,7 @@ float ProfileInitializer::weightedProbability(
   // creating imaginary profile performance for criterion crit
   std::string critId = crit.getId();
   float imaginaryProfilePerformance = perfAlt.getValue() + delta;
-
+  // std::cout << critId << " " << imaginaryProfilePerformance << std::endl;
   // Creating 2 int that will count the number of correctly classified
   // alternatives for criterion crit for a profile performance of
   // imaginaryProfilePerformance.
@@ -135,15 +135,18 @@ float ProfileInitializer::weightedProbability(
     // if the performance of the candidate is higher than the profile
     // performance and that the alternatives category is catAbove then we have
     // correctly classified it
+    // std::cout << altPerformance_.getAlternativeAssignment(can.getName())
+    //           << " catabove : " << catAbove << std::endl;
     if (can.getValue() > imaginaryProfilePerformance and
-        altPerformance_.getAlternativeAssignment(can.getName()) == catAbove) {
+        altPerformance_.getAlternativeAssignment(can.getName())
+                .getCategoryRank() == catAbove.getCategoryRank()) {
       ++catAboveCounter;
       // if the performance of the candidate is lower than the profile
       // performance and that the alternatives category is catBelow then we
       //  have correctly classified it
     } else if (can.getValue() < imaginaryProfilePerformance and
-               altPerformance_.getAlternativeAssignment(can.getName()) ==
-                   catBelow) {
+               altPerformance_.getAlternativeAssignment(can.getName())
+                       .getCategoryRank() == catBelow.getCategoryRank()) {
       ++catBelowCounter;
     }
   }
@@ -176,7 +179,7 @@ std::vector<Perf> ProfileInitializer::initializeProfilePerformance(
     float totProba = std::accumulate(altProba.begin(), altProba.end(), 0);
     float randomNumber = getRandomUniformInt(rd(), 0, totProba);
     float tmp = 0;
-    int index;
+    int index = 0;
     for (int i = 0; i < candidates.size(); i++) {
       if (tmp < randomNumber) {
         tmp += altProba[i];
@@ -185,6 +188,7 @@ std::vector<Perf> ProfileInitializer::initializeProfilePerformance(
         break;
       }
     }
+
     categoryLimits.push_back(candidates[index].getValue());
   }
   std::reverse(categoryLimits.begin(), categoryLimits.end());
@@ -203,28 +207,31 @@ std::vector<Perf> ProfileInitializer::initializeProfilePerformance(
 void ProfileInitializer::initializeProfiles(MRSortModel &model) {
   int nbIterations = 0;
   bool ordered = 0;
+
   while (!ordered) {
+    ++nbIterations;
     std::vector<std::vector<Perf>> perf_vec;
     std::vector<Perf> firstAltPerf = altPerformance_.getPerformanceTable()[0];
     std::vector<std::string> criteriaIds = getCriterionIds(firstAltPerf);
     std::vector<float> catFreq = this->categoryFrequency();
-    // CatFreq has a problem
+    // CatFreq has a problem sometimes
     for (std::string criterion : criteriaIds) {
       // OPTIM : POSSIBILITY parallelization asynchrone
       std::vector<Perf> p = this->initializeProfilePerformance(
           criterion, model.categories, catFreq);
       perf_vec.push_back(p);
     }
+    PerformanceTable p = PerformanceTable(perf_vec);
+    p.display();
     try {
       Profiles p = Profiles(perf_vec, "crit");
       model.profiles = p;
       ordered = 1;
-      nbIterations++;
-      if (nbIterations > 100) {
-        throw std::domain_error("After 100 intialization can't get an valid "
-                                "(orderred) Profiles object ");
-      }
     } catch (std::invalid_argument const &err) {
+    }
+    if (nbIterations > 10000) {
+      throw std::domain_error("After 1000 intialization can't get an valid "
+                              "(orderred) Profiles object ");
     }
   }
 }

@@ -9,6 +9,19 @@
 #include <tuple>
 #include <utility>
 
+Config getTestConf() {
+  Config conf;
+  conf.data_dir = "../data/tests/";
+  try {
+    conf.logger =
+        spdlog::basic_logger_mt("test_logger", "../logs/test_logger.txt");
+  } catch (const spdlog::spdlog_ex &ex) {
+    conf.logger = spdlog::get("test_logger");
+  }
+  spdlog::set_level(spdlog::level::debug);
+  return conf;
+}
+
 TEST(TestDataGenerator, TestDatasetGenerator) {
   Config conf = getTestConf();
   DataGenerator data = DataGenerator(conf);
@@ -374,10 +387,10 @@ TEST(TestDataGenerator, TestGetAlternativePerformanceForDataset) {
       data.getAlternativePerformance("test_dataset.xml", "alt0");
   std::ostringstream os2;
   os2 << p;
-  EXPECT_EQ(
-      os2.str(),
-      "[Perf( name : alt0, crit : crit0, value : 0 ),Perf( name : alt0, crit : "
-      "crit1, value : 0 ),Perf( name : alt0, crit : crit2, value : 0 )]");
+  EXPECT_EQ(os2.str(),
+            "[Perf( name : alt0, crit : crit0, value : 0.592845 ),Perf( name : "
+            "alt0, crit : crit1, value : 0.592845 ),Perf( name : alt0, crit : "
+            "crit2, value : 0.592845 )]");
 }
 
 TEST(TestDataGenerator, TestGetAlternativePerformanceForModel) {
@@ -579,7 +592,7 @@ TEST(TestDataGenerator, TestImportedDataset) {
   // read
   Config conf = getTestConf();
   DataGenerator data = DataGenerator(conf);
-  std::string filename = "in1dataset.xml";
+  std::string filename = "test_dataset.xml";
   AlternativesPerformance ap = data.loadDataset(filename);
 }
 

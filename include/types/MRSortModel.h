@@ -29,9 +29,9 @@ public:
    * MRSortModel generator constructor. This constructor initializes the
    * profiles, lambda and criteria weights at random.
    *
-   * @param ap alternative performance object
-   * @param id optional name of the model
-   * @param mode give the mode of the profile performance table
+   * @param n_cat number of categories
+   * @param n_crit number of criteria
+   * @param id mrsort model's id
    */
   MRSortModel(int n_cat, int n_crit, std::string id = "model");
 

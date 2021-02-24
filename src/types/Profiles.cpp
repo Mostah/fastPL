@@ -11,25 +11,25 @@
 
 Profiles::Profiles(std::vector<std::vector<Perf>> &perf_vect, std::string mode)
     : PerformanceTable(perf_vect) {
-  if (mode != "alt" || model != "crit") {
+  if (mode != "alt" and mode != "crit") {
     throw std::invalid_argument("Invalid Profile mode given.");
   }
   mode_ = mode;
   if (!this->isProfileOrdered()) {
-    throw std::invalid_argument(
-        "The given performance vector cannot be used as a profiles performance "
-        "table. Each row must be ranked such that for each row i we have on "
-        "each criterion j : v_i - 1_j > v_i_j > v_i + 1_j");
+    throw std::invalid_argument("Profile in its given profile is not ordered");
   }
 }
 
 Profiles::Profiles(int nb_of_prof, Criteria &crits, std::string mode,
                    std::string prefix)
     : PerformanceTable(nb_of_prof, crits, prefix) {
-  this->generateRandomPerfValues();
-  if (mode != "alt" || model != "crit") {
+  if (mode != "alt" and mode != "crit") {
     throw std::invalid_argument("Invalid Profile mode given.");
   }
+  if (mode == "crit") {
+    this->changeMode("crit");
+  }
+  this->generateRandomPerfValues();
   mode_ = mode;
   sorted_ = 1;
 }
@@ -59,18 +59,33 @@ void Profiles::generateRandomPerfValues(unsigned long int seed, int lower_bound,
         "Lower bound must be lower than the upper bound.");
   }
 
-  int nbProfiles = pt_.size();
-
-  std::random_device rd;
-  for (int j = 0; j < pt_[0].size(); j++) {
-    std::vector<float> r_vect;
-    for (int i = 0; i < pt_.size(); i++) {
-      r_vect.push_back(getRandomUniformFloat(rd(), lower_bound, upper_bound));
+  if (mode_ == "alt") {
+    int nbProfiles = pt_.size();
+    std::random_device rd;
+    for (int j = 0; j < pt_[0].size(); j++) {
+      std::vector<float> r_vect;
+      for (int i = 0; i < nbProfiles; i++) {
+        r_vect.push_back(getRandomUniformFloat(rd(), lower_bound, upper_bound));
+      }
+      std::sort(r_vect.begin(), r_vect.end());
+      std::reverse(r_vect.begin(), r_vect.end());
+      for (int k = 0; k < nbProfiles; k++) {
+        pt_[nbProfiles - 1 - k][j].setValue(r_vect[k]);
+      }
     }
-    std::sort(r_vect.begin(), r_vect.end());
-    std::reverse(r_vect.begin(), r_vect.end());
-    for (int i = 0; i < nbProfiles; i++) {
-      pt_[nbProfiles - 1 - i][j].setValue(r_vect[i]);
+  } else {
+    int nbCrit = pt_.size();
+    int nbCat = pt_[0].size();
+    std::random_device rd;
+    for (int j = 0; j < nbCrit; j++) {
+      std::vector<float> r_vect;
+      for (int i = 0; i < nbCat; i++) {
+        r_vect.push_back(getRandomUniformFloat(rd(), lower_bound, upper_bound));
+      }
+      std::sort(r_vect.begin(), r_vect.end());
+      for (int k = 0; k < nbCat; k++) {
+        pt_[j][k].setValue(r_vect[k]);
+      }
     }
   }
 }
@@ -79,7 +94,7 @@ bool Profiles::isProfileOrdered() {
   if (mode_ == "crit") {
     for (int crit = 0; crit < pt_.size(); crit++) {
       for (int catLimit = 0; catLimit < pt_[crit].size() - 1; catLimit++) {
-        if (pt_[crit][catLimit].getValue() >
+        if (pt_[crit][catLimit].getValue() >=
             pt_[crit][catLimit + 1].getValue()) {
           return false;
         }
@@ -89,7 +104,8 @@ bool Profiles::isProfileOrdered() {
   } else {
     for (int profile = 0; profile < pt_.size() - 1; profile++) {
       for (int crit = 0; crit < pt_[profile].size(); crit++) {
-        if (pt_[profile][crit].getValue() > pt_[profile + 1][crit].getValue()) {
+        if (pt_[profile][crit].getValue() >=
+            pt_[profile + 1][crit].getValue()) {
           return false;
         }
       }

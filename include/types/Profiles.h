@@ -14,17 +14,20 @@ class Profiles : public PerformanceTable {
 public:
   /**
    * Profiles standard constructor (PerformanceTable surcharged).
+   * Default mode is "crit"
    *
    * @param perf_vect Vector of performance that models category limits or a
    * PerformanceTable Profiles in "alt"
    * @param mode refers the mode of the Profiles
    *
    */
-  Profiles(std::vector<std::vector<Perf>> &perf_vect, std::string mode);
+  Profiles(std::vector<std::vector<Perf>> &perf_vect,
+           std::string mode = "crit");
 
   /**
    * Profiles constructor without perf values but set of
    * criteria to evaluate performance over (PerformanceTable surcharged)
+   * Default mode is "crit".
    *
    * @param nb_of_prof Number of profile
    * @param crits Criteria to evaluate performance over
@@ -32,7 +35,7 @@ public:
    * @param mode refers the mode of the Profiles
    *
    * */
-  Profiles(int nb_of_prof, Criteria &crits, std::string mode,
+  Profiles(int nb_of_prof, Criteria &crits, std::string mode = "crit",
            std::string prefix = "prof");
 
   /**
@@ -54,17 +57,26 @@ public:
   friend std::ostream &operator<<(std::ostream &out, const Profiles &profs);
 
   /**
-   * isProfileOrdered check if the performance table is ordered to be use as a
-   * profile type: each row must be ranked such that for each row i is sorted in
-   * ascending order.
-   * Profiles are therefore ordered in a descending manner
+   * isProfileOrdered checks if the profile performance table is ordered.
+   * - "alt" mode : each row of the performance table denotes a profile.
+   * The first row is profile b0 refering to category of rank 0.
+   * Hence, each criterion must be ordered in descending order.
+   * ie : for all i,j : b_i+1_j > b_i_j
+   *
+   * - "crit" mode : each row of the performance table denotes a criteria
+   * modeled by its category limits.
+   * Hence, each criterion is independant to one another but for one criterion
+   * each category limit (ie column) must be ordered in descending order.
+   * The first column is cat0 refering to category of rank 0.
+   * ie : for all criterion (row) and i : cat_limit_i+1 > cat_limit_i
    *
    * @return isOrdered
    */
   bool isProfileOrdered();
 
   /**
-   * generateRandomPerfValues set all the Perf values to random
+   * generateRandomPerfValues set all the Perf values to random according to
+   * profile mode
    *
    * @param seed (optional) Random seed to use in the random generator
    * @param lower_bound (optional) lower bound of the generated Perf values

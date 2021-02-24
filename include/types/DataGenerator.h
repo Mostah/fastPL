@@ -19,7 +19,7 @@ public:
   DataGenerator(Config &config);
 
   /**
-   * Generate a random dataset and put it in a xml file
+   * Generate a random dataset and puts it in a xml file
    *
    * @param nb_criteria number of criteria
    * @param nb_alternative number of alternatives

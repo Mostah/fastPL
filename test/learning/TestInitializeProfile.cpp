@@ -1,5 +1,6 @@
 #include "../../include/app.h"
 #include "../../include/learning/ProfileInitializer.h"
+#include "../../include/types/DataGenerator.h"
 #include "../../include/types/MRSortModel.h"
 #include "../../include/types/Perf.h"
 #include "../../include/types/Profiles.h"
@@ -8,19 +9,6 @@
 #include <sstream>
 #include <utility>
 #include <vector>
-
-Config getTestConf() {
-  Config conf;
-  conf.data_dir = "../data/tests/";
-  try {
-    conf.logger =
-        spdlog::basic_logger_mt("test_logger", "../logs/test_logger.txt");
-  } catch (const spdlog::spdlog_ex &ex) {
-    conf.logger = spdlog::get("test_logger");
-  }
-  spdlog::set_level(spdlog::level::debug);
-  return conf;
-}
 
 TEST(TestProfileInitializer, TestComputeFrequency) {
   Config conf = getTestConf();
@@ -176,6 +164,25 @@ TEST(TestProfileInitializer, TestInitializeProfiles) {
   MRSortModel model = MRSortModel(3, 4);
   profInit.initializeProfiles(model);
   EXPECT_TRUE(model.profiles.isProfileOrdered());
+  // not working i dont know why but works for profiles in TestProfile
+  // model.profiles.changeMode("alt");
+  // model.profiles.display();
+  // EXPECT_TRUE(model.profiles.isProfileOrdered());
+}
+
+TEST(TestProfileInitializer, TestInitializeProfilesRealDataset) {
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
+  std::string filename = "in4dataset.xml";
+  AlternativesPerformance ap = data.loadDataset(filename);
+  int nbCat = data.getNumberOfCategories(filename);
+  int nbCrit = data.getNumberOfCriteria(filename);
+  MRSortModel model = MRSortModel(nbCat, nbCrit);
+  ProfileInitializer profInit = ProfileInitializer(conf, ap);
+  // profInit.initializeProfiles(model);
+  // std::cout << model.profiles;
+  // model.profiles.display();
+  // EXPECT_TRUE(model.profiles.isProfileOrdered());
   // To be uncommented when performance type no longer exist
   // model.profiles.changeMode("alt");
   // EXPECT_TRUE(model.profiles.isProfileOrdered());

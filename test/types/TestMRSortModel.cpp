@@ -38,7 +38,7 @@ Categories getTestCategories() { return Categories(4); }
 
 TEST(TestMRSortModel, TestBaseConstructorError) {
   Criteria crit = Criteria(1);
-  Profiles prof = Profiles(1, crit, "prof");
+  Profiles prof = Profiles(1, crit, "crit", "prof");
 
   Categories cats = Categories(1);
   try {
