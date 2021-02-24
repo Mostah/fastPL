@@ -23,15 +23,15 @@ Criteria getTestCriteria() {
 }
 
 Profiles getTestProfile() {
-  std::vector<Performance> perf_vect;
+  std::vector<std::vector<Perf>> perf_vect;
   Criteria crit = getTestCriteria();
   std::vector<float> given_perf0 = {0.8, 1, 0.4};
   std::vector<float> given_perf1 = {0.8, 0.1, 0.3};
   std::vector<float> given_perf2 = {0.6, 0, 0.2};
-  perf_vect.push_back(Performance(crit, given_perf0, "cat0"));
-  perf_vect.push_back(Performance(crit, given_perf1, "cat1"));
-  perf_vect.push_back(Performance(crit, given_perf2, "cat2"));
-  return Profiles(perf_vect);
+  perf_vect.push_back(createVectorPerf("cat0", crit, given_perf2));
+  perf_vect.push_back(createVectorPerf("cat1", crit, given_perf1));
+  perf_vect.push_back(createVectorPerf("cat2", crit, given_perf0));
+  return Profiles(perf_vect, "alt");
 }
 
 Categories getTestCategories() { return Categories(4); }
@@ -58,21 +58,21 @@ TEST(TestMRSortModel, TestCategoryAssignment) {
   Categories categories = getTestCategories();
   MRSortModel mrsort = MRSortModel(criteria, profile, categories, 0.6);
 
-  std::vector<Performance> perf_vect;
+  std::vector<std::vector<Perf>> perf_vect;
   std::vector<float> alt0 = {0.9, 0.6, 0.5};
   std::vector<float> alt1 = {0.9, 0.05, 0.35};
   std::vector<float> alt2 = {0.7, 1, 0.5};
   std::vector<float> alt3 = {0.5, 0, 0.6};
-  perf_vect.push_back(Performance(criteria, alt0, "alt0"));
-  perf_vect.push_back(Performance(criteria, alt1, "alt1"));
-  perf_vect.push_back(Performance(criteria, alt2, "alt2"));
-  perf_vect.push_back(Performance(criteria, alt3, "alt3"));
+  perf_vect.push_back(createVectorPerf("alt0", criteria, alt0));
+  perf_vect.push_back(createVectorPerf("alt1", criteria, alt1));
+  perf_vect.push_back(createVectorPerf("alt2", criteria, alt2));
+  perf_vect.push_back(createVectorPerf("alt3", criteria, alt3));
   PerformanceTable pt_ = PerformanceTable(perf_vect);
 
   std::unordered_map<std::string, Category> expected_assignment;
   expected_assignment["alt0"] = categories.getCategoryOfRank(3);
-  expected_assignment["alt1"] = categories.getCategoryOfRank(2);
-  expected_assignment["alt2"] = categories.getCategoryOfRank(1);
+  expected_assignment["alt1"] = categories.getCategoryOfRank(3);
+  expected_assignment["alt2"] = categories.getCategoryOfRank(3);
   expected_assignment["alt3"] = categories.getCategoryOfRank(0);
 
   AlternativesPerformance ap = mrsort.categoryAssignment(pt_);

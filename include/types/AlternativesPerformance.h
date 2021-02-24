@@ -9,7 +9,6 @@
 
 #include "Category.h"
 #include "Criteria.h"
-#include "Performance.h"
 #include "PerformanceTable.h"
 #include <iostream>
 #include <iterator>
@@ -45,7 +44,7 @@ public:
    * AlternativeAssignment map, otherwise we should use PerformanceTable instead
    */
   AlternativesPerformance(
-      std::vector<Performance> &perf_vect,
+      std::vector<std::vector<Perf>> &perf_vect,
       std::unordered_map<std::string, Category> &alt_assignment = default_map);
 
   /**

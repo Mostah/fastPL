@@ -16,7 +16,6 @@
 #include "../app.h"
 #include "AlternativesPerformance.h"
 #include "Criterion.h"
-#include "Performance.h"
 #include "PerformanceTable.h"
 #include <iostream>
 #include <tuple>
@@ -174,8 +173,8 @@ public:
    * @param fileName filename
    * @param alt_id Alternative id
    */
-  Performance getAlternativePerformance(std::string fileName,
-                                        std::string alt_id);
+  std::vector<Perf> getAlternativePerformance(std::string fileName,
+                                              std::string alt_id);
   /**
    * Get all of alternative ids if they exists
    *

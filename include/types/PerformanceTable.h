@@ -8,7 +8,7 @@
  */
 
 #include "Criteria.h"
-#include "Performance.h"
+#include "Perf.h"
 #include <ctime>
 #include <iostream>
 #include <vector>
@@ -42,7 +42,7 @@ public:
    *
    * @param perf_vect Vector of performance
    */
-  PerformanceTable(std::vector<Performance> &perf_vect);
+  PerformanceTable(std::vector<std::vector<Perf>> &perf_vect);
 
   /**
    * PerformanceTable constructor without perf values but set of criteria to
@@ -179,6 +179,14 @@ public:
    * @return true if found, false if nots
    */
   bool isAltInTable(std::string altName);
+
+  /**
+   * Display PerformanceTable in a nice manner. Please be advised that this
+   * method might be counter intuitive since elements do not necessarly have a
+   * correct order depending on the mode
+   *
+   */
+  void display();
 
 protected:
   std::vector<std::vector<Perf>> pt_;

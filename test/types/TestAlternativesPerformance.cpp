@@ -1,7 +1,8 @@
 #include "../../include/types/AlternativesPerformance.h"
 #include "../../include/types/Criteria.h"
-#include "../../include/types/Performance.h"
 #include "../../include/types/PerformanceTable.h"
+#include "../../include/utils.h"
+
 #include "gtest/gtest.h"
 #include <sstream>
 #include <utility>
@@ -17,7 +18,7 @@ TEST(TestAlternativesPerformance, TestConstructorBaseConstructor) {
       os.str(),
       "AlternativesPerformance( PerformanceTable[ Performance: Perf( name : "
       "a0, crit : crit0, value : 0 ) Perf( name : a0, crit : crit1, value : 0 "
-      ") | ], AlternativesAssignment{ a0->Category(id : , rank : -1) }");
+      ") | ], AlternativesAssignment{ {, (a0: Category(id : , rank : -1)),}");
   EXPECT_EQ(alt_perf.getMode(), "alt");
 
   std::unordered_map<std::string, Category> map =
@@ -26,11 +27,11 @@ TEST(TestAlternativesPerformance, TestConstructorBaseConstructor) {
       AlternativesPerformance(1, crit, "a", map);
   std::ostringstream os2;
   os2 << alt_perf2;
-  EXPECT_EQ(
-      os2.str(),
-      "AlternativesPerformance( PerformanceTable[ Performance: Perf( name : "
-      "a0, crit : crit0, value : 0 ) Perf( name : a0, crit : crit1, value : 0 "
-      ") | ], AlternativesAssignment{ a0->Category(id : cat0, rank : 0) }");
+  EXPECT_EQ(os2.str(),
+            "AlternativesPerformance( PerformanceTable[ Performance: Perf( "
+            "name : a0, crit : crit0, value : 0 ) Perf( name : a0, crit : "
+            "crit1, value : 0 ) | ], AlternativesAssignment{ {, (a0: "
+            "Category(id : cat0, rank : 0)),}");
   EXPECT_EQ(alt_perf2.getMode(), "alt");
 }
 
@@ -54,9 +55,9 @@ TEST(TestAlternativesPerformance, TestConstructorMapErrors) {
 }
 
 TEST(TestAlternativesPerformance, TestConstructorWithPerfVect) {
-  std::vector<Performance> perf_vect;
+  std::vector<std::vector<Perf>> perf_vect;
   Criteria crit = Criteria(2, "crit");
-  perf_vect.push_back(Performance(crit, "a0"));
+  perf_vect.push_back(createVectorPerfWithNoPerf("a0", crit));
   // perf_vect.push_back(Performance(crit, "a1"));
 
   AlternativesPerformance alt_perf = AlternativesPerformance(perf_vect);
@@ -66,7 +67,7 @@ TEST(TestAlternativesPerformance, TestConstructorWithPerfVect) {
       os.str(),
       "AlternativesPerformance( PerformanceTable[ Performance: Perf( name : "
       "a0, crit : crit0, value : 0 ) Perf( name : a0, crit : crit1, value : 0 "
-      ") | ], AlternativesAssignment{ a0->Category(id : , rank : -1) }");
+      ") | ], AlternativesAssignment{ {, (a0: Category(id : , rank : -1)),}");
   EXPECT_EQ(alt_perf.getMode(), "alt");
 
   Category cat0 = Category("cat0", 0);
@@ -76,18 +77,18 @@ TEST(TestAlternativesPerformance, TestConstructorWithPerfVect) {
   AlternativesPerformance alt_perf2 = AlternativesPerformance(perf_vect, map);
   std::ostringstream os2;
   os2 << alt_perf2;
-  EXPECT_EQ(
-      os2.str(),
-      "AlternativesPerformance( PerformanceTable[ Performance: Perf( name : "
-      "a0, crit : crit0, value : 0 ) Perf( name : a0, crit : crit1, value : 0 "
-      ") | ], AlternativesAssignment{ a0->Category(id : cat0, rank : 0) }");
+  EXPECT_EQ(os2.str(),
+            "AlternativesPerformance( PerformanceTable[ Performance: Perf( "
+            "name : a0, crit : crit0, value : 0 ) Perf( name : a0, crit : "
+            "crit1, value : 0 ) | ], AlternativesAssignment{ {, (a0: "
+            "Category(id : cat0, rank : 0)),}");
 }
 
 TEST(TestAlternativesPerformance, TestConstructorWithPerfVectMapErrors) {
-  std::vector<Performance> perf_vect;
+  std::vector<std::vector<Perf>> perf_vect;
   Criteria crit = Criteria(2, "crit");
-  perf_vect.push_back(Performance(crit, "a0"));
-  perf_vect.push_back(Performance(crit, "a1"));
+  perf_vect.push_back(createVectorPerfWithNoPerf("a0", crit));
+  perf_vect.push_back(createVectorPerfWithNoPerf("a1", crit));
   Category cat0 = Category("cat0", 0);
   Category cat1 = Category("cat1", 1);
 
@@ -106,9 +107,9 @@ TEST(TestAlternativesPerformance, TestConstructorWithPerfVectMapErrors) {
 }
 
 TEST(TestAlternativesPerformance, TestConstructorWithPerfTable) {
-  std::vector<Performance> perf_vect;
+  std::vector<std::vector<Perf>> perf_vect;
   Criteria crit = Criteria(2, "crit");
-  perf_vect.push_back(Performance(crit, "a0"));
+  perf_vect.push_back(createVectorPerfWithNoPerf("a0", crit));
   PerformanceTable perf_table = PerformanceTable(perf_vect);
 
   AlternativesPerformance alt_perf = AlternativesPerformance(perf_table);
@@ -119,7 +120,7 @@ TEST(TestAlternativesPerformance, TestConstructorWithPerfTable) {
       os.str(),
       "AlternativesPerformance( PerformanceTable[ Performance: Perf( name : "
       "a0, crit : crit0, value : 0 ) Perf( name : a0, crit : crit1, value : 0 "
-      ") | ], AlternativesAssignment{ a0->Category(id : , rank : -1) }");
+      ") | ], AlternativesAssignment{ {, (a0: Category(id : , rank : -1)),}");
   EXPECT_EQ(alt_perf.getMode(), "alt");
 
   Category cat0 = Category("cat0", 0);
@@ -132,15 +133,16 @@ TEST(TestAlternativesPerformance, TestConstructorWithPerfTable) {
       os2.str(),
       "AlternativesPerformance( PerformanceTable[ Performance: Perf( name : "
       "a0, crit : crit0, value : 0 ) Perf( name : a0, crit : crit1, value : 0 "
-      ") | ], AlternativesAssignment{ a0->Category(id : cat0, rank : 0) }");
+      ") | ], AlternativesAssignment{ {, (a0: Category(id : cat0, rank : "
+      "0)),}");
   EXPECT_EQ(alt_perf2.getMode(), "alt");
 }
 
 TEST(TestAlternativesPerformance, TestConstructorWithPerfTableMapErrors) {
-  std::vector<Performance> perf_vect;
+  std::vector<std::vector<Perf>> perf_vect;
   Criteria crit = Criteria(2, "crit");
-  perf_vect.push_back(Performance(crit, "a0"));
-  perf_vect.push_back(Performance(crit, "a1"));
+  perf_vect.push_back(createVectorPerfWithNoPerf("a0", crit));
+  perf_vect.push_back(createVectorPerfWithNoPerf("a1", crit));
   PerformanceTable perf_table = PerformanceTable(perf_vect);
 
   Category cat0 = Category("cat0", 0);
@@ -160,9 +162,9 @@ TEST(TestAlternativesPerformance, TestConstructorWithPerfTableMapErrors) {
 }
 
 TEST(TestAlternativesPerformance, TestCopyConstructor) {
-  std::vector<Performance> perf_vect;
+  std::vector<std::vector<Perf>> perf_vect;
   Criteria crit = Criteria(2, "crit");
-  perf_vect.push_back(Performance(crit, "a0"));
+  perf_vect.push_back(createVectorPerfWithNoPerf("a0", crit));
   PerformanceTable perf_table = PerformanceTable(perf_vect);
   AlternativesPerformance alt_perf = AlternativesPerformance(perf_table);
 
