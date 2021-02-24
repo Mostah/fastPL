@@ -7,3 +7,5 @@
 * @subpage update_profiles
 
 Learning algorithms that implement Sobrie's metaheuristic.
+
+<img src="../images/global_schema.png" width="1200"/>
