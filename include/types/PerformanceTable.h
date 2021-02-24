@@ -168,6 +168,7 @@ public:
    */
   int getNumberAlt();
 
+  /**
    * Display PerformanceTable in a nice manner. Please be advised that this
    * method might be counter intuitive since elements do not necessarly have a
    * correct order depending on the mode

@@ -339,6 +339,7 @@ int PerformanceTable::getNumberAlt() {
     return pt_[0].size();
   }
   return pt_.size();
+}
 
 void PerformanceTable::display() {
   int nbFictAlt = pt_.size();
@@ -394,5 +395,4 @@ void PerformanceTable::display() {
       std::cout << std::endl;
     }
   }
-
 }

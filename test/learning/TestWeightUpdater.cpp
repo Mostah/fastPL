@@ -5,7 +5,7 @@
 #include "../../include/types/Category.h"
 #include "../../include/types/Criteria.h"
 #include "../../include/types/MRSortModel.h"
-#include "../../include/types/Performance.h"
+#include "../../include/types/Perf.h"
 #include "gtest/gtest.h"
 #include <sstream>
 #include <utility>
@@ -24,14 +24,14 @@ Config getWeightTestConf() {
 }
 
 AlternativesPerformance getAPTest() {
-  std::vector<Performance> perf_vect;
+  std::vector<std::vector<Perf>> perf_vect;
   Criteria crits = Criteria(2, "crit");
   std::vector<float> vec0 = {0.8, 0.6}; // good candidate
   std::vector<float> vec1 = {1, 0.5};   // good candidate
   std::vector<float> vec2 = {0.2, 0.4}; // bad candidate
-  perf_vect.push_back(Performance(crits, vec0, "a0"));
-  perf_vect.push_back(Performance(crits, vec1, "a1"));
-  perf_vect.push_back(Performance(crits, vec2, "a2"));
+  perf_vect.push_back(createVectorPerf("a0", crits, vec0));
+  perf_vect.push_back(createVectorPerf("a1", crits, vec1));
+  perf_vect.push_back(createVectorPerf("a2", crits, vec2));
   Category cat0 = Category("cat0", 0); // bad category
   Category cat1 = Category("cat1", 1); // good category
 
@@ -51,12 +51,12 @@ MRSortModel getModelTest() {
 
   Criteria crits = Criteria(2, "crit");
 
-  std::vector<float> vec1 = {0.7, 0.5};
   std::vector<float> vec0 = {0.3, 0.4};
-  std::vector<Performance> perf_vect;
-  perf_vect.push_back(Performance(crits, vec1, "cat1"));
-  perf_vect.push_back(Performance(crits, vec0, "cat0"));
-  Profiles profs = Profiles(perf_vect);
+  std::vector<float> vec1 = {0.7, 0.5};
+  std::vector<std::vector<Perf>> perf_vect;
+  perf_vect.push_back(createVectorPerf("cat0", crits, vec0));
+  perf_vect.push_back(createVectorPerf("cat1", crits, vec1));
+  Profiles profs = Profiles(perf_vect, "alt");
 
   MRSortModel model = MRSortModel(crits, profs, cats, 0.6);
   return model;

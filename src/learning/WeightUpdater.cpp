@@ -43,10 +43,8 @@ WeightUpdater::computeXMatrix(MRSortModel &model) {
   auto profs_pt = model.profiles.getPerformanceTable();
   auto alts_pt = ap.getPerformanceTable();
   auto alts_assign = ap.getAlternativesAssignments();
-  // As the profiles are stored in descending order (h = 0 is the highest
-  // profile, which is not the case in the theorical formulation), going in
-  // reverse.
-  for (int h = profs_pt.size() - 2; h >= 0; h--) {
+
+  for (int h = 1; h < profs_pt.size(); h++) {
     std::vector<std::vector<bool>> x_h;
     for (auto alt : alts_pt) {
       std::vector<bool> x_h_alt;
@@ -55,7 +53,6 @@ WeightUpdater::computeXMatrix(MRSortModel &model) {
           profs_pt[h][0].getName()) {
         for (int j = 0; j < alt.size(); j++) {
           // condition: aj >= bj_h-1
-          // h+1 because going through the vector in reverse (descending order).
           x_h_alt.push_back(alt[j].getValue() >= profs_pt[h + 1][j].getValue());
         }
       }
@@ -73,11 +70,7 @@ WeightUpdater::computeYMatrix(MRSortModel &model) {
   auto profs_pt = model.profiles.getPerformanceTable();
   auto alts_pt = ap.getPerformanceTable();
   auto alts_assign = ap.getAlternativesAssignments();
-
-  // As the profiles are stored in descending order (h = 0 is the highest
-  // profile, which is not the case in the theorical formulation), going in
-  // reverse.
-  for (int h = profs_pt.size() - 1; h > 0; h--) {
+  for (int h = 0; h < profs_pt.size() - 1; h++) {
     std::vector<std::vector<bool>> y_h;
     for (auto alt : alts_pt) {
       std::vector<bool> y_h_alt;
@@ -86,6 +79,8 @@ WeightUpdater::computeYMatrix(MRSortModel &model) {
           profs_pt[h][0].getName()) {
         for (int j = 0; j < alt.size(); j++) {
           // condition: aj >= bj_h
+          std::cout << "h" << h << " j" << j << " : " << alt[j].getValue()
+                    << " " << profs_pt[h][j].getValue() << std::endl;
           y_h_alt.push_back(alt[j].getValue() >= profs_pt[h][j].getValue());
         }
       }
