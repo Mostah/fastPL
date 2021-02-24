@@ -254,15 +254,16 @@ TEST(TestPerformanceTable, TestGetAltBetween) {
   perf_vect.push_back(createVectorPerf("test3", crit, given_perf3));
   PerformanceTable perf_table = PerformanceTable(perf_vect);
 
-  try {
-    perf_table.getAltBetween("crit0", 0, 1);
-    FAIL() << "should have throw domain error.";
-  } catch (std::domain_error const &err) {
-    EXPECT_EQ(err.what(),
-              std::string("Mode must be crit but is currently set to alt."));
-  } catch (...) {
-    FAIL() << "should have throw domain error.";
-  }
+  // try {
+  //   perf_table.getAltBetween("crit0", 0, 1);
+  //   FAIL() << "should have throw domain error.";
+  // } catch (std::domain_error const &err) {
+  //   EXPECT_EQ(err.what(),
+  //             std::string("Mode must be crit but is currently set to alt."));
+  // } catch (...) {
+  //   FAIL() << "should have throw domain error.";
+  // }
+
   perf_table.changeMode("crit");
 
   try {

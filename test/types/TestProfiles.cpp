@@ -2,6 +2,7 @@
 #include "../../include/types/Perf.h"
 #include "../../include/types/PerformanceTable.h"
 #include "../../include/types/Profiles.h"
+#include "../../include/utils.h"
 
 #include "gtest/gtest.h"
 #include <sstream>
@@ -69,14 +70,15 @@ TEST(TestProfiles, TestGetBelowAndAbove) {
   crit_vect.push_back(Criterion("crit2", -1, 0.3));
   Criteria crit = Criteria(crit_vect);
 
-  std::vector<Performance> perf_vect;
-  std::vector<float> given_perf0 = {0.8, 1, 0.4};
+  std::vector<std::vector<Perf>> perf_vect;
+  std::vector<float> given_perf2 = {0.8, 1, 0.4};
   std::vector<float> given_perf1 = {0.8, 0.1, 0.3};
-  std::vector<float> given_perf2 = {0.6, 0, 0.2};
-  perf_vect.push_back(Performance(crit, given_perf0, "b0"));
-  perf_vect.push_back(Performance(crit, given_perf1, "b1"));
-  perf_vect.push_back(Performance(crit, given_perf2, "b2"));
-  Profiles profile = Profiles(perf_vect);
+  std::vector<float> given_perf0 = {0.6, 0, 0.2};
+  perf_vect.push_back(createVectorPerf("b0", crit, given_perf0));
+  perf_vect.push_back(createVectorPerf("b1", crit, given_perf1));
+  perf_vect.push_back(createVectorPerf("b2", crit, given_perf2));
+
+  Profiles profile = Profiles(perf_vect, "alt");
 
   std::pair<std::vector<Perf>, std::vector<Perf>> profiles1 =
       profile.getBelowAndAboveProfile("b1");
@@ -110,14 +112,14 @@ TEST(TestProfiles, TestGetBelowAndAboveErrors) {
   crit_vect.push_back(Criterion("crit2", -1, 0.3));
   Criteria crit = Criteria(crit_vect);
 
-  std::vector<Performance> perf_vect;
-  std::vector<float> given_perf0 = {0.8, 1, 0.4};
+  std::vector<std::vector<Perf>> perf_vect;
+  std::vector<float> given_perf2 = {0.8, 1, 0.4};
   std::vector<float> given_perf1 = {0.8, 0.1, 0.3};
-  std::vector<float> given_perf2 = {0.6, 0, 0.2};
-  perf_vect.push_back(Performance(crit, given_perf0, "b0"));
-  perf_vect.push_back(Performance(crit, given_perf1, "b1"));
-  perf_vect.push_back(Performance(crit, given_perf2, "b2"));
-  Profiles profile = Profiles(perf_vect);
+  std::vector<float> given_perf0 = {0.6, 0, 0.2};
+  perf_vect.push_back(createVectorPerf("b0", crit, given_perf0));
+  perf_vect.push_back(createVectorPerf("b1", crit, given_perf1));
+  perf_vect.push_back(createVectorPerf("b2", crit, given_perf2));
+  Profiles profile = Profiles(perf_vect, "alt");
 
   // TEST INVALID ARGUMENT
   try {
@@ -150,14 +152,14 @@ TEST(TestProfiles, TestSetPerfAndErrors) {
   crit_vect.push_back(Criterion("crit2", -1, 0.3));
   Criteria crit = Criteria(crit_vect);
 
-  std::vector<Performance> perf_vect;
-  std::vector<float> given_perf0 = {0.8, 1, 0.4};
+  std::vector<std::vector<Perf>> perf_vect;
+  std::vector<float> given_perf2 = {0.8, 1, 0.4};
   std::vector<float> given_perf1 = {0.8, 0.1, 0.3};
-  std::vector<float> given_perf2 = {0.6, 0, 0.2};
-  perf_vect.push_back(Performance(crit, given_perf0, "b0"));
-  perf_vect.push_back(Performance(crit, given_perf1, "b1"));
-  perf_vect.push_back(Performance(crit, given_perf2, "b2"));
-  Profiles profile = Profiles(perf_vect);
+  std::vector<float> given_perf0 = {0.6, 0, 0.2};
+  perf_vect.push_back(createVectorPerf("b0", crit, given_perf0));
+  perf_vect.push_back(createVectorPerf("b1", crit, given_perf1));
+  perf_vect.push_back(createVectorPerf("b2", crit, given_perf2));
+  Profiles profile = Profiles(perf_vect, "alt");
 
   profile.setPerf("b0", "crit1", 0.98);
 
@@ -182,15 +184,16 @@ TEST(TestProfiles, TestSetPerfAndErrors) {
   } catch (...) {
     FAIL() << "should have thrown domain error.";
   }
+}
 
-  TEST(TestProfiles, TestChangeMode) {
-    std::vector<std::vector<Perf>> perf_vect;
-    Criteria crit = Criteria(3, "crit");
-    std::vector<float> given_perf0 = {1.1, 0.8, 0.4};
-    std::vector<float> given_perf1 = {0.8, 0.3, 0.1};
-    perf_vect.push_back(createVectorPerf("alt0", crit, given_perf1));
-    perf_vect.push_back(createVectorPerf("alt1", crit, given_perf0));
-    Profiles profile = Profiles(perf_vect, "alt");
-    profile.changeMode("crit");
-    EXPECT_TRUE(profile.isProfileOrdered());
-  }
+TEST(TestProfiles, TestChangeMode) {
+  std::vector<std::vector<Perf>> perf_vect;
+  Criteria crit = Criteria(3, "crit");
+  std::vector<float> given_perf0 = {1.1, 0.8, 0.4};
+  std::vector<float> given_perf1 = {0.8, 0.3, 0.1};
+  perf_vect.push_back(createVectorPerf("alt0", crit, given_perf1));
+  perf_vect.push_back(createVectorPerf("alt1", crit, given_perf0));
+  Profiles profile = Profiles(perf_vect, "alt");
+  profile.changeMode("crit");
+  EXPECT_TRUE(profile.isProfileOrdered());
+}

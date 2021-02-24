@@ -6,12 +6,12 @@
 #include <utility>
 
 //        crit0  crit1  crit2
-// cat0
-//         0.8     1     0.4
-// cat1
-//         0.8    0.1    0.3
 // cat2
-//         0.6     0     0.2
+//   b2    0.8     1     0.4
+// cat1
+//   b1    0.8    0.1    0.3
+// cat0
+//   b0    0.6     0     0.2
 // base
 
 Criteria getTestCriteria() {
@@ -25,12 +25,12 @@ Criteria getTestCriteria() {
 Profiles getTestProfile() {
   std::vector<std::vector<Perf>> perf_vect;
   Criteria crit = getTestCriteria();
-  std::vector<float> given_perf0 = {0.8, 1, 0.4};
+  std::vector<float> given_perf2 = {0.8, 1, 0.4};
   std::vector<float> given_perf1 = {0.8, 0.1, 0.3};
-  std::vector<float> given_perf2 = {0.6, 0, 0.2};
-  perf_vect.push_back(createVectorPerf("cat0", crit, given_perf2));
-  perf_vect.push_back(createVectorPerf("cat1", crit, given_perf1));
-  perf_vect.push_back(createVectorPerf("cat2", crit, given_perf0));
+  std::vector<float> given_perf0 = {0.6, 0, 0.2};
+  perf_vect.push_back(createVectorPerf("b0", crit, given_perf0));
+  perf_vect.push_back(createVectorPerf("b1", crit, given_perf1));
+  perf_vect.push_back(createVectorPerf("b2", crit, given_perf2));
   return Profiles(perf_vect, "alt");
 }
 
@@ -92,15 +92,15 @@ TEST(TestMRSortModel, TestConcordance) {
   Categories categories = getTestCategories();
   MRSortModel mrsort = MRSortModel(criteria, profile, categories, 0.6);
 
-  std::vector<Performance> perf_vect;
-  std::vector<float> alt0 = {0.9, 0.6, 0.5};
-  std::vector<float> alt1 = {0.9, 0.05, 0.35};
-  std::vector<float> alt2 = {0.7, 1, 0.5};
-  std::vector<float> alt3 = {0.5, 0, 0.6};
-  perf_vect.push_back(Performance(criteria, alt0, "alt0"));
-  perf_vect.push_back(Performance(criteria, alt1, "alt1"));
-  perf_vect.push_back(Performance(criteria, alt2, "alt2"));
-  perf_vect.push_back(Performance(criteria, alt3, "alt3"));
+  std::vector<std::vector<Perf>> perf_vect;
+  std::vector<float> alt3 = {0.9, 0.6, 0.5};
+  std::vector<float> alt2 = {0.9, 0.05, 0.35};
+  std::vector<float> alt1 = {0.7, 1, 0.5};
+  std::vector<float> alt0 = {0.5, 0, 0.6};
+  perf_vect.push_back(createVectorPerf("alt0", criteria, alt0));
+  perf_vect.push_back(createVectorPerf("alt1", criteria, alt1));
+  perf_vect.push_back(createVectorPerf("alt2", criteria, alt2));
+  perf_vect.push_back(createVectorPerf("alt3", criteria, alt3));
   PerformanceTable pt_ = PerformanceTable(perf_vect);
 
   // TEST COMPUTE CONCORDANCE
@@ -110,15 +110,15 @@ TEST(TestMRSortModel, TestConcordance) {
   std::vector<Perf> a1 = pt_["alt1"];
   float c_alt0_b0 = mrsort.computeConcordance(b0, a0);
   float c_alt1_b2 = mrsort.computeConcordance(b2, a1);
-  EXPECT_FLOAT_EQ(c_alt0_b0, 0.8);
-  EXPECT_FLOAT_EQ(c_alt1_b2, 1);
+  EXPECT_FLOAT_EQ(c_alt0_b0, 0.3);
+  EXPECT_FLOAT_EQ(c_alt1_b2, 0.3);
 
   // TEST COMPUTE CONCORDANCE TABLE
   std::unordered_map<std::string, std::unordered_map<std::string, float>> ct =
       mrsort.computeConcordanceTable(pt_);
 
-  EXPECT_FLOAT_EQ(ct["b0"]["alt0"], 0.8);
-  EXPECT_FLOAT_EQ(ct["b2"]["alt1"], 1);
+  EXPECT_FLOAT_EQ(ct["b0"]["alt0"], 0.3);
+  EXPECT_FLOAT_EQ(ct["b2"]["alt1"], 0.3);
 
   // Display ct
   // for (std::pair<std::string,
