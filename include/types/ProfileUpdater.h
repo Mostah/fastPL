@@ -12,9 +12,10 @@ public:
   /**
    * ProfileUpdater standard constructor
    *
-   * @param delta
+   * @param epsilon
    */
-  ProfileUpdater(AlternativesPerformance &altPerf_data, float delta = 0.00001);
+  ProfileUpdater(AlternativesPerformance &altPerf_data,
+                 float epsilon = 0.00001);
 
   /**
    * ProfileUpdater copy constructor
@@ -32,7 +33,7 @@ public:
                            std::unordered_map<std::string, float> &ct_prof);
 
 private:
-  float delta_;
+  float epsilon_;
   AlternativesPerformance &altPerf_data;
 };
 

@@ -5,11 +5,11 @@
 #include <string>
 
 ProfileUpdater::ProfileUpdater(AlternativesPerformance &altPerf_data,
-                               float delta)
-    : altPerf_data(altPerf_data), delta_(delta) {}
+                               float epsilon)
+    : altPerf_data(altPerf_data), epsilon_(epsilon) {}
 
 ProfileUpdater::ProfileUpdater(const ProfileUpdater &profUp)
-    : altPerf_data(profUp.altPerf_data), delta_(profUp.delta_) {}
+    : altPerf_data(profUp.altPerf_data), epsilon_(profUp.epsilon_) {}
 
 ProfileUpdater::~ProfileUpdater() {}
 
@@ -21,25 +21,23 @@ std::unordered_map<float, float> ProfileUpdater::computeAboveDesirability(
   float lambda = model.lambda;
   float weight = model.criteria[critId].getWeight();
   int direction = model.criteria[critId].getDirection();
-  float delta = direction * this->delta_;
+  float epsilon = direction * this->epsilon_;
+  std::cout << "epsilon : " << epsilon << std::endl;
   std::vector<std::vector<Perf>> altPerfTable_data =
       this->altPerf_data.getPerformanceTable();
   Profiles profiles_data = model.profiles;
-
-  std::cout << model << std::endl;
 
   // Data calculated from the model
   AlternativesPerformance altPerf_model =
       model.categoryAssignments(altPerf_data);
 
-  // Alternatives between given profile and above profile
+  // Alternatives between given profile and above profile. AltPerf_model needs
+  // to be sorted and in mode crit to have a meaniful iteration in the loop
+  altPerf_model.sort();
   std::vector<Perf> alt_between =
       altPerf_model.getAltBetween(critId, b.getValue(), b_above.getValue());
 
-  std::cout << "Alts between " << b << " and " << b_above << ": " << std::endl;
-  std::cout << alt_between << std::endl;
-
-  // Updating profile value with profile + delta*direction
+  // Updating profile value with profile + epsilon*direction
   Profiles profiles_model_updated = Profiles(profiles_data);
 
   // Initializing the map of desirability indexes
@@ -48,11 +46,11 @@ std::unordered_map<float, float> ProfileUpdater::computeAboveDesirability(
   float denominator = 0;
 
   for (Perf alt : alt_between) {
-    // Need to check if delta to high?
     // Checking if the move is not already handled by the below_des of b_above
-    if ((alt.getValue() + delta) * direction < b_above.getValue() * direction) {
-      // if ((b.getValue() + delta) * direction > alt.getValue() * direction) {
+    if ((alt.getValue() + epsilon) * direction <
+        b_above.getValue() * direction) {
       std::cout << "IN THE LOOP FOR " << alt.getName() << std::endl;
+
       std::string altName = alt.getName();
       float conc = ct_prof[altName];
       float diff = conc - weight;
@@ -61,8 +59,8 @@ std::unordered_map<float, float> ProfileUpdater::computeAboveDesirability(
       std::string aa_model =
           altPerf_model.getAlternativeAssignment(altName).getCategoryId();
 
-      std::cout << altName << " = data: " << aa_data << " - model: " << aa_model
-                << std::endl;
+      // Here we are checking if the move of profile b right above/under the
+      // performance of alt is going to help the model
       if (aa_data == cat_above.getCategoryId()) {
         // Correct classification
         // Moving the profile results in misclassification -> Q
@@ -83,7 +81,8 @@ std::unordered_map<float, float> ProfileUpdater::computeAboveDesirability(
         if (diff >= lambda) {
           numerator += 0.5;
           denominator += 1;
-          desirability_above[alt.getValue() + delta] = numerator / denominator;
+          desirability_above[alt.getValue() + epsilon] =
+              numerator / denominator;
           std::cout << "W" << std::endl;
         }
         // Wrong classification
@@ -91,7 +90,8 @@ std::unordered_map<float, float> ProfileUpdater::computeAboveDesirability(
         else {
           numerator += 2;
           denominator += 1;
-          desirability_above[alt.getValue() + delta] = numerator / denominator;
+          desirability_above[alt.getValue() + epsilon] =
+              numerator / denominator;
           std::cout << "V" << std::endl;
         }
       }
@@ -104,7 +104,7 @@ std::unordered_map<float, float> ProfileUpdater::computeAboveDesirability(
                        .getCategoryRank() < cat.getCategoryRank()) {
         numerator += 0.1;
         denominator += 1;
-        desirability_above[alt.getValue() + delta] = numerator / denominator;
+        desirability_above[alt.getValue() + epsilon] = numerator / denominator;
         std::cout << "T" << std::endl;
       }
     }
