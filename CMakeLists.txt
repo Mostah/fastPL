@@ -26,7 +26,7 @@ set(Headers
     include/types/DataGenerator.h
     include/types/AlternativesPerformance.h
     include/app.h
-    extsrc/matplotlib-cpp/matplotlibcpp.h
+    extsrc/matplotlibcpp/matplotlibcpp.h
     )
 
 set(Sources 
