@@ -7,7 +7,8 @@ jobs:
     steps:
       - checkout
       # command to build all files
-      - run: apt-get update && apt-get -y install cmake && apt-get -y install doxygen python2.7-dev
+      - run: apt-get update && apt-get -y install cmake && apt-get -y install doxygen python2.7-dev wget
+      - run: wget https://bootstrap.pypa.io/2.7/get-pip.py -O get-pip27.py && python2.7 get-pip27.py; pip install numpy matplotlib
       - run: git submodule init; git submodule update
       - run: mkdir build; cd build; cmake ..; make
       - persist_to_workspace:
