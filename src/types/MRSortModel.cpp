@@ -46,8 +46,7 @@ MRSortModel::categoryAssignment(std::vector<Perf> &alt,
   for (int h = 0; h < profiles_pt.size(); h++) {
     int prof_index = profiles_pt.size() - 1 - h;
     // compute the concordance value:
-    float c = 0;
-    c = computeConcordance(profiles_pt[prof_index], alt);
+    float c = computeConcordance(profiles_pt[prof_index], alt);
     // if the value of the concordance is greater than the threshold, assign
     // the category h to the alt.
     // As we are going in descending order, the category assigned is the

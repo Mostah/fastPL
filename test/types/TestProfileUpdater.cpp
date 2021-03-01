@@ -1,5 +1,6 @@
 #include "../../include/types/ProfileUpdater.h"
 #include "gtest/gtest.h"
+#include <algorithm>
 #include <sstream>
 #include <utility>
 
@@ -18,8 +19,8 @@
 Criteria newTestCriteria() {
   std::vector<Criterion> crit_vect;
   crit_vect.push_back(Criterion("crit0", 1, 0.2));
-  crit_vect.push_back(Criterion("crit1", -1, 0.2));
-  crit_vect.push_back(Criterion("crit2", 1, 0.2));
+  crit_vect.push_back(Criterion("crit1", 1, 0.2));
+  crit_vect.push_back(Criterion("crit2", -1, 0.2));
   crit_vect.push_back(Criterion("crit3", 1, 0.2));
   crit_vect.push_back(Criterion("crit4", -1, 0.2));
   return Criteria(crit_vect);
@@ -84,6 +85,8 @@ TEST(TestProfileUpdater, TestComputeAboveDesirability) {
   Categories categories = newTestCategories();
   MRSortModel model = newTestModel(categories);
   AlternativesPerformance altPerf_data = newTestAltPerf();
+  AlternativesPerformance altPerf_model =
+      model.categoryAssignments(altPerf_data);
   std::unordered_map<std::string, std::unordered_map<std::string, float>> ct =
       model.computeConcordanceTable(altPerf_data);
   std::unordered_map<std::string, float> ct_b0 = ct["b0"];
@@ -96,7 +99,7 @@ TEST(TestProfileUpdater, TestComputeAboveDesirability) {
 
   std::unordered_map<float, float> above_des =
       profUpdater.computeAboveDesirability(model, "crit0", b0_c0, b1_c0, cat,
-                                           cat_above, ct_b0);
+                                           cat_above, ct_b0, altPerf_model);
   EXPECT_FLOAT_EQ(
       above_des[altPerf_data.getPerf("alt1", "crit0").getValue() + epsilon],
       0.5);
@@ -105,7 +108,7 @@ TEST(TestProfileUpdater, TestComputeAboveDesirability) {
   Perf b1_c3 = Perf("b1", "crit3", 0.6);
   std::unordered_map<float, float> above_des_bis =
       profUpdater.computeAboveDesirability(model, "crit3", b0_c3, b1_c3, cat,
-                                           cat_above, ct_b0);
+                                           cat_above, ct_b0, altPerf_model);
   EXPECT_FLOAT_EQ(
       above_des_bis[altPerf_data.getPerf("alt1", "crit3").getValue() + epsilon],
       0.25);
@@ -115,10 +118,13 @@ TEST(TestProfileUpdater, TestComputeBelowDesirability) {
   Categories categories = newTestCategories();
   MRSortModel model = newTestModel(categories);
   AlternativesPerformance altPerf_data = newTestAltPerf();
+  AlternativesPerformance altPerf_model =
+      model.categoryAssignments(altPerf_data);
   std::unordered_map<std::string, std::unordered_map<std::string, float>> ct =
       model.computeConcordanceTable(altPerf_data);
   std::unordered_map<std::string, float> ct_b0 = ct["b0"];
-  ProfileUpdater profUpdater = ProfileUpdater(altPerf_data);
+  float epsilon = 0.0001;
+  ProfileUpdater profUpdater = ProfileUpdater(altPerf_data, epsilon);
   Perf b0_c1 = Perf("b0", "crit1", 0.3);
   Perf base = Perf("base", "crit1", 0);
   Category cat = categories.getCategoryOfRank(0);
@@ -126,7 +132,60 @@ TEST(TestProfileUpdater, TestComputeBelowDesirability) {
 
   std::unordered_map<float, float> below_des =
       profUpdater.computeBelowDesirability(model, "crit1", b0_c1, base, cat,
-                                           cat_above, ct_b0);
-  EXPECT_FLOAT_EQ(below_des[altPerf_data.getPerf("alt2", "crit1").getValue()],
-                  2);
+                                           cat_above, ct_b0, altPerf_model);
+  EXPECT_FLOAT_EQ(
+      below_des[altPerf_data.getPerf("alt2", "crit1").getValue() - epsilon], 2);
+}
+
+TEST(TestProfileUpdater, TestChooseMaxDesirability) {
+  AlternativesPerformance altPerf_data = newTestAltPerf();
+  ProfileUpdater profUpdater = ProfileUpdater(altPerf_data);
+
+  std::unordered_map<float, float> desirability;
+  desirability[0.2] = 5;
+  desirability[0.15] = 10;
+  desirability[0.34] = 12;
+  desirability[0.40] = 8;
+
+  Perf b = Perf("b0", "crit1", 0.3);
+
+  // float max = profUpdater.chooseMaxDesirability(desirability, b);
+  EXPECT_FLOAT_EQ(0, 0.34);
+}
+
+TEST(TestProfileUpdater, TestUpdateTables) {
+  Categories categories = newTestCategories();
+  MRSortModel model = newTestModel(categories);
+  AlternativesPerformance altPerf_data = newTestAltPerf();
+  AlternativesPerformance altPerf_model =
+      model.categoryAssignments(altPerf_data);
+
+  auto ct = model.computeConcordanceTable(altPerf_data);
+
+  ProfileUpdater profUpdater = ProfileUpdater(altPerf_data);
+  int good = 1;
+  Perf b0_c0_old = Perf("b0", "crit0", 0.3);
+  Perf b0_c0_new = Perf("b0", "crit0", 0.39);
+
+  profUpdater.updateTables(model, "crit0", b0_c0_old, b0_c0_new, ct, good,
+                           altPerf_model);
+  // Test update concordance table
+  EXPECT_FLOAT_EQ(ct["b0"]["alt1"], 0.8);
+  EXPECT_FLOAT_EQ(ct["b0"]["alt0"], 0.6);
+
+  // Test update Good #
+  Perf b0_c1_old = Perf("b0", "crit1", 0.3);
+  Perf b0_c1_new = Perf("b0", "crit1", 0.18);
+  profUpdater.updateTables(model, "crit1", b0_c1_old, b0_c1_new, ct, good,
+                           altPerf_model);
+  EXPECT_EQ(good, 2);
+
+  // Test update alternative assignment
+  std::string new_cat =
+      altPerf_model.getAlternativeAssignment("alt2").getCategoryId();
+  EXPECT_EQ(new_cat, "cat1");
+
+  // Test update profiles
+  EXPECT_FLOAT_EQ(model.profiles.getPerf("b0", "crit0").getValue(), 0.39);
+  EXPECT_FLOAT_EQ(model.profiles.getPerf("b0", "crit1").getValue(), 0.18);
 }
