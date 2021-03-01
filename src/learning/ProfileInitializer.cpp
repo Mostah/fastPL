@@ -207,6 +207,7 @@ void ProfileInitializer::initializeProfiles(MRSortModel &model) {
   int nbIterations = 0;
   bool ordered = 0;
   while (!ordered) {
+    std::cout << "iteration " << nbIterations << std::endl;
     ++nbIterations;
     std::vector<std::vector<Perf>> perf_vec;
     std::vector<Perf> firstAltPerf = altPerformance_.getPerformanceTable()[0];
@@ -223,12 +224,15 @@ void ProfileInitializer::initializeProfiles(MRSortModel &model) {
     }
     PerformanceTable p = PerformanceTable(perf_vec);
     try {
+      if (nbIterations % 10 == 0) {
+        p.display();
+      }
       Profiles p = Profiles(perf_vec, "crit");
       model.profiles = p;
       ordered = 1;
     } catch (std::invalid_argument const &err) {
     }
-    if (nbIterations > 10000) {
+    if (nbIterations > 100) {
       throw std::domain_error("After 1000 intialization can't get an valid "
                               "(orderred) Profiles object ");
     }

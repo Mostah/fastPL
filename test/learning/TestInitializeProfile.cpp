@@ -182,13 +182,12 @@ TEST(TestProfileInitializer, TestInitializeProfiles) {
 TEST(TestProfileInitializer, TestInitializeProfilesRealDataset) {
   Config conf = getTestConf();
   DataGenerator data = DataGenerator(conf);
-  std::string filename =
-      "in1dataset.xml"; // in3dataset.xml doesnt work since it doesnt have
-                        // alternatives present for all of its categories and
-                        // the categories for Olivier are ranked as our opposite
-                        // ranking system ie for him cat rank 0 is the best so
-                        // it needs to be changed in order to have a working
-                        // algo i changed it manually for in1.
+  std::string filename = "in7dataset.xml";
+
+  // in3, in4 don't work since it doesnt have alternatives present for
+  // all of its categories | in1 works, in7 works but takes long time
+  // for in7, cat1 is people that are likely to die or develop an extreme
+  // condition of a disease
   AlternativesPerformance ap = data.loadDataset(filename);
   int nbCat = data.getNumberOfCategories(filename);
   int nbCrit = data.getNumberOfCriteria(filename);
@@ -198,6 +197,7 @@ TEST(TestProfileInitializer, TestInitializeProfilesRealDataset) {
   // crit -> alt -> crit -> alt -> crit -> ... works !
   ProfileInitializer profInit = ProfileInitializer(conf, ap);
   profInit.initializeProfiles(model);
+  model.profiles.display();
   EXPECT_TRUE(model.profiles.isProfileOrdered());
   // To be uncommented when performance type no longer exist
   // model.profiles.changeMode("alt");
