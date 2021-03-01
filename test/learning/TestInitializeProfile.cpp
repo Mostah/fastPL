@@ -142,11 +142,11 @@ TEST(TestProfileInitializer, TestInitializeProfiles) {
   Categories categories = Categories(3);
   std::unordered_map<std::string, Category> map =
       std::unordered_map<std::string, Category>{
-          {"alt0", categories[2]}, {"alt1", categories[2]},
-          {"alt2", categories[2]}, {"alt3", categories[2]},
+          {"alt0", categories[0]}, {"alt1", categories[0]},
+          {"alt2", categories[0]}, {"alt3", categories[0]},
           {"alt4", categories[1]}, {"alt5", categories[1]},
-          {"alt6", categories[1]}, {"alt7", categories[0]},
-          {"alt8", categories[0]}, {"alt9", categories[0]}};
+          {"alt6", categories[1]}, {"alt7", categories[2]},
+          {"alt8", categories[2]}, {"alt9", categories[2]}};
 
   std::vector<std::vector<Perf>> perf_vect;
   for (int i = 0; i < nbAlt; i++) {
@@ -164,25 +164,41 @@ TEST(TestProfileInitializer, TestInitializeProfiles) {
   MRSortModel model = MRSortModel(3, 4);
   profInit.initializeProfiles(model);
   EXPECT_TRUE(model.profiles.isProfileOrdered());
-  // not working i dont know why but works for profiles in TestProfile
-  // model.profiles.changeMode("alt");
+
+  // for viewing purposes
+  // std::cout << "PT is " << std::endl;
+  // perf_tab.display();
+  // std::cout << std::endl;
+  // std::cout << "profile is " << std::endl;
   // model.profiles.display();
+
+  // change mode doesnt work here it points back to MRSortModel constructor that
+  // points to the Profile constructor thats points back to PerformanceTable
+  //
+  // constructor model.profiles.changeMode("alt");
   // EXPECT_TRUE(model.profiles.isProfileOrdered());
 }
 
 TEST(TestProfileInitializer, TestInitializeProfilesRealDataset) {
   Config conf = getTestConf();
   DataGenerator data = DataGenerator(conf);
-  std::string filename = "in4dataset.xml";
+  std::string filename =
+      "in1dataset.xml"; // in3dataset.xml doesnt work since it doesnt have
+                        // alternatives present for all of its categories and
+                        // the categories for Olivier are ranked as our opposite
+                        // ranking system ie for him cat rank 0 is the best so
+                        // it needs to be changed in order to have a working
+                        // algo i changed it manually for in1.
   AlternativesPerformance ap = data.loadDataset(filename);
   int nbCat = data.getNumberOfCategories(filename);
   int nbCrit = data.getNumberOfCriteria(filename);
   MRSortModel model = MRSortModel(nbCat, nbCrit);
+  // When we initialize the profile change mode stops working. We cant change
+  // properly the profile. crit -> alt fails | crit -> alt -> crit works ! |
+  // crit -> alt -> crit -> alt -> crit -> ... works !
   ProfileInitializer profInit = ProfileInitializer(conf, ap);
-  // profInit.initializeProfiles(model);
-  // std::cout << model.profiles;
-  // model.profiles.display();
-  // EXPECT_TRUE(model.profiles.isProfileOrdered());
+  profInit.initializeProfiles(model);
+  EXPECT_TRUE(model.profiles.isProfileOrdered());
   // To be uncommented when performance type no longer exist
   // model.profiles.changeMode("alt");
   // EXPECT_TRUE(model.profiles.isProfileOrdered());

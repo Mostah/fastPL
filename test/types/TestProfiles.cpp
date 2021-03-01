@@ -19,7 +19,7 @@ TEST(TestProfiles, TestConstructorWithPerfVectError) {
     FAIL() << "should have throw invalid argument.";
   } catch (std::invalid_argument const &err) {
     EXPECT_EQ(err.what(),
-              std::string("Profile in its given profile is not ordered"));
+              std::string("Profile in its given mode is not ordered"));
   } catch (...) {
     FAIL() << "should have throw invalid argument.";
   }
@@ -51,7 +51,7 @@ TEST(TestProfiles, TestIsOrdered) {
     FAIL() << "should have throw invalid argument.";
   } catch (std::invalid_argument const &err) {
     EXPECT_EQ(err.what(),
-              std::string("Profile in its given profile is not ordered"));
+              std::string("Profile in its given mode is not ordered"));
   } catch (...) {
     FAIL() << "should have throw invalid argument.";
   }

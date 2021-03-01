@@ -16,7 +16,7 @@ Profiles::Profiles(std::vector<std::vector<Perf>> &perf_vect, std::string mode)
   }
   mode_ = mode;
   if (!this->isProfileOrdered()) {
-    throw std::invalid_argument("Profile in its given profile is not ordered");
+    throw std::invalid_argument("Profile in its given mode is not ordered");
   }
 }
 
@@ -94,7 +94,7 @@ bool Profiles::isProfileOrdered() {
   if (mode_ == "crit") {
     for (int crit = 0; crit < pt_.size(); crit++) {
       for (int catLimit = 0; catLimit < pt_[crit].size() - 1; catLimit++) {
-        if (pt_[crit][catLimit].getValue() >=
+        if (pt_[crit][catLimit].getValue() >
             pt_[crit][catLimit + 1].getValue()) {
           return false;
         }
@@ -104,8 +104,7 @@ bool Profiles::isProfileOrdered() {
   } else {
     for (int profile = 0; profile < pt_.size() - 1; profile++) {
       for (int crit = 0; crit < pt_[profile].size(); crit++) {
-        if (pt_[profile][crit].getValue() >=
-            pt_[profile + 1][crit].getValue()) {
+        if (pt_[profile][crit].getValue() > pt_[profile + 1][crit].getValue()) {
           return false;
         }
       }

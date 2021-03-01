@@ -121,7 +121,6 @@ float ProfileInitializer::weightedProbability(
   // creating imaginary profile performance for criterion crit
   std::string critId = crit.getId();
   float imaginaryProfilePerformance = perfAlt.getValue() + delta;
-  // std::cout << critId << " " << imaginaryProfilePerformance << std::endl;
   // Creating 2 int that will count the number of correctly classified
   // alternatives for criterion crit for a profile performance of
   // imaginaryProfilePerformance.
@@ -135,8 +134,6 @@ float ProfileInitializer::weightedProbability(
     // if the performance of the candidate is higher than the profile
     // performance and that the alternatives category is catAbove then we have
     // correctly classified it
-    // std::cout << altPerformance_.getAlternativeAssignment(can.getName())
-    //           << " catabove : " << catAbove << std::endl;
     if (can.getValue() > imaginaryProfilePerformance and
         altPerformance_.getAlternativeAssignment(can.getName())
                 .getCategoryRank() == catAbove.getCategoryRank()) {
@@ -192,14 +189,16 @@ std::vector<Perf> ProfileInitializer::initializeProfilePerformance(
     categoryLimits.push_back(candidates[index].getValue());
   }
   std::reverse(categoryLimits.begin(), categoryLimits.end());
+  int nbCategoryLimits = categoryLimits.size();
   // this is a work around since we would actually need to construct a
   // Performance with a categories object.
   std::vector<Perf> vect_p;
-  for (int i = 0; i < categoryLimits.size(); i++) {
+  for (int i = 0; i < nbCategoryLimits; i++) {
     // Cannot give a nice name to it since each vector of Perf need to have
     // same name
-    vect_p.push_back(
-        Perf(crit.getId(), "cat" + std::to_string(i), categoryLimits[i]));
+    vect_p.push_back(Perf(crit.getId(),
+                          "cat" + std::to_string(nbCategoryLimits - 1 - i),
+                          categoryLimits[i]));
   }
   return vect_p;
 }
@@ -207,7 +206,6 @@ std::vector<Perf> ProfileInitializer::initializeProfilePerformance(
 void ProfileInitializer::initializeProfiles(MRSortModel &model) {
   int nbIterations = 0;
   bool ordered = 0;
-
   while (!ordered) {
     ++nbIterations;
     std::vector<std::vector<Perf>> perf_vec;
@@ -219,10 +217,11 @@ void ProfileInitializer::initializeProfiles(MRSortModel &model) {
       // OPTIM : POSSIBILITY parallelization asynchrone
       std::vector<Perf> p = this->initializeProfilePerformance(
           criterion, model.categories, catFreq);
+      std::reverse(p.begin(), p.end());
+
       perf_vec.push_back(p);
     }
     PerformanceTable p = PerformanceTable(perf_vec);
-    p.display();
     try {
       Profiles p = Profiles(perf_vec, "crit");
       model.profiles = p;
