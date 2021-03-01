@@ -156,40 +156,48 @@ float ProfileInitializer::weightedProbability(
 std::vector<Perf> ProfileInitializer::initializeProfilePerformance(
     const Criterion &crit, Categories &categories,
     const std::vector<float> &catFre) {
-  std::vector<float> categoryLimits;
   int nbCategories = categories.getNumberCategories();
+  bool OrderedProfilePerformance = 0;
+  std::vector<float> finalCategoryLimits;
 
-  for (int i = 0; i < nbCategories - 1; i++) {
-    std::vector<float> altProba;
-    std::vector<Perf> candidates =
-        ProfileInitializer::getProfilePerformanceCandidates(crit, categories[i],
-                                                            nbCategories);
-    // OPTIM : POSSIBILITY parallelization synchrone
-    for (Perf cand : candidates) {
-      float proba = ProfileInitializer::weightedProbability(
-          cand, crit, categories[i], categories[i + 1], nbCategories, catFre,
-          candidates);
-      altProba.push_back(proba);
-    }
-
-    std::random_device rd;
-    float totProba = std::accumulate(altProba.begin(), altProba.end(), 0);
-    float randomNumber = getRandomUniformInt(rd(), 0, totProba);
-    float tmp = 0;
-    int index = 0;
-    for (int i = 0; i < candidates.size(); i++) {
-      if (tmp < randomNumber) {
-        tmp += altProba[i];
-        index = i;
-      } else {
-        break;
+  while (!OrderedProfilePerformance) {
+    std::vector<float> categoryLimits;
+    for (int i = 0; i < nbCategories - 1; i++) {
+      std::vector<float> altProba;
+      std::vector<Perf> candidates =
+          ProfileInitializer::getProfilePerformanceCandidates(
+              crit, categories[i], nbCategories);
+      // OPTIM : POSSIBILITY parallelization synchrone
+      for (Perf cand : candidates) {
+        float proba = ProfileInitializer::weightedProbability(
+            cand, crit, categories[i], categories[i + 1], nbCategories, catFre,
+            candidates);
+        altProba.push_back(proba);
       }
-    }
 
-    categoryLimits.push_back(candidates[index].getValue());
+      std::random_device rd;
+      float totProba = std::accumulate(altProba.begin(), altProba.end(), 0);
+      float randomNumber = getRandomUniformInt(rd(), 0, totProba);
+      float tmp = 0;
+      int index = 0;
+      for (int i = 0; i < candidates.size(); i++) {
+        if (tmp < randomNumber) {
+          tmp += altProba[i];
+          index = i;
+        } else {
+          break;
+        }
+      }
+
+      categoryLimits.push_back(candidates[index].getValue());
+    }
+    if (std::is_sorted(categoryLimits.begin(), categoryLimits.end())) {
+      OrderedProfilePerformance = 1;
+      finalCategoryLimits = categoryLimits;
+    }
   }
-  std::reverse(categoryLimits.begin(), categoryLimits.end());
-  int nbCategoryLimits = categoryLimits.size();
+  std::reverse(finalCategoryLimits.begin(), finalCategoryLimits.end());
+  int nbCategoryLimits = finalCategoryLimits.size();
   // this is a work around since we would actually need to construct a
   // Performance with a categories object.
   std::vector<Perf> vect_p;
@@ -198,7 +206,7 @@ std::vector<Perf> ProfileInitializer::initializeProfilePerformance(
     // same name
     vect_p.push_back(Perf(crit.getId(),
                           "cat" + std::to_string(nbCategoryLimits - 1 - i),
-                          categoryLimits[i]));
+                          finalCategoryLimits[i]));
   }
   return vect_p;
 }
@@ -206,35 +214,21 @@ std::vector<Perf> ProfileInitializer::initializeProfilePerformance(
 void ProfileInitializer::initializeProfiles(MRSortModel &model) {
   int nbIterations = 0;
   bool ordered = 0;
-  while (!ordered) {
-    std::cout << "iteration " << nbIterations << std::endl;
-    ++nbIterations;
-    std::vector<std::vector<Perf>> perf_vec;
-    std::vector<Perf> firstAltPerf = altPerformance_.getPerformanceTable()[0];
-    std::vector<std::string> criteriaIds = getCriterionIds(firstAltPerf);
-    std::vector<float> catFreq = this->categoryFrequency();
-    // CatFreq has a problem sometimes
-    for (std::string criterion : criteriaIds) {
-      // OPTIM : POSSIBILITY parallelization asynchrone
-      std::vector<Perf> p = this->initializeProfilePerformance(
-          criterion, model.categories, catFreq);
-      std::reverse(p.begin(), p.end());
-
-      perf_vec.push_back(p);
-    }
-    PerformanceTable p = PerformanceTable(perf_vec);
-    try {
-      if (nbIterations % 10 == 0) {
-        p.display();
-      }
-      Profiles p = Profiles(perf_vec, "crit");
-      model.profiles = p;
-      ordered = 1;
-    } catch (std::invalid_argument const &err) {
-    }
-    if (nbIterations > 100) {
-      throw std::domain_error("After 1000 intialization can't get an valid "
-                              "(orderred) Profiles object ");
-    }
+  ++nbIterations;
+  std::vector<std::vector<Perf>> perf_vec;
+  std::vector<Perf> firstAltPerf = altPerformance_.getPerformanceTable()[0];
+  std::vector<std::string> criteriaIds = getCriterionIds(firstAltPerf);
+  std::vector<float> catFreq = this->categoryFrequency();
+  // CatFreq has a problem sometimes
+  for (std::string criterion : criteriaIds) {
+    // OPTIM : POSSIBILITY parallelization asynchrone
+    std::vector<Perf> p = this->initializeProfilePerformance(
+        criterion, model.categories, catFreq);
+    std::reverse(p.begin(), p.end());
+    perf_vec.push_back(p);
   }
+
+  Profiles prof = Profiles(perf_vec, "crit");
+  model.profiles = prof;
+  ordered = 1;
 }
