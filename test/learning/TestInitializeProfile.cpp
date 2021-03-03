@@ -193,8 +193,8 @@ TEST(TestProfileInitializer, TestInitializeProfilesRealDataset) {
   int nbCrit = data.getNumberOfCriteria(filename);
   MRSortModel model = MRSortModel(nbCat, nbCrit);
   // When we initialize the profile change mode stops working. We cant change
-  // properly the profile. crit -> alt fails | crit -> alt -> crit works ! |
-  // crit -> alt -> crit -> alt -> crit -> ... works !
+  // properly the profile. crit -> alt fails | crit -> alt -> crit works ! but
+  // we lose the model's mode| crit -> alt -> crit -> alt -> crit -> ... works !
   ProfileInitializer profInit = ProfileInitializer(conf, ap);
   profInit.initializeProfiles(model);
   model.profiles.display();
