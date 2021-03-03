@@ -1,3 +1,7 @@
+#include "../include/app.h"
+#include "../include/learning/ProfileInitializer.h"
+#include "../include/types/DataGenerator.h"
+#include "../include/types/MRSortModel.h"
 #include "../include/utils.h"
 #include "gtest/gtest.h"
 #include <iostream>
@@ -41,3 +45,21 @@ TEST(TestUtils, TestUtilsVectorPerf) {
       "[Perf( name : alt1, crit : crit0, value : 1 ),Perf( name : alt1, crit : "
       "crit1, value : 3 ),Perf( name : alt1, crit : crit2, value : 4 )]");
 }
+
+// TEST(TestUtils, TestUtilsPlotData) {
+// Config conf = getTestConf();
+// DataGenerator data = DataGenerator(conf);
+// std::string filename = "in7dataset.xml";
+// AlternativesPerformance ap = data.loadDataset(filename);
+// int nbCat = data.getNumberOfCategories(filename);
+// int nbCrit = data.getNumberOfCriteria(filename);
+// MRSortModel mr = MRSortModel(nbCat, nbCrit);
+// // plotGlobalData(ap);
+// ProfileInitializer profInit = ProfileInitializer(conf, ap);
+// profInit.initializeProfiles(mr);
+// works if we take out profile mode condition in function or
+//     fix change mode bug
+// mr.profiles.changeMode("alt");
+// mr.profiles.changeMode("crit");
+// plotProfile(mr.profiles);
+// }

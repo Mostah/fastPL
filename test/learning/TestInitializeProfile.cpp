@@ -197,7 +197,7 @@ TEST(TestProfileInitializer, TestInitializeProfilesRealDataset) {
   // we lose the model's mode| crit -> alt -> crit -> alt -> crit -> ... works !
   ProfileInitializer profInit = ProfileInitializer(conf, ap);
   profInit.initializeProfiles(model);
-  model.profiles.display();
+  // model.profiles.display();
   EXPECT_TRUE(model.profiles.isProfileOrdered());
   // To be uncommented when performance type no longer exist
   // model.profiles.changeMode("alt");

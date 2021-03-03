@@ -7,10 +7,10 @@ add_subdirectory(extsrc/googletest)
 add_subdirectory(extsrc/spdlog)
 add_subdirectory(extsrc/pugixml)
 add_subdirectory(extsrc/yaml-cpp)
+add_subdirectory(extsrc/matplotplusplus)
 
 add_subdirectory(doc) # add doxygen doc generator
 
-find_package(Python2 COMPONENTS Development NumPy)
 
 set(Headers 
     include/learning/ProfileInitializer.h
@@ -26,7 +26,6 @@ set(Headers
     include/types/DataGenerator.h
     include/types/AlternativesPerformance.h
     include/app.h
-    extsrc/matplotlibcpp/matplotlibcpp.h
     )
 
 set(Sources 
@@ -54,17 +53,15 @@ endif()
 
 add_library(Core ${Headers} ${Sources})   # build a library with our header and source files
 
-target_include_directories(Core PRIVATE ${Python2_INCLUDE_DIRS} ${Python2_NumPy_INCLUDE_DIRS})
-
 target_link_libraries(Core spdlog::spdlog_header_only)
 target_link_libraries(Core yaml-cpp)
 target_link_libraries(Core pugixml)
-target_link_libraries(Core Python2::Python Python2::NumPy)
+target_link_libraries(Core matplot)
+
 
 # Add executables
 add_executable(Test test/TestMain.cpp)
 add_executable(Main src/main.cpp)
-add_executable(plttest src/plttest.cpp)
 
 # link librairies to executables
 target_link_libraries(Test Core gtest) 
@@ -78,6 +75,5 @@ target_link_libraries(Main Core pugixml)
 target_link_libraries(Test Core yaml-cpp)
 target_link_libraries(Main Core yaml-cpp)
 
-target_link_libraries(Main Core Python2::Python Python2::NumPy)
-target_link_libraries(Test Core Python2::Python Python2::NumPy)
-target_link_libraries(plttest Core Python2::Python Python2::NumPy)
+target_link_libraries(Test Core matplot)
+target_link_libraries(Main Core matplot)
