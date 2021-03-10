@@ -13,4 +13,4 @@
 	url = https://github.com/jbeder/yaml-cpp.git
 [submodule "extsrc/matplotplusplus"]
 	path = extsrc/matplotplusplus
-	url = https://github.com/alandefreitas/matplotplusplus/
+	url = https://github.com/alandefreitas/matplotplusplus.git
