@@ -2,7 +2,7 @@ FROM ubuntu:groovy
 
 #test 
 # install c++ tools
-RUN apt-get update && apt-get -y install build-essential cmake git graphviz python3 doxygen gnuplot
+RUN DEBIAN_FRONTEND="noninteractive" apt-get update && apt-get -y install build-essential cmake git graphviz python3 doxygen gnuplot
 
 # Copy the current folder which contains C++ source code to the Docker image under /usr/src
 COPY . /home/fastPL
