@@ -144,6 +144,14 @@ inline std::vector<std::string> getCriterionIds(std::vector<Perf> vectPerf) {
   return criterionIds;
 };
 
+inline std::vector<std::string> getNameIds(std::vector<Perf> vectPerf) {
+  std::vector<std::string> NameIds;
+  for (auto p : vectPerf) {
+    NameIds.push_back(p.getName());
+  }
+  return NameIds;
+};
+
 inline std::vector<Perf> createVectorPerf(std::string id, Criteria &criteria,
                                           std::vector<float> &given_perf) {
   if (criteria.getCriterionVect().size() != given_perf.size()) {

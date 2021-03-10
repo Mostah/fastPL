@@ -121,7 +121,6 @@ float ProfileInitializer::weightedProbability(
   // creating imaginary profile performance for criterion crit
   std::string critId = crit.getId();
   float imaginaryProfilePerformance = perfAlt.getValue() + delta;
-
   // Creating 2 int that will count the number of correctly classified
   // alternatives for criterion crit for a profile performance of
   // imaginaryProfilePerformance.
@@ -136,14 +135,15 @@ float ProfileInitializer::weightedProbability(
     // performance and that the alternatives category is catAbove then we have
     // correctly classified it
     if (can.getValue() > imaginaryProfilePerformance and
-        altPerformance_.getAlternativeAssignment(can.getName()) == catAbove) {
+        altPerformance_.getAlternativeAssignment(can.getName())
+                .getCategoryRank() == catAbove.getCategoryRank()) {
       ++catAboveCounter;
       // if the performance of the candidate is lower than the profile
       // performance and that the alternatives category is catBelow then we
       //  have correctly classified it
     } else if (can.getValue() < imaginaryProfilePerformance and
-               altPerformance_.getAlternativeAssignment(can.getName()) ==
-                   catBelow) {
+               altPerformance_.getAlternativeAssignment(can.getName())
+                       .getCategoryRank() == catBelow.getCategoryRank()) {
       ++catBelowCounter;
     }
   }
@@ -156,75 +156,73 @@ float ProfileInitializer::weightedProbability(
 std::vector<Perf> ProfileInitializer::initializeProfilePerformance(
     const Criterion &crit, Categories &categories,
     const std::vector<float> &catFre) {
-  std::vector<float> categoryLimits;
   int nbCategories = categories.getNumberCategories();
+  bool OrderedProfilePerformance = 0;
+  std::vector<float> finalCategoryLimits;
 
-  for (int i = 0; i < nbCategories - 1; i++) {
-    std::vector<float> altProba;
-    std::vector<Perf> candidates =
-        ProfileInitializer::getProfilePerformanceCandidates(crit, categories[i],
-                                                            nbCategories);
-    // OPTIM : POSSIBILITY parallelization synchrone
-    for (Perf cand : candidates) {
-      float proba = ProfileInitializer::weightedProbability(
-          cand, crit, categories[i], categories[i + 1], nbCategories, catFre,
-          candidates);
-      altProba.push_back(proba);
-    }
-
-    std::random_device rd;
-    float totProba = std::accumulate(altProba.begin(), altProba.end(), 0);
-    float randomNumber = getRandomUniformInt(rd(), 0, totProba);
-    float tmp = 0;
-    int index;
-    for (int i = 0; i < candidates.size(); i++) {
-      if (tmp < randomNumber) {
-        tmp += altProba[i];
-        index = i;
-      } else {
-        break;
+  while (!OrderedProfilePerformance) {
+    std::vector<float> categoryLimits;
+    for (int i = 0; i < nbCategories - 1; i++) {
+      std::vector<float> altProba;
+      std::vector<Perf> candidates =
+          ProfileInitializer::getProfilePerformanceCandidates(
+              crit, categories[i], nbCategories);
+      // OPTIM : POSSIBILITY parallelization synchrone
+      for (Perf cand : candidates) {
+        float proba = ProfileInitializer::weightedProbability(
+            cand, crit, categories[i], categories[i + 1], nbCategories, catFre,
+            candidates);
+        altProba.push_back(proba);
       }
+
+      std::random_device rd;
+      float totProba = std::accumulate(altProba.begin(), altProba.end(), 0);
+      float randomNumber = getRandomUniformInt(rd(), 0, totProba);
+      float tmp = 0;
+      int index = 0;
+      for (int i = 0; i < candidates.size(); i++) {
+        if (tmp < randomNumber) {
+          tmp += altProba[i];
+          index = i;
+        } else {
+          break;
+        }
+      }
+
+      categoryLimits.push_back(candidates[index].getValue());
     }
-    categoryLimits.push_back(candidates[index].getValue());
+    if (std::is_sorted(categoryLimits.begin(), categoryLimits.end())) {
+      OrderedProfilePerformance = 1;
+      finalCategoryLimits = categoryLimits;
+    }
   }
-  std::reverse(categoryLimits.begin(), categoryLimits.end());
+  std::reverse(finalCategoryLimits.begin(), finalCategoryLimits.end());
+  int nbCategoryLimits = finalCategoryLimits.size();
   // this is a work around since we would actually need to construct a
   // Performance with a categories object.
   std::vector<Perf> vect_p;
-  for (int i = 0; i < categoryLimits.size(); i++) {
+  for (int i = 0; i < nbCategoryLimits; i++) {
     // Cannot give a nice name to it since each vector of Perf need to have
     // same name
-    vect_p.push_back(
-        Perf(crit.getId(), "cat" + std::to_string(i), categoryLimits[i]));
+    vect_p.push_back(Perf("b" + std::to_string(nbCategoryLimits - 1 - i),
+                          crit.getId(), finalCategoryLimits[i]));
   }
   return vect_p;
 }
 
 void ProfileInitializer::initializeProfiles(MRSortModel &model) {
-  int nbIterations = 0;
-  bool ordered = 0;
-  while (!ordered) {
-    std::vector<std::vector<Perf>> perf_vec;
-    std::vector<Perf> firstAltPerf = altPerformance_.getPerformanceTable()[0];
-    std::vector<std::string> criteriaIds = getCriterionIds(firstAltPerf);
-    std::vector<float> catFreq = this->categoryFrequency();
-    // CatFreq has a problem
-    for (std::string criterion : criteriaIds) {
-      // OPTIM : POSSIBILITY parallelization asynchrone
-      std::vector<Perf> p = this->initializeProfilePerformance(
-          criterion, model.categories, catFreq);
-      perf_vec.push_back(p);
-    }
-    try {
-      Profiles p = Profiles(perf_vec, "crit");
-      model.profiles = p;
-      ordered = 1;
-      nbIterations++;
-      if (nbIterations > 100) {
-        throw std::domain_error("After 100 intialization can't get an valid "
-                                "(orderred) Profiles object ");
-      }
-    } catch (std::invalid_argument const &err) {
-    }
+  std::vector<std::vector<Perf>> perf_vec;
+  std::vector<Perf> firstAltPerf = altPerformance_.getPerformanceTable()[0];
+  std::vector<std::string> criteriaIds = getCriterionIds(firstAltPerf);
+  std::vector<float> catFreq = this->categoryFrequency();
+  // CatFreq has a problem sometimes
+  for (std::string criterion : criteriaIds) {
+    // OPTIM : POSSIBILITY parallelization asynchrone
+    std::vector<Perf> p = this->initializeProfilePerformance(
+        criterion, model.categories, catFreq);
+    std::reverse(p.begin(), p.end());
+    perf_vec.push_back(p);
   }
+  Profiles prof = Profiles(perf_vec, "crit");
+  model.profiles = prof;
 }
