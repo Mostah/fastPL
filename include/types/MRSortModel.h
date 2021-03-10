@@ -68,6 +68,8 @@ public:
   float lambda;
   Categories &categories;
 
+  float accuracy;
+
 private:
   std::string id_;
 };

@@ -9,6 +9,8 @@ struct Config {
   std::shared_ptr<spdlog::logger> logger;
   std::string data_dir = "../data/";
   std::string env = "staging";
+  int model_batch_size = 50;
+  int max_iterations = 100;
 };
 
 class App {

@@ -8,3 +8,5 @@ env:
 
 log_file: ../logs/app_log.txt
 data_dir: ../data/
+model_batch_size: 50
+max_iterations: 100

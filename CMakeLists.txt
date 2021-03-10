@@ -26,6 +26,7 @@ set(Headers
     include/types/AlternativesPerformance.h
     include/learning/LinearSolver.h
     include/learning/WeightUpdater.h
+    include/learning/HeuristicPipeline.h
     include/app.h
     )
 
@@ -43,6 +44,7 @@ set(Sources
     src/types/AlternativesPerformance.cpp
     src/learning/LinearSolver.cpp
     src/learning/WeightUpdater.cpp
+    src/learning/HeuristicPipeline.cpp
     src/app.cpp
     )
 

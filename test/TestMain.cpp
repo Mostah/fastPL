@@ -1,7 +1,8 @@
 #include "TestUtils.cpp"
+#include "learning/TestHeuristicPipeline.cpp"
+#include "learning/TestInitializeProfile.cpp"
 #include "learning/TestLinearSolver.cpp"
 #include "learning/TestWeightUpdater.cpp"
-#include "learning/TestInitializeProfile.cpp"
 
 #include "types/TestAlternativesPerformance.cpp"
 #include "types/TestCategories.cpp"

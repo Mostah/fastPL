@@ -37,6 +37,14 @@ MRSortModel::MRSortModel(int n_cat, int n_crit, std::string id)
   profiles.generateRandomPerfValues();
 }
 
+MRSortModel::MRSortModel(const MRSortModel &mrsort)
+    : criteria(mrsort.criteria), profiles(mrsort.profiles),
+      categories(mrsort.categories) {
+  lambda = mrsort.lambda;
+  accuracy = mrsort.accuracy;
+  id_ = mrsort.id_;
+}
+
 AlternativesPerformance MRSortModel::categoryAssignment(PerformanceTable &pt) {
   if (pt.getMode() != "alt") {
     throw std::invalid_argument(
