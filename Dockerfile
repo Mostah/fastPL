@@ -1,11 +1,7 @@
 FROM ubuntu:groovy
 
 # install c++ tools
-RUN apt-get update && apt-get -y install build-essential cmake git graphviz python3 doxygen python2.7-dev wget
-
-# install ploting tools
-RUN wget https://bootstrap.pypa.io/2.7/get-pip.py -O get-pip27.py && python2.7 get-pip27.py
-RUN pip install numpy matplotlib
+RUN apt-get update && apt-get -y install build-essential cmake git graphviz python3 doxygen gnuplot
 
 # Copy the current folder which contains C++ source code to the Docker image under /usr/src
 COPY . /home/fastPL
