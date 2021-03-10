@@ -154,6 +154,21 @@ public:
   bool isAltInTable(std::string altName);
 
   /**
+
+   * getNumberCrit return the amount of crits in the table
+   *
+   * @return n_crit
+   */
+  int getNumberCrit();
+
+  /**
+   * getNumberAlt return the amount of alts in the table
+   *
+   * @return n_alts
+   */
+  int getNumberAlt();
+
+  /**
    * Display PerformanceTable in a nice manner. Please be advised that this
    * method might be counter intuitive since elements do not necessarly have a
    * correct order depending on the mode

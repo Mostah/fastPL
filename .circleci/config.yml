@@ -3,20 +3,20 @@ version: 2.1
 jobs:
   compile:
     docker:
-      - image: gcc:9.3
+      - image: ubuntu:groovy
     steps:
       - checkout
       # command to build all files
-      - run: apt-get update && apt-get -y install cmake && apt-get -y install doxygen
+      - run: apt-get update && apt-get -y install build-essential cmake git doxygen
       - run: git submodule init; git submodule update
-      - run: mkdir build; cd build; cmake ..; make
+      - run: mkdir build; cd build; cmake .. -DBUILD_DEPS:BOOL=ON -DUSE_SCIP=OFF; make
       - persist_to_workspace:
           root: ./
           paths: 
             - ./
   test:
     docker:
-      - image: gcc:9.3
+      - image: ubuntu:groovy
     steps:
       # instead of checking out, restore workspace (will merge all parallel containers from previous job)
       - attach_workspace:
@@ -25,12 +25,12 @@ jobs:
 
   doc_generation:
     docker:
-      - image: gcc:9.3
+      - image: ubuntu:groovy
     steps:
       # instead of checking out, restore workspace (will merge all parallel containers from previous job)
       - attach_workspace:
           at: ./
-      - run: apt-get update && apt-get -y install cmake && apt-get -y install doxygen
+      - run: apt-get update && apt-get -y install build-essential cmake git doxygen
       - run: cd doc; cmake .; doxygen Doxyfile.Doxygen 
 
 
