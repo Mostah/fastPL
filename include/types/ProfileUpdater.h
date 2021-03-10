@@ -103,6 +103,18 @@ public:
           &ct,
       int &good, AlternativesPerformance &altPerf_model);
 
+  /**
+   * optimizeProfile Optimizes one profile using the profileUpdater methods.
+   *
+   * @param prof profile to optimize
+   * @param cat_below category delimited by the profile (below)
+   * @param cat_above category delimited by the profile (above)
+   * @param model current model
+   *
+   */
+  void optimizeProfile(std::vect<Perf> &prof, Category &cat_below,
+                       Category &cat_above, MRSortModel &model);
+
 private:
   float epsilon_;
   AlternativesPerformance &altPerf_data;

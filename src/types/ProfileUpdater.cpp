@@ -211,7 +211,7 @@ float chooseMaxDesirability(std::unordered_map<float, float> &desirability,
                  key_selector);
   std::transform(desirability.begin(), desirability.end(), values.begin(),
                  value_selector);
-  float key_max = values[0];
+  float key_max = keys[0];
   float val_max = values[0];
   float diff = std::abs(b.getValue() - key_max);
   for (auto element : keys) {
@@ -299,6 +299,17 @@ void ProfileUpdater::updateTables(
       good = good + 1;
       std::cout << "one more :D " << std::endl;
     }
+  }
+}
+
+void ProfileUpdater::optimizeProfile(std::vect<Perf> &prof, Category &cat_below,
+                                     Category &cat_above, MRSortModel &model) {
+  std::pair<std::vect<Perf>, std::vect<Perf>> below_above =
+      model.profiles.getBelowAndAboveProfile(prof[0].getName());
+  std::vect<Perf> prof_below = below_above[0];
+  std::vect<Perf> prof_above = below_above[1];
+  for (Criterion crit : model.criteria.getCriterionVect()) {
+    // Perf b = prof
   }
 }
 
