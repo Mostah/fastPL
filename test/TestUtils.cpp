@@ -46,20 +46,20 @@ TEST(TestUtils, TestUtilsVectorPerf) {
       "crit1, value : 3 ),Perf( name : alt1, crit : crit2, value : 4 )]");
 }
 
-TEST(TestUtils, TestUtilsPlotData) {
-  Config conf = getTestConf();
-  DataGenerator data = DataGenerator(conf);
-  std::string filename = "in7dataset.xml";
-  AlternativesPerformance ap = data.loadDataset(filename);
-  int nbCat = data.getNumberOfCategories(filename);
-  int nbCrit = data.getNumberOfCriteria(filename);
-  MRSortModel mr = MRSortModel(nbCat, nbCrit);
-  plotGlobalData(ap);
-  ProfileInitializer profInit = ProfileInitializer(conf, ap);
-  profInit.initializeProfiles(mr);
-  // works if we take out profile mode condition in function or
-  //     fix change mode bug
-  // mr.profiles.changeMode("alt");
-  // mr.profiles.changeMode("crit");
-  // plotProfile(mr.profiles);
+// TEST(TestUtils, TestUtilsPlotData) {
+//   Config conf = getTestConf();
+//   DataGenerator data = DataGenerator(conf);
+//   std::string filename = "in7dataset.xml";
+//   AlternativesPerformance ap = data.loadDataset(filename);
+//   int nbCat = data.getNumberOfCategories(filename);
+//   int nbCrit = data.getNumberOfCriteria(filename);
+//   MRSortModel mr = MRSortModel(nbCat, nbCrit);
+//   plotGlobalData(ap);
+//   ProfileInitializer profInit = ProfileInitializer(conf, ap);
+//   profInit.initializeProfiles(mr);
+// works if we take out profile mode condition in function or
+//     fix change mode bug
+// mr.profiles.changeMode("alt");
+// mr.profiles.changeMode("crit");
+// plotProfile(mr.profiles);
 }
