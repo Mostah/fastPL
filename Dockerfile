@@ -1,3 +1,4 @@
+# Get the GCC preinstalled image from Docker Hub
 FROM ubuntu:groovy
 
 #test 
@@ -15,7 +16,7 @@ RUN git submodule init && git submodule update
 # build c++ programs
 RUN mkdir -p /home/fastPL/build
 WORKDIR /home/fastPL/build/
-RUN cmake .. && make
+RUN cmake .. -DBUILD_DEPS:BOOL=ON -DUSE_SCIP=OFF && make
 
 # To visualize profiling data
 RUN git clone https://github.com/jrfonseca/gprof2dot.git

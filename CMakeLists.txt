@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.12) # version can be different
+cmake_minimum_required(VERSION 3.14) # version can be different
 
 project(fastPL) #name of your project
 
@@ -8,6 +8,7 @@ add_subdirectory(extsrc/spdlog)
 add_subdirectory(extsrc/pugixml)
 add_subdirectory(extsrc/yaml-cpp)
 add_subdirectory(extsrc/matplotplusplus)
+add_subdirectory(extsrc/ortools)
 
 add_subdirectory(doc) # add doxygen doc generator
 
@@ -25,6 +26,8 @@ set(Headers
     include/types/Categories.h
     include/types/DataGenerator.h
     include/types/AlternativesPerformance.h
+    include/learning/LinearSolver.h
+    include/learning/WeightUpdater.h
     include/app.h
     )
 
@@ -40,6 +43,8 @@ set(Sources
     src/types/Categories.cpp
     src/types/DataGenerator.cpp
     src/types/AlternativesPerformance.cpp
+    src/learning/LinearSolver.cpp
+    src/learning/WeightUpdater.cpp
     src/app.cpp
     )
 
@@ -57,6 +62,7 @@ target_link_libraries(Core spdlog::spdlog_header_only)
 target_link_libraries(Core yaml-cpp)
 target_link_libraries(Core pugixml)
 target_link_libraries(Core matplot)
+target_link_libraries(Core ortools::ortools)
 
 
 # Add executables
@@ -78,3 +84,5 @@ target_link_libraries(Main Core yaml-cpp)
 target_link_libraries(Test Core matplot)
 target_link_libraries(Main Core matplot)
 
+target_link_libraries(Main Core ortools::ortools)
+target_link_libraries(Test Core ortools::ortools)

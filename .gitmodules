@@ -1,7 +1,6 @@
 [submodule "extsrc/pugixml"]
 	path = extsrc/pugixml
 	url = https://github.com/thibmonsel/pugixml.git
-	
 [submodule "extsrc/googletest"]
 	path = extsrc/googletest
 	url = https://github.com/google/googletest.git
@@ -14,3 +13,6 @@
 [submodule "extsrc/matplotplusplus"]
 	path = extsrc/matplotplusplus
 	url = https://github.com/alandefreitas/matplotplusplus.git
+[submodule "extsrc/ortools"]
+	path = extsrc/ortools
+	url = https://github.com/google/or-tools.git
