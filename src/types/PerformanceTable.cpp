@@ -431,8 +431,8 @@ void PerformanceTable::display() {
 
 bool PerformanceTable::operator==(const PerformanceTable &pt) const {
 
-  if (this->pt_.size() != pt.getPerformanceTable().size() &&
-      this->pt_[0].size() != pt.getPerformanceTable().size()) {
+  if (this->pt_.size() != pt.getPerformanceTable().size() ||
+      this->pt_[0].size() != pt[0].getPerformanceTable().size()) {
     return 0;
   }
 
