@@ -144,6 +144,22 @@ inline std::vector<std::string> getCriterionIds(std::vector<Perf> vectPerf) {
   return criterionIds;
 };
 
+/**
+ * getPerfOfCrit
+ *
+ * @param critId criterion for which we want the perf
+ *
+ * @return Perf for given critId
+ */
+inline Perf getPerfOfCrit(std::vector<Perf> &vectPerf, std::string critId) {
+  for (Perf p : vectPerf) {
+    if (p.getCrit() == critId) {
+      return p;
+    }
+  }
+  throw std::invalid_argument("No performance for given criterion found");
+};
+
 inline std::vector<Perf> createVectorPerf(std::string id, Criteria &criteria,
                                           std::vector<float> &given_perf) {
   if (criteria.getCriterionVect().size() != given_perf.size()) {
