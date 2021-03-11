@@ -175,16 +175,9 @@ TEST(TestProfileInitializer, TestInitializeProfiles) {
   ProfileInitializer profInit = ProfileInitializer(conf, alt_perf);
   MRSortModel model = MRSortModel(3, 4);
   profInit.initializeProfiles(model);
-  std::cout << model.profiles << std::endl;
-  model.profiles.display();
   EXPECT_TRUE(model.profiles.isProfileOrdered());
-  // To be uncommented when performance type no longer exist
   model.profiles.changeMode("alt");
-  std::cout << model.profiles << std::endl;
-  model.profiles.display();
   EXPECT_TRUE(model.profiles.isProfileOrdered());
   model.profiles.changeMode("crit");
-  std::cout << model.profiles << std::endl;
-  model.profiles.display();
   EXPECT_TRUE(model.profiles.isProfileOrdered());
 }
