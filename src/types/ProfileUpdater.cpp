@@ -1,10 +1,12 @@
 #include "../../include/types/ProfileUpdater.h"
+#include "../../include/utils.h"
 
 #include <algorithm>
 #include <cstdlib>
 #include <iostream>
 #include <map>
 #include <string>
+#include <typeinfo>
 
 ProfileUpdater::ProfileUpdater(AlternativesPerformance &altPerf_data,
                                float epsilon)
@@ -198,36 +200,14 @@ std::unordered_map<float, float> ProfileUpdater::computeBelowDesirability(
   return desirability_below;
 }
 
-// NOT WORKING YET
-float chooseMaxDesirability(std::unordered_map<float, float> &desirability,
-                            Perf &b) {
-  std::cout << "hello" << std::endl;
-  auto key_selector = [](auto pair) { return pair.first; };
-  auto value_selector = [](auto pair) { return pair.second; };
-
-  std::vector<float> keys(desirability.size());
-  std::vector<float> values(desirability.size());
-  std::transform(desirability.begin(), desirability.end(), keys.begin(),
-                 key_selector);
-  std::transform(desirability.begin(), desirability.end(), values.begin(),
-                 value_selector);
-  float key_max = keys[0];
-  float val_max = values[0];
-  float diff = std::abs(b.getValue() - key_max);
-  for (auto element : keys) {
-    float k = element;
-    float v = desirability[element];
-    std::cout << "key_max: " << key_max << " val_max: " << val_max << std::endl;
-    std::cout << "k: " << k << " v: " << v << std::endl;
-    if (v >= val_max) {
-      float tmp = std::abs(b.getValue() - k);
-      std::cout << "tmp: " << tmp << std::endl;
-      if (tmp > diff) {
-        std::cout << "test3" << std::endl;
-        key_max = k;
-        val_max = v;
-        diff = tmp;
-      }
+float ProfileUpdater::chooseMaxDesirability(
+    std::unordered_map<float, float> &desirability, Perf &b) {
+  float key_max = 0;
+  float value_max = 0;
+  for (auto it = desirability.begin(); it != desirability.end(); ++it) {
+    if (it->second > value_max) {
+      key_max = it->first;
+      value_max = it->second;
     }
   }
   return key_max;
@@ -302,15 +282,62 @@ void ProfileUpdater::updateTables(
   }
 }
 
-void ProfileUpdater::optimizeProfile(std::vect<Perf> &prof, Category &cat_below,
-                                     Category &cat_above, MRSortModel &model) {
-  std::pair<std::vect<Perf>, std::vect<Perf>> below_above =
+void ProfileUpdater::optimizeProfile(
+    std::vector<Perf> &prof, Category &cat_below, Category &cat_above,
+    MRSortModel &model,
+    std::unordered_map<std::string, std::unordered_map<std::string, float>> &ct,
+    AlternativesPerformance &altPerf_model) {
+
+  std::pair<std::vector<Perf>, std::vector<Perf>> below_above =
       model.profiles.getBelowAndAboveProfile(prof[0].getName());
-  std::vect<Perf> prof_below = below_above[0];
-  std::vect<Perf> prof_above = below_above[1];
+  std::vector<Perf> prof_below = below_above.first;
+  std::vector<Perf> prof_above = below_above.second;
+
   for (Criterion crit : model.criteria.getCriterionVect()) {
-    // Perf b = prof
+    Perf b = getPerfOfCrit(prof, crit.getId());
+    Perf b_below = getPerfOfCrit(prof_below, crit.getId());
+    Perf b_above = getPerfOfCrit(prof_above, crit.getId());
+
+    std::unordered_map<std::string, float> ct_prof = ct[b.getName()];
+
+    std::unordered_map<float, float> below_des = this->computeBelowDesirability(
+        model, crit.getId(), b, b_below, cat_below, cat_above, ct_prof,
+        altPerf_model);
+    std::unordered_map<float, float> above_des = this->computeAboveDesirability(
+        model, crit.getId(), b, b_above, cat_below, cat_above, ct_prof,
+        altPerf_model);
+    std::unordered_map<float, float> desirability = below_des;
+    desirability.insert(above_des.begin(), above_des.end());
+
+    float key_max = this->chooseMaxDesirability(desirability, b);
+
+    float r = getRandomUniformFloat();
+    if (r <= key_max) {
+      Perf b_new = Perf(b);
+      b_new.setValue(key_max);
+      this->updateTables(model, crit.getId(), b, b_new, ct, good_,
+                         altPerf_model);
+    }
   }
+}
+
+float ProfileUpdater::optimize(
+    MRSortModel &model,
+    std::unordered_map<std::string, std::unordered_map<std::string, float>> &ct,
+    AlternativesPerformance &altPerf_model) {
+  int i = 0;
+  for (std::vector<Perf> profile : model.profiles.getPerformanceTable()) {
+    if (model.profiles.getMode() == "alt") {
+      if (model.profiles.isProfileOrdered()) {
+        Category cat_below = model.categories.getCategoryOfRank(i);
+        Category cat_above = model.categories.getCategoryOfRank(i + 1);
+        this->optimizeProfile(profile, cat_below, cat_above, model, ct,
+                              altPerf_model);
+      }
+    }
+  }
+  int n_alt = altPerf_data.getNumberAlt();
+  return (good_ / n_alt);
 }
 
 // Concordance table as an argument of optimize

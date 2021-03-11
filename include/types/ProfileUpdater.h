@@ -110,10 +110,29 @@ public:
    * @param cat_below category delimited by the profile (below)
    * @param cat_above category delimited by the profile (above)
    * @param model current model
+   * @param ct concordance table
+   * @param altPerf_model altPerf_model
    *
    */
-  void optimizeProfile(std::vect<Perf> &prof, Category &cat_below,
-                       Category &cat_above, MRSortModel &model);
+  void optimizeProfile(
+      std::vector<Perf> &prof, Category &cat_below, Category &cat_above,
+      MRSortModel &model,
+      std::unordered_map<std::string, std::unordered_map<std::string, float>>
+          &ct,
+      AlternativesPerformance &altPerf_model);
+
+  /**
+   * optimize Optimizes all the profiles using the profileUpdater methods.
+   *
+   * @param model current model
+   * @param ct concordance table
+   * @param altPerf_model altPerf_model
+   *
+   */
+  float optimize(MRSortModel &model,
+                 std::unordered_map<std::string,
+                                    std::unordered_map<std::string, float>> &ct,
+                 AlternativesPerformance &altPerf_model);
 
 private:
   float epsilon_;

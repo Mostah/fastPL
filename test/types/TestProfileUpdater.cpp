@@ -149,8 +149,8 @@ TEST(TestProfileUpdater, TestChooseMaxDesirability) {
 
   Perf b = Perf("b0", "crit1", 0.3);
 
-  // float max = profUpdater.chooseMaxDesirability(desirability, b);
-  EXPECT_FLOAT_EQ(0, 0.34);
+  float max = profUpdater.chooseMaxDesirability(desirability, b);
+  EXPECT_FLOAT_EQ(max, 0.34);
 }
 
 TEST(TestProfileUpdater, TestUpdateTables) {
