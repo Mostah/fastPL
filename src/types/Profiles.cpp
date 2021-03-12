@@ -95,18 +95,28 @@ bool Profiles::isProfileOrdered() {
 
 std::pair<std::vector<Perf>, std::vector<Perf>>
 Profiles::getBelowAndAboveProfile(std::string profName) {
+  int n_crit = this->getNumberCrit();
+  std::vector<Perf> base;
+  for (int i = 0; i < n_crit; i++) {
+    base.push_back(Perf("base", pt_[0][i].getCrit(), 0));
+  }
+  std::vector<Perf> top;
+  for (int i = 0; i < n_crit; i++) {
+    top.push_back(Perf("top", pt_[0][i].getCrit(), 1));
+  }
+
   std::vector<Perf> below;
   std::vector<Perf> above;
   if (mode_ == "alt") {
     for (int h = 0; h < pt_.size(); h++) {
       if (pt_[h][0].getName() == profName) {
         if (h == 0) {
-          below = pt_[h];
+          below = base;
           above = pt_[h + 1];
           return std::make_pair(below, above);
         } else if (h == pt_.size() - 1) {
           below = pt_[h - 1];
-          above = pt_[h];
+          above = top;
           return std::make_pair(below, above);
         } else {
           below = pt_[h - 1];
