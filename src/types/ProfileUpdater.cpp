@@ -256,6 +256,7 @@ void ProfileUpdater::updateTables(
     model.profiles.setPerf(b_new.getName(), b_new.getCrit(), b_new.getValue());
 
     // New assignment
+    altPerf_model.changeMode("alt");
     auto alternative = altPerf_model.operator[](alt.getName());
     std::vector<std::vector<Perf>> pt = model.profiles.getPerformanceTable();
     Category cat_new = model.categoryAssignment(alternative, pt);
@@ -318,6 +319,9 @@ void ProfileUpdater::optimizeProfile(
       this->updateTables(model, crit.getId(), b, b_new, ct, good_,
                          altPerf_model);
     }
+    std::cout << crit << std::endl;
+    std::cout << desirability << std::endl;
+    std::cout << key_max << std::endl;
   }
 }
 
@@ -327,14 +331,16 @@ float ProfileUpdater::optimize(
     AlternativesPerformance &altPerf_model) {
   int i = 0;
   for (std::vector<Perf> profile : model.profiles.getPerformanceTable()) {
-    if (model.profiles.getMode() == "alt") {
-      if (model.profiles.isProfileOrdered()) {
-        Category cat_below = model.categories.getCategoryOfRank(i);
-        Category cat_above = model.categories.getCategoryOfRank(i + 1);
-        this->optimizeProfile(profile, cat_below, cat_above, model, ct,
-                              altPerf_model);
+    if (model.profiles.getMode() != "alt") {
+      model.profiles.changeMode("alt");
+      if (!model.profiles.isProfileOrdered()) {
+        model.profiles.sort("alt");
       }
     }
+    Category cat_below = model.categories.getCategoryOfRank(i);
+    Category cat_above = model.categories.getCategoryOfRank(i + 1);
+    this->optimizeProfile(profile, cat_below, cat_above, model, ct,
+                          altPerf_model);
   }
   int n_alt = altPerf_data.getNumberAlt();
   return (good_ / n_alt);

@@ -189,3 +189,33 @@ TEST(TestProfileUpdater, TestUpdateTables) {
   EXPECT_FLOAT_EQ(model.profiles.getPerf("b0", "crit0").getValue(), 0.39);
   EXPECT_FLOAT_EQ(model.profiles.getPerf("b0", "crit1").getValue(), 0.18);
 }
+
+TEST(TestProfileUpdater, TestOptimizeProfile) {
+  Categories categories = newTestCategories();
+  MRSortModel model = newTestModel(categories);
+  AlternativesPerformance altPerf_data = newTestAltPerf();
+  AlternativesPerformance altPerf_model =
+      model.categoryAssignments(altPerf_data);
+  std::unordered_map<std::string, std::unordered_map<std::string, float>> ct =
+      model.computeConcordanceTable(altPerf_data);
+
+  std::vector<Perf> b1 = model.profiles["b1"];
+
+  Category cat_below = categories.getCategoryOfRank(1);
+  Category cat_above = categories.getCategoryOfRank(2);
+
+  ProfileUpdater profUpdater = ProfileUpdater(altPerf_data);
+
+  profUpdater.optimizeProfile(b1, cat_below, cat_above, model, ct,
+                              altPerf_model);
+}
+
+TEST(TestProfileUpdater, TestOptimize) {
+  Categories categories = newTestCategories();
+  MRSortModel model = newTestModel(categories);
+  AlternativesPerformance altPerf_data = newTestAltPerf();
+  AlternativesPerformance altPerf_model =
+      model.categoryAssignments(altPerf_data);
+  std::unordered_map<std::string, std::unordered_map<std::string, float>> ct =
+      model.computeConcordanceTable(altPerf_data);
+}
