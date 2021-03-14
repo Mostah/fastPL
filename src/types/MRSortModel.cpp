@@ -23,7 +23,7 @@ MRSortModel::MRSortModel(Criteria &crits, Profiles &profs, Categories &cats,
 }
 
 MRSortModel::MRSortModel(int n_cat, int n_crit, std::string id)
-    : criteria(n_crit), profiles(n_cat - 1, criteria, "prof"),
+    : criteria(n_crit), profiles(n_cat - 1, criteria, "crit", "prof"),
       categories(default_cats) {
   if (n_cat < 2) {
     throw std::invalid_argument(
