@@ -119,15 +119,4 @@ TEST(TestMRSortModel, TestConcordance) {
 
   EXPECT_FLOAT_EQ(ct["b0"]["alt0"], 0.3);
   EXPECT_FLOAT_EQ(ct["b2"]["alt1"], 0.3);
-
-  // Display ct
-  // for (std::pair<std::string,
-  // std::unordered_map<std::string, float>> element
-  // :
-  //      ct) {
-  //   std::cout << "profile " << element.first << std::endl;
-  //   for (std::pair<std::string, float> conc : element.second) {
-  //     std::cout << conc.first << " conc " << conc.second << std::endl;
-  //   }
-  // }
 }
