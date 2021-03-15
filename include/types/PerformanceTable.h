@@ -122,6 +122,20 @@ public:
    *
    * @return sub_vect
    */
+  std::vector<Perf> getAltBetweenSorted(std::string critId, float inf,
+                                        float sup);
+
+  /**
+   * getAltBetween return all the alternatives / profiles that have a
+   * performance (value) between inf and sup on criterion crit. The performance
+   * table does not need to be sorted before calling this function.
+   *
+   * @param critId crit Id to look for
+   * @param inf inferior boudary
+   * @param sup superior boundary
+   *
+   * @return sub_vect
+   */
   std::vector<Perf> getAltBetween(std::string critId, float inf, float sup);
 
   /**
