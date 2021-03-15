@@ -87,15 +87,6 @@ AlternativesPerformance newTestAltPerf() {
   return AlternativesPerformance(perf_vect, assignment);
 }
 
-TEST(TestProfileUpdater, TestBaseConstructor) {
-  Config conf = getProfUpdaterTestConf();
-  // MRSortModel model = newTestModel();
-  AlternativesPerformance altPerf_data = newTestAltPerf();
-  ProfileUpdater profUpdater = ProfileUpdater(conf, altPerf_data, 0.1);
-
-  EXPECT_EQ("hello", "hello");
-}
-
 TEST(TestProfileUpdater, TestComputeAboveDesirability) {
   Config conf = getProfUpdaterTestConf();
   Categories categories = newTestCategories();
