@@ -127,7 +127,7 @@ Profiles::getBelowAndAboveProfile(std::string profName) {
     }
     throw std::invalid_argument("Profile not found.");
   } else {
-    throw std::domain_error("Profiles perftable mode corrupted.");
+    throw std::invalid_argument("Profiles perftable mode should be crit.");
   }
 }
 

@@ -137,11 +137,12 @@ TEST(TestProfiles, TestGetBelowAndAboveErrors) {
   try {
     std::pair<std::vector<Perf>, std::vector<Perf>> profiles1 =
         profile.getBelowAndAboveProfile("b1");
-    FAIL() << "should have thrown domain error.";
-  } catch (std::domain_error const &err) {
-    EXPECT_EQ(err.what(), std::string("Profiles perftable mode corrupted."));
+    FAIL() << "should have thrown invalid argument.";
+  } catch (std::invalid_argument const &err) {
+    EXPECT_EQ(err.what(),
+              std::string("Profiles perftable mode should be crit."));
   } catch (...) {
-    FAIL() << "should have thrown domain error.";
+    FAIL() << "should have thrown invalid argument.";
   }
 }
 
