@@ -331,25 +331,24 @@ void ProfileUpdater::optimizeProfile(
   }
 }
 
-float ProfileUpdater::optimize(
+void ProfileUpdater::optimize(
     MRSortModel &model,
     std::unordered_map<std::string, std::unordered_map<std::string, float>> &ct,
     AlternativesPerformance &altPerf_model) {
+  if (model.profiles.getMode() != "alt") {
+    model.profiles.changeMode("alt");
+    if (!model.profiles.isProfileOrdered()) {
+      model.profiles.sort("alt");
+    }
+  }
   int i = 0;
   for (std::vector<Perf> profile : model.profiles.getPerformanceTable()) {
-    if (model.profiles.getMode() != "alt") {
-      model.profiles.changeMode("alt");
-      if (!model.profiles.isProfileOrdered()) {
-        model.profiles.sort("alt");
-      }
-    }
     Category cat_below = model.categories.getCategoryOfRank(i);
     Category cat_above = model.categories.getCategoryOfRank(i + 1);
     this->optimizeProfile(profile, cat_below, cat_above, model, ct,
                           altPerf_model);
-  }
-  int n_alt = altPerf_data.getNumberAlt();
-  return (good_ / n_alt);
+    i = i + 1;
+  };
 }
 
 // Concordance table as an argument of optimize

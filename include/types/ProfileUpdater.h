@@ -132,10 +132,10 @@ public:
    * @param altPerf_model altPerf_model
    *
    */
-  float optimize(MRSortModel &model,
-                 std::unordered_map<std::string,
-                                    std::unordered_map<std::string, float>> &ct,
-                 AlternativesPerformance &altPerf_model);
+  void optimize(MRSortModel &model,
+                std::unordered_map<std::string,
+                                   std::unordered_map<std::string, float>> &ct,
+                AlternativesPerformance &altPerf_model);
 
 private:
   float epsilon_;
