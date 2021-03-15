@@ -8,12 +8,18 @@
 #include <string>
 #include <typeinfo>
 
-ProfileUpdater::ProfileUpdater(AlternativesPerformance &altPerf_data,
+ProfileUpdater::ProfileUpdater(Config &conf,
+                               AlternativesPerformance &altPerf_data,
                                float epsilon)
-    : altPerf_data(altPerf_data), epsilon_(epsilon) {}
+    : conf(conf), altPerf_data(altPerf_data), epsilon_(epsilon) {
+  conf.logger->debug("Starting ProfileUpdater object...");
+}
 
 ProfileUpdater::ProfileUpdater(const ProfileUpdater &profUp)
-    : altPerf_data(profUp.altPerf_data), epsilon_(profUp.epsilon_) {}
+    : conf(profUp.conf), altPerf_data(profUp.altPerf_data),
+      epsilon_(profUp.epsilon_) {
+  conf.logger->debug("Starting ProfileUpdater object...");
+}
 
 ProfileUpdater::~ProfileUpdater() {}
 

@@ -1,3 +1,4 @@
+#include "../../include/app.h"
 #include "../../include/types/ProfileUpdater.h"
 #include "gtest/gtest.h"
 #include <algorithm>
@@ -15,6 +16,19 @@
 // b0------0.3----0.3----0.3----0.3----0.3
 //                   cat0
 // ----------------------------------------
+
+Config getProfUpdaterTestConf() {
+  Config conf;
+  conf.data_dir = "../data/tests/";
+  try {
+    conf.logger =
+        spdlog::basic_logger_mt("test_logger", "../logs/test_logger.txt");
+  } catch (const spdlog::spdlog_ex &ex) {
+    conf.logger = spdlog::get("test_logger");
+  }
+  spdlog::set_level(spdlog::level::debug);
+  return conf;
+}
 
 Criteria newTestCriteria() {
   std::vector<Criterion> crit_vect;
@@ -74,14 +88,16 @@ AlternativesPerformance newTestAltPerf() {
 }
 
 TEST(TestProfileUpdater, TestBaseConstructor) {
+  Config conf = getProfUpdaterTestConf();
   // MRSortModel model = newTestModel();
   AlternativesPerformance altPerf_data = newTestAltPerf();
-  ProfileUpdater profUpdater = ProfileUpdater(altPerf_data, 0.1);
+  ProfileUpdater profUpdater = ProfileUpdater(conf, altPerf_data, 0.1);
 
   EXPECT_EQ("hello", "hello");
 }
 
 TEST(TestProfileUpdater, TestComputeAboveDesirability) {
+  Config conf = getProfUpdaterTestConf();
   Categories categories = newTestCategories();
   MRSortModel model = newTestModel(categories);
   AlternativesPerformance altPerf_data = newTestAltPerf();
@@ -91,7 +107,7 @@ TEST(TestProfileUpdater, TestComputeAboveDesirability) {
       model.computeConcordanceTable(altPerf_data);
   std::unordered_map<std::string, float> ct_b0 = ct["b0"];
   float epsilon = 0.0001;
-  ProfileUpdater profUpdater = ProfileUpdater(altPerf_data, epsilon);
+  ProfileUpdater profUpdater = ProfileUpdater(conf, altPerf_data, epsilon);
   Perf b0_c0 = Perf("b0", "crit0", 0.3);
   Perf b1_c0 = Perf("b1", "crit0", 0.6);
   Category cat = categories.getCategoryOfRank(0);
@@ -115,6 +131,7 @@ TEST(TestProfileUpdater, TestComputeAboveDesirability) {
 }
 
 TEST(TestProfileUpdater, TestComputeBelowDesirability) {
+  Config conf = getProfUpdaterTestConf();
   Categories categories = newTestCategories();
   MRSortModel model = newTestModel(categories);
   AlternativesPerformance altPerf_data = newTestAltPerf();
@@ -124,7 +141,7 @@ TEST(TestProfileUpdater, TestComputeBelowDesirability) {
       model.computeConcordanceTable(altPerf_data);
   std::unordered_map<std::string, float> ct_b0 = ct["b0"];
   float epsilon = 0.0001;
-  ProfileUpdater profUpdater = ProfileUpdater(altPerf_data, epsilon);
+  ProfileUpdater profUpdater = ProfileUpdater(conf, altPerf_data, epsilon);
   Perf b0_c1 = Perf("b0", "crit1", 0.3);
   Perf base = Perf("base", "crit1", 0);
   Category cat = categories.getCategoryOfRank(0);
@@ -138,8 +155,9 @@ TEST(TestProfileUpdater, TestComputeBelowDesirability) {
 }
 
 TEST(TestProfileUpdater, TestChooseMaxDesirability) {
+  Config conf = getProfUpdaterTestConf();
   AlternativesPerformance altPerf_data = newTestAltPerf();
-  ProfileUpdater profUpdater = ProfileUpdater(altPerf_data);
+  ProfileUpdater profUpdater = ProfileUpdater(conf, altPerf_data);
 
   std::unordered_map<float, float> desirability;
   desirability[0.2] = 5;
@@ -154,6 +172,7 @@ TEST(TestProfileUpdater, TestChooseMaxDesirability) {
 }
 
 TEST(TestProfileUpdater, TestUpdateTables) {
+  Config conf = getProfUpdaterTestConf();
   Categories categories = newTestCategories();
   MRSortModel model = newTestModel(categories);
   AlternativesPerformance altPerf_data = newTestAltPerf();
@@ -162,7 +181,7 @@ TEST(TestProfileUpdater, TestUpdateTables) {
 
   auto ct = model.computeConcordanceTable(altPerf_data);
 
-  ProfileUpdater profUpdater = ProfileUpdater(altPerf_data);
+  ProfileUpdater profUpdater = ProfileUpdater(conf, altPerf_data);
   int good = 1;
   Perf b0_c0_old = Perf("b0", "crit0", 0.3);
   Perf b0_c0_new = Perf("b0", "crit0", 0.39);
@@ -191,6 +210,7 @@ TEST(TestProfileUpdater, TestUpdateTables) {
 }
 
 TEST(TestProfileUpdater, TestOptimizeProfile) {
+  Config conf = getProfUpdaterTestConf();
   Categories categories = newTestCategories();
   MRSortModel model = newTestModel(categories);
   AlternativesPerformance altPerf_data = newTestAltPerf();
@@ -204,7 +224,7 @@ TEST(TestProfileUpdater, TestOptimizeProfile) {
   Category cat_below = categories.getCategoryOfRank(1);
   Category cat_above = categories.getCategoryOfRank(2);
 
-  ProfileUpdater profUpdater = ProfileUpdater(altPerf_data);
+  ProfileUpdater profUpdater = ProfileUpdater(conf, altPerf_data);
 
   profUpdater.optimizeProfile(b1, cat_below, cat_above, model, ct,
                               altPerf_model);

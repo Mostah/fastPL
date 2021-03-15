@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 
+#include "../app.h"
 #include "MRSortModel.h"
 
 class ProfileUpdater {
@@ -12,9 +13,11 @@ public:
   /**
    * ProfileUpdater standard constructor
    *
+   * @param conf conf setup for logging
+   * @param altPerf_data alternative perfomances dataset
    * @param epsilon
    */
-  ProfileUpdater(AlternativesPerformance &altPerf_data,
+  ProfileUpdater(Config &conf, AlternativesPerformance &altPerf_data,
                  float epsilon = 0.00001);
 
   /**
@@ -138,6 +141,7 @@ private:
   float epsilon_;
   AlternativesPerformance &altPerf_data;
   int good_;
+  Config &conf;
 };
 
 #endif
