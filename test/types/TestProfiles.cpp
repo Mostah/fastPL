@@ -93,7 +93,7 @@ TEST(TestProfiles, TestGetBelowAndAbove) {
   std::vector<Perf> below2 = profiles2.first;
   std::vector<Perf> above2 = profiles2.second;
 
-  EXPECT_EQ(below2[0].getName(), "b0");
+  EXPECT_EQ(below2[0].getName(), "base");
   EXPECT_EQ(above2[0].getName(), "b1");
 
   std::pair<std::vector<Perf>, std::vector<Perf>> profiles3 =
@@ -102,7 +102,7 @@ TEST(TestProfiles, TestGetBelowAndAbove) {
   std::vector<Perf> above3 = profiles3.second;
 
   EXPECT_EQ(below3[0].getName(), "b1");
-  EXPECT_EQ(above3[0].getName(), "b2");
+  EXPECT_EQ(above3[0].getName(), "top");
 }
 
 TEST(TestProfiles, TestGetBelowAndAboveErrors) {
