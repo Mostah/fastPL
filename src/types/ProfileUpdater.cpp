@@ -222,7 +222,7 @@ float ProfileUpdater::chooseMaxDesirability(
 void ProfileUpdater::updateTables(
     MRSortModel &model, std::string critId, Perf &b_old, Perf &b_new,
     std::unordered_map<std::string, std::unordered_map<std::string, float>> &ct,
-    int &good, AlternativesPerformance &altPerf_model) {
+    AlternativesPerformance &altPerf_model) {
   if (b_old.getName() != b_new.getName() ||
       b_old.getCrit() != b_new.getCrit()) {
     throw std::invalid_argument("Profile perfs must have same name and crit");
@@ -275,17 +275,14 @@ void ProfileUpdater::updateTables(
               << " aa_old: " << aa_old << " aa_new: " << aa_new << std::endl;
     std::cout << "c: " << c << std::endl;
 
-    // Update good assignment count
-    if (aa_old == aa_new) {
-      std::cout << "no change" << std::endl;
-      break;
-    } else if (aa_old == aa_data) {
-      good = good - 1;
-      std::cout << "one less :( " << std::endl;
-    } else if (aa_new == aa_data) {
-      good = good + 1;
-      std::cout << "one more :D " << std::endl;
-    }
+    // // Update good assignment count
+    // if (aa_old == aa_new) {
+    //   break;
+    // } else if (aa_old == aa_data) {
+    //   good = good - 1;
+    // } else if (aa_new == aa_data) {
+    //   good = good + 1;
+    // }
   }
 }
 
@@ -322,12 +319,8 @@ void ProfileUpdater::optimizeProfile(
     if (r <= key_max) {
       Perf b_new = Perf(b);
       b_new.setValue(key_max);
-      this->updateTables(model, crit.getId(), b, b_new, ct, good_,
-                         altPerf_model);
+      this->updateTables(model, crit.getId(), b, b_new, ct, altPerf_model);
     }
-    std::cout << crit << std::endl;
-    std::cout << desirability << std::endl;
-    std::cout << key_max << std::endl;
   }
 }
 
@@ -350,8 +343,3 @@ void ProfileUpdater::optimize(
     i = i + 1;
   };
 }
-
-// Concordance table as an argument of optimize
-// Idem #good
-// Idem aa_data
-// Idem aa_model

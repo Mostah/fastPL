@@ -87,7 +87,6 @@ public:
   /**
    * updateTables updates model tables with new profile value
    * - concordance table
-   * - good assignment count
    * - alternative assignement
    * - profiles
    *
@@ -96,7 +95,6 @@ public:
    * @param b_old old profile perf
    * @param b_new new profile perf
    * @param ct concordance table to update
-   * @param good # of good assignment to update
    * @param altPerf_model alternativePerformance calculated with current model
    *
    */
@@ -104,7 +102,7 @@ public:
       MRSortModel &model, std::string critId, Perf &b_old, Perf &b_new,
       std::unordered_map<std::string, std::unordered_map<std::string, float>>
           &ct,
-      int &good, AlternativesPerformance &altPerf_model);
+      AlternativesPerformance &altPerf_model);
 
   /**
    * optimizeProfile Optimizes one profile using the profileUpdater methods.
@@ -140,7 +138,6 @@ public:
 private:
   float epsilon_;
   AlternativesPerformance &altPerf_data;
-  int good_;
   Config &conf;
 };
 
