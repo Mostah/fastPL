@@ -114,7 +114,7 @@ public:
   /**
    * getAltBetween return all the alternatives / profiles that have a
    * performance (value) between inf and sup on criterion crit. The performance
-   * table must have been sorted before calling this function.
+   * table must have been sorted and in mode crit before calling this function.
    *
    * @param critId crit Id to look for
    * @param inf inferior boudary
