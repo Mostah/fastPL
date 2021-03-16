@@ -343,3 +343,11 @@ void ProfileUpdater::optimize(
     i = i + 1;
   };
 }
+
+void ProfileUpdater::updateProfiles(MRSortModel &model) {
+  std::unordered_map<std::string, std::unordered_map<std::string, float>> ct =
+      model.computeConcordanceTable(altPerf_data);
+  AlternativesPerformance altPerf_model =
+      model.categoryAssignments(altPerf_data);
+  this->optimize(model, ct, altPerf_model);
+}

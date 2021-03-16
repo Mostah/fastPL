@@ -135,6 +135,14 @@ public:
                                    std::unordered_map<std::string, float>> &ct,
                 AlternativesPerformance &altPerf_model);
 
+  /**
+   * updateProfiles Updates the profiles of the model using the metaheuristic
+   *
+   * @param model current model
+   *
+   */
+  void updateProfiles(MRSortModel &model);
+
 private:
   float epsilon_;
   AlternativesPerformance &altPerf_data;
