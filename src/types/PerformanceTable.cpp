@@ -227,7 +227,9 @@ std::vector<Perf> PerformanceTable::getAltBetweenSorted(std::string critId,
     throw std::domain_error("The performance table must be sorted.");
   }
   std::vector<Perf> v;
-  if (mode_ == "crit") {
+  if (mode_ != "crit") {
+    throw std::invalid_argument("Performance table mode must be crit.");
+  } else {
     std::vector<Perf> pv = this->operator[](critId);
     auto lower_b = std::lower_bound(
         pv.begin(), pv.end(), inf,
