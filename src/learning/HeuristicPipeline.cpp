@@ -25,6 +25,9 @@ void HeuristicPipeline::start() {
   for (int k = 0; k < conf.model_batch_size; k++) {
     MRSortModel model = MRSortModel(n_cat, n_crit);
     profileInitializer.initializeProfiles(model);
+
+    // change back to alt mode
+    model.profiles.changeMode("alt");
     models.push_back(model);
   }
   // Update weight and lambda
@@ -47,6 +50,7 @@ void HeuristicPipeline::start() {
     for (int k = conf.model_batch_size - 1; k > conf.model_batch_size / 2 - 1;
          k--) {
       profileInitializer.initializeProfiles(models[k]);
+      models[k].profiles.changeMode("alt");
     }
 
     // ** Weight and lambda update **
