@@ -164,6 +164,10 @@ TEST(TestProfileInitializer, TestInitializeProfiles) {
   MRSortModel model = MRSortModel(3, 4);
   profInit.initializeProfiles(model);
   EXPECT_TRUE(model.profiles.isProfileOrdered());
+  model.profiles.changeMode("alt");
+  EXPECT_TRUE(model.profiles.isProfileOrdered());
+  model.profiles.changeMode("crit");
+  EXPECT_TRUE(model.profiles.isProfileOrdered());
 }
 
 TEST(TestProfileInitializer, TestInitializeProfilesRealDataset) {
@@ -184,6 +188,6 @@ TEST(TestProfileInitializer, TestInitializeProfilesRealDataset) {
   EXPECT_TRUE(model.profiles.isProfileOrdered());
   model.profiles.display();
   model.profiles.changeMode("alt");
-  // model.profiles.display();
-  // EXPECT_TRUE(model.profiles.isProfileOrdered());
+  model.profiles.display();
+  EXPECT_TRUE(model.profiles.isProfileOrdered());
 }

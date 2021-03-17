@@ -1,7 +1,21 @@
 #ifndef CATEGORY_H
 #define CATEGORY_H
 
+/**
+ * @file Category.h
+ * @brief Datastructure representing a category.
+ *
+ */
+
 #include <iostream>
+
+/** @class Category Category.h
+ * @brief Category datastructure
+ *
+ * The Category datastructure is represented by its name and its rank. The rank
+ * represents the order to assume when comparing two categories. The rank 0 is
+ * by convention the worst category.
+ */
 
 class Category {
 public:

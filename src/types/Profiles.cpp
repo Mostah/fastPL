@@ -10,10 +10,7 @@
 #include <vector>
 
 Profiles::Profiles(std::vector<std::vector<Perf>> &perf_vect, std::string mode)
-    : PerformanceTable(perf_vect) {
-  if (mode != "alt" and mode != "crit") {
-    throw std::invalid_argument("Invalid Profile mode given.");
-  }
+    : PerformanceTable(perf_vect, mode) {
   mode_ = mode;
   if (!this->isProfileOrdered()) {
     throw std::invalid_argument("Profile in its given mode is not ordered");

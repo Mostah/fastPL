@@ -1,21 +1,51 @@
 #ifndef PERFORMANCETABLE_H
 #define PERFORMANCETABLE_H
 
+/**
+ * @file PerformanceTable.h
+ * @brief PerformanceTable data structure.
+ *
+ */
+
 #include "Criteria.h"
 #include "Perf.h"
 #include <ctime>
 #include <iostream>
 #include <vector>
 
+/**
+ * @class PerformanceTable PerformanceTable.h
+ * @brief PerformanceTable data structure.
+ *
+ * PerformanceTable is a table of Perf objects. It is a Mathematical
+ * datastructure that can be interpreted as a Matrix if a few conditions are
+ * met, or a vector of vector if the column order cannot be guaranteed.
+ *
+ * The PerformanceTable has to mode of representation: crit and alt.
+ *   -  In crit mode, the table is index by crit in the first dimension (in one
+ * row we have all perf of a certain crit), the second dimension beeing alt.
+ *   -  In alt mode, the table is index by alt in the first dimension (in one
+ * row we have all perf of a certain alt), the second dimension beeing crit.
+ *
+ * The Perf table can be interpreted as a Matrix if the second dimension has the
+ * same order for all row.
+ *
+ * This datastructure was designed to be itterated over easily, thus the access
+ * time of a certain element (like in a hashmap) is in O(n_crit * n_alt) which
+ * is absolutely inefficient and should be avoided.
+ */
 class PerformanceTable {
 public:
   /**
-   * PerformanceTable constructor with defined vector of performance. All
-   * Performance should have the same criteria to be based on.
+   * PerformanceTable constructor with defined vector of performance that
+   * represents the PerformanceTable in a certain mode. All Vector of Perf
+   * objects should have the same criteria. Need to give the mode of the
+   * Performance table that is either "alt" or "crit".
    *
    * @param perf_vect Vector of performance
    */
-  PerformanceTable(std::vector<std::vector<Perf>> &perf_vect);
+  PerformanceTable(std::vector<std::vector<Perf>> &perf_vect,
+                   std::string mode = "alt");
 
   /**
    * PerformanceTable constructor without perf values but set of criteria to
@@ -175,6 +205,14 @@ public:
    *
    */
   void display();
+
+  /**
+   * Overload of == operator for PerformanceTable object. It compares the name,
+   * criteria and values of the PerformanceTable.
+   *
+   * @param pt PerformanceTable object to compare it with
+   */
+  bool operator==(const PerformanceTable &pt) const;
 
 protected:
   std::vector<std::vector<Perf>> pt_;

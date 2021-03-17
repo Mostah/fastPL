@@ -204,17 +204,13 @@ std::vector<Perf> ProfileInitializer::initializeProfilePerformance(
   for (int i = 0; i < nbCategoryLimits; i++) {
     // Cannot give a nice name to it since each vector of Perf need to have
     // same name
-    vect_p.push_back(Perf(crit.getId(),
-                          "cat" + std::to_string(nbCategoryLimits - 1 - i),
-                          finalCategoryLimits[i]));
+    vect_p.push_back(Perf("b" + std::to_string(nbCategoryLimits - 1 - i),
+                          crit.getId(), finalCategoryLimits[i]));
   }
   return vect_p;
 }
 
 void ProfileInitializer::initializeProfiles(MRSortModel &model) {
-  int nbIterations = 0;
-  bool ordered = 0;
-  ++nbIterations;
   std::vector<std::vector<Perf>> perf_vec;
   std::vector<Perf> firstAltPerf = altPerformance_.getPerformanceTable()[0];
   std::vector<std::string> criteriaIds = getCriterionIds(firstAltPerf);
@@ -227,8 +223,6 @@ void ProfileInitializer::initializeProfiles(MRSortModel &model) {
     std::reverse(p.begin(), p.end());
     perf_vec.push_back(p);
   }
-
   Profiles prof = Profiles(perf_vec, "crit");
   model.profiles = prof;
-  ordered = 1;
 }

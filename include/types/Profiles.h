@@ -1,6 +1,12 @@
 #ifndef PROFILES_H
 #define PROFILES_H
 
+/**
+ * @file Profiles.h
+ * @brief Profiles data structure.
+ *
+ */
+
 #include "Category.h"
 #include "Criteria.h"
 #include "Perf.h"
@@ -10,6 +16,28 @@
 #include <string.h>
 #include <vector>
 
+/**
+ * @class Profiles Profiles.h
+ * @brief Profiles data structure.
+ *
+ * The Profiles class hold the datastructure that implement the theoretical
+ * definition of a "profile": the values that delimit two categories. A Profiles
+ * object is represented as a PerformanceTable that guarantee the right order of
+ * the values. In order to have a correct representation of a set of profile (to
+ * delimit all the category of our problem), each profile must be dominated by
+ * the one above and must demonate the one below.
+ *
+ * Example:
+ *
+ * |           |crit0|  crit1|                 |
+ * |-----------|-----|-------|-----------------|
+ * |category 2 |     |       |                 |
+ * |           | 0.6 |   0.8 |  --  profile 1  |
+ * |category 1 |     |       |                 |
+ * |           | 0.4 |   0.5 |  --  profile 0  |
+ * |category 0 |     |       |                 |
+ *
+ */
 class Profiles : public PerformanceTable {
 public:
   /**

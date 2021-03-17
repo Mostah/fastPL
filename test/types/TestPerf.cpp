@@ -37,3 +37,11 @@ TEST(TestPerf, TestGetterSetter) {
   EXPECT_EQ("test2", perf.getName());
   EXPECT_EQ("b", perf.getCrit());
 }
+
+TEST(TestPerf, TestOperatorEqual) {
+  Perf perf = Perf("test", "a", 0.6);
+  Perf perf2 = Perf("test", "a", 0.6);
+  Perf perf3 = Perf("test", "a1", 0.6);
+  EXPECT_EQ(perf3 == perf2, 0);
+  EXPECT_EQ(perf == perf2, 1);
+}

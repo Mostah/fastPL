@@ -1,6 +1,13 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+/**
+ * @file utils.h
+ * @brief utility functions used by our programs.
+ *
+ * All utility fonctions are referenced and implemented inside this file.
+ */
+
 #include "../extsrc/pugixml/src/pugixml.hpp"
 #include "types/AlternativesPerformance.h"
 #include "types/Profiles.h"
@@ -132,6 +139,14 @@ inline std::vector<std::string> getCriterionIds(std::vector<Perf> vectPerf) {
     criterionIds.push_back(p.getCrit());
   }
   return criterionIds;
+};
+
+inline std::vector<std::string> getNameIds(std::vector<Perf> vectPerf) {
+  std::vector<std::string> NameIds;
+  for (auto p : vectPerf) {
+    NameIds.push_back(p.getName());
+  }
+  return NameIds;
 };
 
 inline std::vector<Perf> createVectorPerf(std::string id, Criteria &criteria,
