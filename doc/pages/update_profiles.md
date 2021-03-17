@@ -19,13 +19,16 @@ Profile Updater algorithm is responsible for updating the profiles given the fix
 After initializing the profiles, computing the weights and the lambda of a model, the last step is to update the profile to match as much as possible the decision maker's criteria.
 The profile updater algorithm functions as below:
 
+    1. For each profile:
+        A. For each criterion:
+            i. Compute the possible positions for the profile and evaluate the repercution of this move on the classification 
+            ii. Select the position that maximizes the result of the move on the alternative assignments 
+            iii. Move the profile and update the alternative assignments *(updateTables)*
 
-    For each profile:
-        For each criterion:
-            - *computeBelowDisirability, computeAboveDesirability* : Compute the possible positions for the profile and evaluate the repercution of this move on the classification 
-            - *chooseMaxDesirability* : Select the position that maximizes the result of the move on the alternative assignments 
-            - *updateTables* : Move the profile and update the alternative assignments *(updateTables)*
+Or, in terms of functions:
 
-
-*optimizeProfile* performs the algorithme above for one profile
-*optimize performs* optimizeProfile on each profile
+    1. *optimizeProfile* performs the algorithm above for one profile
+        A. *optimize performs* optimizeProfile on each profile
+            i. *computeBelowDisirability, computeAboveDesirability* 
+            ii. *chooseMaxDesirability* 
+            iii. *updateTables* 
