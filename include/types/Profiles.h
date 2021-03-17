@@ -87,7 +87,8 @@ public:
   getBelowAndAboveProfile(std::string profName);
 
   /**
-   * setPerf set a Perf given the alt name, crit and value
+   * setPerf set a Perf given the alt name, crit and value.
+   * Unefficient since using [] operator...
    *
    * @param name name of the alt or profile we want to update
    * @param crit name of the crit we want to update
