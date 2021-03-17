@@ -91,6 +91,13 @@ public:
    */
   void setCrit(std::string crit);
 
+  /**
+   * Overload of == operator for Perf object
+   *
+   * @param perf2 Perf object to compare it with
+   */
+  bool operator==(const Perf &perf2) const;
+
 private:
   std::string crit_;
   float value_;

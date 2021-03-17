@@ -609,13 +609,11 @@ std::vector<Perf> DataGenerator::getAlternativePerformance(std::string fileName,
         break;
       }
     }
-    std::cout << alt_perf;
     if (alt_perf.empty()) {
       throw std::invalid_argument("Cannot find performance associated to the "
                                   "alternative identified by "
                                   "alt_id in xml file.");
     }
-    std::cout << criteria.getCriterionVect().size() << "  " << alt_perf.size();
     return createVectorPerf(alt_id, criteria, alt_perf);
   }
 }

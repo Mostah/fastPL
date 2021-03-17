@@ -38,6 +38,7 @@ build
 .vscode
 fastPL.code-workspace
 .clang-format
+.DS_Store
 
 # CMake.gitignore from github
 CMakeLists.txt.user

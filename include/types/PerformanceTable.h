@@ -37,12 +37,15 @@
 class PerformanceTable {
 public:
   /**
-   * PerformanceTable constructor with defined vector of performance. All
-   * Performance should have the same criteria to be based on.
+   * PerformanceTable constructor with defined vector of performance that
+   * represents the PerformanceTable in a certain mode. All Vector of Perf
+   * objects should have the same criteria. Need to give the mode of the
+   * Performance table that is either "alt" or "crit".
    *
    * @param perf_vect Vector of performance
    */
-  PerformanceTable(std::vector<std::vector<Perf>> &perf_vect);
+  PerformanceTable(std::vector<std::vector<Perf>> &perf_vect,
+                   std::string mode = "alt");
 
   /**
    * PerformanceTable constructor without perf values but set of criteria to
@@ -181,12 +184,35 @@ public:
   bool isAltInTable(std::string altName);
 
   /**
+
+   * getNumberCrit return the amount of crits in the table
+   *
+   * @return n_crit
+   */
+  int getNumberCrit();
+
+  /**
+   * getNumberAlt return the amount of alts in the table
+   *
+   * @return n_alts
+   */
+  int getNumberAlt();
+
+  /**
    * Display PerformanceTable in a nice manner. Please be advised that this
    * method might be counter intuitive since elements do not necessarly have a
    * correct order depending on the mode
    *
    */
   void display();
+
+  /**
+   * Overload of == operator for PerformanceTable object. It compares the name,
+   * criteria and values of the PerformanceTable.
+   *
+   * @param pt PerformanceTable object to compare it with
+   */
+  bool operator==(const PerformanceTable &pt) const;
 
 protected:
   std::vector<std::vector<Perf>> pt_;
