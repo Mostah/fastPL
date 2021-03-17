@@ -102,6 +102,13 @@ public:
    */
   void setAlternativeAssignment(std::string altName, Category &cat);
 
+  /**
+   * getNumberCats compute the number of unique category in the dataset
+   *
+   * @return n_cats
+   */
+  int getNumberCats();
+
 private:
   // Hashmap: key = Alternative Name, value = Category
   std::unordered_map<std::string, Category> alt_assignment_;

@@ -159,7 +159,6 @@ std::vector<Perf> ProfileInitializer::initializeProfilePerformance(
   int nbCategories = categories.getNumberCategories();
   bool OrderedProfilePerformance = 0;
   std::vector<float> finalCategoryLimits;
-
   while (!OrderedProfilePerformance) {
     std::vector<float> categoryLimits;
     for (int i = 0; i < nbCategories - 1; i++) {
@@ -188,7 +187,6 @@ std::vector<Perf> ProfileInitializer::initializeProfilePerformance(
           break;
         }
       }
-
       categoryLimits.push_back(candidates[index].getValue());
     }
     if (std::is_sorted(categoryLimits.begin(), categoryLimits.end())) {

@@ -17,31 +17,26 @@ HeuristicPipeline::HeuristicPipeline(Config &config,
 
 void HeuristicPipeline::start() {
 
-  int n_cat = altPerfs.getNumberAlt();
+  int n_cat = altPerfs.getNumberCats();
   int n_crit = altPerfs.getNumberCrit();
 
   // First itteration outside the loop: run every algorithm on all models
-  std::cout << "allo1" << std::endl;
   // Creation of models and profile initialization
   for (int k = 0; k < conf.model_batch_size; k++) {
     MRSortModel model = MRSortModel(n_cat, n_crit);
     profileInitializer.initializeProfiles(model);
     models.push_back(model);
   }
-  std::cout << "allo2" << std::endl;
   // Update weight and lambda
   for (int k = 0; k < conf.model_batch_size; k++) {
     weightUpdater.updateWeightsAndLambda(models[k]);
   }
-  std::cout << "allo3" << std::endl;
   // Update profiles
   for (int k = 0; k < conf.model_batch_size; k++) {
     // profileUpdater.updateProfiles(model[k]);
   }
-  std::cout << "allo4" << std::endl;
   // compute accuracy, check for convergence and order the models by accuracy
   this->orderModels(false);
-  std::cout << "allo5" << std::endl;
   // iterating until convergence or reaching the max iteration, only working on
   // the worst half
   for (int i = 1; i < conf.max_iterations; i++) {

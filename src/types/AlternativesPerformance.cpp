@@ -1,4 +1,5 @@
 #include "../../include/types/AlternativesPerformance.h"
+#include "../../include/types/Category.h"
 #include "../../include/utils.h"
 #include <typeinfo>
 
@@ -136,4 +137,15 @@ void AlternativesPerformance::setAlternativeAssignment(std::string altName,
     throw std::invalid_argument("The alternatives in the map should be present "
                                 "in the performance table.");
   }
+}
+
+int AlternativesPerformance::getNumberCats() {
+  std::vector<std::string> cat_vector;
+  for (auto pair : alt_assignment_) {
+    if (!std::count(cat_vector.begin(), cat_vector.end(),
+                    pair.second.getCategoryId())) {
+      cat_vector.push_back(pair.second.getCategoryId());
+    }
+  }
+  return cat_vector.size();
 }

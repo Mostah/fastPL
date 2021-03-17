@@ -8,7 +8,7 @@ Config getHeuristicTestConf() {
   Config conf;
   conf.data_dir = "../data/tests/";
   conf.model_batch_size = 5;
-  conf.max_iterations = 100;
+  conf.max_iterations = 5;
   try {
     conf.logger =
         spdlog::basic_logger_mt("test_logger", "../logs/test_logger.txt");
@@ -40,6 +40,7 @@ Profiles getHeuristicTestProfile() {
 }
 
 Categories getHeuristicTestCategories() { return Categories(4); }
+Categories getHeuristicTestCategories2() { return Categories(2); }
 
 TEST(TestHeuristicPipeline, TestComputeAccuracy) {
   Profiles profile = getHeuristicTestProfile();
@@ -180,6 +181,6 @@ TEST(TestHeuristicPipeline, TestPipeline) {
   Config conf = getHeuristicTestConf();
 
   HeuristicPipeline hp = HeuristicPipeline(conf, ap);
-  std::cout << "allo0" << std::endl;
   hp.start();
+  EXPECT_EQ(hp.models[0].accuracy, 1);
 }

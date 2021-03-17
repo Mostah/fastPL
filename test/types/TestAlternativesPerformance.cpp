@@ -270,3 +270,14 @@ TEST(TestAlternativesPerformance, TestSetAlternativeAssignmentError) {
     FAIL() << "should have thrown invalid argument.";
   }
 }
+
+TEST(TestAlternativesPerformance, TestGetNumberCats) {
+  Criteria crit = Criteria(2, "crit");
+  Category cat0 = Category("cat0", 0);
+  Category cat1 = Category("cat1", 1);
+  std::unordered_map<std::string, Category> map =
+      std::unordered_map<std::string, Category>{
+          {"a0", cat0}, {"a1", cat1}, {"a2", cat0}, {"a3", cat0}, {"a4", cat1}};
+  AlternativesPerformance alt_perf = AlternativesPerformance(5, crit, "a", map);
+  EXPECT_EQ(alt_perf.getNumberCats(), 2);
+}

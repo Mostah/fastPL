@@ -100,10 +100,19 @@ bool WeightUpdater::modelCheck(MRSortModel &model) {
         "AlternativesPerformance's profile should be in alt mode.");
   }
   // both are supposed to be in mode alt
-  auto profs = model.profiles.getPerformanceTable();
+  std::vector<std::vector<Perf>> profs = model.profiles.getPerformanceTable();
+  std::cout << model.profiles << std::endl;
+  for (auto pv : model.profiles.getPerformanceTable()) {
+    for (auto p : pv) {
+      std::cout << p << std::endl;
+    }
+  }
   auto ap_pt = ap.getPerformanceTable();
   for (int i = 0; i < ap.getNumberCrit(); i++) {
+    std::cout << profs[0][i] << std::endl;
     if (profs[0][i].getCrit() != ap_pt[0][i].getCrit()) {
+      std::cout << i << std::endl;
+      std::cout << profs[0][i].getCrit() << std::endl;
       return false;
     }
   }
