@@ -6,7 +6,18 @@
 #include <vector>
 
 #include "../app.h"
-#include "MRSortModel.h"
+#include "../types/MRSortModel.h"
+
+/** @class ProfileUpdater ProfileUpdater.h
+ *  @brief Explanation of the Profile Update step of the heuristic
+ *
+ * Profile Updater algorithm is responsible for updating the profiles given the
+ * fixed weight and lambda. It will evaluate each move of each profile on each
+ * criterion to see what moves have the best impact on the alternatives
+ * assignments.
+ *
+ *
+ */
 
 class ProfileUpdater {
 public:

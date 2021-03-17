@@ -1,5 +1,5 @@
 #include "../../include/app.h"
-#include "../../include/types/ProfileUpdater.h"
+#include "../../include/learning/ProfileUpdater.h"
 #include "gtest/gtest.h"
 #include <algorithm>
 #include <sstream>

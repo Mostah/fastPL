@@ -1,4 +1,4 @@
-#include "../../include/types/ProfileUpdater.h"
+#include "../../include/learning/ProfileUpdater.h"
 #include "../../include/utils.h"
 
 #include <algorithm>
