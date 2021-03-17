@@ -305,9 +305,9 @@ void ProfileUpdater::optimize(
     AlternativesPerformance &altPerf_model) {
   if (model.profiles.getMode() != "alt") {
     model.profiles.changeMode("alt");
-    if (!model.profiles.isProfileOrdered()) {
-      model.profiles.sort("alt");
-    }
+  }
+  if (!model.profiles.isProfileOrdered()) {
+    std::invalid_argument("Profile table is not ordered");
   }
   int i = 0;
   for (std::vector<Perf> profile : model.profiles.getPerformanceTable()) {

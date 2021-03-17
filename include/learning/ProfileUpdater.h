@@ -1,6 +1,12 @@
 #ifndef PROFILEUPDATER_H
 #define PROFILEUPDATER_H
 
+/** @file ProfileUpdater.h
+ *  @brief Third step of the heuristic, updates the profiles given fixed weight
+ * and lambda.
+ *
+ */
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -9,7 +15,8 @@
 #include "../types/MRSortModel.h"
 
 /** @class ProfileUpdater ProfileUpdater.h
- *  @brief Explanation of the Profile Update step of the heuristic
+ *  @brief Third step of the heuristic, updates the profiles given fixed weight
+ * and lambda.
  *
  * Profile Updater algorithm is responsible for updating the profiles given the
  * fixed weight and lambda. It will evaluate each move of each profile on each

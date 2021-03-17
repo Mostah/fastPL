@@ -222,11 +222,17 @@ TEST(TestProfileUpdater, TestOptimizeProfile) {
 }
 
 TEST(TestProfileUpdater, TestOptimize) {
+  Config conf = getProfUpdaterTestConf();
   Categories categories = newTestCategories();
   MRSortModel model = newTestModel(categories);
+  // std::cout << model.profiles << std::endl;
   AlternativesPerformance altPerf_data = newTestAltPerf();
   AlternativesPerformance altPerf_model =
       model.categoryAssignments(altPerf_data);
   std::unordered_map<std::string, std::unordered_map<std::string, float>> ct =
       model.computeConcordanceTable(altPerf_data);
+
+  ProfileUpdater profUpdater = ProfileUpdater(conf, altPerf_data);
+  profUpdater.updateProfiles(model);
+  // std::cout << model.profiles << std::endl;
 }
