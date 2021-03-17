@@ -23,7 +23,7 @@ public:
    * @param id optional name of the model
    */
   MRSortModel(Criteria &criteria, Profiles &profiles, Categories &categories,
-              float lambda, std::string id = "model");
+              float lambda, std::string id = "model", float score = 0);
 
   /**
    * MRSortModel generator constructor. This constructor initializes the
@@ -33,7 +33,7 @@ public:
    * @param id optional name of the model
    * @param mode give the mode of the profile performance table
    */
-  MRSortModel(int n_cat, int n_crit, std::string id = "model");
+  MRSortModel(int n_cat, int n_crit, std::string id = "model", float score = 0);
 
   /**
    * MRSortModel constructor by copy
@@ -51,6 +51,21 @@ public:
    * @return id
    */
   std::string getId() const;
+
+  /**
+   * getScore getter of score parameter
+   *
+   * @return score
+   */
+  float getScore() const;
+
+  /**
+   * setScore setter of score parameter
+   *
+   * @param score new score
+   *
+   */
+  void setScore(float score);
 
   /**
    * categoryAssignment assign the category given the alternative
@@ -107,6 +122,7 @@ public:
 
 private:
   std::string id_;
+  float score_;
 };
 
 #endif

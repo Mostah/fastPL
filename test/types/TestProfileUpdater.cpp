@@ -173,6 +173,7 @@ TEST(TestProfileUpdater, TestUpdateTables) {
   auto ct = model.computeConcordanceTable(altPerf_data);
 
   ProfileUpdater profUpdater = ProfileUpdater(conf, altPerf_data);
+  model.setScore(0.25);
   Perf b0_c0_old = Perf("b0", "crit0", 0.3);
   Perf b0_c0_new = Perf("b0", "crit0", 0.39);
 
@@ -190,6 +191,9 @@ TEST(TestProfileUpdater, TestUpdateTables) {
   std::string new_cat =
       altPerf_model.getAlternativeAssignment("alt2").getCategoryId();
   EXPECT_EQ(new_cat, "cat1");
+
+  // Test update score
+  EXPECT_FLOAT_EQ(0.5, model.getScore());
 
   // Test update profiles
   EXPECT_FLOAT_EQ(model.profiles.getPerf("b0", "crit0").getValue(), 0.39);

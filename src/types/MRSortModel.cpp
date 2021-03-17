@@ -11,7 +11,7 @@
 Categories default_cats;
 
 MRSortModel::MRSortModel(Criteria &crits, Profiles &profs, Categories &cats,
-                         float lbd, std::string id)
+                         float lbd, std::string id, float score)
     : criteria(crits), profiles(profs), categories(cats) {
   if (profiles.getPerformanceTable().size() !=
       cats.getIdCategories().size() - 1) {
@@ -20,9 +20,10 @@ MRSortModel::MRSortModel(Criteria &crits, Profiles &profs, Categories &cats,
   }
   lambda = lbd;
   id_ = id;
+  score_ = score;
 }
 
-MRSortModel::MRSortModel(int n_cat, int n_crit, std::string id)
+MRSortModel::MRSortModel(int n_cat, int n_crit, std::string id, float score)
     : criteria(n_crit), profiles(n_cat - 1, criteria, "prof"),
       categories(default_cats) {
   if (n_cat < 2) {
@@ -30,6 +31,7 @@ MRSortModel::MRSortModel(int n_cat, int n_crit, std::string id)
         "The number of categories (n_cat) must be >= 2");
   }
   id_ = id;
+  score_ = score;
   categories = Categories(n_cat);
 
   lambda = getRandomUniformFloat(time(NULL), 0.5, 1);
@@ -120,6 +122,10 @@ MRSortModel::computeConcordanceTable(PerformanceTable &pt) {
 MRSortModel::~MRSortModel() {}
 
 std::string MRSortModel::getId() const { return id_; }
+
+float MRSortModel::getScore() const { return score_; }
+
+void MRSortModel::setScore(float score) { score_ = score; }
 
 std::ostream &operator<<(std::ostream &out, const MRSortModel &mrsort) {
   out << "Model( id : " << mrsort.id_ << std::endl

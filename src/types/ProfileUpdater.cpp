@@ -275,14 +275,16 @@ void ProfileUpdater::updateTables(
               << " aa_old: " << aa_old << " aa_new: " << aa_new << std::endl;
     std::cout << "c: " << c << std::endl;
 
-    // // Update good assignment count
-    // if (aa_old == aa_new) {
-    //   break;
-    // } else if (aa_old == aa_data) {
-    //   good = good - 1;
-    // } else if (aa_new == aa_data) {
-    //   good = good + 1;
-    // }
+    // Update model score
+    int n_alt = altPerf_data.getNumberAlt();
+    float change = static_cast<float>(1) / static_cast<float>(n_alt);
+    if (aa_old == aa_new) {
+      break;
+    } else if (aa_old == aa_data) {
+      model.setScore(model.getScore() - change);
+    } else if (aa_new == aa_data) {
+      model.setScore(model.getScore() + change);
+    }
   }
 }
 
