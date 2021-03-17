@@ -203,6 +203,16 @@ public:
   std::vector<float> getCriterionCategoryLimits(std::string fileName,
                                                 std::string crit_id);
 
+  /**
+   * This method checks if the dataset used for our profile initialisation is
+   * compatible in our framework. Essentially, it checks that at least one
+   * alternative is assigned to each category of our problem.
+   *
+   * @param fileName dataset filename
+   * @return bool
+   */
+  bool checkDataCompatability(std::string fileName);
+
 private:
   Config &conf;
 };

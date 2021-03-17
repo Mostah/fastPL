@@ -604,3 +604,44 @@ TEST(TestDataGenerator, TestImportedModel) {
   std::string filename = "out1modelcrit.xml";
   std::tuple<float, Criteria, PerformanceTable> t = data.loadModel(filename);
 }
+
+TEST(TestDataGenerator, TestDataCompatability) {
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
+  try {
+    bool v = data.checkDataCompatability("test_dataset.xml");
+    FAIL() << "should have throw invalid_argument error.";
+  } catch (std::invalid_argument const &err) {
+    EXPECT_EQ(
+        err.what(),
+        std::string(
+            "The number of categories found in the dataset does not match the "
+            "number of categories given in the xml <categories> tag."));
+  } catch (...) {
+    FAIL() << "should have throw invalid_argument error.";
+  }
+}
+
+TEST(TestDataGenerator, TestDataCompatabilityRealDataset) {
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
+  try {
+    bool v = data.checkDataCompatability("in3dataset.xml");
+    FAIL() << "should have throw invalid_argument error.";
+  } catch (std::invalid_argument const &err) {
+    EXPECT_EQ(
+        err.what(),
+        std::string(
+            "The number of categories found in the dataset does not match the "
+            "number of categories given in the xml <categories> tag."));
+  } catch (...) {
+    FAIL() << "should have throw invalid_argument error.";
+  }
+}
+
+TEST(TestDataGenerator, TestDataCompatabilityRealDatasetWork) {
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
+  bool v = data.checkDataCompatability("in1dataset.xml");
+  // EXPECT_EQ(v, 1);
+}

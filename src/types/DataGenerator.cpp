@@ -8,6 +8,7 @@
 #include "../../include/utils.h"
 #include <fstream>
 #include <iostream>
+#include <set>
 #include <sstream>
 #include <stdlib.h>
 #include <string>
@@ -805,4 +806,32 @@ DataGenerator::getCriterionCategoryLimits(std::string fileName,
                                 "associated to crit_id in xml file.");
   }
   return categoryLimits;
+}
+
+bool DataGenerator::checkDataCompatability(std::string fileName) {
+  pugi::xml_document doc = DataGenerator::openXmlFile(fileName);
+  if (DataGenerator::getXmlFileType(fileName) == "model") {
+    throw std::invalid_argument("Cannot find any alternatives in xml file, "
+                                "most likely have a xml model file");
+  }
+  std::set<float> s1;
+  int nbCategories = DataGenerator::getNumberOfCategories(fileName);
+
+  pugi::xml_node node_dataset = doc.child("dataset");
+  for (pugi::xml_node alt_nodes = node_dataset.child("alternative"); alt_nodes;
+       alt_nodes = alt_nodes.next_sibling()) {
+    for (pugi::xml_node child_node : alt_nodes.children()) {
+      if (strcmp(child_node.name(), "assignment") == 0) {
+        float cat = atof(child_node.child_value());
+        s1.insert(cat);
+      }
+    }
+  }
+  if (s1.size() != nbCategories) {
+    throw std::invalid_argument(
+        "The number of categories found in the dataset does not match the "
+        "number of categories given in the xml <categories> tag.");
+    return 0;
+  }
+  return 1;
 }
