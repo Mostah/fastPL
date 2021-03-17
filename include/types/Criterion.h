@@ -1,9 +1,22 @@
 #ifndef CRITERION_H
 #define CRITERION_H
 
+/**
+ * @file Criterion.h
+ * @brief Datastructure representing a criterion.
+ *
+ */
+
 #include <iostream>
 #include <string>
 #include <vector>
+
+/** @class Criterion Criterion.h
+ * @brief Criterion datastructure
+ *
+ * The Criterion datastructure is represented by its name, its weight and its
+ * direction, representing the minimization of maximization of this criterion.
+ */
 
 class Criterion {
 public:

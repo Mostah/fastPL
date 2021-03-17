@@ -1,13 +1,29 @@
 #ifndef CATEGORIES_H
 #define CATEGORIES_H
 
+/**
+ * @file Categories.h
+ * @brief Datastructure representing a set of category.
+ *
+ */
+
 #include "Category.h"
 #include <iostream>
 #include <vector>
 
-/** Categories is a wrapper around a vector of category. The rank 0 is
- * considered as the lowest one for the profiles
+/** @class Categories Categories.h
+ *  @brief Set of Category datastructure
  *
+ * The Categories datastructure represents a full set of category, well
+ * formatted to be used in the problem. It is implemented with a c++ Vector.
+ *
+ * It is used to represents all the category defined in a dataset. Each
+ * category must be different for all the others, and more specifically, the
+ * rank must be correctly defined such that we can decide which category is
+ * better when comparing two single categories. Futhermore, the categories must
+ * be ranked such that when itterating over the categories, we go from the best
+ * one (higest rank) to the lowest one. Therefore, categories[0] always
+ * represents the best category of the set.
  */
 class Categories {
 public:
