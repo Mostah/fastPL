@@ -1,3 +1,14 @@
+/**
+ * @file main.cpp
+ * @author Emma Dixneuf, Thibault Monsel, Thomas Vindard
+ * @version 0.1
+ * @date 4 February 2021
+ * @brief main entry of the project
+ *
+ * School project aiming at scaling up the pymcda repository by
+ * implementing the Olivier Sobrie's metaheuristic in C++ with parallelization.
+ */
+
 #include "spdlog/sinks/basic_file_sink.h"
 #include "spdlog/spdlog.h"
 #include "yaml-cpp/yaml.h"

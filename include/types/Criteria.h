@@ -1,9 +1,26 @@
 #ifndef CRITERIA_H
 #define CRITERIA_H
 
+/**
+ * @file Criteria.h
+ * @brief Datastructure representing a set of criterion.
+ *
+ */
+
 #include "Criterion.h"
 #include <iostream>
 #include <vector>
+
+/** @class Criteria Criteria.h
+ * @brief Set of Criterion datastructure
+ *
+ * The Criteria datastructure represents a full set of Criterion. It is
+ * implemented with a c++ Vector.
+ *
+ * It is used to represents all the criterion defined in a dataset. Each
+ * criterion is independent from the other, and no order should be implied in
+ * the vector.
+ */
 
 class Criteria {
 public:

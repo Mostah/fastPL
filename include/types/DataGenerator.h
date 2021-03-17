@@ -1,6 +1,12 @@
 #ifndef DATAGENERATOR_H
 #define DATAGENERATOR_H
 
+/**
+ * @file DataGenerator.h
+ * @brief Wrapper to generate, save and load xml files.
+ *
+ */
+
 // will be using pugiXML for parsing and generating
 // git clone https://github.com/zeux/pugixml.git
 // forked repo and uncomment in pugixml/src/pugiconfig.hpp
@@ -14,6 +20,13 @@
 #include <iostream>
 #include <tuple>
 
+/** @class DataGenerator DataGenerator.h
+ * @brief Wrapper to generate, save and load xml files.
+ *
+ * The DataGenerator is a utility class that is the bridge between the
+ * datastructure of this project and the corresponding xml files used to store a
+ * dataset or a model.
+ */
 class DataGenerator {
 public:
   DataGenerator(Config &config);
