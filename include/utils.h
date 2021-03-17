@@ -120,6 +120,7 @@ randomCategoriesLimits(int nbCategories, unsigned long int seed = time(NULL)) {
   sort(catLimits.begin(), catLimits.end());
   return catLimits;
 }
+
 /**
  * Overloading << operator for std::unordered_map
  *
@@ -158,37 +159,38 @@ inline Perf getPerfOfCrit(std::vector<Perf> &vectPerf, std::string critId) {
     }
   }
   throw std::invalid_argument("No performance for given criterion found");
+}
 
-  inline std::vector<std::string> getNameIds(std::vector<Perf> vectPerf) {
-    std::vector<std::string> NameIds;
-    for (auto p : vectPerf) {
-      NameIds.push_back(p.getName());
-    }
-    return NameIds;
-  };
-
-  inline std::vector<Perf> createVectorPerf(std::string id, Criteria & criteria,
-                                            std::vector<float> & given_perf) {
-    if (criteria.getCriterionVect().size() != given_perf.size()) {
-      throw std::invalid_argument(
-          "You must have the same number of performance value and criterias");
-    }
-    std::vector<Perf> vp;
-    std::vector<Criterion> criterion_vect = criteria.getCriterionVect();
-    for (int i = 0; i < criterion_vect.size(); i++) {
-      vp.push_back(Perf(id, criterion_vect[i].getId(), given_perf[i]));
-    }
-    return vp;
+inline std::vector<std::string> getNameIds(std::vector<Perf> vectPerf) {
+  std::vector<std::string> NameIds;
+  for (auto p : vectPerf) {
+    NameIds.push_back(p.getName());
   }
+  return NameIds;
+};
 
-  inline std::vector<Perf> createVectorPerfWithNoPerf(std::string id,
-                                                      Criteria & criteria) {
-    std::vector<Perf> vp;
-    std::vector<Criterion> criterion_vect = criteria.getCriterionVect();
-    for (int i = 0; i < criterion_vect.size(); i++) {
-      vp.push_back(Perf(id, criterion_vect[i].getId(), 0));
-    }
-    return vp;
+inline std::vector<Perf> createVectorPerf(std::string id, Criteria &criteria,
+                                          std::vector<float> &given_perf) {
+  if (criteria.getCriterionVect().size() != given_perf.size()) {
+    throw std::invalid_argument(
+        "You must have the same number of performance value and criterias");
   }
+  std::vector<Perf> vp;
+  std::vector<Criterion> criterion_vect = criteria.getCriterionVect();
+  for (int i = 0; i < criterion_vect.size(); i++) {
+    vp.push_back(Perf(id, criterion_vect[i].getId(), given_perf[i]));
+  }
+  return vp;
+}
+
+inline std::vector<Perf> createVectorPerfWithNoPerf(std::string id,
+                                                    Criteria &criteria) {
+  std::vector<Perf> vp;
+  std::vector<Criterion> criterion_vect = criteria.getCriterionVect();
+  for (int i = 0; i < criterion_vect.size(); i++) {
+    vp.push_back(Perf(id, criterion_vect[i].getId(), 0));
+  }
+  return vp;
+}
 
 #endif
