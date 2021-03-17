@@ -182,6 +182,8 @@ TEST(TestProfileInitializer, TestInitializeProfilesRealDataset) {
   ProfileInitializer profInit = ProfileInitializer(conf, ap);
   profInit.initializeProfiles(model);
   EXPECT_TRUE(model.profiles.isProfileOrdered());
+  model.profiles.display();
   model.profiles.changeMode("alt");
-  EXPECT_TRUE(model.profiles.isProfileOrdered());
+  // model.profiles.display();
+  // EXPECT_TRUE(model.profiles.isProfileOrdered());
 }
