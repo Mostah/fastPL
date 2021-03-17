@@ -10,7 +10,7 @@
 #include <vector>
 
 Profiles::Profiles(std::vector<std::vector<Perf>> &perf_vect, std::string mode)
-    : PerformanceTable(perf_vect) {
+    : PerformanceTable(perf_vect, mode) {
   mode_ = mode;
   if (!this->isProfileOrdered()) {
     throw std::invalid_argument(

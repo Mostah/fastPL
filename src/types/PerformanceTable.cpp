@@ -13,28 +13,58 @@
 #include <chrono>
 #include <thread>
 
-PerformanceTable::PerformanceTable(std::vector<std::vector<Perf>> &perf_vect) {
+PerformanceTable::PerformanceTable(std::vector<std::vector<Perf>> &perf_vect,
+                                   std::string mode) {
   if (perf_vect.size() == 0) {
     throw std::invalid_argument("The vector must contain performances.");
   }
-  std::vector<std::string> perf_id_vect;
-  std::vector<std::string> crit_vect = getCriterionIds(perf_vect[0]);
+  if (mode != "alt" && mode != "crit") {
+    throw std::invalid_argument("Mode must be alt or crit.");
+  }
+  mode_ = mode;
+  if (mode == "alt") {
+    std::vector<std::string> perf_id_vect;
+    std::vector<std::string> crit_vect = getCriterionIds(perf_vect[0]);
 
-  for (std::vector<Perf> p : perf_vect) {
-    // ensure there is no performance with dupplicated name
+    for (std::vector<Perf> p : perf_vect) {
+      // ensure there is no performance with dupplicated name
 
-    if (std::find(perf_id_vect.begin(), perf_id_vect.end(), p[0].getName()) !=
-        perf_id_vect.end()) {
-      throw std::invalid_argument("Each performance must have different ids.");
+      if (std::find(perf_id_vect.begin(), perf_id_vect.end(), p[0].getName()) !=
+          perf_id_vect.end()) {
+        throw std::invalid_argument(
+            "Each performance must have different ids.");
+      }
+      perf_id_vect.push_back(p[0].getName());
+
+      // ensure all the performance are based on the same set of criterion
+      if (getCriterionIds(p) != crit_vect) {
+        throw std::invalid_argument(
+            "Each performance must be based on the same "
+            "set of criterion, in the same order.");
+      }
+      pt_.push_back(p);
     }
-    perf_id_vect.push_back(p[0].getName());
+  } else {
+    std::vector<std::string> crit_id_vect;
+    std::vector<std::string> altIdVec = getNameIds(perf_vect[0]);
 
-    // ensure all the performance are based on the same set of criterion
-    if (getCriterionIds(p) != crit_vect) {
-      throw std::invalid_argument("Each performance must be based on the same "
-                                  "set of criterion, in the same order.");
+    for (std::vector<Perf> p : perf_vect) {
+      // ensure there is no criteria id with duplicated name
+
+      if (std::find(crit_id_vect.begin(), crit_id_vect.end(), p[0].getCrit()) !=
+          crit_id_vect.end()) {
+        throw std::invalid_argument("Each row must have different criterias.");
+      }
+      crit_id_vect.push_back(p[0].getCrit());
+
+      // ensure all the performance are based on the same set of criterion
+      if (getNameIds(p) != altIdVec) {
+        throw std::invalid_argument(
+            "Each criteria row must be based on the same "
+            "set of alternative ids, in the same order.");
+      }
+      pt_.push_back(p);
     }
-    pt_.push_back(p);
   }
 }
 
@@ -166,8 +196,8 @@ void PerformanceTable::changeMode(std::string mode) {
   if (mode != "alt" && mode != "crit") {
     throw std::invalid_argument("Mode must be alt or crit.");
   }
-  // this operation cannot be done in place, should not be an issue as we should
-  // not call this method often.
+  // this operation cannot be done in place, should not be an issue as we
+  // should not call this method often.
   std::vector<std::vector<Perf>> new_pt;
   std::map<std::string, int> index;
   if (mode == "crit") {
@@ -188,10 +218,12 @@ void PerformanceTable::changeMode(std::string mode) {
     for (std::vector<Perf> pv : pt_) {
       for (Perf p : pv) {
         if (index.count(p.getName()) > 0) {
-          // if alternative (or profile) already seen, add Perf to the right row
+          // if alternative (or profile) already seen, add Perf to the right
+          // row
           new_pt[index[p.getName()]].push_back(p);
         } else {
-          // if alternative (or profile) already seen, add Perf to the right row
+          // if alternative (or profile) already seen, add Perf to the right
+          // row
           std::vector<Perf> v = {p};
           new_pt.push_back(v);
           index[p.getName()] = new_pt.size() - 1; // index of crit in the new_pt
@@ -418,4 +450,23 @@ void PerformanceTable::display() {
       std::cout << std::endl;
     }
   }
+}
+
+bool PerformanceTable::operator==(const PerformanceTable &pt) const {
+
+  if (this->pt_.size() != pt.getPerformanceTable().size() ||
+      this->pt_[0].size() != pt.getPerformanceTable()[0].size()) {
+    return 0;
+  }
+
+  int nbPerfs = this->pt_.size();
+  int nbCrits = this->pt_[0].size();
+  for (int i = 0; i < nbPerfs; i++) {
+    for (int j = 0; j < nbCrits; j++) {
+      if (!(this->pt_[i][j] == pt.getPerformanceTable()[i][j])) {
+        return false;
+      }
+    }
+  }
+  return true;
 }

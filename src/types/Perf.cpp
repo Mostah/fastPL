@@ -39,3 +39,8 @@ void Perf::setValue(float value) { value_ = value; }
 std::string Perf::getCrit() const { return crit_; }
 
 void Perf::setCrit(std::string crit) { crit_ = crit; }
+
+bool Perf::operator==(const Perf &perf2) const {
+  return (this->crit_ == perf2.getCrit() && this->value_ == perf2.getValue() &&
+          this->name_ == perf2.getName());
+}

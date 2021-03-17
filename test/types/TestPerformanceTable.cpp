@@ -376,3 +376,23 @@ TEST(TestPerformanceTable, TestNumbers) {
   EXPECT_EQ(perf_table.getNumberAlt(), 2);
   EXPECT_EQ(perf_table.getNumberCrit(), 2);
 }
+
+TEST(TestPerformanceTable, TestEqualOperator) {
+  std::vector<std::vector<Perf>> perf_vect;
+  Criteria crit = Criteria(2, "crit");
+  std::vector<float> given_perf0 = {0.2, 0};
+  std::vector<float> given_perf1 = {0.8, 1};
+  std::vector<float> given_perf2 = {0.4, 0.4};
+  std::vector<float> given_perf3 = {0.6, 0.6};
+  perf_vect.push_back(createVectorPerf("a0", crit, given_perf0));
+  perf_vect.push_back(createVectorPerf("a1", crit, given_perf1));
+  perf_vect.push_back(createVectorPerf("test2", crit, given_perf2));
+  perf_vect.push_back(createVectorPerf("test3", crit, given_perf3));
+  PerformanceTable perf_table = PerformanceTable(perf_vect);
+
+  PerformanceTable perf_table2 = PerformanceTable(perf_vect);
+  perf_vect.push_back(createVectorPerf("test4", crit, given_perf3));
+  PerformanceTable perf_table3 = PerformanceTable(perf_vect);
+  EXPECT_EQ(perf_table3 == perf_table, 0);
+  EXPECT_EQ(perf_table2 == perf_table, 1);
+}
