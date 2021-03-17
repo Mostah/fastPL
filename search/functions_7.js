@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['normalizeweights_161',['normalizeWeights',['../class_criteria.html#a5f0741e9f52d441ce8964e2dd6f8ace2',1,'Criteria']]]
+  ['normalizeweights_243',['normalizeWeights',['../class_criteria.html#a5f0741e9f52d441ce8964e2dd6f8ace2',1,'Criteria']]]
 ];

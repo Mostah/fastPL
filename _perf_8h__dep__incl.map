@@ -1,0 +1,12 @@
+<map id="/Users/ThomasVindard 1/Desktop/3A/Projet/fastPL/include/types/Perf.h" name="/Users/ThomasVindard 1/Desktop/3A/Projet/fastPL/include/types/Perf.h">
+<area shape="rect" id="node1" title="Perf (single performance) data structure." alt="" coords="83,5,239,76"/>
+<area shape="rect" id="node2" href="$_profile_initializer_8h_source.html" title=" " alt="" coords="23,480,182,551"/>
+<area shape="rect" id="node3" href="$_performance_table_8h.html" title="PerformanceTable data structure." alt="" coords="142,124,298,195"/>
+<area shape="rect" id="node9" href="$_profiles_8h.html" title="Profiles data structure." alt="" coords="26,243,182,313"/>
+<area shape="rect" id="node10" href="$utils_8h.html" title="utility functions used by our programs." alt="" coords="322,131,478,187"/>
+<area shape="rect" id="node4" href="$_alternatives_performance_8h.html" title="Dataset data structure." alt="" coords="258,243,438,313"/>
+<area shape="rect" id="node7" href="$_data_generator_8h.html" title="Wrapper to generate, save and load xml files." alt="" coords="555,361,711,432"/>
+<area shape="rect" id="node8" href="$_m_r_sort_model_8h.html" title="Model datastructre that will learn from the problem." alt="" coords="90,361,246,432"/>
+<area shape="rect" id="node5" href="$_linear_solver_8h_source.html" title=" " alt="" coords="373,361,531,432"/>
+<area shape="rect" id="node6" href="$_weight_updater_8h_source.html" title=" " alt="" coords="255,480,414,551"/>
+</map>

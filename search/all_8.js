@@ -1,4 +1,7 @@
 var searchData=
 [
-  ['normalizeweights_60',['normalizeWeights',['../class_criteria.html#a5f0741e9f52d441ce8964e2dd6f8ace2',1,'Criteria']]]
+  ['modelcheck_91',['modelCheck',['../class_weight_updater.html#af6390ed689c5e3bb9049a99be6796025',1,'WeightUpdater']]],
+  ['modelgenerator_92',['modelGenerator',['../class_data_generator.html#aa73d2fe3ce64ef23f5375215f50e17fc',1,'DataGenerator']]],
+  ['mrsortmodel_93',['MRSortModel',['../class_m_r_sort_model.html',1,'MRSortModel'],['../class_m_r_sort_model.html#a1869cfb55e8b06aabfaa72723d6c5929',1,'MRSortModel::MRSortModel(Criteria &amp;criteria, Profiles &amp;profiles, Categories &amp;categories, float lambda, std::string id=&quot;model&quot;)'],['../class_m_r_sort_model.html#a40986de8f6efdf116c4a3b7a65ba3a00',1,'MRSortModel::MRSortModel(int n_cat, int n_crit, std::string id=&quot;model&quot;)'],['../class_m_r_sort_model.html#af1f0f21d2fc8a2acbf5f5e3516715155',1,'MRSortModel::MRSortModel(const MRSortModel &amp;mrsort)']]],
+  ['mrsortmodel_2eh_94',['MRSortModel.h',['../_m_r_sort_model_8h.html',1,'']]]
 ];

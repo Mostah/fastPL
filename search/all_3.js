@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['fast_20preference_20learning_20algorithm_20with_20parallelisation_11',['Fast Preference Learning algorithm with parallelisation',['../md___users__thomas_vindard_1__desktop_3_a__projet_fast_p_l__r_e_a_d_m_e.html',1,'']]]
+  ['env_23',['env',['../struct_config.html#a3e1c064adb54cb899e460ef4f8b50739',1,'Config']]]
 ];

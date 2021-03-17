@@ -1,5 +1,9 @@
 var searchData=
 [
-  ['modelgenerator_58',['modelGenerator',['../class_data_generator.html#aa73d2fe3ce64ef23f5375215f50e17fc',1,'DataGenerator']]],
-  ['mrsortmodel_59',['MRSortModel',['../class_m_r_sort_model.html',1,'MRSortModel'],['../class_m_r_sort_model.html#a1869cfb55e8b06aabfaa72723d6c5929',1,'MRSortModel::MRSortModel(Criteria &amp;criteria, Profiles &amp;profiles, Categories &amp;categories, float lambda, std::string id=&quot;model&quot;)'],['../class_m_r_sort_model.html#a40986de8f6efdf116c4a3b7a65ba3a00',1,'MRSortModel::MRSortModel(int n_cat, int n_crit, std::string id=&quot;model&quot;)'],['../class_m_r_sort_model.html#af1f0f21d2fc8a2acbf5f5e3516715155',1,'MRSortModel::MRSortModel(const MRSortModel &amp;mrsort)']]]
+  ['lambda_20and_20weight_20updater_85',['Lambda and Weight updater',['../weight_updater.html',1,'learning_algorithms']]],
+  ['learning_20algorithms_86',['Learning Algorithms',['../learning_algorithms.html',1,'index']]],
+  ['linearsolver_87',['LinearSolver',['../class_linear_solver.html',1,'LinearSolver'],['../class_linear_solver.html#aa1030cd5be40397a8c26246433d042a5',1,'LinearSolver::LinearSolver()']]],
+  ['loaddataset_88',['loadDataset',['../class_data_generator.html#a75d3251816d994c7a8f03f78aec2553a',1,'DataGenerator']]],
+  ['loadmodel_89',['loadModel',['../class_data_generator.html#abfc9b2dcfcff68efedadf3e0cb2b9a4f',1,'DataGenerator']]],
+  ['logger_90',['logger',['../struct_config.html#ad414f004c3eedbcf5ae37d0a143a2e50',1,'Config']]]
 ];

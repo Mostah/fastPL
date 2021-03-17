@@ -1,7 +1,7 @@
 <map id="MRSortModel" name="MRSortModel">
-<area shape="rect" id="node1" title=" " alt="" coords="95,171,198,197"/>
-<area shape="rect" id="node2" href="$class_categories.html" title=" " alt="" coords="5,81,91,108"/>
-<area shape="rect" id="node3" href="$class_criteria.html" title=" " alt="" coords="115,81,179,108"/>
-<area shape="rect" id="node4" href="$class_profiles.html" title=" " alt="" coords="203,81,269,108"/>
-<area shape="rect" id="node5" href="$class_performance_table.html" title=" " alt="" coords="173,5,299,32"/>
+<area shape="rect" id="node1" title="Datastructure of the model to learn." alt="" coords="95,171,198,197"/>
+<area shape="rect" id="node2" href="$class_categories.html" title="Set of Category datastructure." alt="" coords="5,81,91,108"/>
+<area shape="rect" id="node3" href="$class_criteria.html" title="Set of Criterion datastructure." alt="" coords="115,81,179,108"/>
+<area shape="rect" id="node4" href="$class_profiles.html" title="Profiles data structure." alt="" coords="203,81,269,108"/>
+<area shape="rect" id="node5" href="$class_performance_table.html" title="PerformanceTable data structure." alt="" coords="173,5,299,32"/>
 </map>

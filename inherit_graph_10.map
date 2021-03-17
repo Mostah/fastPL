@@ -1,5 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$class_performance_table.html" title=" " alt="" coords="5,31,132,57"/>
-<area shape="rect" id="node2" href="$class_alternatives_performance.html" title=" " alt="" coords="180,5,345,32"/>
-<area shape="rect" id="node3" href="$class_profiles.html" title=" " alt="" coords="229,56,296,83"/>
+<area shape="rect" id="node1" href="$class_performance_table.html" title="PerformanceTable data structure." alt="" coords="5,31,132,57"/>
+<area shape="rect" id="node2" href="$class_alternatives_performance.html" title="Dataset datastructure." alt="" coords="180,5,345,32"/>
+<area shape="rect" id="node3" href="$class_profiles.html" title="Profiles data structure." alt="" coords="229,56,296,83"/>
 </map>
