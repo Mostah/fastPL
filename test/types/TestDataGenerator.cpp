@@ -587,24 +587,6 @@ TEST(TestDataGenerator, TestGetCriterionCategoryLimitsModelFakeCritId) {
   }
 }
 
-TEST(TestDataGenerator, TestImportedDataset) {
-  // IMPORTANT NOTE : cannot have any xml tag with only digits ie <1> c++ cant
-  // read
-  Config conf = getTestConf();
-  DataGenerator data = DataGenerator(conf);
-  std::string filename = "test_dataset.xml";
-  AlternativesPerformance ap = data.loadDataset(filename);
-}
-
-TEST(TestDataGenerator, TestImportedModel) {
-  // IMPORTANT NOTE : cannot have any xml tag with only digits ie <1> c++ cant
-  // read
-  Config conf = getTestConf();
-  DataGenerator data = DataGenerator(conf);
-  std::string filename = "out1modelcrit.xml";
-  std::tuple<float, Criteria, PerformanceTable> t = data.loadModel(filename);
-}
-
 TEST(TestDataGenerator, TestDataCompatability) {
   Config conf = getTestConf();
   DataGenerator data = DataGenerator(conf);
@@ -643,5 +625,5 @@ TEST(TestDataGenerator, TestDataCompatabilityRealDatasetWork) {
   Config conf = getTestConf();
   DataGenerator data = DataGenerator(conf);
   bool v = data.checkDataCompatability("in1dataset.xml");
-  // EXPECT_EQ(v, 1);
+  EXPECT_EQ(v, 1);
 }

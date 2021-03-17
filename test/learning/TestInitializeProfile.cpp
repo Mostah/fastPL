@@ -164,19 +164,6 @@ TEST(TestProfileInitializer, TestInitializeProfiles) {
   MRSortModel model = MRSortModel(3, 4);
   profInit.initializeProfiles(model);
   EXPECT_TRUE(model.profiles.isProfileOrdered());
-
-  // for viewing purposes
-  // std::cout << "PT is " << std::endl;
-  // perf_tab.display();
-  // std::cout << std::endl;
-  // std::cout << "profile is " << std::endl;
-  // model.profiles.display();
-
-  // change mode doesnt work here it points back to MRSortModel constructor that
-  // points to the Profile constructor thats points back to PerformanceTable
-  //
-  // constructor model.profiles.changeMode("alt");
-  // EXPECT_TRUE(model.profiles.isProfileOrdered());
 }
 
 TEST(TestProfileInitializer, TestInitializeProfilesRealDataset) {
@@ -192,14 +179,9 @@ TEST(TestProfileInitializer, TestInitializeProfilesRealDataset) {
   int nbCat = data.getNumberOfCategories(filename);
   int nbCrit = data.getNumberOfCriteria(filename);
   MRSortModel model = MRSortModel(nbCat, nbCrit);
-  // When we initialize the profile change mode stops working. We cant change
-  // properly the profile. crit -> alt fails | crit -> alt -> crit works ! but
-  // we lose the model's mode| crit -> alt -> crit -> alt -> crit -> ... works !
   ProfileInitializer profInit = ProfileInitializer(conf, ap);
   profInit.initializeProfiles(model);
-  // model.profiles.display();
   EXPECT_TRUE(model.profiles.isProfileOrdered());
-  // To be uncommented when performance type no longer exist
-  // model.profiles.changeMode("alt");
-  // EXPECT_TRUE(model.profiles.isProfileOrdered());
+  model.profiles.changeMode("alt");
+  EXPECT_TRUE(model.profiles.isProfileOrdered());
 }
