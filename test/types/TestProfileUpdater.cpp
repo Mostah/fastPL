@@ -210,14 +210,14 @@ TEST(TestProfileUpdater, TestOptimizeProfile) {
   std::unordered_map<std::string, std::unordered_map<std::string, float>> ct =
       model.computeConcordanceTable(altPerf_data);
 
-  std::vector<Perf> b1 = model.profiles["b1"];
+  std::vector<Perf> b0 = model.profiles["b0"];
 
-  Category cat_below = categories.getCategoryOfRank(1);
-  Category cat_above = categories.getCategoryOfRank(2);
+  Category cat_below = categories.getCategoryOfRank(0);
+  Category cat_above = categories.getCategoryOfRank(1);
 
   ProfileUpdater profUpdater = ProfileUpdater(conf, altPerf_data);
 
-  profUpdater.optimizeProfile(b1, cat_below, cat_above, model, ct,
+  profUpdater.optimizeProfile(b0, cat_below, cat_above, model, ct,
                               altPerf_model);
 }
 

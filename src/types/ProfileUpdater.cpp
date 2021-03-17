@@ -47,7 +47,6 @@ std::unordered_map<float, float> ProfileUpdater::computeAboveDesirability(
   for (Perf alt : alt_between) {
     // Checking if the move will not go above b_above
     if (alt.getValue() + epsilon < b_above.getValue()) {
-      std::cout << "IN THE LOOP FOR " << alt.getName() << std::endl;
       std::string altName = alt.getName();
       float conc = ct_prof[altName];
       float diff = conc - weight;
@@ -63,13 +62,11 @@ std::unordered_map<float, float> ProfileUpdater::computeAboveDesirability(
         // Moving the profile results in misclassification -> Q
         if (aa_model == cat_above.getCategoryId() and diff < lambda) {
           denominator += 5;
-          std::cout << "Q" << std::endl;
         }
         // Wrong classification
         // Moving the profile is in favor of wrong classification -> R
         else if (aa_model == cat.getCategoryId()) {
           denominator += 1;
-          std::cout << "R" << std::endl;
         }
       } else if (aa_data == cat.getCategoryId() and
                  aa_model == cat_above.getCategoryId()) {
@@ -80,7 +77,6 @@ std::unordered_map<float, float> ProfileUpdater::computeAboveDesirability(
           denominator += 1;
           desirability_above[alt.getValue() + epsilon] =
               numerator / denominator;
-          std::cout << "W" << std::endl;
         }
         // Wrong classification
         // Moving the profile results in correct classification -> V
@@ -89,7 +85,6 @@ std::unordered_map<float, float> ProfileUpdater::computeAboveDesirability(
           denominator += 1;
           desirability_above[alt.getValue() + epsilon] =
               numerator / denominator;
-          std::cout << "V" << std::endl;
         }
       }
       // Wrong classification
@@ -102,14 +97,8 @@ std::unordered_map<float, float> ProfileUpdater::computeAboveDesirability(
         numerator += 0.1;
         denominator += 1;
         desirability_above[alt.getValue() + epsilon] = numerator / denominator;
-        std::cout << "T" << std::endl;
       }
     }
-  }
-  auto it = desirability_above.begin();
-  while (it != desirability_above.end()) {
-    std::cout << it->first << "->" << it->second << " " << std::endl;
-    it++;
   }
   return desirability_above;
 }
@@ -136,10 +125,11 @@ std::unordered_map<float, float> ProfileUpdater::computeBelowDesirability(
   float numerator = 0;
   float denominator = 0;
 
-  for (Perf alt : alt_between) {
+  // Going in reverse order as we are moving the profile down
+  for (int i = alt_between.size() - 1; i >= 0; i--) {
+    Perf alt = alt_between[i];
     // Checking if the move will not go below b_below
     if ((alt.getValue() - epsilon) > b_below.getValue()) {
-      std::cout << "IN THE LOOP FOR " << alt.getName() << std::endl;
       std::string altName = alt.getName();
       float conc = ct_prof[altName];
       float diff = conc + weight;
@@ -159,7 +149,6 @@ std::unordered_map<float, float> ProfileUpdater::computeBelowDesirability(
           denominator += 1;
           desirability_below[alt.getValue() - epsilon] =
               numerator / denominator;
-          std::cout << "V" << std::endl;
         }
         // Wrong classification
         // Moving the profile is in favor of right classification -> W
@@ -168,20 +157,17 @@ std::unordered_map<float, float> ProfileUpdater::computeBelowDesirability(
           denominator += 1;
           desirability_below[alt.getValue() - epsilon] =
               numerator / denominator;
-          std::cout << "W" << std::endl;
         }
       } else if (aa_data == cat.getCategoryId()) {
         // Correct classification
         // Moving the profile results in misclassification -> Q
         if (aa_model == cat.getCategoryId() and diff >= lambda) {
           denominator += 5;
-          std::cout << "Q" << std::endl;
         }
         // Wrong classification
         // Moving the profile is in favor of wrong classification -> R
         else if (aa_model == cat_above.getCategoryId()) {
           denominator += 1;
-          std::cout << "R" << std::endl;
         }
       }
       // Wrong classification
@@ -194,15 +180,10 @@ std::unordered_map<float, float> ProfileUpdater::computeBelowDesirability(
         numerator += 0.1;
         denominator += 1;
         desirability_below[alt.getValue() - epsilon] = numerator / denominator;
-        std::cout << "T" << std::endl;
       }
     }
   }
   auto it = desirability_below.begin();
-  while (it != desirability_below.end()) {
-    std::cout << it->first << "->" << it->second << " " << std::endl;
-    it++;
-  }
   return desirability_below;
 }
 
@@ -227,10 +208,6 @@ void ProfileUpdater::updateTables(
       b_old.getCrit() != b_new.getCrit()) {
     throw std::invalid_argument("Profile perfs must have same name and crit");
   }
-
-  std::cout << "update for profile " << b_old.getName() << " on criterion "
-            << b_old.getCrit() << " from " << b_old.getValue() << " to "
-            << b_new.getValue() << std::endl;
 
   float w = 0;
   // Determine if the profile is moving up or down to know how to adjust the
@@ -270,10 +247,6 @@ void ProfileUpdater::updateTables(
 
     // Update alternative assignment
     altPerf_model.setAlternativeAssignment(alt.getName(), cat_new);
-
-    std::cout << alt.getName() << "=> aa_data: " << aa_data
-              << " aa_old: " << aa_old << " aa_new: " << aa_new << std::endl;
-    std::cout << "c: " << c << std::endl;
 
     // Update model score
     int n_alt = altPerf_data.getNumberAlt();
