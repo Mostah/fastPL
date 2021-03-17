@@ -20,15 +20,11 @@ After initializing the profiles, computing the weights and the lambda of a model
 The profile updater algorithm functions as below:
 
 
->For each profile:
->
->    For each criterion:
->
->        - *computeBelowDisirability, computeAboveDesirability* : Compute the possible positions for the profile and evaluate the repercution of this move on the classification 
->
->        - *chooseMaxDesirability* : Select the position that maximizes the result of the move on the alternative assignments 
->
->        - *updateTables* : Move the profile and update the alternative assignments *(updateTables)*
+    For each profile:
+        For each criterion:
+            - *computeBelowDisirability, computeAboveDesirability* : Compute the possible positions for the profile and evaluate the repercution of this move on the classification 
+            - *chooseMaxDesirability* : Select the position that maximizes the result of the move on the alternative assignments 
+            - *updateTables* : Move the profile and update the alternative assignments *(updateTables)*
 
 
 *optimizeProfile* performs the algorithme above for one profile
