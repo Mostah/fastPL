@@ -10,9 +10,9 @@ Profile Updater algorithm is responsible for updating the profiles given the fix
 
 ### Attributes
 
-* Epsilon - Float (small value ~10-4) ensuring that the classification relationship is maintained between profile and alternatives (no profile will have the same value as an alt)
-* AlternativesPerformance - dataset of the global problem
-* Config - Global config of the application
+* **Epsilon** - Float (small value ~10-4) ensuring that the classification relationship is maintained between profile and alternatives (no profile will have the same value as an alt)
+* **AlternativesPerformance** - dataset of the global problem
+* **Config** - Global config of the application
 
 ### Description
 
@@ -21,9 +21,13 @@ The profile updater algorithm functions as below:
 
 
 >For each profile:
+>
 >    For each criterion:
+>
 >        - *computeBelowDisirability, computeAboveDesirability* : Compute the possible positions for the profile and evaluate the repercution of this move on the classification 
+>
 >        - *chooseMaxDesirability* : Select the position that maximizes the result of the move on the alternative assignments 
+>
 >        - *updateTables* : Move the profile and update the alternative assignments *(updateTables)*
 
 
