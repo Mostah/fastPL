@@ -16,33 +16,32 @@ HeuristicPipeline::HeuristicPipeline(Config &config,
 }
 
 void HeuristicPipeline::start() {
-  std::vector<MRSortModel> models;
 
   int n_cat = altPerfs.getNumberAlt();
   int n_crit = altPerfs.getNumberCrit();
 
   // First itteration outside the loop: run every algorithm on all models
-
+  std::cout << "allo1" << std::endl;
   // Creation of models and profile initialization
   for (int k = 0; k < conf.model_batch_size; k++) {
     MRSortModel model = MRSortModel(n_cat, n_crit);
     profileInitializer.initializeProfiles(model);
     models.push_back(model);
   }
-
+  std::cout << "allo2" << std::endl;
   // Update weight and lambda
   for (int k = 0; k < conf.model_batch_size; k++) {
     weightUpdater.updateWeightsAndLambda(models[k]);
   }
-
+  std::cout << "allo3" << std::endl;
   // Update profiles
   for (int k = 0; k < conf.model_batch_size; k++) {
-    // profileUpdater.updateProfiles(model);
+    // profileUpdater.updateProfiles(model[k]);
   }
-
+  std::cout << "allo4" << std::endl;
   // compute accuracy, check for convergence and order the models by accuracy
-  this->orderModels(models, false);
-
+  this->orderModels(false);
+  std::cout << "allo5" << std::endl;
   // iterating until convergence or reaching the max iteration, only working on
   // the worst half
   for (int i = 1; i < conf.max_iterations; i++) {
@@ -67,7 +66,7 @@ void HeuristicPipeline::start() {
       // profileUpdater.updateProfiles(models[k]);
     }
 
-    this->orderModels(models, true);
+    this->orderModels(true);
 
     // if one model is accurately representing the dataset, stop the learning
     // algorithm
@@ -77,14 +76,16 @@ void HeuristicPipeline::start() {
   }
 }
 
-void customSort(std::vector<MRSortModel> &models) {
+void HeuristicPipeline::customSort() {
   std::vector<int> temp;
   for (int i = 0; i < models.size(); i++) {
     temp.push_back(i);
   }
-  std::sort(temp.begin(), temp.end(), [models](const auto &a, const auto &b) {
-    return models[a].accuracy > models[b].accuracy;
-  });
+  auto lambda_models = models;
+  std::sort(temp.begin(), temp.end(),
+            [lambda_models](const auto &a, const auto &b) {
+              return lambda_models[a].accuracy > lambda_models[b].accuracy;
+            });
   std::vector<MRSortModel> models_copy;
   for (auto e : models) {
     models_copy.push_back(e);
@@ -95,8 +96,7 @@ void customSort(std::vector<MRSortModel> &models) {
   }
 }
 
-void HeuristicPipeline::orderModels(std::vector<MRSortModel> &models,
-                                    bool worstHalf) {
+void HeuristicPipeline::orderModels(bool worstHalf) {
   int begin = 0;
   int end = models.size();
   if (worstHalf) {
@@ -107,7 +107,7 @@ void HeuristicPipeline::orderModels(std::vector<MRSortModel> &models,
     this->computeAccuracy(models[k]);
   }
   // for some reason std::sort is not working here...
-  customSort(models);
+  this->customSort();
 }
 
 void HeuristicPipeline::computeAccuracy(MRSortModel &model) {

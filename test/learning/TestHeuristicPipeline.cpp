@@ -7,6 +7,8 @@
 Config getHeuristicTestConf() {
   Config conf;
   conf.data_dir = "../data/tests/";
+  conf.model_batch_size = 5;
+  conf.max_iterations = 100;
   try {
     conf.logger =
         spdlog::basic_logger_mt("test_logger", "../logs/test_logger.txt");
@@ -69,6 +71,48 @@ TEST(TestHeuristicPipeline, TestComputeAccuracy) {
   EXPECT_FLOAT_EQ(mrsort.accuracy, 0.75);
 }
 
+TEST(TestHeuristicPipeline, TestCustomSort) {
+  Profiles profile = getHeuristicTestProfile();
+  Criteria criteria = getHeuristicTestCriteria();
+  Categories categories = getHeuristicTestCategories();
+  MRSortModel mrsort0 =
+      MRSortModel(criteria, profile, categories, 0.4, "model0");
+  MRSortModel mrsort1 =
+      MRSortModel(criteria, profile, categories, 0.4, "model1");
+  MRSortModel mrsort2 =
+      MRSortModel(criteria, profile, categories, 0.4, "model2");
+  MRSortModel mrsort3 =
+      MRSortModel(criteria, profile, categories, 0.4, "model3");
+  MRSortModel mrsort4 =
+      MRSortModel(criteria, profile, categories, 0.4, "model4");
+
+  mrsort0.accuracy = 1;
+  mrsort1.accuracy = 0.8;
+  mrsort2.accuracy = 0.6;
+  mrsort3.accuracy = 0.4;
+  mrsort4.accuracy = 0.2;
+
+  std::vector<std::vector<Perf>> perf_vect;
+  std::vector<float> alt0 = {0.9, 0.6, 0.5};
+  perf_vect.push_back(createVectorPerf("alt0", criteria, alt0));
+  std::unordered_map<std::string, Category> truth;
+  AlternativesPerformance ap = AlternativesPerformance(perf_vect, truth);
+  Config conf = getHeuristicTestConf();
+
+  HeuristicPipeline hp = HeuristicPipeline(conf, ap);
+  hp.models.push_back(mrsort3);
+  hp.models.push_back(mrsort0);
+  hp.models.push_back(mrsort2);
+  hp.models.push_back(mrsort1);
+  hp.models.push_back(mrsort4);
+  hp.customSort();
+  EXPECT_EQ(hp.models[0].getId(), "model0");
+  EXPECT_EQ(hp.models[1].getId(), "model1");
+  EXPECT_EQ(hp.models[2].getId(), "model2");
+  EXPECT_EQ(hp.models[3].getId(), "model3");
+  EXPECT_EQ(hp.models[4].getId(), "model4");
+}
+
 TEST(TestHeuristicPipeline, TestOrderModels) {
   Profiles profile = getHeuristicTestProfile();
   Criteria criteria = getHeuristicTestCriteria();
@@ -99,13 +143,43 @@ TEST(TestHeuristicPipeline, TestOrderModels) {
   truth["alt3"] = categories.getCategoryOfRank(0);
   AlternativesPerformance ap = AlternativesPerformance(perf_vect, truth);
 
-  std::vector<MRSortModel> models = {mrsort3, mrsort0, mrsort2, mrsort1};
-
   Config conf = getHeuristicTestConf();
   HeuristicPipeline hp = HeuristicPipeline(conf, ap);
-  hp.orderModels(models, false);
-  EXPECT_FLOAT_EQ(models[0].accuracy, 1);
-  EXPECT_FLOAT_EQ(models[1].accuracy, 1);
-  EXPECT_FLOAT_EQ(models[2].accuracy, 0.75);
-  EXPECT_FLOAT_EQ(models[3].accuracy, 0.75);
+  hp.models.push_back(mrsort3);
+  hp.models.push_back(mrsort0);
+  hp.models.push_back(mrsort2);
+  hp.models.push_back(mrsort1);
+  hp.orderModels(false);
+  EXPECT_FLOAT_EQ(hp.models[0].accuracy, 1);
+  EXPECT_FLOAT_EQ(hp.models[1].accuracy, 1);
+  EXPECT_FLOAT_EQ(hp.models[2].accuracy, 0.75);
+  EXPECT_FLOAT_EQ(hp.models[3].accuracy, 0.75);
+}
+
+TEST(TestHeuristicPipeline, TestPipeline) {
+  Criteria criteria = getHeuristicTestCriteria();
+  Categories categories = getHeuristicTestCategories();
+
+  std::vector<std::vector<Perf>> perf_vect;
+  std::vector<float> alt0 = {0.9, 0.6, 0.5};
+  std::vector<float> alt1 = {0.9, 0.05, 0.35};
+  std::vector<float> alt2 = {0.7, 1, 0.5};
+  std::vector<float> alt3 = {0.5, 0, 0.6};
+  perf_vect.push_back(createVectorPerf("alt0", criteria, alt0));
+  perf_vect.push_back(createVectorPerf("alt1", criteria, alt1));
+  perf_vect.push_back(createVectorPerf("alt2", criteria, alt2));
+  perf_vect.push_back(createVectorPerf("alt3", criteria, alt3));
+
+  std::unordered_map<std::string, Category> truth;
+  truth["alt0"] = categories.getCategoryOfRank(3);
+  truth["alt1"] = categories.getCategoryOfRank(3);
+  truth["alt2"] = categories.getCategoryOfRank(3);
+  truth["alt3"] = categories.getCategoryOfRank(0);
+  AlternativesPerformance ap = AlternativesPerformance(perf_vect, truth);
+
+  Config conf = getHeuristicTestConf();
+
+  HeuristicPipeline hp = HeuristicPipeline(conf, ap);
+  std::cout << "allo0" << std::endl;
+  hp.start();
 }
