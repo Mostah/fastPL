@@ -11,8 +11,8 @@
 
 #include "../app.h"
 #include "ProfileInitializer.h"
+#include "ProfileUpdater.h"
 #include "WeightUpdater.h"
-// #include "ProfileUpdater"
 
 /** @class HeuristicPipeline HeuristicPipeline.h
  *  @brief Global heuristic to learn a model.
@@ -70,7 +70,7 @@ private:
 
   WeightUpdater weightUpdater;
   ProfileInitializer profileInitializer;
-  // ProfileUpdater profileUpdater;
+  ProfileUpdater profileUpdater;
 };
 
 #endif

@@ -34,7 +34,7 @@ void WeightUpdater::updateWeightsAndLambda(MRSortModel &model) {
   for (int i = 0; i < res.second.size(); i++) {
     ss << " - w" << i << ": " << model.criteria[i].getWeight();
   }
-  conf.logger->info(ss.str());
+  conf.logger->debug(ss.str());
 }
 
 std::vector<std::vector<std::vector<bool>>>

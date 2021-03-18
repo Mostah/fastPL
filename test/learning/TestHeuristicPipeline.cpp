@@ -69,7 +69,7 @@ TEST(TestHeuristicPipeline, TestComputeAccuracy) {
   HeuristicPipeline hp = HeuristicPipeline(conf, ap);
   hp.computeAccuracy(mrsort);
 
-  EXPECT_FLOAT_EQ(mrsort.accuracy, 0.75);
+  EXPECT_FLOAT_EQ(mrsort.getScore(), 0.75);
 }
 
 TEST(TestHeuristicPipeline, TestCustomSort) {
@@ -87,11 +87,11 @@ TEST(TestHeuristicPipeline, TestCustomSort) {
   MRSortModel mrsort4 =
       MRSortModel(criteria, profile, categories, 0.4, "model4");
 
-  mrsort0.accuracy = 1;
-  mrsort1.accuracy = 0.8;
-  mrsort2.accuracy = 0.6;
-  mrsort3.accuracy = 0.4;
-  mrsort4.accuracy = 0.2;
+  mrsort0.getScore() = 1;
+  mrsort1.getScore() = 0.8;
+  mrsort2.getScore() = 0.6;
+  mrsort3.getScore() = 0.4;
+  mrsort4.getScore() = 0.2;
 
   std::vector<std::vector<Perf>> perf_vect;
   std::vector<float> alt0 = {0.9, 0.6, 0.5};
@@ -151,10 +151,10 @@ TEST(TestHeuristicPipeline, TestOrderModels) {
   hp.models.push_back(mrsort2);
   hp.models.push_back(mrsort1);
   hp.orderModels(false);
-  EXPECT_FLOAT_EQ(hp.models[0].accuracy, 1);
-  EXPECT_FLOAT_EQ(hp.models[1].accuracy, 1);
-  EXPECT_FLOAT_EQ(hp.models[2].accuracy, 0.75);
-  EXPECT_FLOAT_EQ(hp.models[3].accuracy, 0.75);
+  EXPECT_FLOAT_EQ(hp.models[0].getScore(), 1);
+  EXPECT_FLOAT_EQ(hp.models[1].getScore(), 1);
+  EXPECT_FLOAT_EQ(hp.models[2].getScore(), 0.75);
+  EXPECT_FLOAT_EQ(hp.models[3].getScore(), 0.75);
 }
 
 TEST(TestHeuristicPipeline, TestPipeline) {
@@ -183,7 +183,7 @@ TEST(TestHeuristicPipeline, TestPipeline) {
   HeuristicPipeline hp = HeuristicPipeline(conf, ap);
   hp.start();
   for (int i = 0; i < hp.models.size(); i++) {
-    std::cout << hp.models[i].accuracy << std::endl;
+    std::cout << hp.models[i].getScore() << std::endl;
   }
-  // EXPECT_EQ(hp.models[0].accuracy, 1);
+  // EXPECT_EQ(hp.models[0].getScore(), 1);
 }

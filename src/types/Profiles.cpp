@@ -55,7 +55,6 @@ void Profiles::generateRandomPerfValues(unsigned long int seed, int lower_bound,
     throw std::invalid_argument(
         "Lower bound must be lower than the upper bound.");
   }
-
   if (mode_ == "alt") {
     int nbProfiles = pt_.size();
     std::random_device rd;

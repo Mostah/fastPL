@@ -3,17 +3,14 @@
 
 #include "../../include/learning/HeuristicPipeline.h"
 #include "../../include/learning/ProfileInitializer.h"
+#include "../../include/learning/ProfileUpdater.h"
 #include "../../include/learning/WeightUpdater.h"
 #include "../../include/types/MRSortModel.h"
-// #include "../../include/learning/ProfileUpdater.h"
 
 HeuristicPipeline::HeuristicPipeline(Config &config,
                                      AlternativesPerformance &altPerfs)
     : conf(config), altPerfs(altPerfs), weightUpdater(altPerfs, config),
-      profileInitializer(config, altPerfs) {
-  // ProfileUpdater pu = ProfileUpdater(config, altPerfs);
-  // profileUpdater = pu;
-}
+      profileInitializer(config, altPerfs), profileUpdater(config, altPerfs) {}
 
 void HeuristicPipeline::start() {
   conf.logger->info("Starting heuristic pipeline");
@@ -25,8 +22,8 @@ void HeuristicPipeline::start() {
   conf.logger->info("Running 1st itteration on all models");
   for (int k = 0; k < conf.model_batch_size; k++) {
     MRSortModel model = MRSortModel(n_cat, n_crit);
-    profileInitializer.initializeProfiles(model);
 
+    profileInitializer.initializeProfiles(model);
     // change back to alt mode
     model.profiles.changeMode("alt");
     models.push_back(model);
@@ -37,18 +34,19 @@ void HeuristicPipeline::start() {
   }
   // Update profiles
   for (int k = 0; k < conf.model_batch_size; k++) {
-    // profileUpdater.updateProfiles(model[k]);
+    profileUpdater.updateProfiles(models[k]);
   }
-  // compute accuracy, check for convergence and order the models by accuracy
+  // compute getScore(), check for convergence and order the models by
+  // getScore()
   this->orderModels(false);
   // iterating until convergence or reaching the max iteration, only working on
   // the worst half
-  conf.logger->info("Iteration 1 done, best model has an accuracy of: " +
-                    std::to_string(models[0].accuracy));
+  conf.logger->info("Iteration 1 done, best model has an getScore() of: " +
+                    std::to_string(models[0].getScore()));
   for (int i = 1; i < conf.max_iterations; i++) {
     // ** profiles initialization **
 
-    // models are sorted in descending order by accuracy
+    // models are sorted in descending order by getScore()
     // re-initialize the worst half of the models
     for (int k = conf.model_batch_size - 1; k > conf.model_batch_size / 2 - 1;
          k--) {
@@ -65,7 +63,7 @@ void HeuristicPipeline::start() {
     // ** Profiles update **
     for (int k = conf.model_batch_size - 1; k > conf.model_batch_size / 2 - 1;
          k--) {
-      // profileUpdater.updateProfiles(models[k]);
+      profileUpdater.updateProfiles(models[k]);
     }
 
     this->orderModels(true);
@@ -73,11 +71,11 @@ void HeuristicPipeline::start() {
     // if one model is accurately representing the dataset, stop the learning
     // algorithm
     conf.logger->info("Iteration " + std::to_string(i) +
-                      "done, best model has an accuracy of: " +
-                      std::to_string(models[0].accuracy));
-    if (models[0].accuracy == 1) {
+                      " done, best model has an getScore() of: " +
+                      std::to_string(models[0].getScore()));
+    if (models[0].getScore() == 1) {
       conf.logger->info(
-          "Model with an accuracy of 1 found, stopping algorithm");
+          "Model with an getScore() of 1 found, stopping algorithm");
       break;
     }
   }
@@ -92,7 +90,7 @@ void HeuristicPipeline::customSort() {
   auto lambda_models = models;
   std::sort(temp.begin(), temp.end(),
             [lambda_models](const auto &a, const auto &b) {
-              return lambda_models[a].accuracy > lambda_models[b].accuracy;
+              return lambda_models[a].getScore() > lambda_models[b].getScore();
             });
   std::vector<MRSortModel> models_copy;
   for (auto e : models) {
@@ -131,5 +129,5 @@ void HeuristicPipeline::computeAccuracy(MRSortModel &model) {
       acc++;
     }
   }
-  model.accuracy = float(acc) / float(altPerfs.getNumberAlt());
+  model.setScore(float(acc) / float(altPerfs.getNumberAlt()));
 }

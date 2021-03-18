@@ -214,7 +214,7 @@ LinearSolver::solve(std::vector<std::vector<std::vector<bool>>> x_matrix,
   std::ostringstream ss;
   ss << "Problem solved - " << solver->wall_time() << " ms, "
      << solver->iterations() << " iterations.";
-  conf.logger->info(ss.str());
+  conf.logger->debug(ss.str());
 
   std::vector<float> weight_values;
   for (auto w_i : weights) {
