@@ -254,19 +254,17 @@ TEST(TestPerformanceTable, TestGetAltBetween) {
   perf_vect.push_back(createVectorPerf("test3", crit, given_perf3));
   PerformanceTable perf_table = PerformanceTable(perf_vect);
 
-  try {
-    perf_table.getAltBetween("crit0", 0, 1);
-    FAIL() << "should have throw domain error.";
-  } catch (std::domain_error const &err) {
-    EXPECT_EQ(err.what(),
-              std::string("Mode must be crit but is currently set to alt."));
-  } catch (...) {
-    FAIL() << "should have throw domain error.";
-  }
-  perf_table.changeMode("crit");
+  // Testing alt mode
+  std::ostringstream os0;
+  std::vector<Perf> p0 = perf_table.getAltBetween("crit0", 0.1, 0.5);
+  os0 << p0;
+  EXPECT_EQ(os0.str(), "[Perf( name : a0, crit : crit0, value : 0.2 "
+                       "),Perf( name : test2, crit : crit0, value : 0.4 )]");
 
+  // Testing crit mode
+  perf_table.changeMode("crit");
   try {
-    perf_table.getAltBetween("crit0", 0, 1);
+    perf_table.getAltBetweenSorted("crit0", 0, 1);
     FAIL() << "should have throw domain error.";
   } catch (std::domain_error const &err) {
     EXPECT_EQ(err.what(), std::string("The performance table must be sorted."));
@@ -275,6 +273,14 @@ TEST(TestPerformanceTable, TestGetAltBetween) {
   }
 
   perf_table.sort("crit");
+  try {
+    perf_table.getAltBetweenSorted("crit0", 1, 0);
+    FAIL() << "should have throw invalid argument.";
+  } catch (std::invalid_argument const &err) {
+    EXPECT_EQ(err.what(), std::string("Sup must be greater (>) than inf"));
+  } catch (...) {
+    FAIL() << "should have throw invalid argument.";
+  }
   try {
     perf_table.getAltBetween("crit0", 1, 0);
     FAIL() << "should have throw invalid argument.";
@@ -285,18 +291,23 @@ TEST(TestPerformanceTable, TestGetAltBetween) {
   }
 
   EXPECT_EQ(0, perf_table.getAltBetween("crit0", 0.25, 0.3).size());
-  EXPECT_EQ(0, perf_table.getAltBetween("crit0", 0.81, 1).size());
+  EXPECT_EQ(0, perf_table.getAltBetweenSorted("crit0", 0.81, 1).size());
 
-  std::ostringstream os;
-  std::vector<Perf> p0 = perf_table.getAltBetween("crit0", 0.1, 0.5);
-  os << p0;
-  EXPECT_EQ(os.str(), "[Perf( name : a0, crit : crit0, value : 0.2 "
-                      "),Perf( name : test2, crit : crit0, value : 0.4 )]");
+  std::ostringstream os1;
+  std::vector<Perf> p1 = perf_table.getAltBetweenSorted("crit0", 0.1, 0.5);
+  os1 << p1;
+  EXPECT_EQ(os1.str(), "[Perf( name : a0, crit : crit0, value : 0.2 "
+                       "),Perf( name : test2, crit : crit0, value : 0.4 )]");
 
   std::ostringstream os2;
-  std::vector<Perf> p1 = perf_table.getAltBetween("crit1", 0.5, 1);
-  os2 << p1;
+  std::vector<Perf> p2 = perf_table.getAltBetween("crit1", 0.5, 1);
+  os2 << p2;
   EXPECT_EQ(os2.str(), "[Perf( name : test3, crit : crit1, value : 0.6 "
+                       "),Perf( name : a1, crit : crit1, value : 1 )]");
+  std::ostringstream os3;
+  std::vector<Perf> p3 = perf_table.getAltBetweenSorted("crit1", 0.5, 1);
+  os3 << p3;
+  EXPECT_EQ(os3.str(), "[Perf( name : test3, crit : crit1, value : 0.6 "
                        "),Perf( name : a1, crit : crit1, value : 1 )]");
 }
 

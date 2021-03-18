@@ -1,6 +1,7 @@
 #include "TestUtils.cpp"
 #include "learning/TestInitializeProfile.cpp"
 #include "learning/TestLinearSolver.cpp"
+#include "learning/TestProfileUpdater.cpp"
 #include "learning/TestWeightUpdater.cpp"
 
 #include "types/TestAlternativesPerformance.cpp"
