@@ -46,7 +46,7 @@ public:
    * @param id optional name of the model
    */
   MRSortModel(Criteria &criteria, Profiles &profiles, Categories &categories,
-              float lambda, std::string id = "model");
+              float lambda, std::string id = "model", float score = 0);
 
   /**
    * MRSortModel generator constructor. This constructor initializes the
@@ -56,7 +56,7 @@ public:
    * @param n_crit number of criteria
    * @param id mrsort model's id
    */
-  MRSortModel(int n_cat, int n_crit, std::string id = "model");
+  MRSortModel(int n_cat, int n_crit, std::string id = "model", float score = 0);
 
   /**
    * MRSortModel constructor by copy
@@ -76,7 +76,34 @@ public:
   std::string getId() const;
 
   /**
-   * categoryAssignment assign the categories given the performance table
+   * getScore getter of score parameter
+   *
+   * @return score
+   */
+  float getScore() const;
+
+  /**
+   * setScore setter of score parameter
+   *
+   * @param score new score
+   *
+   */
+  void setScore(float score);
+
+  /**
+   * categoryAssignment assign the category given the alternative
+   * and the current state of the model.
+   *
+   * @param alt PerfVect of the alternative
+   * @param profiles_pt PerfTable of the profiles
+   *
+   * @return category_assignment Category object associated to the alternative
+   */
+  Category categoryAssignment(std::vector<Perf> &alt,
+                              std::vector<std::vector<Perf>> &profiles_pt);
+
+  /**
+   * categoryAssignments assign the categories given the performance table
    * and the current state of the model.
    *
    * @param pt PerformanceTable
@@ -84,7 +111,32 @@ public:
    * @return category_assignment AlternativeAssignment object containing the pt
    * given in args and the category assignment.
    */
-  AlternativesPerformance categoryAssignment(PerformanceTable &pt);
+  AlternativesPerformance categoryAssignments(PerformanceTable &pt);
+
+  /**
+   * computeConcordance computes the concordance value between a profile and an
+   * alternative
+   *
+   * @param prof profile
+   * @param alt alternative
+   *
+   * @return concordance value
+   */
+  float computeConcordance(std::vector<Perf> &prof, std::vector<Perf> &alt);
+
+  /**
+   * computeConcordanceTable computes the concordance table of a performance
+   * table
+   *
+   * @param pt PerformanceTable
+   *
+   * @return concordance table giving the concordance value for each profile,
+   * alternative tupple, displayed in a map { prof_id1 : {alt_id1 : c1,
+   alt_id2:
+   * c2, ...}, ...}
+   */
+  std::unordered_map<std::string, std::unordered_map<std::string, float>>
+  computeConcordanceTable(PerformanceTable &pt);
 
   Criteria criteria;
   Profiles profiles;
@@ -93,6 +145,7 @@ public:
 
 private:
   std::string id_;
+  float score_;
 };
 
 #endif

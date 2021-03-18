@@ -26,6 +26,7 @@ set(Headers
     include/types/Categories.h
     include/types/DataGenerator.h
     include/types/AlternativesPerformance.h
+    include/learning/ProfileUpdater.h
     include/learning/LinearSolver.h
     include/learning/WeightUpdater.h
     include/app.h
@@ -43,6 +44,7 @@ set(Sources
     src/types/Categories.cpp
     src/types/DataGenerator.cpp
     src/types/AlternativesPerformance.cpp
+    src/learning/ProfileUpdater.cpp
     src/learning/LinearSolver.cpp
     src/learning/WeightUpdater.cpp
     src/app.cpp

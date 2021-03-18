@@ -108,4 +108,78 @@ bool Profiles::isProfileOrdered() {
     }
     return true;
   }
+  return true;
+}
+
+std::pair<std::vector<Perf>, std::vector<Perf>>
+Profiles::getBelowAndAboveProfile(std::string profName) {
+  int n_crit = this->getNumberCrit();
+  std::vector<Perf> base;
+  for (int i = 0; i < n_crit; i++) {
+    base.push_back(Perf("base", pt_[0][i].getCrit(), 0));
+  }
+  std::vector<Perf> top;
+  for (int i = 0; i < n_crit; i++) {
+    top.push_back(Perf("top", pt_[0][i].getCrit(), 1));
+  }
+
+  std::vector<Perf> below;
+  std::vector<Perf> above;
+  if (mode_ == "alt") {
+    for (int h = 0; h < pt_.size(); h++) {
+      if (pt_[h][0].getName() == profName) {
+        if (h == 0) {
+          below = base;
+          above = pt_[h + 1];
+          return std::make_pair(below, above);
+        } else if (h == pt_.size() - 1) {
+          below = pt_[h - 1];
+          above = top;
+          return std::make_pair(below, above);
+        } else {
+          below = pt_[h - 1];
+          above = pt_[h + 1];
+          return std::make_pair(below, above);
+        }
+      }
+    }
+    throw std::invalid_argument("Profile not found.");
+  } else {
+    throw std::invalid_argument("Profiles perftable mode should be crit.");
+  }
+}
+
+void Profiles::setPerf(std::string name, std::string crit, float value) {
+  // supposing the pt is consistent:
+  // if in mode alt, each row contains 1 and only 1 (alternative or profile)
+  // if in mode crit, each row contains 1 and only 1 criterion
+  if (mode_ == "alt") {
+    for (std::vector<Perf> &p : pt_) {
+      if (p[0].getName() == name) {
+        for (Perf &perf : p) {
+          if (perf.getCrit() == crit) {
+            perf.setValue(value);
+            return;
+          }
+        }
+        throw std::invalid_argument("Criterion not found in performance table");
+      }
+    }
+    throw std::invalid_argument("Name not found in performance table");
+  } else if (mode_ == "crit") {
+    for (std::vector<Perf> &p : pt_) {
+      if (p[0].getCrit() == crit) {
+        for (Perf &perf : p) {
+          if (perf.getName() == name) {
+            perf.setValue(value);
+            return;
+          }
+        }
+        throw std::invalid_argument("Name not found in performance table");
+      }
+    }
+    throw std::invalid_argument("Criterion not found in performance table");
+  } else {
+    throw std::domain_error("Performance table mode corrupted.");
+  }
 }

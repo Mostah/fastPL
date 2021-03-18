@@ -112,6 +112,27 @@ public:
    */
   void generateRandomPerfValues(unsigned long int seed = time(NULL),
                                 int lower_bound = 0, int upper_bound = 1);
+
+  /**
+   * getBelowAndAboveProfile gets the profiles below and above the given
+   * profile. If given profile is the first or last, it will return itself
+   *
+   * @param profId id of the profile to get the above and below profiles
+   *
+   * @return profiles performances (below and above)
+   */
+  std::pair<std::vector<Perf>, std::vector<Perf>>
+  getBelowAndAboveProfile(std::string profName);
+
+  /**
+   * setPerf set a Perf given the alt name, crit and value.
+   * Unefficient since using [] operator...
+   *
+   * @param name name of the alt or profile we want to update
+   * @param crit name of the crit we want to update
+   * @param value new perf value
+   */
+  void setPerf(std::string name, std::string crit, float value);
 };
 
 #endif

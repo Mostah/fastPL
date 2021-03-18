@@ -33,6 +33,24 @@ TEST(TestUtils, TestRandomFloatGenerator) {
   EXPECT_TRUE(random4 >= 0 && random4 <= 1);
 }
 
+TEST(TestUtils, TestUtilsGetPerfOfCrit) {
+  std::string id = "alt1";
+  Criteria crit = Criteria(3);
+  std::vector<float> givenPerf = {1, 3, 4};
+  std::vector<Perf> vecp = createVectorPerf(id, crit, givenPerf);
+  Perf p = getPerfOfCrit(vecp, "crit1");
+  EXPECT_EQ(p.getValue(), 3);
+  try {
+    Perf p = getPerfOfCrit(vecp, "crit6");
+    FAIL() << "should have thrown invalid argument.";
+  } catch (std::invalid_argument const &err) {
+    EXPECT_EQ(err.what(),
+              std::string("No performance for given criterion found"));
+  } catch (...) {
+    FAIL() << "should have thrown invalid argument.";
+  }
+}
+
 TEST(TestUtils, TestUtilsVectorPerf) {
   std::string id = "alt1";
   Criteria crit = Criteria(3);
