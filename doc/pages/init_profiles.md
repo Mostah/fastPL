@@ -10,7 +10,7 @@ The theorical foundation of this part of the metaheuristic can be found in the t
 
 Before we get started explaining how the heuristic works lets talk about the objects that are used in this part of the algorithm.  
 
-In MCDA, a "profile" is the performance values that delimits two categories.   
+In MCDA, a "profile" is the performance values that delimits two Categories.   
 In the particular setting of 3 criteria and 2 categories, let the profile ```b0``` be the following vector  ```b0 = [0.1,0.2,0.3]```. Hence, ```b0``` models the separation of the category of rank ```0 ```(lowest) and the category of rank ```1``` (highest).  
 If I were to have the alternatives ```a0 = [0,0.1,0.2]``` and ```a1 = [0.2,0.3,0.4]```, we can be certain that ```a0``` is assigned to the category of rank ```0``` and ```a1``` to the category of rank ```1``` independently from the value of lambda and the weights.
 
@@ -20,32 +20,26 @@ Similary as in the object ```PerformanceTable```, ```Profiles``` also has two di
 In both scenarios below, we have a MCDA problem with ```3``` categories and ```2``` criteria.
 
 For instance, a ```Profiles``` object in ```"alt"``` mode can be visualised as below : 
-```
- 
-  |           |crit0|  crit1|         |
-  |-----------|-----|-------|---------|
-  |           |     |       |         | category 0
-  | b0        | 0.4 |   0.5 |         |
-  |           |     |       |         | category 1 
-  | b1        | 0.6 |   0.8 |         |
-  |           |     |       |         | category 2 
- 
- ```
- ```b0``` separates the categories of rank ```0``` and ```1``` and ```b1```  the ones of rank ```1``` and ```2```.
+
+
+|    | crit0 | crit1 |            |
+|----|-------|-------|------------|
+|    |       |       | category 0 |
+| b0 | 0.4   | 0.5   |            |
+|    |       |       | category 1 |
+| b1 | 0.6   | 0.8   |            |
+|    |       |       | category 2 |
+
+
+The "profile" ```b0``` separates the categories of rank ```0``` and ```1``` and ```b1```  the ones of rank ```1``` and ```2```.
 
  On the contrary, a ```Profiles``` object in ```"crit"``` mode can be visualised as below : 
 
- ```
-               b0            b1
-  |            |             |               |
-  |------------|-------------|---------------|
-  |            |             |               |
-  | crit0      |     0.4     |       0.6     |
-  |            |             |               | 
-  | crit1      |     0.5     |       0.8     |
-  |            |             |               | 
-  | category 0 |  category 1 |  category 2   |
- ```
+|  |  |  | b0 |  | b1 |
+|:-:|-|:-:|:-:|:-:|:-:|
+| crit0 |  | 0.4 |  | 0.6 |  |
+| crit1 |  | 0.5 |  | 0.8 |  |
+| category 0 |  | category 1 |  | category 2 |  |
 
 Conceptually to pass from one mode to another, you can see it as a matrix transpose of the numerical values in the table.
 
@@ -84,7 +78,7 @@ Let us suppose that we have a dataset of ```12``` alternative and only ```1``` c
 
 |<img src="../images/toy_example.png" width="600"/>|
 | :--:|
-| *Toy Dataset* 
+| *Toy Dataset* |
 
 
 The first thing to do is to compute the category frequency. In our case, we see that for the category of rank ```0``` three alternatives belong to this category therefore the frequency is ```3/12=1/4```:   
@@ -118,11 +112,11 @@ The probability is :
 - ``` 2/freq0 + 3/freq1```
 
 For the candidate vector we have the following probabilities.  
- ```candidates = [alt0,alt1,alt2,alt3,alt5,alt6]```   
-```proba = [1/freq0 + 3/freq1,  2/freq0 + 3/freq1, 3/freq0 + 2/freq1, 3/freq0 + 1/freq1, 3/freq0]```  
-```proba = [16,20,20,16,12]```  
-```proba_normalised = [0,19,0.24,0.24,0.19,0.14]```   
-``` cum_sum_proba_normalised = [0.19,0.43,0.67,0.84,1]```
+- ``` candidates = [alt0,alt1,alt2,alt3,alt5,alt6]```   
+- ``` proba = [1/freq0 + 3/freq1,  2/freq0 + 3/freq1, 3/freq0 + 2/freq1, 3/freq0 + 1/freq1, 3/freq0]```  
+- ``` proba = [16,20,20,16,12]```  
+- ``` proba_normalised = [0,19,0.24,0.24,0.19,0.14]```   
+- ``` cum_sum_proba_normalised = [0.19,0.43,0.67,0.84,1]```
 
 With the probabilities computed, we sample from a uniform distribution U(1) and according to its value we assign a certain alternative performance value to ```b0```. For example, it we sample ```0.3```, ```b0=alt1```.
 

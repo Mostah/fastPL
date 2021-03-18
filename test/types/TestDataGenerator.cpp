@@ -2,11 +2,25 @@
 #include "../../include/types/DataGenerator.h"
 #include "../../include/utils.h"
 #include "gtest/gtest.h"
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <tuple>
 #include <utility>
+
+Config getTestConf() {
+  Config conf;
+  conf.data_dir = "../data/tests/";
+  try {
+    conf.logger =
+        spdlog::basic_logger_mt("test_logger", "../logs/test_logger.txt");
+  } catch (const spdlog::spdlog_ex &ex) {
+    conf.logger = spdlog::get("test_logger");
+  }
+  spdlog::set_level(spdlog::level::debug);
+  return conf;
+}
 
 TEST(TestDataGenerator, TestDatasetGenerator) {
   Config conf = getTestConf();
@@ -373,10 +387,10 @@ TEST(TestDataGenerator, TestGetAlternativePerformanceForDataset) {
       data.getAlternativePerformance("test_dataset.xml", "alt0");
   std::ostringstream os2;
   os2 << p;
-  EXPECT_EQ(
-      os2.str(),
-      "[Perf( name : alt0, crit : crit0, value : 0 ),Perf( name : alt0, crit : "
-      "crit1, value : 0 ),Perf( name : alt0, crit : crit2, value : 0 )]");
+  EXPECT_EQ(os2.str(),
+            "[Perf( name : alt0, crit : crit0, value : 0.592845 ),Perf( name : "
+            "alt0, crit : crit1, value : 0.592845 ),Perf( name : alt0, crit : "
+            "crit2, value : 0.592845 )]");
 }
 
 TEST(TestDataGenerator, TestGetAlternativePerformanceForModel) {
@@ -571,4 +585,45 @@ TEST(TestDataGenerator, TestGetCriterionCategoryLimitsModelFakeCritId) {
   } catch (...) {
     FAIL() << "should have throw invalid_argument error.";
   }
+}
+
+TEST(TestDataGenerator, TestDataCompatability) {
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
+  try {
+    bool v = data.checkDataCompatability("test_dataset.xml");
+    FAIL() << "should have throw invalid_argument error.";
+  } catch (std::invalid_argument const &err) {
+    EXPECT_EQ(
+        err.what(),
+        std::string(
+            "The number of categories found in the dataset does not match the "
+            "number of categories given in the xml <categories> tag."));
+  } catch (...) {
+    FAIL() << "should have throw invalid_argument error.";
+  }
+}
+
+TEST(TestDataGenerator, TestDataCompatabilityRealDataset) {
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
+  try {
+    bool v = data.checkDataCompatability("in3dataset.xml");
+    FAIL() << "should have throw invalid_argument error.";
+  } catch (std::invalid_argument const &err) {
+    EXPECT_EQ(
+        err.what(),
+        std::string(
+            "The number of categories found in the dataset does not match the "
+            "number of categories given in the xml <categories> tag."));
+  } catch (...) {
+    FAIL() << "should have throw invalid_argument error.";
+  }
+}
+
+TEST(TestDataGenerator, TestDataCompatabilityRealDatasetWork) {
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
+  bool v = data.checkDataCompatability("in1dataset.xml");
+  EXPECT_EQ(v, 1);
 }

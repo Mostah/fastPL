@@ -102,7 +102,12 @@ std::ostream &operator<<(std::ostream &out,
   }
   out << "], AlternativesAssignment{ ";
 
-  out << alt.alt_assignment_;
+  auto it = alt.alt_assignment_.begin();
+  while (it != alt.alt_assignment_.end()) {
+    out << it->first << "->" << it->second << " ";
+    it++;
+  }
+  out << "}";
   return out;
 }
 

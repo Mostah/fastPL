@@ -19,16 +19,22 @@ TEST(TestProfiles, TestConstructorWithPerfVectError) {
     Profiles profs = Profiles(perf_vect, "alt");
     FAIL() << "should have throw invalid argument.";
   } catch (std::invalid_argument const &err) {
-    EXPECT_EQ(
-        err.what(),
-        std::string(
-            "The given performance vector cannot be used as a profiles "
-            "performance table. Each row must be ranked such that for each row "
-            "i we have on each criterion j : v_i - 1_j > v_i_j > v_i + 1_j"));
+    EXPECT_EQ(err.what(),
+              std::string("Profile in its given mode is not ordered"));
   } catch (...) {
     FAIL() << "should have throw invalid argument.";
   }
 }
+
+TEST(TestProfiles, TestConstructorWithoutPerfVect) {
+  Criteria crit = Criteria(4, "crit");
+  Profiles profs = Profiles(12, crit, "alt", "b");
+  EXPECT_TRUE(profs.isProfileOrdered());
+
+  Profiles profs2 = Profiles(12, crit, "crit", "criterion");
+  EXPECT_TRUE(profs2.isProfileOrdered());
+}
+
 TEST(TestProfiles, TestIsOrdered) {
   std::vector<std::vector<Perf>> perf_vect;
   Criteria crit = Criteria(3, "crit");
@@ -45,12 +51,8 @@ TEST(TestProfiles, TestIsOrdered) {
     Profiles profile2 = Profiles(perf_vect, "alt");
     FAIL() << "should have throw invalid argument.";
   } catch (std::invalid_argument const &err) {
-    EXPECT_EQ(
-        err.what(),
-        std::string(
-            "The given performance vector cannot be used as a profiles "
-            "performance table. Each row must be ranked such that for each row "
-            "i we have on each criterion j : v_i - 1_j > v_i_j > v_i + 1_j"));
+    EXPECT_EQ(err.what(),
+              std::string("Profile in its given mode is not ordered"));
   } catch (...) {
     FAIL() << "should have throw invalid argument.";
   }
@@ -58,9 +60,13 @@ TEST(TestProfiles, TestIsOrdered) {
 
 TEST(TestProfiles, TestGenerateRandomOrderedPerfValues) {
   Criteria crit = Criteria(4, "crit");
-  Profiles profs = Profiles(12, crit, "b");
+  Profiles profs = Profiles(12, crit, "alt", "b");
   profs.generateRandomPerfValues();
   EXPECT_TRUE(profs.isProfileOrdered());
+
+  Profiles profs2 = Profiles(12, crit, "crit", "criterion");
+  profs2.generateRandomPerfValues();
+  EXPECT_TRUE(profs2.isProfileOrdered());
 }
 
 TEST(TestProfiles, TestGetBelowAndAbove) {

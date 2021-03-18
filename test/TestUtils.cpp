@@ -1,3 +1,7 @@
+#include "../include/app.h"
+#include "../include/learning/ProfileInitializer.h"
+#include "../include/types/DataGenerator.h"
+#include "../include/types/MRSortModel.h"
 #include "../include/utils.h"
 #include "gtest/gtest.h"
 #include <iostream>
@@ -63,17 +67,17 @@ TEST(TestUtils, TestUtilsVectorPerf) {
 // TEST(TestUtils, TestUtilsPlotData) {
 //   Config conf = getTestConf();
 //   DataGenerator data = DataGenerator(conf);
-//   std::string filename = "in1dataset.xml";
+//   std::string filename = "in7dataset.xml";
 //   AlternativesPerformance ap = data.loadDataset(filename);
 //   int nbCat = data.getNumberOfCategories(filename);
 //   int nbCrit = data.getNumberOfCriteria(filename);
 //   MRSortModel mr = MRSortModel(nbCat, nbCrit);
-//   // plotGlobalData(ap);
+//   plotGlobalData(ap);
 //   ProfileInitializer profInit = ProfileInitializer(conf, ap);
 //   profInit.initializeProfiles(mr);
-//   // works if we take out profile mode condition in function or
-//   //     fix change mode bug
-//   mr.profiles.changeMode("alt");
-//   mr.profiles.changeMode("crit");
-//   plotProfile(mr.profiles);
-// }
+// works if we take out profile mode condition in function or
+//     fix change mode bug
+// mr.profiles.changeMode("alt");
+// mr.profiles.changeMode("crit");
+// plotProfile(mr.profiles);
+//}

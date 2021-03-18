@@ -231,7 +231,6 @@ void PerformanceTable::changeMode(std::string mode) {
       }
     }
   }
-
   pt_ = new_pt;
   mode_ = mode;
   sorted_ = false;
