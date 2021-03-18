@@ -1,6 +1,12 @@
 #ifndef AlternativesPerformance_H
 #define AlternativesPerformance_H
 
+/**
+ * @file AlternativesPerformance.h
+ * @brief Dataset data structure.
+ *
+ */
+
 #include "Category.h"
 #include "Criteria.h"
 #include "PerformanceTable.h"
@@ -14,6 +20,18 @@
 extern Category default_cat;
 extern std::unordered_map<std::string, Category> default_map;
 
+/**
+ * @class AlternativesPerformance AlternativesPerformance.h
+ * @brief Dataset datastructure
+ *
+ * The AlternativesPerformance class hold the datastructure that implement a
+ * complete dataset. An AlternativesPerformance object hold a PerformanceTable
+ * that represents the values of each alternative on each vriterion, and a
+ * hashmap that stores the ategory assignment for each alternatives. The
+ * hashmap is unordered and link the name of an alternative to the Category
+ * object to which it is assigned.
+ *
+ */
 class AlternativesPerformance : public PerformanceTable {
 public:
   /**
@@ -110,6 +128,9 @@ public:
   int getNumberCats();
 
 private:
+  // TODO: Memory could be optimize here, there is no need to store the Category
+  // object, we could use a reference instead.
+
   // Hashmap: key = Alternative Name, value = Category
   std::unordered_map<std::string, Category> alt_assignment_;
 };

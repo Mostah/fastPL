@@ -1,6 +1,13 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+/**
+ * @file utils.h
+ * @brief utility functions used by our programs.
+ *
+ * All utility fonctions are referenced and implemented inside this file.
+ */
+
 #include "../extsrc/pugixml/src/pugixml.hpp"
 #include "types/Category.h"
 #include "types/Criteria.h"
