@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='us-ascii'?>
+<dataset><datasetName>datasetNameTest</datasetName><criteria>5</criteria><categories>3</categories><alternatives>2</alternatives><alternative>alt1<crit1>269</crit1><crit0>150</crit0><crit3>4.5</crit3><crit2>2</crit2><crit4>24</crit4><assignment>2</assignment></alternative><alternative>alt2<crit1>413</crit1><crit0>100</crit0><crit3>5.5</crit3><crit2>4</crit2><crit4>17</crit4><assignment>2</assignment></alternative></dataset>

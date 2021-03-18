@@ -7,9 +7,11 @@ add_subdirectory(extsrc/googletest)
 add_subdirectory(extsrc/spdlog)
 add_subdirectory(extsrc/pugixml)
 add_subdirectory(extsrc/yaml-cpp)
+add_subdirectory(extsrc/matplotplusplus)
 add_subdirectory(extsrc/ortools)
 
 add_subdirectory(doc) # add doxygen doc generator
+
 
 set(Headers 
     include/learning/ProfileInitializer.h
@@ -55,10 +57,13 @@ if(UNIX AND NOT APPLE)
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pg" )
 endif()
 
+
 add_library(Core ${Headers} ${Sources})   # build a library with our header and source files
+
 target_link_libraries(Core spdlog::spdlog_header_only)
 target_link_libraries(Core yaml-cpp)
 target_link_libraries(Core pugixml)
+target_link_libraries(Core matplot)
 target_link_libraries(Core ortools::ortools)
 
 
@@ -77,6 +82,9 @@ target_link_libraries(Main Core pugixml)
 
 target_link_libraries(Test Core yaml-cpp)
 target_link_libraries(Main Core yaml-cpp)
+
+target_link_libraries(Test Core matplot)
+target_link_libraries(Main Core matplot)
 
 target_link_libraries(Main Core ortools::ortools)
 target_link_libraries(Test Core ortools::ortools)

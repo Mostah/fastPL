@@ -32,7 +32,7 @@ public:
   DataGenerator(Config &config);
 
   /**
-   * Generate a random dataset and put it in a xml file
+   * Generate a random dataset and puts it in a xml file
    *
    * @param nb_criteria number of criteria
    * @param nb_alternative number of alternatives
@@ -215,6 +215,16 @@ public:
    */
   std::vector<float> getCriterionCategoryLimits(std::string fileName,
                                                 std::string crit_id);
+
+  /**
+   * This method checks if the dataset used for our profile initialisation is
+   * compatible in our framework. Essentially, it checks that at least one
+   * alternative is assigned to each category of our problem.
+   *
+   * @param fileName dataset filename
+   * @return bool
+   */
+  bool checkDataCompatability(std::string fileName);
 
 private:
   Config &conf;

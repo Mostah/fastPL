@@ -1,5 +1,6 @@
 #include "../../include/app.h"
 #include "../../include/learning/ProfileInitializer.h"
+#include "../../include/types/DataGenerator.h"
 #include "../../include/types/MRSortModel.h"
 #include "../../include/types/Perf.h"
 #include "../../include/types/Profiles.h"
@@ -8,19 +9,6 @@
 #include <sstream>
 #include <utility>
 #include <vector>
-
-Config getTestConf() {
-  Config conf;
-  conf.data_dir = "../data/tests/";
-  try {
-    conf.logger =
-        spdlog::basic_logger_mt("test_logger", "../logs/test_logger.txt");
-  } catch (const spdlog::spdlog_ex &ex) {
-    conf.logger = spdlog::get("test_logger");
-  }
-  spdlog::set_level(spdlog::level::debug);
-  return conf;
-}
 
 TEST(TestProfileInitializer, TestComputeFrequency) {
   Config conf = getTestConf();
@@ -154,11 +142,11 @@ TEST(TestProfileInitializer, TestInitializeProfiles) {
   Categories categories = Categories(3);
   std::unordered_map<std::string, Category> map =
       std::unordered_map<std::string, Category>{
-          {"alt0", categories[2]}, {"alt1", categories[2]},
-          {"alt2", categories[2]}, {"alt3", categories[2]},
+          {"alt0", categories[0]}, {"alt1", categories[0]},
+          {"alt2", categories[0]}, {"alt3", categories[0]},
           {"alt4", categories[1]}, {"alt5", categories[1]},
-          {"alt6", categories[1]}, {"alt7", categories[0]},
-          {"alt8", categories[0]}, {"alt9", categories[0]}};
+          {"alt6", categories[1]}, {"alt7", categories[2]},
+          {"alt8", categories[2]}, {"alt9", categories[2]}};
 
   std::vector<std::vector<Perf>> perf_vect;
   for (int i = 0; i < nbAlt; i++) {
@@ -179,5 +167,25 @@ TEST(TestProfileInitializer, TestInitializeProfiles) {
   model.profiles.changeMode("alt");
   EXPECT_TRUE(model.profiles.isProfileOrdered());
   model.profiles.changeMode("crit");
+  EXPECT_TRUE(model.profiles.isProfileOrdered());
+}
+
+TEST(TestProfileInitializer, TestInitializeProfilesRealDataset) {
+  Config conf = getTestConf();
+  DataGenerator data = DataGenerator(conf);
+  std::string filename = "in7dataset.xml";
+
+  // in3, in4 don't work since it doesnt have alternatives present for
+  // all of its categories | in1 works, in7 works but takes long time
+  // for in7, cat1 is people that are likely to die or develop an extreme
+  // condition of a disease
+  AlternativesPerformance ap = data.loadDataset(filename);
+  int nbCat = data.getNumberOfCategories(filename);
+  int nbCrit = data.getNumberOfCriteria(filename);
+  MRSortModel model = MRSortModel(nbCat, nbCrit);
+  ProfileInitializer profInit = ProfileInitializer(conf, ap);
+  profInit.initializeProfiles(model);
+  EXPECT_TRUE(model.profiles.isProfileOrdered());
+  model.profiles.changeMode("alt");
   EXPECT_TRUE(model.profiles.isProfileOrdered());
 }

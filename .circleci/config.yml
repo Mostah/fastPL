@@ -8,6 +8,7 @@ jobs:
       - checkout
       # command to build all files
       - run: apt-get update && apt-get -y install build-essential cmake git doxygen
+      - run : DEBIAN_FRONTEND="noninteractive" apt-get -y install gnuplot
       - run: git submodule init; git submodule update
       - run: mkdir build; cd build; cmake .. -DBUILD_DEPS:BOOL=ON -DUSE_SCIP=OFF; make
       - persist_to_workspace:

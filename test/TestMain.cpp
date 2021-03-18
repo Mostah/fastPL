@@ -1,3 +1,5 @@
+#include "types/TestDataGenerator.cpp"
+
 #include "TestUtils.cpp"
 #include "learning/TestInitializeProfile.cpp"
 #include "learning/TestLinearSolver.cpp"
@@ -9,7 +11,6 @@
 #include "types/TestCategory.cpp"
 #include "types/TestCriteria.cpp"
 #include "types/TestCriterion.cpp"
-#include "types/TestDataGenerator.cpp"
 #include "types/TestMRSortModel.cpp"
 #include "types/TestPerf.cpp"
 #include "types/TestPerformanceTable.cpp"

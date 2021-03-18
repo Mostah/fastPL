@@ -59,5 +59,7 @@ logs/
 # documentation
 doc/*
 !doc/CMakeLists.txt
-!doc/pages/
-!doc/images/
+!doc/doc_generation.sh
+
+#Dsstore
+.DS_Store

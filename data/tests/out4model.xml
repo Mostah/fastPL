@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='us-ascii'?>
+<model><modelName>modelName</modelName><criteria>5</criteria><categories>2</categories><lambda>0.60004</lambda><profile>b2<c01>32700.0</c01><c02>105.0</c02><c03>11.4</c03><c04>9.6</c04><c05>128.0</c05></profile><weight>0.19998</weight><direction>1</direction><profile>b1<c01>24649.99999</c01><c02>143.00001</c02><c03>7.9</c03><c04>5.79999</c04><c05>128.0</c05></profile><weight>0.20008</weight><direction>1</direction></model>
