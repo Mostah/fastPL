@@ -72,7 +72,7 @@ void HeuristicPipeline::start() {
 
     // if one model is accurately representing the dataset, stop the learning
     // algorithm
-    conf.logger->info("Iteration " + k +
+    conf.logger->info("Iteration " + std::to_string(i) +
                       "done, best model has an accuracy of: " +
                       std::to_string(models[0].accuracy));
     if (models[0].accuracy == 1) {
@@ -81,7 +81,7 @@ void HeuristicPipeline::start() {
       break;
     }
   }
-  conf.logger->info("Reaching mac iteration, terminating the pipeline");
+  conf.logger->info("Reaching max iteration, terminating the pipeline");
 }
 
 void HeuristicPipeline::customSort() {
@@ -120,7 +120,7 @@ void HeuristicPipeline::orderModels(bool worstHalf) {
 
 void HeuristicPipeline::computeAccuracy(MRSortModel &model) {
   AlternativesPerformance model_assignments =
-      model.categoryAssignment(altPerfs);
+      model.categoryAssignments(altPerfs);
   std::unordered_map<std::string, Category> truth =
       altPerfs.getAlternativesAssignments();
   std::unordered_map<std::string, Category> assignments =

@@ -47,6 +47,7 @@ MRSortModel::MRSortModel(const MRSortModel &mrsort)
   id_ = mrsort.id_;
 }
 
+Category
 MRSortModel::categoryAssignment(std::vector<Perf> &alt,
                                 std::vector<std::vector<Perf>> &profiles_pt) {
   bool assigned = false;
