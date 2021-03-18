@@ -1,4 +1,4 @@
-#include "../../include/app.h"
+#include "../../include/config.h"
 #include "../../include/types/DataGenerator.h"
 #include "../../include/utils.h"
 #include "gtest/gtest.h"

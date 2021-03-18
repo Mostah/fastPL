@@ -28,6 +28,7 @@ set(Headers
     include/learning/WeightUpdater.h
     include/learning/HeuristicPipeline.h
     include/app.h
+    include/config.h
     )
 
 set(Sources 

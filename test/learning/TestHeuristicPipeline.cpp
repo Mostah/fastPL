@@ -1,4 +1,4 @@
-#include "../../include/app.h"
+#include "../../include/config.h"
 #include "../../include/learning/HeuristicPipeline.h"
 #include "gtest/gtest.h"
 #include <sstream>

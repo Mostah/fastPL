@@ -16,12 +16,13 @@ HeuristicPipeline::HeuristicPipeline(Config &config,
 }
 
 void HeuristicPipeline::start() {
-
+  conf.logger->info("Starting heuristic pipeline");
   int n_cat = altPerfs.getNumberCats();
   int n_crit = altPerfs.getNumberCrit();
 
   // First itteration outside the loop: run every algorithm on all models
   // Creation of models and profile initialization
+  conf.logger->info("Running 1st itteration on all models");
   for (int k = 0; k < conf.model_batch_size; k++) {
     MRSortModel model = MRSortModel(n_cat, n_crit);
     profileInitializer.initializeProfiles(model);
@@ -42,6 +43,8 @@ void HeuristicPipeline::start() {
   this->orderModels(false);
   // iterating until convergence or reaching the max iteration, only working on
   // the worst half
+  conf.logger->info("Iteration 1 done, best model has an accuracy of: " +
+                    std::to_string(models[0].accuracy));
   for (int i = 1; i < conf.max_iterations; i++) {
     // ** profiles initialization **
 
@@ -69,10 +72,16 @@ void HeuristicPipeline::start() {
 
     // if one model is accurately representing the dataset, stop the learning
     // algorithm
+    conf.logger->info("Iteration " + k +
+                      "done, best model has an accuracy of: " +
+                      std::to_string(models[0].accuracy));
     if (models[0].accuracy == 1) {
+      conf.logger->info(
+          "Model with an accuracy of 1 found, stopping algorithm");
       break;
     }
   }
+  conf.logger->info("Reaching mac iteration, terminating the pipeline");
 }
 
 void HeuristicPipeline::customSort() {
