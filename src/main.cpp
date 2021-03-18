@@ -48,3 +48,10 @@ int main(int argc, char *argv[]) {
   app_conf.logger->info("App terminated");
   return 0;
 }
+
+// TODO
+// Ajouter des logs durant l'exécurtion de l'app
+// Ajouter un flag pour choisir quel dataset exécuter et où sauvegarder le model
+// Ajouter de la doc au niveau des classes Learning
+// Changer le fonctionnement de la config et le rendre plus claire, notemment au
+// niveau de son extraction

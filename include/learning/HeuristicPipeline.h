@@ -1,12 +1,30 @@
 #ifndef HEURISTICPIPELINE_H
 #define HEURISTICPIPELINE_H
 
+/**
+ * @file HeuristicPipeline.h
+ * @brief Global heuristic to learn a model.
+ *
+ */
+
 #include <vector>
 
 #include "../app.h"
 #include "ProfileInitializer.h"
 #include "WeightUpdater.h"
 // #include "ProfileUpdater"
+
+/** @class HeuristicPipeline HeuristicPipeline.h
+ *  @brief Global heuristic to learn a model.
+ *
+ * The heuristic pipeline is responsible of initializing the sub algorithms: the
+ * WeightUpdater, the ProfileInitializer and the ProfileUpdater, is responsible
+ * for initilizing the population of n models and run the learning metaheuristic
+ * to converge into a learned model.
+ *
+ * A complete description of the heuristic can be found in @subpage
+ * learning_algorithms.
+ */
 
 class HeuristicPipeline {
 
