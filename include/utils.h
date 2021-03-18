@@ -47,6 +47,15 @@ std::ostream &operator<<(std::ostream &out, const std::vector<T> &vec) {
   return out;
 }
 
+/**
+ * subVector get a sub-vector of a vector
+ *
+ * @param v vector from which we want the sub vector
+ * @param m index of the beginning of subvector
+ * @param n index of the end of subvector
+ *
+ * @return subvector
+ */
 template <typename T>
 std::vector<T> subVector(std::vector<T> const &v, int m, int n) {
   auto first = v.begin() + m;
@@ -118,6 +127,15 @@ inline float getRandomUniformFloat(unsigned long int seed = 0, float min = 0,
   return dis(gen);
 }
 
+/**
+ * randomCategoriesLimits creates random categories limits given the number of
+ * categories
+ *
+ * @param nbCategories number of categories (and of limits) to create
+ * @param seed seed for random
+ *
+ * @return vector of float representing categories limits
+ */
 inline std::vector<float>
 randomCategoriesLimits(int nbCategories, unsigned long int seed = time(NULL)) {
   std::vector<float> catLimits;
@@ -144,6 +162,13 @@ std::ostream &operator<<(std::ostream &out, std::unordered_map<K, V> const &m) {
   return out;
 }
 
+/**
+ * getCriterionIds get vector of criterions ids of a performance vector
+ *
+ * @param vectPerf performance vector
+ *
+ * @return vector of criterion ids
+ */
 inline std::vector<std::string> getCriterionIds(std::vector<Perf> vectPerf) {
   std::vector<std::string> criterionIds;
   for (auto p : vectPerf) {
@@ -153,7 +178,8 @@ inline std::vector<std::string> getCriterionIds(std::vector<Perf> vectPerf) {
 };
 
 /**
- * getPerfOfCrit
+ * getPerfOfCrit get the performance for a given criterion in a performance
+ * vector.
  *
  * @param critId criterion for which we want the perf
  *
@@ -168,6 +194,13 @@ inline Perf getPerfOfCrit(std::vector<Perf> &vectPerf, std::string critId) {
   throw std::invalid_argument("No performance for given criterion found");
 }
 
+/**
+ * getNameIds get the names of each perfomance in a perfomance vector
+ *
+ * @param vectPerf Performance vector from which we want the ids
+ *
+ * @return vector of names (ids)
+ */
 inline std::vector<std::string> getNameIds(std::vector<Perf> vectPerf) {
   std::vector<std::string> NameIds;
   for (auto p : vectPerf) {
@@ -176,6 +209,16 @@ inline std::vector<std::string> getNameIds(std::vector<Perf> vectPerf) {
   return NameIds;
 };
 
+/**
+ * createVectorPerf creates a vector of performances given the id, criteria and
+ * values
+ *
+ * @param id of the performance
+ * @param criteria criteria vector on which to associate the performances
+ * @param given_perf performances values in the same order as criteria vect
+ *
+ * @return vect<Perf> performance vector
+ */
 inline std::vector<Perf> createVectorPerf(std::string id, Criteria &criteria,
                                           std::vector<float> &given_perf) {
   if (criteria.getCriterionVect().size() != given_perf.size()) {
@@ -190,6 +233,15 @@ inline std::vector<Perf> createVectorPerf(std::string id, Criteria &criteria,
   return vp;
 }
 
+/**
+ * createVectorPerf creates a vector of performances with random values given
+ * the id and criteria
+ *
+ * @param id of the performance
+ * @param criteria criteria vector on which to associate the performances
+ *
+ * @return vect<Perf> performance vector
+ */
 inline std::vector<Perf> createVectorPerfWithNoPerf(std::string id,
                                                     Criteria &criteria) {
   std::vector<Perf> vp;
