@@ -87,11 +87,11 @@ TEST(TestHeuristicPipeline, TestCustomSort) {
   MRSortModel mrsort4 =
       MRSortModel(criteria, profile, categories, 0.4, "model4");
 
-  mrsort0.getScore() = 1;
-  mrsort1.getScore() = 0.8;
-  mrsort2.getScore() = 0.6;
-  mrsort3.getScore() = 0.4;
-  mrsort4.getScore() = 0.2;
+  mrsort0.setScore(1);
+  mrsort1.setScore(0.8);
+  mrsort2.setScore(0.6);
+  mrsort3.setScore(0.4);
+  mrsort4.setScore(0.2);
 
   std::vector<std::vector<Perf>> perf_vect;
   std::vector<float> alt0 = {0.9, 0.6, 0.5};
@@ -150,7 +150,7 @@ TEST(TestHeuristicPipeline, TestOrderModels) {
   hp.models.push_back(mrsort0);
   hp.models.push_back(mrsort2);
   hp.models.push_back(mrsort1);
-  hp.orderModels(false);
+  hp.orderModels();
   EXPECT_FLOAT_EQ(hp.models[0].getScore(), 1);
   EXPECT_FLOAT_EQ(hp.models[1].getScore(), 1);
   EXPECT_FLOAT_EQ(hp.models[2].getScore(), 0.75);

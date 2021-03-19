@@ -154,3 +154,20 @@ int AlternativesPerformance::getNumberCats() {
   }
   return cat_vector.size();
 }
+
+std::pair<float, float> AlternativesPerformance::getBoundaries() {
+  float min = pt_[0][0].getValue();
+  float max = pt_[0][0].getValue();
+  for (int i = 0; i < pt_.size(); i++) {
+    for (int j = 0; j < pt_[i].size(); j++) {
+      if (pt_[i][j].getValue() < min) {
+        min = pt_[i][j].getValue();
+      }
+      if (pt_[i][j].getValue() > max) {
+        max = pt_[i][j].getValue();
+      }
+    }
+  }
+
+  return std::pair<float, float>(min, max);
+}

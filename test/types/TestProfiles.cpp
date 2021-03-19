@@ -87,7 +87,7 @@ TEST(TestProfiles, TestGetBelowAndAbove) {
   Profiles profile = Profiles(perf_vect, "alt");
 
   std::pair<std::vector<Perf>, std::vector<Perf>> profiles1 =
-      profile.getBelowAndAboveProfile("b1");
+      profile.getBelowAndAboveProfile("b1", 0, 1);
   std::vector<Perf> below1 = profiles1.first;
   std::vector<Perf> above1 = profiles1.second;
 
@@ -95,7 +95,7 @@ TEST(TestProfiles, TestGetBelowAndAbove) {
   EXPECT_EQ(above1[0].getName(), "b2");
 
   std::pair<std::vector<Perf>, std::vector<Perf>> profiles2 =
-      profile.getBelowAndAboveProfile("b0");
+      profile.getBelowAndAboveProfile("b0", 0, 1);
   std::vector<Perf> below2 = profiles2.first;
   std::vector<Perf> above2 = profiles2.second;
 
@@ -103,7 +103,7 @@ TEST(TestProfiles, TestGetBelowAndAbove) {
   EXPECT_EQ(above2[0].getName(), "b1");
 
   std::pair<std::vector<Perf>, std::vector<Perf>> profiles3 =
-      profile.getBelowAndAboveProfile("b2");
+      profile.getBelowAndAboveProfile("b2", 0, 1);
   std::vector<Perf> below3 = profiles3.first;
   std::vector<Perf> above3 = profiles3.second;
 
@@ -130,7 +130,7 @@ TEST(TestProfiles, TestGetBelowAndAboveErrors) {
   // TEST INVALID ARGUMENT
   try {
     std::pair<std::vector<Perf>, std::vector<Perf>> profiles1 =
-        profile.getBelowAndAboveProfile("b3");
+        profile.getBelowAndAboveProfile("b3", 0, 1);
     FAIL() << "should have thrown invalid argument.";
   } catch (std::invalid_argument const &err) {
     EXPECT_EQ(err.what(), std::string("Profile not found."));
@@ -142,7 +142,7 @@ TEST(TestProfiles, TestGetBelowAndAboveErrors) {
   profile.changeMode("crit");
   try {
     std::pair<std::vector<Perf>, std::vector<Perf>> profiles1 =
-        profile.getBelowAndAboveProfile("b1");
+        profile.getBelowAndAboveProfile("b1", 0, 1);
     FAIL() << "should have thrown invalid argument.";
   } catch (std::invalid_argument const &err) {
     EXPECT_EQ(err.what(),

@@ -38,14 +38,12 @@ public:
   /** Start run the heuristic pipeline
    *
    */
-  void start();
+  MRSortModel start();
 
   /** orderModels Order models by their accuracy.
    *
-   * @param worstHalf only working on the worst half
-   *
    */
-  void orderModels(bool worstHalf);
+  void orderModels();
 
   /**
    * customSort sort the model given their accuracy

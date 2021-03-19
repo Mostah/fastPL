@@ -36,7 +36,6 @@ std::unordered_map<float, float> ProfileUpdater::computeAboveDesirability(
   // Alternatives between given profile and above profile. AltPerf_model needs
   // to be sorted and in mode crit to have a meaniful iteration in the loop
   altPerf_model.sort();
-  std::cout << b.getValue() << " " << b_above.getValue() << std::endl;
   std::vector<Perf> alt_between =
       altPerf_model.getAltBetween(critId, b.getValue(), b_above.getValue());
   // Initializing the map of desirability indexes
@@ -265,9 +264,12 @@ void ProfileUpdater::optimizeProfile(
     MRSortModel &model,
     std::unordered_map<std::string, std::unordered_map<std::string, float>> &ct,
     AlternativesPerformance &altPerf_model) {
-
+  // get the worst and best values in the dataset to compute the boundaries of
+  // the profile
+  std::pair<float, float> bounds = altPerf_model.getBoundaries();
   std::pair<std::vector<Perf>, std::vector<Perf>> below_above =
-      model.profiles.getBelowAndAboveProfile(prof[0].getName());
+      model.profiles.getBelowAndAboveProfile(prof[0].getName(), bounds.first,
+                                             bounds.second);
   std::vector<Perf> prof_below = below_above.first;
   std::vector<Perf> prof_above = below_above.second;
 
