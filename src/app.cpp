@@ -102,19 +102,39 @@ int App::run() {
   conf.logger->info("Starting...");
   DataGenerator dg = DataGenerator(conf);
   std::string data_path = conf.data_dir + conf.dataset;
-  std::filesystem::path f{data_path};
-  if (!std::filesystem::exists(f)) {
+  std::string model_path = conf.data_dir + conf.output;
+
+  // verify dataset exists at given path
+  std::filesystem::path data_f{data_path};
+  if (!std::filesystem::exists(data_f)) {
     std::cerr << "No file found in dataset path: " << data_path << std::endl;
     conf.logger->error("No file found in data set path.");
     return 1;
   }
-  // might have to check the path
+  // verify output directory path exists
+  std::string directory_models;
+  for (int i = model_path.size() - 1; i >= 0; i--) {
+    if (model_path[i] == *"/") {
+      directory_models = model_path.substr(0, i);
+      break;
+    }
+  }
+  std::filesystem::path model_f{directory_models};
+  if (!std::filesystem::exists(model_f)) {
+    std::cerr << "No directory found for output at: " << directory_models
+              << std::endl;
+    conf.logger->error("No directory found for output.");
+    return 1;
+  }
 
   AlternativesPerformance dataset = dg.loadDataset(data_path);
   conf.logger->info("Dataset loaded");
 
   HeuristicPipeline hp = HeuristicPipeline(conf, dataset);
-  hp.start();
+  MRSortModel opti = hp.start();
+  conf.logger->info("Saving models...");
+  dg.saveModel(model_path, opti.lambda, opti.criteria, opti.profiles, true,
+               opti.getId());
   conf.logger->info("App terminated");
   return 0;
 }

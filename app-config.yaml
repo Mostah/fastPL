@@ -3,5 +3,5 @@
 log_level: "INFO"
 log_file: ../logs/app_log.txt
 data_dir: ../data/
-model_batch_size: 10
-max_iterations: 1
+model_batch_size: 5
+max_iterations: 10
