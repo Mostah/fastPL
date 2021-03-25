@@ -54,8 +54,3 @@ int main(int argc, char *argv[]) {
   // return status: success or failure
   return app_status;
 }
-
-// TODO
-// Ajouter des logs durant l'exécurtion de l'app
-// Ajouter un flag pour choisir quel dataset exécuter et où sauvegarder le model
-// Ajouter de la doc au niveau des classes Learning

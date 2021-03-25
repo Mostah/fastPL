@@ -17,7 +17,7 @@
 /** @class LinearSolver LinearSolver.h
  *  @brief External linear solver wrapper
  *
- * The linear solver class is a wrapper that make an abstraction between the
+ * The linear solver class is a wrapper that makes an abstraction between the
  * weight updater and the resolution of the linear problem. Currently this
  * wrapper uses ortools interface and only the ortools solver (GLOP) is
  * implemented. Other solver could be used by following the instruction on how
@@ -27,7 +27,7 @@
  *
  * The abstraction was made by receiving the constraint matrices according to
  * the equations described in the thesis and returning the solution found for
- * the weights and lambda.
+ * the new weights and lambda.
  *
  * Link to ortools (google) : https://github.com/google/or-tools
  */

@@ -18,7 +18,7 @@
  *  @brief Weight and Lambda update heuristic.
  *
  * This class implements the update of Criterion weight and the majority
- * threshold lambda as described in the thesis. This algorithms is initialized
+ * threshold lambda as described in the thesis. This algorithm is initialized
  * with the dataset and can then be used to transform a model into an updated
  * one.
  *
