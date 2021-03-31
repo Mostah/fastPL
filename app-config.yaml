@@ -1,10 +1,7 @@
-env:
-  staging:
-    log_level: "DEBUG"
 
-  prod:
-    log_level: "INFO"
 # log_level takes its value in { DEBUG, INFO, WARN, ERROR, CRITICAL }
-
+log_level: "INFO"
 log_file: ../logs/app_log.txt
 data_dir: ../data/
+model_batch_size: 5
+max_iterations: 10

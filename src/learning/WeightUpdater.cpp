@@ -1,5 +1,6 @@
 #include "../../include/learning/WeightUpdater.h"
 #include "../../include/learning/LinearSolver.h"
+#include "../../include/utils.h"
 
 #include <sstream>
 
@@ -33,7 +34,7 @@ void WeightUpdater::updateWeightsAndLambda(MRSortModel &model) {
   for (int i = 0; i < res.second.size(); i++) {
     ss << " - w" << i << ": " << model.criteria[i].getWeight();
   }
-  conf.logger->info(ss.str());
+  conf.logger->debug(ss.str());
 }
 
 std::vector<std::vector<std::vector<bool>>>
@@ -93,14 +94,15 @@ bool WeightUpdater::modelCheck(MRSortModel &model) {
     return false;
   }
   if (model.profiles.getMode() != "alt") {
-    std::invalid_argument("Model's profile should be in alt mode.");
+    throw std::invalid_argument("Model's profile should be in alt mode.");
   }
   if (ap.getMode() != "alt") {
-    std::invalid_argument(
+    throw std::invalid_argument(
         "AlternativesPerformance's profile should be in alt mode.");
   }
   // both are supposed to be in mode alt
-  auto profs = model.profiles.getPerformanceTable();
+
+  std::vector<std::vector<Perf>> profs = model.profiles.getPerformanceTable();
   auto ap_pt = ap.getPerformanceTable();
   for (int i = 0; i < ap.getNumberCrit(); i++) {
     if (profs[0][i].getCrit() != ap_pt[0][i].getCrit()) {

@@ -55,7 +55,6 @@ void Profiles::generateRandomPerfValues(unsigned long int seed, int lower_bound,
     throw std::invalid_argument(
         "Lower bound must be lower than the upper bound.");
   }
-
   if (mode_ == "alt") {
     int nbProfiles = pt_.size();
     std::random_device rd;
@@ -112,15 +111,16 @@ bool Profiles::isProfileOrdered() {
 }
 
 std::pair<std::vector<Perf>, std::vector<Perf>>
-Profiles::getBelowAndAboveProfile(std::string profName) {
+Profiles::getBelowAndAboveProfile(std::string profName, float worst_value,
+                                  float best_value) {
   int n_crit = this->getNumberCrit();
   std::vector<Perf> base;
   for (int i = 0; i < n_crit; i++) {
-    base.push_back(Perf("base", pt_[0][i].getCrit(), 0));
+    base.push_back(Perf("base", pt_[0][i].getCrit(), worst_value));
   }
   std::vector<Perf> top;
   for (int i = 0; i < n_crit; i++) {
-    top.push_back(Perf("top", pt_[0][i].getCrit(), 1));
+    top.push_back(Perf("top", pt_[0][i].getCrit(), best_value));
   }
 
   std::vector<Perf> below;
