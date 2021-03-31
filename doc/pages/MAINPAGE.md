@@ -56,11 +56,8 @@ ELECTRI TRI is an outranking sorting procedure. The method aims at assigning eac
 
 Formally we denote by A the set of alternatives that have to be assigned to a category selected among p ordered categories, $$C^p$$  $$\succ$$  $$C^{p-1}$$   $$\succ$$ ...   $$\succ$$ $$C^1$$ where $$\succ$$ indicates a binary outranking relation. Alternatives in the set are evaluated on multiple attributes which are known to have a monotone preference scale, i.e. the higher the value of an alternative on criterion j the better it is or the contrary. The set of criteria is denoted by N = $$\{1,..., n\}$$ and j denotes one of the criteria in the set N. To know in which category an alternative should be assigned, its performances are compared to the ones of the p-1 profiles delimiting the p categories. We denote by $$b_h$$ the profile delimiting the category $$C^h$$ from $$C^{h+1}$$. H = $$\{1,..., p-1\}$$ denotes the set of profile indices. Figure 2.1 illustrates the profiles and categories of an ELECTRE TRI model. Alternatives are compared to the profiles delimiting the categories according a specific schema given by the ELECTRE TRI parameter learning model. Formally, an outraking relation is given to ELECTRE TRI in order for alternatives to be assigned to specific categories. I encourage to check out the thesis page 13.
 
-<img src="../images/Electre_Tri_model.png"  width="600"/>
 
-<!-- ![ELECTRI TRI MODEL](../images/Electre_Tri_model.png)
-|<img src="../images/global_schema.png"  width="600"/>|
-| :--:|  --> -->
+<!-- <!<img src="../images/Electre_Tri_model.png"  width="600"/> -->
 
 ## MR-Sort Model
 
