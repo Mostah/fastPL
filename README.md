@@ -1,192 +1,246 @@
 # Fast Preference Learning README
+
+## Introduction
+
 This work is based on Olivier Sobrie's work on preference learning algorithms (python code : <https://github.com/oso/pymcda>, thesis: <https://tel.archives-ouvertes.fr/tel-01370555/document>).
 
 The  objective of this repository is to translate the previous code (py-mcda) in C++ and set up the parallelisation tools needed to process a greater amount of entrypoints.
 
-# Repository structure  
+The README contains information on how to run the application and help future developpers to set their environment.
 
-* [src](https://github.com/Mostah/fastPL/tree/master/src) : Sources files (headers and classes)
+The full description and documentation of the project can be found at <https://mostah.github.io/fastPL/>.
 
-* [test](https://github.com/Mostah/fastPL/tree/master/test) : Test files
+---
 
-* [extsrc](https://github.com/Mostah/fastPL/tree/master/extsrc) : External sources and dependencies
+## Repository structure  
 
-* [.circleci](https://github.com/Mostah/fastPL/tree/master/.circleci) : CircleCi configuration
+* [include](<https://github.com/Mostah/fastPL/tree/master/include>) : Header files
 
-# Run app and test in Docker
+* [src](<https://github.com/Mostah/fastPL/tree/master/src>) : Sources files
 
-## Build Docker image
+* [test](<https://github.com/Mostah/fastPL/tree/master/test>) : Test files
+
+* [extsrc](<https://github.com/Mostah/fastPL/tree/master/extsrc>) : External sources and dependencies
+
+* [data](<https://github.com/Mostah/fastPL/tree/master/data>) : Data (datasets and models) repository
+
+* [doc](<https://github.com/Mostah/fastPL/tree/master/doc>) : Doxygen documentation repository
+
+* [.circleci](<https://github.com/Mostah/fastPL/tree/master/.circleci>) : CircleCi pipelines configuration
+
+---
+
+## Run project in Docker (Recommended)
+
+### Build Docker image
 
 First thing first, build the docker image
 
-```
+```bash
 docker build . -t fastpl
 ```
 
-## Run test using the docker image
+Currently, the built of all dependencies requires ~1h
+
+### Run the main app in Docker
+
+The following command will show the run config options (helper):
+
+```bash
+docker run fastpl ./Main -h
 ```
+
+To run the app with on a specific dataset:
+
+```bash
+docker run fastpl ./Main -d $dataset_path -o $output_path
+```
+
+At the end of the algorithm, the model will be stored in the `$output_path`
+
+### Run the tests in Docker
+
+Run all tests:
+
+```bash
 docker run fastpl ./Test
 ```
 
-## Run the main app using the docker image
-The following command will show the run config options (helper):
-```
-docker run fastpl
+Run specified tests:
+
+```bash
+docker run fastpl ./Test --gtest_filter=TestGeneralName.TestPreciseName   # One specific Test
+docker run fastpl ./Test --gtest_filter=TestGeneralName.*                 # All tests of Name1 = GeneralName 
 ```
 
-To run the app with default config:
-```
-docker run fastpl ./Main
-```
+### Check the logs
 
-## SSH connect to the docker image and check the logs
+Get the fastpl docker container id by running `docker ps`
 
-Replace container_id with the current container id
-```
-docker run -it <container_id> /bin/bash 
+```bash
+docker run -it $container_id /bin/bash 
 cd /home/fastpl/logs
 ```
 
-# Online Documentation
+---
 
-## Link to the online documentation
-https://mostah.github.io/fastPL/
+## Run project locally
 
-## Script to update online doc
-From root directory:
+The following requires CMake to be installed in your machine.
 
-```
-sh doc_generation.sh
-```
+From the root of the project directory:
 
-# Local Tests environment configuration
+### Download dependencies
 
-## Test C++ code on Circle CI
-
-See [Circle CI configuration file](https://github.com/Mostah/fastPL/blob/master/.circleci/config.yml)
-
-## Manual test with google-test
-
-### Download and set up dependencies
-
-``` 
+```bash
 git submodule init
 git submodule update
-``` 
-
-### Build the project
-
-cmake must have been installed in the machine. Run `sudo apt-get install cmake` for Ubuntu
-
-```
-mkdir build
-cd build
-cmake .. -DBUILD_DEPS:BOOL=ON -DUSE_SCIP=OFF
-make
 ```
 
-### Run test manually
+### Build C++ files
 
-First, move to build folder
-```
-cd build
-```
-
-#### Run all tests
-```
-./Test  
+```bash
+mkdir build && cd build
+cmake .. -DBUILD_DEPS:BOOL=ON -DUSE_SCIP=OFF && make
 ```
 
-#### Run specific tests
+Currently, the built of all dependencies requires ~1h
 
-Run the exectuable using the filter option of gtest:
-```
---gtest_filter=POSTIVE_PATTERNS[-NEGATIVE_PATTERNS]
-    Run only the tests whose name matches one of the positive patterns but
-    none of the negative patterns. '?' matches any single character; '*'
-    matches any substring; ':' separates two patterns.
+### Run the main app locally
 
-    The name of TEST(Name1, Name2) is "Name1.Name2"
+From the `build` directory:
+
+The following command will show the run config options (helper):
+
+```bash
+./Main -h
 ```
 
-Example:
+To run the app on a specified dataset:
+
+```bash
+./Main -d $dataset_path -o $output_path
 ```
+
+At the end of the algorithm, the model will be stored in the `$output_path`
+
+### Run the tests locally
+
+From the `build` directory:
+
+Run all tests:
+
+```bash
+./Test
+```
+
+Run specified tests:
+
+```bash
 ./Test --gtest_filter=TestGeneralName.TestPreciseName   # One specific Test
 ./Test --gtest_filter=TestGeneralName.*                 # All tests of Name1 = GeneralName 
 ```
 
-## Docker image
+---
 
-### Run test using the docker image
-```
-docker-compose up --build
+## Application configuration
+
+The application configuration can be found at: [app-config](<https://github.com/Mostah/fastPL/tree/master/app-config.yaml>)
+
+The application configuration holds the general config of the learning algorithms.
+
+### Parameters
+
+* `log_level`: log filter, values in `INFO`, `ERROR`, `DEBUG`
+* `log_file`: path of the logfile
+* `data_dir`: data directory path. When changed, the args -d and -o passed along with ./Main program is set relatively to the data directory path configured here
+* `model_batch_size`: model population size used in the metaheuristic
+* `max_iterations`: max iteration of the metaheuristic before terminating the application
+
+---
+
+## CircleCi pipelines
+
+CircleCi pipelines configuration can be found at: [.circleci](<https://github.com/Mostah/fastPL/tree/master/.circleci>)
+
+### pipelines
+
+* Build: Try to build all the project
+* Tests (requires build): Try to pass all the tests
+* Doc generation (requires build): Try to generate the documentation
+
+## Documentation
+
+The documentation of this project is generated by doxygen. In order to generate locally or update the online documentation, the following modules must be installed: `doxygen`, `doxygen-doc`, `doxygen-gui`, `graphviz`.
+
+The documentation configuration and files can be found at: [doc](<https://github.com/Mostah/fastPL/tree/master/doc>)
+
+### Update online documentation
+
+The online documentation is currently host on GitHub Pages: <https://mostah.github.io/fastPL/>.
+
+The GitHub Page displays static html files from a specified branch. The files used by GitHub Pages to display the latest documentation are set on the `gh-pages` branch and must not be changed manually.
+
+The following script updates the `gh-pages` branch by generating the documentation from the latest `master` commit.
+
+From root directory:
+
+```bash
+sh doc_generation.sh
 ```
 
-SSH connect to the docker image (just in case)
+### Generate documentation locally
 
-### Replace container_id with the current container id
-```
-docker run -it <container_id> /bin/bash 
-```
+From `/doc` directory:
 
-## Generating documentation locally with doxygen
-
-### Installing doxygen
-
-#### On Ubuntu
-```
-sudo apt-get install doxygen
+```bash
+cmake . && doxygen Doxyfile.Doxigen
 ```
 
-#### On MacOSX with brew
-```
-brew install doxygen
-```
+Open the documentation on your browser, from `/doc/html` directory:
 
-### Generating documentation
-
+```bash
+open index.html
 ```
-cd doc
-cmake .
-doxygen Doxyfile.Doxigen
-cd html
-google-chrome index.html
-```
+---
 
 ## Profiling
 
+Profiling requires the app to be run on a Docker container. The following assumes the fastpl app has already been built by docker.
+
 ### Profiling with GPROF
 
-Running the docker container and ssh into it:
-```
+#### Running the docker container and ssh into it
+
+```bash
 docker run -it fastpl /bin/bash
 ```
 
-Now we are inside the container:
+#### Executing the program we want to profile
 
-
-Executing the program we want to profile
-```
+```bash
 ./$PROGRAM
 ```
 
-Creating the profiling data into text
-```
-gprof $PROGRAM > analysis.txt
-```
+#### Creating the profiling data as a callgraph image (Recommended)
 
-Creating the profiling data into a callgraph image
-```
+```bash
 gprof $PROGRAM | python3 gprof2dot/gprof2dot.py | dot -Tpng -o analysis.png
 ```
 
-Keep this terminal open, and open a new one:
+#### Creating the profiling data as a text file
 
-copy the analysis from the docker container into your machine:
+```bash
+gprof $PROGRAM > analysis.txt
+```
+
+#### copy the analysis from the docker container into your machine
+
+Keep this terminal open, and open a new one
 
 Get the $ID of the fastpl container running with `docker ps`
-copy the file from the docker container into your machine:
-```
+
+```bash
 docker cp $ID:/home/fastPL/build/analysis.{txt or png} $YOUR_PATH
 ```
 
