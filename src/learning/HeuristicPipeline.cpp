@@ -71,6 +71,7 @@ MRSortModel HeuristicPipeline::start() {
     // re-initialize the worst half of the models
     for (int k = conf.model_batch_size - 1; k > conf.model_batch_size / 2 - 1;
          k--) {
+      models[k].criteria.generateRandomCriteriaWeights();
       profileInitializer.initializeProfiles(models[k]);
       models[k].profiles.changeMode("alt");
       this->computeAccuracy(models[k]);
@@ -109,7 +110,7 @@ MRSortModel HeuristicPipeline::start() {
     // std::cout << models[0].getScore() << std::endl;
   }
   conf.logger->info("Reaching max iteration, terminating the pipeline");
-  for (int i = 0; i < models.size(); i++) {
+  for (int i = 0; i < std::max(int(models.size()), 5); i++) {
     std::cout << models[i].getScore() << std::endl;
   }
   return models[0];
