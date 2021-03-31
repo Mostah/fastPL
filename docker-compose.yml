@@ -1,8 +1,0 @@
-# Docker-compose-1
-version: '3.4'
-
-services:
-  app:
-    build:
-      context: .
-      dockerfile: ./Dockerfile
