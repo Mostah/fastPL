@@ -44,9 +44,14 @@ std::unordered_map<float, float> ProfileUpdater::computeAboveDesirability(
   float numerator = 0;
   float denominator = 0;
 
+  std::ostringstream ss;
+  ss << "Computing above desirability for profile " << b.getName()
+     << " on criterion " << critId << std::endl;
+
   for (Perf alt : alt_between) {
     // Checking if the move will not go above b_above
     if (alt.getValue() + epsilon < b_above.getValue()) {
+      ss << "Checking alternative " << alt.getName();
       std::string altName = alt.getName();
       float conc = ct_prof[altName];
       float diff = conc - weight;
@@ -61,11 +66,13 @@ std::unordered_map<float, float> ProfileUpdater::computeAboveDesirability(
         // Correct classification
         // Moving the profile results in misclassification -> Q
         if (aa_model == cat_above.getCategoryId() and diff < lambda) {
+          ss << " Q ";
           denominator += 5;
         }
         // Wrong classification
         // Moving the profile is in favor of wrong classification -> R
         else if (aa_model == cat.getCategoryId()) {
+          ss << " R ";
           denominator += 1;
         }
       } else if (aa_data == cat.getCategoryId() and
@@ -73,6 +80,7 @@ std::unordered_map<float, float> ProfileUpdater::computeAboveDesirability(
         // Wrong classification
         // Moving the profile is in favor of right classification -> W
         if (diff >= lambda) {
+          ss << " W ";
           numerator += 0.5;
           denominator += 1;
           desirability_above[alt.getValue() + epsilon] =
@@ -81,6 +89,7 @@ std::unordered_map<float, float> ProfileUpdater::computeAboveDesirability(
         // Wrong classification
         // Moving the profile results in correct classification -> V
         else {
+          ss << " V ";
           numerator += 2;
           denominator += 1;
           desirability_above[alt.getValue() + epsilon] =
@@ -94,12 +103,14 @@ std::unordered_map<float, float> ProfileUpdater::computeAboveDesirability(
                        .getCategoryRank() >= cat_above.getCategoryRank() and
                altPerf_data.getAlternativeAssignment(altName)
                        .getCategoryRank() < cat.getCategoryRank()) {
+        ss << " T ";
         numerator += 0.1;
         denominator += 1;
         desirability_above[alt.getValue() + epsilon] = numerator / denominator;
       }
     }
   }
+  conf.logger->info(ss.str());
   return desirability_above;
 }
 
