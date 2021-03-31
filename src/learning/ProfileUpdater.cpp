@@ -42,7 +42,6 @@ std::unordered_map<float, float> ProfileUpdater::computeAboveDesirability(
   std::unordered_map<float, float> desirability_above;
   float numerator = 0;
   float denominator = 0;
-
   for (Perf alt : alt_between) {
     // Checking if the move will not go above b_above
     if (alt.getValue() + epsilon < b_above.getValue()) {
@@ -181,11 +180,10 @@ std::unordered_map<float, float> ProfileUpdater::computeBelowDesirability(
       }
     }
   }
-  auto it = desirability_below.begin();
   return desirability_below;
 }
 
-float ProfileUpdater::chooseMaxDesirability(
+std::pair<float, float> ProfileUpdater::chooseMaxDesirability(
     std::unordered_map<float, float> &desirability, Perf &b) {
   float key_max = 0;
   float value_max = 0;
@@ -195,7 +193,7 @@ float ProfileUpdater::chooseMaxDesirability(
       value_max = it->second;
     }
   }
-  return key_max;
+  return std::make_pair(key_max, value_max);
 }
 
 void ProfileUpdater::updateTables(
@@ -289,13 +287,17 @@ void ProfileUpdater::optimizeProfile(
     std::unordered_map<float, float> desirability = below_des;
     desirability.insert(above_des.begin(), above_des.end());
 
-    float key_max = this->chooseMaxDesirability(desirability, b);
+    std::pair<float, float> max = this->chooseMaxDesirability(desirability, b);
+    float key_max = max.first;
+    float value_max = max.second;
 
-    float r = getRandomUniformFloat();
-    if (r <= key_max) {
-      Perf b_new = Perf(b);
-      b_new.setValue(key_max);
-      this->updateTables(model, crit.getId(), b, b_new, ct, altPerf_model);
+    if (value_max != 0) {
+      float r = getRandomUniformFloat();
+      if (r <= value_max) {
+        Perf b_new = Perf(b);
+        b_new.setValue(key_max);
+        this->updateTables(model, crit.getId(), b, b_new, ct, altPerf_model);
+      }
     }
   }
 }
