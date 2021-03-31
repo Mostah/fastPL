@@ -69,37 +69,37 @@ $(function() {
 <div class="title">Lambda and Weight updater </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="autotoc_md46"></a>
+<div class="textblock"><h1><a class="anchor" id="autotoc_md56"></a>
 Lambda and Weight updater algorithm</h1>
-<h2><a class="anchor" id="autotoc_md47"></a>
+<h2><a class="anchor" id="autotoc_md57"></a>
 I - Context</h2>
 <p>The weight updater algorithm is responsible for updating the weight associated to each <a class="el" href="class_criterion.html" title="Criterion datastructure.">Criterion</a> and the lambda (majority threshold) of the problem. The weight updater algorithm is divided in two main components (C++ classes): the <a class="el" href="class_linear_solver.html">LinearSolver</a> and the <a class="el" href="class_weight_updater.html">WeightUpdater</a>.</p>
-<h2><a class="anchor" id="autotoc_md48"></a>
+<h2><a class="anchor" id="autotoc_md58"></a>
 II - WeightUpdater</h2>
 <p>The weightUpdater is responsible of computing the constraint matrix and pass it to the linear solver before updating the <a class="el" href="class_m_r_sort_model.html" title="Datastructure of the model to learn.">MRSortModel</a> with the new weights and lambda.</p>
-<h3><a class="anchor" id="autotoc_md49"></a>
+<h3><a class="anchor" id="autotoc_md59"></a>
 Attributes</h3>
 <ul>
 <li><a class="el" href="struct_config.html" title="High level configuration of the app.">Config</a> - Global config of the application</li>
 <li><a class="el" href="class_linear_solver.html">LinearSolver</a> - abstraction between the algorithm and the way we solve the linear problem</li>
 <li><a class="el" href="class_alternatives_performance.html" title="Dataset datastructure.">AlternativesPerformance</a> - dataset of the global problem</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md50"></a>
+<h3><a class="anchor" id="autotoc_md60"></a>
 Matrix constraint representation</h3>
 <p>The datastructre of the matrix constraint is a 3-dimension boolean tensor. The first dimension represent a profile, se second an alternative and the third a criteria. Thus a constrain matrix is a tensor of dimension : n_prof x n_alt x n_crit.</p>
 <p>For a specific profile and alternative, the booleans denote the presence or absence of the criterion in the constraint.</p>
 <p>For example, given {w0, ..., w4} weights of 5 different criterion: </p><div class="fragment"><div class="line">w0 + w3 + w4</div>
 </div><!-- fragment --><p> is represented by </p><div class="fragment"><div class="line">[true, false, false, true, true]</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md51"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md61"></a>
 III - LinearSolver</h2>
 <p>The linear solver makes an interface between our algorithm and the way we solve the linear problem. Therefore, if at some point the way of solving the linear problem is changed (changing the library for example), no modification in the <a class="el" href="class_weight_updater.html">WeightUpdater</a> class will be needed.</p>
 <p>The linear solver takes as input the constraint matrix and the variables of the problem to solve, instantiates a model solver and computes the new weights and lambda.</p>
-<h3><a class="anchor" id="autotoc_md52"></a>
+<h3><a class="anchor" id="autotoc_md62"></a>
 Attributes</h3>
 <p>Delta: small value to transform strict equalities into non strict ones - default = 0.0001. <a class="el" href="class_alternatives_performance.html" title="Dataset datastructure.">AlternativesPerformance</a> - dataset of the global problem <a class="el" href="struct_config.html" title="High level configuration of the app.">Config</a> - Global config of the application</p>
-<h3><a class="anchor" id="autotoc_md53"></a>
+<h3><a class="anchor" id="autotoc_md63"></a>
 Definition of the Linear Problem</h3>
-<h4><a class="anchor" id="autotoc_md54"></a>
+<h4><a class="anchor" id="autotoc_md64"></a>
 Variables</h4>
 <div class="fragment"><div class="line">w_j in [0,1] for j in {1, …, n_crit}</div>
 <div class="line">lambda in [0.5,1]</div>
@@ -107,12 +107,12 @@ Variables</h4>
 <div class="line">y_a in [0,1] for a in {1, …, n_alt}</div>
 <div class="line">xp_a in [0,1] for a in {1, …, n_alt}</div>
 <div class="line">yp_a in [0,1] for a in {1, …, n_alt}</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md55"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md65"></a>
 Constraints</h4>
 <div class="fragment"><div class="line">sum(w_j for j in {1, …, n_crit}) = 1</div>
 <div class="line">sum(w_j(a_i, b_h-1) if a_i&gt;=bi_h-1) - x_a + xp_a = lambda, for a assigned to C_h, for h in [1, n_prof]</div>
 <div class="line">sum(w_j(a_i, b_h) if a_i&gt;=bi_h) - y_a + yp_a = lambda - delta, for a assigned to C_h, for h in [0, n_prof-1]</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md56"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md66"></a>
 Objective function</h4>
 <p>min(sum(x_ap+y_ap, for a in {0,…,n_alt})) </p>
 </div></div><!-- contents -->

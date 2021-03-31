@@ -69,21 +69,21 @@ $(function() {
 <div class="title"><a class="el" href="class_profiles.html" title="Profiles data structure.">Profiles</a> update </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="autotoc_md41"></a>
+<div class="textblock"><h1><a class="anchor" id="autotoc_md51"></a>
 Profiles update algorithm</h1>
-<h2><a class="anchor" id="autotoc_md42"></a>
+<h2><a class="anchor" id="autotoc_md52"></a>
 I - Context</h2>
 <p>Profile Updater algorithm is responsible for updating the profiles given the fixed weight and lambda. It will evaluate each move of each profile on each criterion to see what moves have the best impact on the alternatives assignments.</p>
-<h2><a class="anchor" id="autotoc_md43"></a>
+<h2><a class="anchor" id="autotoc_md53"></a>
 II - ProfileUpdater</h2>
-<h3><a class="anchor" id="autotoc_md44"></a>
+<h3><a class="anchor" id="autotoc_md54"></a>
 Attributes</h3>
 <ul>
 <li><b>Epsilon</b> - Float (small value ~10-4) ensuring that the classification relationship is maintained between profile and alternatives (no profile will have the same value as an alt)</li>
 <li><b><a class="el" href="class_alternatives_performance.html" title="Dataset datastructure.">AlternativesPerformance</a></b> - dataset of the global problem</li>
 <li><b><a class="el" href="struct_config.html" title="High level configuration of the app.">Config</a></b> - Global config of the application</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md45"></a>
+<h3><a class="anchor" id="autotoc_md55"></a>
 Description</h3>
 <p>After initializing the profiles, computing the weights and the lambda of a model, the last step is to update the profile to match as much as possible the decision maker's criteria. The profile updater algorithm functions as below: </p><pre class="fragment">1. For each profile:
     A. For each criterion:
