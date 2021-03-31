@@ -78,13 +78,13 @@ $(function() {
 <div class="dynheader">
 Inheritance diagram for PerformanceTable:</div>
 <div class="dyncontent">
-<div class="center"><img src="class_performance_table__inherit__graph.png" border="0" usemap="#a_performance_table_inherit__map" alt="Inheritance graph"/></div>
-<map name="a_performance_table_inherit__map" id="a_performance_table_inherit__map">
-<area shape="rect" title="PerformanceTable data structure." alt="" coords="94,5,221,32"/>
-<area shape="rect" href="class_alternatives_performance.html" title="Dataset datastructure." alt="" coords="5,80,171,107"/>
-<area shape="rect" href="class_profiles.html" title="Profiles data structure." alt="" coords="195,80,261,107"/>
-</map>
-<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
+ <div class="center">
+  <img src="class_performance_table.png" usemap="#PerformanceTable_map" alt=""/>
+  <map id="PerformanceTable_map" name="PerformanceTable_map">
+<area href="class_alternatives_performance.html" title="Dataset datastructure." alt="AlternativesPerformance" shape="rect" coords="0,56,152,80"/>
+<area href="class_profiles.html" title="Profiles data structure." alt="Profiles" shape="rect" coords="162,56,314,80"/>
+  </map>
+</div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -110,6 +110,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a67e2bbf699f50b62ca01c857c08a2c90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d13b0d5565652a87d03ea9877c83912"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_performance_table.html#a1d13b0d5565652a87d03ea9877c83912">changeMode</a> (std::string mode)</td></tr>
 <tr class="separator:a1d13b0d5565652a87d03ea9877c83912"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65b9650053a491cc35fd634af40cf167"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_perf.html">Perf</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_performance_table.html#a65b9650053a491cc35fd634af40cf167">getAltBetweenSorted</a> (std::string critId, float inf, float sup)</td></tr>
+<tr class="separator:a65b9650053a491cc35fd634af40cf167"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6f89b112906c68383fa1dcf9117cb580"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_perf.html">Perf</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_performance_table.html#a6f89b112906c68383fa1dcf9117cb580">getAltBetween</a> (std::string critId, float inf, float sup)</td></tr>
 <tr class="separator:a6f89b112906c68383fa1dcf9117cb580"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0e1c464b2d7e85b161ada712229363be"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_perf.html">Perf</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_performance_table.html#a0e1c464b2d7e85b161ada712229363be">getBestPerfByCrit</a> (<a class="el" href="class_criteria.html">Criteria</a> &amp;crits)</td></tr>
@@ -376,7 +378,51 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
         </tr>
       </table>
 </div><div class="memdoc">
-<p>getAltBetween return all the alternatives / profiles that have a performance (value) between inf and sup on criterion crit. The performance table must have been sorted before calling this function.</p>
+<p>getAltBetween return all the alternatives / profiles that have a performance (value) between inf and sup on criterion crit. The performance table does not need to be sorted before calling this function.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">critId</td><td>crit Id to look for </td></tr>
+    <tr><td class="paramname">inf</td><td>inferior boudary </td></tr>
+    <tr><td class="paramname">sup</td><td>superior boundary</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>sub_vect </dd></dl>
+
+</div>
+</div>
+<a id="a65b9650053a491cc35fd634af40cf167"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a65b9650053a491cc35fd634af40cf167">&#9670;&nbsp;</a></span>getAltBetweenSorted()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="class_perf.html">Perf</a>&gt; PerformanceTable::getAltBetweenSorted </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>critId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>inf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>sup</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>getAltBetween return all the alternatives / profiles that have a performance (value) between inf and sup on criterion crit. The performance table must have been sorted and in mode crit before calling this function.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">critId</td><td>crit Id to look for </td></tr>
@@ -675,7 +721,7 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/Users/ThomasVindard 1/Desktop/3A/Projet/fastPL/include/types/<a class="el" href="_performance_table_8h_source.html">PerformanceTable.h</a></li>
+<li>/Users/thibaultmonsel/Desktop/3a_cs/FastPL/fastPL/include/types/<a class="el" href="_performance_table_8h_source.html">PerformanceTable.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

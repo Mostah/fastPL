@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Project: /Users/ThomasVindard 1/Desktop/3A/Projet/fastPL/include/types/Profiles.h Source File</title>
+<title>Project: /Users/thibaultmonsel/Desktop/3a_cs/FastPL/fastPL/include/types/Profiles.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -83,24 +83,30 @@ $(function() {
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
 <div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="class_profiles.html">   41</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_profiles.html">Profiles</a> : <span class="keyword">public</span> <a class="code" href="class_performance_table.html">PerformanceTable</a> {</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="class_profiles.html#aed91d36bb84865a16dae26b62990d22d">   53</a></span>&#160;  <a class="code" href="class_profiles.html#aed91d36bb84865a16dae26b62990d22d">Profiles</a>(std::vector&lt;std::vector&lt;Perf&gt;&gt; &amp;perf_vect, std::string mode);</div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="class_profiles.html#a1117c8e2629892bbaeb8336f96692bee">   52</a></span>&#160;  <a class="code" href="class_profiles.html#a1117c8e2629892bbaeb8336f96692bee">Profiles</a>(std::vector&lt;std::vector&lt;Perf&gt;&gt; &amp;perf_vect,</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;           std::string mode = <span class="stringliteral">&quot;crit&quot;</span>);</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="class_profiles.html#ae81bfefc382868d45cc480c6257efe82">   65</a></span>&#160;  <a class="code" href="class_profiles.html#ae81bfefc382868d45cc480c6257efe82">Profiles</a>(<span class="keywordtype">int</span> nb_of_prof, <a class="code" href="class_criteria.html">Criteria</a> &amp;crits, std::string mode,</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;           std::string prefix = <span class="stringliteral">&quot;prof&quot;</span>);</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="class_profiles.html#a420176f45d4ee47b8fb93209399e767b">   73</a></span>&#160;  <a class="code" href="class_profiles.html#a420176f45d4ee47b8fb93209399e767b">Profiles</a>(<span class="keyword">const</span> <a class="code" href="class_profiles.html">Profiles</a> &amp;profiles);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  ~<a class="code" href="class_profiles.html">Profiles</a>(){};</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
-<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="class_profiles.html#a2af09ba1240387edb5fb8b505711c410">   84</a></span>&#160;  <span class="keyword">friend</span> std::ostream &amp;<a class="code" href="class_profiles.html#a2af09ba1240387edb5fb8b505711c410">operator&lt;&lt;</a>(std::ostream &amp;out, <span class="keyword">const</span> <a class="code" href="class_profiles.html">Profiles</a> &amp;profs);</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
-<div class="line"><a name="l00094"></a><span class="lineno"><a class="line" href="class_profiles.html#a42336cccc5cfb00b5d36723d1063e233">   94</a></span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="class_profiles.html#a42336cccc5cfb00b5d36723d1063e233">isProfileOrdered</a>();</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
-<div class="line"><a name="l00103"></a><span class="lineno"><a class="line" href="class_profiles.html#a3ab3b90267abca89c26aadd8b6b6e511">  103</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_profiles.html#a3ab3b90267abca89c26aadd8b6b6e511">generateRandomPerfValues</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <span class="keywordtype">int</span> seed = time(NULL),</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;                                <span class="keywordtype">int</span> lower_bound = 0, <span class="keywordtype">int</span> upper_bound = 1);</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;};</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="class_profiles.html#a81f9988e919098eaa7969e3849acf543">   66</a></span>&#160;  <a class="code" href="class_profiles.html#a81f9988e919098eaa7969e3849acf543">Profiles</a>(<span class="keywordtype">int</span> nb_of_prof, <a class="code" href="class_criteria.html">Criteria</a> &amp;crits, std::string mode = <span class="stringliteral">&quot;crit&quot;</span>,</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;           std::string prefix = <span class="stringliteral">&quot;prof&quot;</span>);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="class_profiles.html#a420176f45d4ee47b8fb93209399e767b">   74</a></span>&#160;  <a class="code" href="class_profiles.html#a420176f45d4ee47b8fb93209399e767b">Profiles</a>(<span class="keyword">const</span> <a class="code" href="class_profiles.html">Profiles</a> &amp;profiles);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  ~<a class="code" href="class_profiles.html">Profiles</a>(){};</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
+<div class="line"><a name="l00085"></a><span class="lineno"><a class="line" href="class_profiles.html#a2af09ba1240387edb5fb8b505711c410">   85</a></span>&#160;  <span class="keyword">friend</span> std::ostream &amp;<a class="code" href="class_profiles.html#a2af09ba1240387edb5fb8b505711c410">operator&lt;&lt;</a>(std::ostream &amp;out, <span class="keyword">const</span> <a class="code" href="class_profiles.html">Profiles</a> &amp;profs);</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
+<div class="line"><a name="l00103"></a><span class="lineno"><a class="line" href="class_profiles.html#a42336cccc5cfb00b5d36723d1063e233">  103</a></span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="class_profiles.html#a42336cccc5cfb00b5d36723d1063e233">isProfileOrdered</a>();</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
+<div class="line"><a name="l00113"></a><span class="lineno"><a class="line" href="class_profiles.html#a3ab3b90267abca89c26aadd8b6b6e511">  113</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_profiles.html#a3ab3b90267abca89c26aadd8b6b6e511">generateRandomPerfValues</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <span class="keywordtype">int</span> seed = time(NULL),</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;                                <span class="keywordtype">int</span> lower_bound = 0, <span class="keywordtype">int</span> upper_bound = 1);</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;  std::pair&lt;std::vector&lt;Perf&gt;, std::vector&lt;Perf&gt;&gt;</div>
+<div class="line"><a name="l00125"></a><span class="lineno"><a class="line" href="class_profiles.html#aa26014b4d85bb4b90060e26d428f07c0">  125</a></span>&#160;  <a class="code" href="class_profiles.html#aa26014b4d85bb4b90060e26d428f07c0">getBelowAndAboveProfile</a>(std::string profName);</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160; </div>
+<div class="line"><a name="l00135"></a><span class="lineno"><a class="line" href="class_profiles.html#a8e327ff472267741eb9a589d68dff2a2">  135</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_profiles.html#a8e327ff472267741eb9a589d68dff2a2">setPerf</a>(std::string name, std::string crit, <span class="keywordtype">float</span> value);</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;};</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160; </div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="a_category_8h_html"><div class="ttname"><a href="_category_8h.html">Category.h</a></div><div class="ttdoc">Datastructure representing a category.</div></div>
 <div class="ttc" id="a_criteria_8h_html"><div class="ttname"><a href="_criteria_8h.html">Criteria.h</a></div><div class="ttdoc">Datastructure representing a set of criterion.</div></div>
 <div class="ttc" id="a_perf_8h_html"><div class="ttname"><a href="_perf_8h.html">Perf.h</a></div><div class="ttdoc">Perf (single performance) data structure.</div></div>
@@ -108,12 +114,14 @@ $(function() {
 <div class="ttc" id="aclass_criteria_html"><div class="ttname"><a href="class_criteria.html">Criteria</a></div><div class="ttdoc">Set of Criterion datastructure.</div><div class="ttdef"><b>Definition:</b> Criteria.h:25</div></div>
 <div class="ttc" id="aclass_performance_table_html"><div class="ttname"><a href="class_performance_table.html">PerformanceTable</a></div><div class="ttdoc">PerformanceTable data structure.</div><div class="ttdef"><b>Definition:</b> PerformanceTable.h:37</div></div>
 <div class="ttc" id="aclass_profiles_html"><div class="ttname"><a href="class_profiles.html">Profiles</a></div><div class="ttdoc">Profiles data structure.</div><div class="ttdef"><b>Definition:</b> Profiles.h:41</div></div>
+<div class="ttc" id="aclass_profiles_html_a1117c8e2629892bbaeb8336f96692bee"><div class="ttname"><a href="class_profiles.html#a1117c8e2629892bbaeb8336f96692bee">Profiles::Profiles</a></div><div class="ttdeci">Profiles(std::vector&lt; std::vector&lt; Perf &gt;&gt; &amp;perf_vect, std::string mode=&quot;crit&quot;)</div></div>
 <div class="ttc" id="aclass_profiles_html_a2af09ba1240387edb5fb8b505711c410"><div class="ttname"><a href="class_profiles.html#a2af09ba1240387edb5fb8b505711c410">Profiles::operator&lt;&lt;</a></div><div class="ttdeci">friend std::ostream &amp; operator&lt;&lt;(std::ostream &amp;out, const Profiles &amp;profs)</div></div>
 <div class="ttc" id="aclass_profiles_html_a3ab3b90267abca89c26aadd8b6b6e511"><div class="ttname"><a href="class_profiles.html#a3ab3b90267abca89c26aadd8b6b6e511">Profiles::generateRandomPerfValues</a></div><div class="ttdeci">void generateRandomPerfValues(unsigned long int seed=time(NULL), int lower_bound=0, int upper_bound=1)</div></div>
 <div class="ttc" id="aclass_profiles_html_a420176f45d4ee47b8fb93209399e767b"><div class="ttname"><a href="class_profiles.html#a420176f45d4ee47b8fb93209399e767b">Profiles::Profiles</a></div><div class="ttdeci">Profiles(const Profiles &amp;profiles)</div></div>
 <div class="ttc" id="aclass_profiles_html_a42336cccc5cfb00b5d36723d1063e233"><div class="ttname"><a href="class_profiles.html#a42336cccc5cfb00b5d36723d1063e233">Profiles::isProfileOrdered</a></div><div class="ttdeci">bool isProfileOrdered()</div></div>
-<div class="ttc" id="aclass_profiles_html_ae81bfefc382868d45cc480c6257efe82"><div class="ttname"><a href="class_profiles.html#ae81bfefc382868d45cc480c6257efe82">Profiles::Profiles</a></div><div class="ttdeci">Profiles(int nb_of_prof, Criteria &amp;crits, std::string mode, std::string prefix=&quot;prof&quot;)</div></div>
-<div class="ttc" id="aclass_profiles_html_aed91d36bb84865a16dae26b62990d22d"><div class="ttname"><a href="class_profiles.html#aed91d36bb84865a16dae26b62990d22d">Profiles::Profiles</a></div><div class="ttdeci">Profiles(std::vector&lt; std::vector&lt; Perf &gt;&gt; &amp;perf_vect, std::string mode)</div></div>
+<div class="ttc" id="aclass_profiles_html_a81f9988e919098eaa7969e3849acf543"><div class="ttname"><a href="class_profiles.html#a81f9988e919098eaa7969e3849acf543">Profiles::Profiles</a></div><div class="ttdeci">Profiles(int nb_of_prof, Criteria &amp;crits, std::string mode=&quot;crit&quot;, std::string prefix=&quot;prof&quot;)</div></div>
+<div class="ttc" id="aclass_profiles_html_a8e327ff472267741eb9a589d68dff2a2"><div class="ttname"><a href="class_profiles.html#a8e327ff472267741eb9a589d68dff2a2">Profiles::setPerf</a></div><div class="ttdeci">void setPerf(std::string name, std::string crit, float value)</div></div>
+<div class="ttc" id="aclass_profiles_html_aa26014b4d85bb4b90060e26d428f07c0"><div class="ttname"><a href="class_profiles.html#aa26014b4d85bb4b90060e26d428f07c0">Profiles::getBelowAndAboveProfile</a></div><div class="ttdeci">std::pair&lt; std::vector&lt; Perf &gt;, std::vector&lt; Perf &gt; &gt; getBelowAndAboveProfile(std::string profName)</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

@@ -69,14 +69,21 @@ $(function() {
 <div class="title">Learning Algorithms </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md31"></a>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md40"></a>
 Table</h2>
 <ul>
 <li><a class="el" href="init_profiles.html">Profile Initialization</a></li>
 <li><a class="el" href="weight_updater.html">Lambda and Weight updater</a></li>
 <li><a class="el" href="update_profiles.html">Profiles update</a></li>
 </ul>
-<p>Learning algorithms that implement Sobrie's metaheuristic.</p>
+<p>We initiate a pool of models that will pass individually through the learning algorithms to improve their's efficiency using Sobrie's metaheuristic:</p>
+<ul>
+<li><a class="el" href="class_profile_initializer.html">ProfileInitializer</a> initializes the profiles</li>
+<li><a class="el" href="class_weight_updater.html">WeightUpdater</a> update the weights of the criteria</li>
+<li><a class="el" href="class_profile_updater.html" title="Third step of the heuristic, updates the profiles given fixed weight and lambda.">ProfileUpdater</a> update the profiles given the fixed weights</li>
+</ul>
+<p>Then, we regroup the models, sort them by accuracy and reinitialize the last half of the models.</p>
+<p>After n iteration or an accuracy of <b>70%??</b> for each model, the algorithm is stopped.</p>
 <p><img src="../images/global_schema.png" alt="" width="1200" class="inline"/> </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Project: /Users/ThomasVindard 1/Desktop/3A/Projet/fastPL/include/utils.h File Reference</title>
+<title>Project: /Users/thibaultmonsel/Desktop/3a_cs/FastPL/fastPL/include/utils.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -76,50 +76,30 @@ $(function() {
 <p>utility functions used by our programs.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;../extsrc/pugixml/src/pugixml.hpp&quot;</code><br />
+<code>#include &quot;<a class="el" href="_alternatives_performance_8h_source.html">types/AlternativesPerformance.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_profiles_8h_source.html">types/Profiles.h</a>&quot;</code><br />
+<code>#include &lt;matplot/matplot.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="_category_8h_source.html">types/Category.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_criteria_8h_source.html">types/Criteria.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_perf_8h_source.html">types/Perf.h</a>&quot;</code><br />
-<code>#include &lt;iostream&gt;</code><br />
-<code>#include &lt;random&gt;</code><br />
-<code>#include &lt;vector&gt;</code><br />
 <code>#include &lt;algorithm&gt;</code><br />
 <code>#include &lt;chrono&gt;</code><br />
 <code>#include &lt;fstream&gt;</code><br />
+<code>#include &lt;iostream&gt;</code><br />
+<code>#include &lt;numeric&gt;</code><br />
+<code>#include &lt;random&gt;</code><br />
+<code>#include &lt;set&gt;</code><br />
 <code>#include &lt;stdio.h&gt;</code><br />
 <code>#include &lt;stdlib.h&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;sys/stat.h&gt;</code><br />
 <code>#include &lt;thread&gt;</code><br />
 <code>#include &lt;time.h&gt;</code><br />
+<code>#include &lt;typeinfo&gt;</code><br />
 <code>#include &lt;unistd.h&gt;</code><br />
 <code>#include &lt;unordered_map&gt;</code><br />
-</div><div class="textblock"><div class="dynheader">
-Include dependency graph for utils.h:</div>
-<div class="dyncontent">
-<div class="center"><img src="utils_8h__incl.png" border="0" usemap="#a_2_users_2_thomas_vindard_011_2_desktop_23_a_2_projet_2fast_p_l_2include_2utils_8h" alt=""/></div>
-<map name="a_2_users_2_thomas_vindard_011_2_desktop_23_a_2_projet_2fast_p_l_2include_2utils_8h" id="a_2_users_2_thomas_vindard_011_2_desktop_23_a_2_projet_2fast_p_l_2include_2utils_8h">
-<area shape="rect" title="utility functions used by our programs." alt="" coords="833,5,989,61"/>
-<area shape="rect" title=" " alt="" coords="5,109,147,151"/>
-<area shape="rect" href="_category_8h.html" title="Datastructure representing a category." alt="" coords="221,199,341,225"/>
-<area shape="rect" title=" " alt="" coords="373,273,445,300"/>
-<area shape="rect" href="_criteria_8h.html" title="Datastructure representing a set of criterion." alt="" coords="551,117,662,143"/>
-<area shape="rect" title=" " alt="" coords="470,273,525,300"/>
-<area shape="rect" title=" " alt="" coords="675,273,733,300"/>
-<area shape="rect" href="_perf_8h.html" title="Perf (single performance) data structure." alt="" coords="365,199,459,225"/>
-<area shape="rect" title=" " alt="" coords="738,117,803,143"/>
-<area shape="rect" title=" " alt="" coords="828,117,903,143"/>
-<area shape="rect" title=" " alt="" coords="927,117,988,143"/>
-<area shape="rect" title=" " alt="" coords="1012,117,1079,143"/>
-<area shape="rect" title=" " alt="" coords="1103,117,1164,143"/>
-<area shape="rect" title=" " alt="" coords="1188,117,1252,143"/>
-<area shape="rect" title=" " alt="" coords="1276,117,1356,143"/>
-<area shape="rect" title=" " alt="" coords="1380,117,1439,143"/>
-<area shape="rect" title=" " alt="" coords="1463,117,1521,143"/>
-<area shape="rect" title=" " alt="" coords="1546,117,1614,143"/>
-<area shape="rect" title=" " alt="" coords="1638,117,1749,143"/>
-<area shape="rect" href="_criterion_8h.html" title="Datastructure representing a criterion." alt="" coords="584,199,667,225"/>
-</map>
-</div>
+<code>#include &lt;utility&gt;</code><br />
+<code>#include &lt;vector&gt;</code><br />
 </div>
 <p><a href="utils_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -133,9 +113,8 @@ Functions</h2></td></tr>
 <tr class="memitem:a9ed3925b3af87fcbebdf27990480b98b"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a9ed3925b3af87fcbebdf27990480b98b"><td class="memTemplItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="utils_8h.html#a9ed3925b3af87fcbebdf27990480b98b">operator&lt;&lt;</a> (std::ostream &amp;out, const std::vector&lt; T &gt; &amp;vec)</td></tr>
 <tr class="separator:a9ed3925b3af87fcbebdf27990480b98b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae5cb733cdd99a7d9d8414d5dcf2045b9"><td class="memTemplParams" colspan="2"><a id="ae5cb733cdd99a7d9d8414d5dcf2045b9"></a>
-template&lt;typename T &gt; </td></tr>
-<tr class="memitem:ae5cb733cdd99a7d9d8414d5dcf2045b9"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>subVector</b> (std::vector&lt; T &gt; const &amp;v, int m, int n)</td></tr>
+<tr class="memitem:ae5cb733cdd99a7d9d8414d5dcf2045b9"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ae5cb733cdd99a7d9d8414d5dcf2045b9"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="utils_8h.html#ae5cb733cdd99a7d9d8414d5dcf2045b9">subVector</a> (std::vector&lt; T &gt; const &amp;v, int m, int n)</td></tr>
 <tr class="separator:ae5cb733cdd99a7d9d8414d5dcf2045b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8da6832660ffb6bbf974846015f44a21"><td class="memItemLeft" align="right" valign="top"><a id="a8da6832660ffb6bbf974846015f44a21"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>fileExists</b> (const std::string &amp;name)</td></tr>
@@ -144,29 +123,314 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>fileExists</b> (const
 <tr class="separator:ac49a932244dfe5392004846f25a4a0b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5f49996e596ccd4b4adc707f504015e9"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a5f49996e596ccd4b4adc707f504015e9">getRandomUniformFloat</a> (unsigned long int seed=0, float min=0, float max=1)</td></tr>
 <tr class="separator:a5f49996e596ccd4b4adc707f504015e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af4a36123310960c99defa5ff6cd46bba"><td class="memItemLeft" align="right" valign="top"><a id="af4a36123310960c99defa5ff6cd46bba"></a>
-std::vector&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>randomCategoriesLimits</b> (int nbCategories, unsigned long int seed=time(NULL))</td></tr>
+<tr class="memitem:af4a36123310960c99defa5ff6cd46bba"><td class="memItemLeft" align="right" valign="top">std::vector&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#af4a36123310960c99defa5ff6cd46bba">randomCategoriesLimits</a> (int nbCategories, unsigned long int seed=time(NULL))</td></tr>
 <tr class="separator:af4a36123310960c99defa5ff6cd46bba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ade352d1ef18e9ae50e8a820879a5ee22"><td class="memTemplParams" colspan="2">template&lt;typename K , typename V &gt; </td></tr>
-<tr class="memitem:ade352d1ef18e9ae50e8a820879a5ee22"><td class="memTemplItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="utils_8h.html#ade352d1ef18e9ae50e8a820879a5ee22">operator&lt;&lt;</a> (std::ostream &amp;out, std::unordered_map&lt; K, V &gt; const &amp;m)</td></tr>
-<tr class="separator:ade352d1ef18e9ae50e8a820879a5ee22"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaec50cd83b7346a052addf6550ad96e9"><td class="memItemLeft" align="right" valign="top"><a id="aaec50cd83b7346a052addf6550ad96e9"></a>
-std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getCriterionIds</b> (std::vector&lt; <a class="el" href="class_perf.html">Perf</a> &gt; vectPerf)</td></tr>
+<tr class="memitem:aaec50cd83b7346a052addf6550ad96e9"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#aaec50cd83b7346a052addf6550ad96e9">getCriterionIds</a> (std::vector&lt; <a class="el" href="class_perf.html">Perf</a> &gt; vectPerf)</td></tr>
 <tr class="separator:aaec50cd83b7346a052addf6550ad96e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae577a0d7fb534493ee477e3908c64462"><td class="memItemLeft" align="right" valign="top"><a id="ae577a0d7fb534493ee477e3908c64462"></a>
-std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getNameIds</b> (std::vector&lt; <a class="el" href="class_perf.html">Perf</a> &gt; vectPerf)</td></tr>
+<tr class="memitem:a878e3a271953cb9cd2aee7d93342a90c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_perf.html">Perf</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a878e3a271953cb9cd2aee7d93342a90c">getPerfOfCrit</a> (std::vector&lt; <a class="el" href="class_perf.html">Perf</a> &gt; &amp;vectPerf, std::string critId)</td></tr>
+<tr class="separator:a878e3a271953cb9cd2aee7d93342a90c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae577a0d7fb534493ee477e3908c64462"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#ae577a0d7fb534493ee477e3908c64462">getNameIds</a> (std::vector&lt; <a class="el" href="class_perf.html">Perf</a> &gt; vectPerf)</td></tr>
 <tr class="separator:ae577a0d7fb534493ee477e3908c64462"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a581d002032a0c24eb80f58cdd4d542ce"><td class="memItemLeft" align="right" valign="top"><a id="a581d002032a0c24eb80f58cdd4d542ce"></a>
-std::vector&lt; <a class="el" href="class_perf.html">Perf</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>createVectorPerf</b> (std::string id, <a class="el" href="class_criteria.html">Criteria</a> &amp;criteria, std::vector&lt; float &gt; &amp;given_perf)</td></tr>
+<tr class="memitem:a581d002032a0c24eb80f58cdd4d542ce"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_perf.html">Perf</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a581d002032a0c24eb80f58cdd4d542ce">createVectorPerf</a> (std::string id, <a class="el" href="class_criteria.html">Criteria</a> &amp;criteria, std::vector&lt; float &gt; &amp;given_perf)</td></tr>
 <tr class="separator:a581d002032a0c24eb80f58cdd4d542ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad7413f0ab5f79a83e44edf4b14041193"><td class="memItemLeft" align="right" valign="top"><a id="ad7413f0ab5f79a83e44edf4b14041193"></a>
-std::vector&lt; <a class="el" href="class_perf.html">Perf</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>createVectorPerfWithNoPerf</b> (std::string id, <a class="el" href="class_criteria.html">Criteria</a> &amp;criteria)</td></tr>
+<tr class="memitem:ad7413f0ab5f79a83e44edf4b14041193"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_perf.html">Perf</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#ad7413f0ab5f79a83e44edf4b14041193">createVectorPerfWithNoPerf</a> (std::string id, <a class="el" href="class_criteria.html">Criteria</a> &amp;criteria)</td></tr>
 <tr class="separator:ad7413f0ab5f79a83e44edf4b14041193"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afca854126dead4aeb303664467faf272"><td class="memItemLeft" align="right" valign="top">std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#afca854126dead4aeb303664467faf272">getPerfFromPerfVect</a> (std::vector&lt; <a class="el" href="class_perf.html">Perf</a> &gt; &amp;p)</td></tr>
+<tr class="separator:afca854126dead4aeb303664467faf272"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75b17ce351de803ecfca2dc0ef5cfc2f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a75b17ce351de803ecfca2dc0ef5cfc2f">checkKey</a> (std::unordered_map&lt; int, int &gt; &amp;map, int key)</td></tr>
+<tr class="separator:a75b17ce351de803ecfca2dc0ef5cfc2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d01c5b453ae7cd9f4bd68c27c3c5101"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a8d01c5b453ae7cd9f4bd68c27c3c5101">plotGlobalData</a> (<a class="el" href="class_alternatives_performance.html">AlternativesPerformance</a> &amp;ap)</td></tr>
+<tr class="separator:a8d01c5b453ae7cd9f4bd68c27c3c5101"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61d16c000c454dbe9b46da86249cdec3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a61d16c000c454dbe9b46da86249cdec3">plotProfile</a> (<a class="el" href="class_profiles.html">Profiles</a> &amp;p)</td></tr>
+<tr class="separator:a61d16c000c454dbe9b46da86249cdec3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>utility functions used by our programs. </p>
 <p>All utility fonctions are referenced and implemented inside this file. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
+<a id="a75b17ce351de803ecfca2dc0ef5cfc2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75b17ce351de803ecfca2dc0ef5cfc2f">&#9670;&nbsp;</a></span>checkKey()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool checkKey </td>
+          <td>(</td>
+          <td class="paramtype">std::unordered_map&lt; int, int &gt; &amp;&#160;</td>
+          <td class="paramname"><em>map</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>key</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Check if a key is present in a unordered map </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">map</td><td>unordered map of &lt;int,int&gt; </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a581d002032a0c24eb80f58cdd4d542ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a581d002032a0c24eb80f58cdd4d542ce">&#9670;&nbsp;</a></span>createVectorPerf()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="class_perf.html">Perf</a>&gt; createVectorPerf </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_criteria.html">Criteria</a> &amp;&#160;</td>
+          <td class="paramname"><em>criteria</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; float &gt; &amp;&#160;</td>
+          <td class="paramname"><em>given_perf</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>createVectorPerf creates a vector of performances given the id, criteria and values</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>of the performance </td></tr>
+    <tr><td class="paramname">criteria</td><td>criteria vector on which to associate the performances </td></tr>
+    <tr><td class="paramname">given_perf</td><td>performances values in the same order as criteria vect</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>vect&lt;Perf&gt; performance vector </dd></dl>
+
+</div>
+</div>
+<a id="ad7413f0ab5f79a83e44edf4b14041193"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7413f0ab5f79a83e44edf4b14041193">&#9670;&nbsp;</a></span>createVectorPerfWithNoPerf()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="class_perf.html">Perf</a>&gt; createVectorPerfWithNoPerf </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_criteria.html">Criteria</a> &amp;&#160;</td>
+          <td class="paramname"><em>criteria</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>createVectorPerf creates a vector of performances with random values given the id and criteria</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>of the performance </td></tr>
+    <tr><td class="paramname">criteria</td><td>criteria vector on which to associate the performances</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>vect&lt;Perf&gt; performance vector </dd></dl>
+
+</div>
+</div>
+<a id="aaec50cd83b7346a052addf6550ad96e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaec50cd83b7346a052addf6550ad96e9">&#9670;&nbsp;</a></span>getCriterionIds()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::string&gt; getCriterionIds </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="class_perf.html">Perf</a> &gt;&#160;</td>
+          <td class="paramname"><em>vectPerf</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>getCriterionIds get vector of criterions ids of a performance vector</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vectPerf</td><td>performance vector</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>vector of criterion ids </dd></dl>
+
+</div>
+</div>
+<a id="ae577a0d7fb534493ee477e3908c64462"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae577a0d7fb534493ee477e3908c64462">&#9670;&nbsp;</a></span>getNameIds()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::string&gt; getNameIds </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="class_perf.html">Perf</a> &gt;&#160;</td>
+          <td class="paramname"><em>vectPerf</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>getNameIds get the names of each perfomance in a perfomance vector</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vectPerf</td><td>Performance vector from which we want the ids</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>vector of names (ids) </dd></dl>
+
+</div>
+</div>
+<a id="afca854126dead4aeb303664467faf272"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afca854126dead4aeb303664467faf272">&#9670;&nbsp;</a></span>getPerfFromPerfVect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;double&gt; getPerfFromPerfVect </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="class_perf.html">Perf</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Extract only performance values from a vector of <a class="el" href="class_perf.html" title="Perf (single performance) data structure.">Perf</a> objects </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p</td><td>vector of <a class="el" href="class_perf.html" title="Perf (single performance) data structure.">Perf</a> objects </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a878e3a271953cb9cd2aee7d93342a90c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a878e3a271953cb9cd2aee7d93342a90c">&#9670;&nbsp;</a></span>getPerfOfCrit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_perf.html">Perf</a> getPerfOfCrit </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="class_perf.html">Perf</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>vectPerf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>critId</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>getPerfOfCrit get the performance for a given criterion in a performance vector.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">critId</td><td>criterion for which we want the perf</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_perf.html" title="Perf (single performance) data structure.">Perf</a> for given critId </dd></dl>
+
+</div>
+</div>
 <a id="a5f49996e596ccd4b4adc707f504015e9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5f49996e596ccd4b4adc707f504015e9">&#9670;&nbsp;</a></span>getRandomUniformFloat()</h2>
 
@@ -272,7 +536,7 @@ std::vector&lt; <a class="el" href="class_perf.html">Perf</a> &gt;&#160;</td><td
 </div>
 </div>
 <a id="a9ed3925b3af87fcbebdf27990480b98b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9ed3925b3af87fcbebdf27990480b98b">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ed3925b3af87fcbebdf27990480b98b">&#9670;&nbsp;</a></span>operator&lt;&lt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -309,25 +573,142 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="ade352d1ef18e9ae50e8a820879a5ee22"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ade352d1ef18e9ae50e8a820879a5ee22">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[2/2]</span></h2>
+<a id="a8d01c5b453ae7cd9f4bd68c27c3c5101"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d01c5b453ae7cd9f4bd68c27c3c5101">&#9670;&nbsp;</a></span>plotGlobalData()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename K , typename V &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::ostream&amp; operator&lt;&lt; </td>
+          <td class="memname">void plotGlobalData </td>
           <td>(</td>
-          <td class="paramtype">std::ostream &amp;&#160;</td>
-          <td class="paramname"><em>out</em>, </td>
+          <td class="paramtype"><a class="el" href="class_alternatives_performance.html">AlternativesPerformance</a> &amp;&#160;</td>
+          <td class="paramname"><em>ap</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Plots data distribution for a <a class="el" href="class_alternatives_performance.html" title="Dataset datastructure.">AlternativesPerformance</a> object in order to see if populations are separable. This is useful for ProfileInitialization for example.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ap</td><td><a class="el" href="class_alternatives_performance.html" title="Dataset datastructure.">AlternativesPerformance</a> object </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a61d16c000c454dbe9b46da86249cdec3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61d16c000c454dbe9b46da86249cdec3">&#9670;&nbsp;</a></span>plotProfile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void plotProfile </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_profiles.html">Profiles</a> &amp;&#160;</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Plots a visualization of a <a class="el" href="class_profiles.html" title="Profiles data structure.">Profiles</a> object. Profile object must be set in "alt" mode in order to correctly plot.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p</td><td><a class="el" href="class_profiles.html" title="Profiles data structure.">Profiles</a> object </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af4a36123310960c99defa5ff6cd46bba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af4a36123310960c99defa5ff6cd46bba">&#9670;&nbsp;</a></span>randomCategoriesLimits()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;float&gt; randomCategoriesLimits </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>nbCategories</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::unordered_map&lt; K, V &gt; const &amp;&#160;</td>
-          <td class="paramname"><em>m</em>&#160;</td>
+          <td class="paramtype">unsigned long int&#160;</td>
+          <td class="paramname"><em>seed</em> = <code>time(NULL)</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>randomCategoriesLimits creates random categories limits given the number of categories</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nbCategories</td><td>number of categories (and of limits) to create </td></tr>
+    <tr><td class="paramname">seed</td><td>seed for random</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>vector of float representing categories limits </dd></dl>
+
+</div>
+</div>
+<a id="ae5cb733cdd99a7d9d8414d5dcf2045b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae5cb733cdd99a7d9d8414d5dcf2045b9">&#9670;&nbsp;</a></span>subVector()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;T&gt; subVector </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; T &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>m</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>n</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -336,14 +717,16 @@ template&lt;typename K , typename V &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Overloading &lt;&lt; operator for std::unordered_map</p>
+<p>subVector get a sub-vector of a vector</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">out</td><td>ostream </td></tr>
-    <tr><td class="paramname">std::unordered_map</td><td>object </td></tr>
+    <tr><td class="paramname">v</td><td>vector from which we want the sub vector </td></tr>
+    <tr><td class="paramname">m</td><td>index of the beginning of subvector </td></tr>
+    <tr><td class="paramname">n</td><td>index of the end of subvector</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>subvector </dd></dl>
 
 </div>
 </div>

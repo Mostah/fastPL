@@ -69,8 +69,33 @@ $(function() {
 <div class="title"><a class="el" href="class_profiles.html" title="Profiles data structure.">Profiles</a> update </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="el" href="class_profiles.html" title="Profiles data structure.">Profiles</a> update algorithm </p>
-</div></div><!-- contents -->
+<div class="textblock"><h1><a class="anchor" id="autotoc_md41"></a>
+Profiles update algorithm</h1>
+<h2><a class="anchor" id="autotoc_md42"></a>
+I - Context</h2>
+<p>Profile Updater algorithm is responsible for updating the profiles given the fixed weight and lambda. It will evaluate each move of each profile on each criterion to see what moves have the best impact on the alternatives assignments.</p>
+<h2><a class="anchor" id="autotoc_md43"></a>
+II - ProfileUpdater</h2>
+<h3><a class="anchor" id="autotoc_md44"></a>
+Attributes</h3>
+<ul>
+<li><b>Epsilon</b> - Float (small value ~10-4) ensuring that the classification relationship is maintained between profile and alternatives (no profile will have the same value as an alt)</li>
+<li><b><a class="el" href="class_alternatives_performance.html" title="Dataset datastructure.">AlternativesPerformance</a></b> - dataset of the global problem</li>
+<li><b><a class="el" href="struct_config.html" title="High level configuration of the app.">Config</a></b> - Global config of the application</li>
+</ul>
+<h3><a class="anchor" id="autotoc_md45"></a>
+Description</h3>
+<p>After initializing the profiles, computing the weights and the lambda of a model, the last step is to update the profile to match as much as possible the decision maker's criteria. The profile updater algorithm functions as below: </p><pre class="fragment">1. For each profile:
+    A. For each criterion:
+        i. Compute the possible positions for the profile and evaluate the repercution of this move on the classification 
+        ii. Select the position that maximizes the result of the move on the alternative assignments 
+        iii. Move the profile and update the alternative assignments *(updateTables)*
+</pre><p> Or, in terms of functions: </p><pre class="fragment">1. *optimizeProfile* performs the algorithm above for one profile
+    A. *optimize performs* optimizeProfile on each profile
+        i. *computeBelowDisirability, computeAboveDesirability* 
+        ii. *chooseMaxDesirability* 
+        iii. *updateTables* 
+</pre> </div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

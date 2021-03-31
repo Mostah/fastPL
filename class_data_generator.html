@@ -115,11 +115,39 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a8c5ca8b7f56eae1ad1e544d57f8c2544"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3db4060bcdc917476884b26a8059d8b4"><td class="memItemLeft" align="right" valign="top">std::vector&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_generator.html#a3db4060bcdc917476884b26a8059d8b4">getCriterionCategoryLimits</a> (std::string fileName, std::string crit_id)</td></tr>
 <tr class="separator:a3db4060bcdc917476884b26a8059d8b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad856bc52e3f50fbe64ee4c06bb9c12e8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_generator.html#ad856bc52e3f50fbe64ee4c06bb9c12e8">checkDataCompatability</a> (std::string fileName)</td></tr>
+<tr class="separator:ad856bc52e3f50fbe64ee4c06bb9c12e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Wrapper to generate, save and load xml files. </p>
 <p>The <a class="el" href="class_data_generator.html" title="Wrapper to generate, save and load xml files.">DataGenerator</a> is a utility class that is the bridge between the datastructure of this project and the corresponding xml files used to store a dataset or a model. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="ad856bc52e3f50fbe64ee4c06bb9c12e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad856bc52e3f50fbe64ee4c06bb9c12e8">&#9670;&nbsp;</a></span>checkDataCompatability()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool DataGenerator::checkDataCompatability </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>fileName</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This method checks if the dataset used for our profile initialisation is compatible in our framework. Essentially, it checks that at least one alternative is assigned to each category of our problem.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fileName</td><td>dataset filename </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool </dd></dl>
+
+</div>
+</div>
 <a id="a33eaa44e0a93bf596f06fffb7d343415"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a33eaa44e0a93bf596f06fffb7d343415">&#9670;&nbsp;</a></span>datasetGenerator()</h2>
 
@@ -169,7 +197,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Generate a random dataset and put it in a xml file</p>
+<p>Generate a random dataset and puts it in a xml file</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">nb_criteria</td><td>number of criteria </td></tr>
@@ -764,7 +792,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/Users/ThomasVindard 1/Desktop/3A/Projet/fastPL/include/types/<a class="el" href="_data_generator_8h_source.html">DataGenerator.h</a></li>
+<li>/Users/thibaultmonsel/Desktop/3a_cs/FastPL/fastPL/include/types/<a class="el" href="_data_generator_8h_source.html">DataGenerator.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

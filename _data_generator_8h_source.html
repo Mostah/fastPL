@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Project: /Users/ThomasVindard 1/Desktop/3A/Projet/fastPL/include/types/DataGenerator.h Source File</title>
+<title>Project: /Users/thibaultmonsel/Desktop/3a_cs/FastPL/fastPL/include/types/DataGenerator.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -133,11 +133,13 @@ $(function() {
 <div class="line"><a name="l00216"></a><span class="lineno"><a class="line" href="class_data_generator.html#a3db4060bcdc917476884b26a8059d8b4">  216</a></span>&#160;  std::vector&lt;float&gt; <a class="code" href="class_data_generator.html#a3db4060bcdc917476884b26a8059d8b4">getCriterionCategoryLimits</a>(std::string fileName,</div>
 <div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;                                                std::string crit_id);</div>
 <div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160; </div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;  <a class="code" href="struct_config.html">Config</a> &amp;conf;</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;};</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160; </div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00227"></a><span class="lineno"><a class="line" href="class_data_generator.html#ad856bc52e3f50fbe64ee4c06bb9c12e8">  227</a></span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="class_data_generator.html#ad856bc52e3f50fbe64ee4c06bb9c12e8">checkDataCompatability</a>(std::string fileName);</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160; </div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;  <a class="code" href="struct_config.html">Config</a> &amp;conf;</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;};</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160; </div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="a_alternatives_performance_8h_html"><div class="ttname"><a href="_alternatives_performance_8h.html">AlternativesPerformance.h</a></div><div class="ttdoc">Dataset data structure.</div></div>
 <div class="ttc" id="a_criterion_8h_html"><div class="ttname"><a href="_criterion_8h.html">Criterion.h</a></div><div class="ttdoc">Datastructure representing a criterion.</div></div>
 <div class="ttc" id="a_performance_table_8h_html"><div class="ttname"><a href="_performance_table_8h.html">PerformanceTable.h</a></div><div class="ttdoc">PerformanceTable data structure.</div></div>
@@ -162,6 +164,7 @@ $(function() {
 <div class="ttc" id="aclass_data_generator_html_abfc9b2dcfcff68efedadf3e0cb2b9a4f"><div class="ttname"><a href="class_data_generator.html#abfc9b2dcfcff68efedadf3e0cb2b9a4f">DataGenerator::loadModel</a></div><div class="ttdeci">std::tuple&lt; float, Criteria, PerformanceTable &gt; loadModel(std::string fileName)</div></div>
 <div class="ttc" id="aclass_data_generator_html_ad2ca82fb563432bc59fca35652a7d7ce"><div class="ttname"><a href="class_data_generator.html#ad2ca82fb563432bc59fca35652a7d7ce">DataGenerator::openXmlFile</a></div><div class="ttdeci">pugi::xml_document openXmlFile(std::string filename)</div></div>
 <div class="ttc" id="aclass_data_generator_html_ad42e9f5f3f9e7fcf255ad7f96511b6a0"><div class="ttname"><a href="class_data_generator.html#ad42e9f5f3f9e7fcf255ad7f96511b6a0">DataGenerator::getNumberOfCriteria</a></div><div class="ttdeci">int getNumberOfCriteria(std::string fileName)</div></div>
+<div class="ttc" id="aclass_data_generator_html_ad856bc52e3f50fbe64ee4c06bb9c12e8"><div class="ttname"><a href="class_data_generator.html#ad856bc52e3f50fbe64ee4c06bb9c12e8">DataGenerator::checkDataCompatability</a></div><div class="ttdeci">bool checkDataCompatability(std::string fileName)</div></div>
 <div class="ttc" id="aclass_data_generator_html_ae6f28417be262523d8592daaf2bdaa45"><div class="ttname"><a href="class_data_generator.html#ae6f28417be262523d8592daaf2bdaa45">DataGenerator::getAlternativeIds</a></div><div class="ttdeci">std::vector&lt; std::string &gt; getAlternativeIds(std::string fileName)</div></div>
 <div class="ttc" id="aclass_performance_table_html"><div class="ttname"><a href="class_performance_table.html">PerformanceTable</a></div><div class="ttdoc">PerformanceTable data structure.</div><div class="ttdef"><b>Definition:</b> PerformanceTable.h:37</div></div>
 <div class="ttc" id="astruct_config_html"><div class="ttname"><a href="struct_config.html">Config</a></div><div class="ttdoc">High level configuration of the app.</div><div class="ttdef"><b>Definition:</b> app.h:23</div></div>

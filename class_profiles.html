@@ -77,34 +77,29 @@ $(function() {
 <div class="dynheader">
 Inheritance diagram for Profiles:</div>
 <div class="dyncontent">
-<div class="center"><img src="class_profiles__inherit__graph.png" border="0" usemap="#a_profiles_inherit__map" alt="Inheritance graph"/></div>
-<map name="a_profiles_inherit__map" id="a_profiles_inherit__map">
-<area shape="rect" title="Profiles data structure." alt="" coords="35,80,102,107"/>
-<area shape="rect" href="class_performance_table.html" title="PerformanceTable data structure." alt="" coords="5,5,132,32"/>
-</map>
-<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
-<div class="dynheader">
-Collaboration diagram for Profiles:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_profiles__coll__graph.png" border="0" usemap="#a_profiles_coll__map" alt="Collaboration graph"/></div>
-<map name="a_profiles_coll__map" id="a_profiles_coll__map">
-<area shape="rect" title="Profiles data structure." alt="" coords="35,80,102,107"/>
-<area shape="rect" href="class_performance_table.html" title="PerformanceTable data structure." alt="" coords="5,5,132,32"/>
-</map>
-<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
+ <div class="center">
+  <img src="class_profiles.png" usemap="#Profiles_map" alt=""/>
+  <map id="Profiles_map" name="Profiles_map">
+<area href="class_performance_table.html" title="PerformanceTable data structure." alt="PerformanceTable" shape="rect" coords="0,0,116,24"/>
+  </map>
+</div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aed91d36bb84865a16dae26b62990d22d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profiles.html#aed91d36bb84865a16dae26b62990d22d">Profiles</a> (std::vector&lt; std::vector&lt; <a class="el" href="class_perf.html">Perf</a> &gt;&gt; &amp;perf_vect, std::string mode)</td></tr>
-<tr class="separator:aed91d36bb84865a16dae26b62990d22d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae81bfefc382868d45cc480c6257efe82"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profiles.html#ae81bfefc382868d45cc480c6257efe82">Profiles</a> (int nb_of_prof, <a class="el" href="class_criteria.html">Criteria</a> &amp;crits, std::string mode, std::string prefix=&quot;prof&quot;)</td></tr>
-<tr class="separator:ae81bfefc382868d45cc480c6257efe82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1117c8e2629892bbaeb8336f96692bee"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profiles.html#a1117c8e2629892bbaeb8336f96692bee">Profiles</a> (std::vector&lt; std::vector&lt; <a class="el" href="class_perf.html">Perf</a> &gt;&gt; &amp;perf_vect, std::string mode=&quot;crit&quot;)</td></tr>
+<tr class="separator:a1117c8e2629892bbaeb8336f96692bee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81f9988e919098eaa7969e3849acf543"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profiles.html#a81f9988e919098eaa7969e3849acf543">Profiles</a> (int nb_of_prof, <a class="el" href="class_criteria.html">Criteria</a> &amp;crits, std::string mode=&quot;crit&quot;, std::string prefix=&quot;prof&quot;)</td></tr>
+<tr class="separator:a81f9988e919098eaa7969e3849acf543"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a420176f45d4ee47b8fb93209399e767b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profiles.html#a420176f45d4ee47b8fb93209399e767b">Profiles</a> (const <a class="el" href="class_profiles.html">Profiles</a> &amp;profiles)</td></tr>
 <tr class="separator:a420176f45d4ee47b8fb93209399e767b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42336cccc5cfb00b5d36723d1063e233"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profiles.html#a42336cccc5cfb00b5d36723d1063e233">isProfileOrdered</a> ()</td></tr>
 <tr class="separator:a42336cccc5cfb00b5d36723d1063e233"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3ab3b90267abca89c26aadd8b6b6e511"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profiles.html#a3ab3b90267abca89c26aadd8b6b6e511">generateRandomPerfValues</a> (unsigned long int seed=time(NULL), int lower_bound=0, int upper_bound=1)</td></tr>
 <tr class="separator:a3ab3b90267abca89c26aadd8b6b6e511"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa26014b4d85bb4b90060e26d428f07c0"><td class="memItemLeft" align="right" valign="top">std::pair&lt; std::vector&lt; <a class="el" href="class_perf.html">Perf</a> &gt;, std::vector&lt; <a class="el" href="class_perf.html">Perf</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profiles.html#aa26014b4d85bb4b90060e26d428f07c0">getBelowAndAboveProfile</a> (std::string profName)</td></tr>
+<tr class="separator:aa26014b4d85bb4b90060e26d428f07c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e327ff472267741eb9a589d68dff2a2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profiles.html#a8e327ff472267741eb9a589d68dff2a2">setPerf</a> (std::string name, std::string crit, float value)</td></tr>
+<tr class="separator:a8e327ff472267741eb9a589d68dff2a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_performance_table"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_performance_table')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_performance_table.html">PerformanceTable</a></td></tr>
 <tr class="memitem:af4f944f6a6e6e9feca0f6c87ae35bde7 inherit pub_methods_class_performance_table"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_performance_table.html#af4f944f6a6e6e9feca0f6c87ae35bde7">PerformanceTable</a> (std::vector&lt; std::vector&lt; <a class="el" href="class_perf.html">Perf</a> &gt;&gt; &amp;perf_vect, std::string mode=&quot;alt&quot;)</td></tr>
 <tr class="separator:af4f944f6a6e6e9feca0f6c87ae35bde7 inherit pub_methods_class_performance_table"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -128,6 +123,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a67e2bbf699f50b62ca01c857c08a2c90 inherit pub_methods_class_performance_table"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d13b0d5565652a87d03ea9877c83912 inherit pub_methods_class_performance_table"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_performance_table.html#a1d13b0d5565652a87d03ea9877c83912">changeMode</a> (std::string mode)</td></tr>
 <tr class="separator:a1d13b0d5565652a87d03ea9877c83912 inherit pub_methods_class_performance_table"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65b9650053a491cc35fd634af40cf167 inherit pub_methods_class_performance_table"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_perf.html">Perf</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_performance_table.html#a65b9650053a491cc35fd634af40cf167">getAltBetweenSorted</a> (std::string critId, float inf, float sup)</td></tr>
+<tr class="separator:a65b9650053a491cc35fd634af40cf167 inherit pub_methods_class_performance_table"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6f89b112906c68383fa1dcf9117cb580 inherit pub_methods_class_performance_table"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_perf.html">Perf</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_performance_table.html#a6f89b112906c68383fa1dcf9117cb580">getAltBetween</a> (std::string critId, float inf, float sup)</td></tr>
 <tr class="separator:a6f89b112906c68383fa1dcf9117cb580 inherit pub_methods_class_performance_table"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0e1c464b2d7e85b161ada712229363be inherit pub_methods_class_performance_table"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_perf.html">Perf</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_performance_table.html#a0e1c464b2d7e85b161ada712229363be">getBestPerfByCrit</a> (<a class="el" href="class_criteria.html">Criteria</a> &amp;crits)</td></tr>
@@ -182,8 +179,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>sorted_</b> = false</
 <td class="markdownTableBodyNone">category 0   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
 </table>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="aed91d36bb84865a16dae26b62990d22d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aed91d36bb84865a16dae26b62990d22d">&#9670;&nbsp;</a></span>Profiles() <span class="overload">[1/3]</span></h2>
+<a id="a1117c8e2629892bbaeb8336f96692bee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1117c8e2629892bbaeb8336f96692bee">&#9670;&nbsp;</a></span>Profiles() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -198,7 +195,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>sorted_</b> = false</
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::string&#160;</td>
-          <td class="paramname"><em>mode</em>&#160;</td>
+          <td class="paramname"><em>mode</em> = <code>&quot;crit&quot;</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -207,7 +204,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>sorted_</b> = false</
         </tr>
       </table>
 </div><div class="memdoc">
-<p><a class="el" href="class_profiles.html" title="Profiles data structure.">Profiles</a> standard constructor (<a class="el" href="class_performance_table.html" title="PerformanceTable data structure.">PerformanceTable</a> surcharged). A Profile type is always represented in the mode_ = "crit" of a <a class="el" href="class_performance_table.html" title="PerformanceTable data structure.">PerformanceTable</a>. There is no such thing as a Profile in "alt" mode.</p>
+<p><a class="el" href="class_profiles.html" title="Profiles data structure.">Profiles</a> standard constructor (<a class="el" href="class_performance_table.html" title="PerformanceTable data structure.">PerformanceTable</a> surcharged). Default mode is "crit"</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">perf_vect</td><td>Vector of performance that models category limits or a <a class="el" href="class_performance_table.html" title="PerformanceTable data structure.">PerformanceTable</a> <a class="el" href="class_profiles.html" title="Profiles data structure.">Profiles</a> in "alt" </td></tr>
@@ -218,8 +215,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>sorted_</b> = false</
 
 </div>
 </div>
-<a id="ae81bfefc382868d45cc480c6257efe82"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae81bfefc382868d45cc480c6257efe82">&#9670;&nbsp;</a></span>Profiles() <span class="overload">[2/3]</span></h2>
+<a id="a81f9988e919098eaa7969e3849acf543"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a81f9988e919098eaa7969e3849acf543">&#9670;&nbsp;</a></span>Profiles() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -240,7 +237,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>sorted_</b> = false</
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::string&#160;</td>
-          <td class="paramname"><em>mode</em>, </td>
+          <td class="paramname"><em>mode</em> = <code>&quot;crit&quot;</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -255,7 +252,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>sorted_</b> = false</
         </tr>
       </table>
 </div><div class="memdoc">
-<p><a class="el" href="class_profiles.html" title="Profiles data structure.">Profiles</a> constructor without perf values but set of criteria to evaluate performance over (<a class="el" href="class_performance_table.html" title="PerformanceTable data structure.">PerformanceTable</a> surcharged)</p>
+<p><a class="el" href="class_profiles.html" title="Profiles data structure.">Profiles</a> constructor without perf values but set of criteria to evaluate performance over (<a class="el" href="class_performance_table.html" title="PerformanceTable data structure.">PerformanceTable</a> surcharged) Default mode is "crit".</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">nb_of_prof</td><td>Number of profile </td></tr>
@@ -325,7 +322,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>sorted_</b> = false</
         </tr>
       </table>
 </div><div class="memdoc">
-<p>generateRandomPerfValues set all the <a class="el" href="class_perf.html" title="Perf (single performance) data structure.">Perf</a> values to random</p>
+<p>generateRandomPerfValues set all the <a class="el" href="class_perf.html" title="Perf (single performance) data structure.">Perf</a> values to random according to profile mode</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">seed</td><td>(optional) Random seed to use in the random generator </td></tr>
@@ -334,6 +331,32 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>sorted_</b> = false</
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="aa26014b4d85bb4b90060e26d428f07c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa26014b4d85bb4b90060e26d428f07c0">&#9670;&nbsp;</a></span>getBelowAndAboveProfile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::pair&lt;std::vector&lt;<a class="el" href="class_perf.html">Perf</a>&gt;, std::vector&lt;<a class="el" href="class_perf.html">Perf</a>&gt; &gt; Profiles::getBelowAndAboveProfile </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>profName</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>getBelowAndAboveProfile gets the profiles below and above the given profile. If given profile is the first or last, it will return itself</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">profId</td><td>id of the profile to get the above and below profiles</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>profiles performances (below and above) </dd></dl>
 
 </div>
 </div>
@@ -351,8 +374,54 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>sorted_</b> = false</
         </tr>
       </table>
 </div><div class="memdoc">
-<p>isProfileOrdered check if the performance table is ordered to be use as a profile type: each row must be ranked such that for each row i is sorted in ascending order. <a class="el" href="class_profiles.html" title="Profiles data structure.">Profiles</a> are therefore ordered in a descending manner</p>
+<p>isProfileOrdered checks if the profile performance table is ordered.</p><ul>
+<li>"alt" mode : each row of the performance table denotes a profile. The first row is profile b0 refering to category of rank 0. Hence, each criterion must be ordered in descending order. ie : for all i,j : b_i+1_j &gt; b_i_j</li>
+<li>"crit" mode : each row of the performance table denotes a criteria modeled by its category limits. Hence, each criterion is independant to one another but for one criterion each category limit (ie column) must be ordered in descending order. The first column is cat0 refering to category of rank 0. ie : for all criterion (row) and i : cat_limit_i+1 &gt; cat_limit_i</li>
+</ul>
 <dl class="section return"><dt>Returns</dt><dd>isOrdered </dd></dl>
+
+</div>
+</div>
+<a id="a8e327ff472267741eb9a589d68dff2a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e327ff472267741eb9a589d68dff2a2">&#9670;&nbsp;</a></span>setPerf()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Profiles::setPerf </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>crit</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>setPerf set a <a class="el" href="class_perf.html" title="Perf (single performance) data structure.">Perf</a> given the alt name, crit and value. Unefficient since using [] operator...</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>name of the alt or profile we want to update </td></tr>
+    <tr><td class="paramname">crit</td><td>name of the crit we want to update </td></tr>
+    <tr><td class="paramname">value</td><td>new perf value </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -402,7 +471,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>sorted_</b> = false</
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/Users/ThomasVindard 1/Desktop/3A/Projet/fastPL/include/types/<a class="el" href="_profiles_8h_source.html">Profiles.h</a></li>
+<li>/Users/thibaultmonsel/Desktop/3a_cs/FastPL/fastPL/include/types/<a class="el" href="_profiles_8h_source.html">Profiles.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

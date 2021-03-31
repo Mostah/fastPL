@@ -69,89 +69,90 @@ $(function() {
 <div class="title">Profile Initialization </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="autotoc_md28"></a>
+<div class="textblock"><h1><a class="anchor" id="autotoc_md33"></a>
 Profile Initialization Algorithm</h1>
-<h2><a class="anchor" id="autotoc_md29"></a>
+<h2><a class="anchor" id="autotoc_md34"></a>
 I Context</h2>
 <p>The theorical foundation of this part of the metaheuristic can be found in the thesis page 69-70.</p>
-<h2><a class="anchor" id="autotoc_md30"></a>
+<h2><a class="anchor" id="autotoc_md35"></a>
 II Profiles object</h2>
 <p>Before we get started explaining how the heuristic works lets talk about the objects that are used in this part of the algorithm. <br  />
 </p>
-<p>In MCDA, a "profile" is the performance values that delimits two categories. <br  />
+<p>In MCDA, a "profile" is the performance values that delimits two <a class="el" href="class_categories.html" title="Set of Category datastructure.">Categories</a>. <br  />
  In the particular setting of 3 criteria and 2 categories, let the profile <code>b0</code> be the following vector <code>b0 = [0.1,0.2,0.3]</code>. Hence, <code>b0</code> models the separation of the category of rank <code>0</code>(lowest) and the category of rank <code>1</code> (highest). <br  />
  If I were to have the alternatives <code>a0 = [0,0.1,0.2]</code> and <code>a1 = [0.2,0.3,0.4]</code>, we can be certain that <code>a0</code> is assigned to the category of rank <code>0</code> and <code>a1</code> to the category of rank <code>1</code> independently from the value of lambda and the weights.</p>
 <p>The <code><a class="el" href="class_profiles.html" title="Profiles data structure.">Profiles</a></code> object is therefore the agregations of several "profiles". The object is represented as a <code><a class="el" href="class_performance_table.html" title="PerformanceTable data structure.">PerformanceTable</a></code> object where there is a certain order constraint. Similary as in the object <code><a class="el" href="class_performance_table.html" title="PerformanceTable data structure.">PerformanceTable</a></code>, <code><a class="el" href="class_profiles.html" title="Profiles data structure.">Profiles</a></code> also has two different representations called modes (<code>"alt"</code> or <code>"crit"</code>). Each representation can be seen as a different way of seeing the object.</p>
 <p>In both scenarios below, we have a MCDA problem with <code>3</code> categories and <code>2</code> criteria.</p>
-<p>For instance, a <code><a class="el" href="class_profiles.html" title="Profiles data structure.">Profiles</a></code> object in <code>"alt"</code> mode can be visualised as below : </p><div class="fragment"><div class="line">|           |crit0|  crit1|         |</div>
-<div class="line">|-----------|-----|-------|---------|</div>
-<div class="line">|           |     |       |         | category 0</div>
-<div class="line">| b0        | 0.4 |   0.5 |         |</div>
-<div class="line">|           |     |       |         | category 1 </div>
-<div class="line">| b1        | 0.6 |   0.8 |         |</div>
-<div class="line">|           |     |       |         | category 2 </div>
-</div><!-- fragment --> <div class="fragment"><div class="line">{b0```}</div>
-<div class="line"> </div>
-<div class="line">On the contrary, a ```Profiles``` object in ```&quot;crit&quot;``` mode can be visualised as below : </div>
-</div><!-- fragment --><p> b0 b1 </p><table class="markdownTable">
+<p>For instance, a <code><a class="el" href="class_profiles.html" title="Profiles data structure.">Profiles</a></code> object in <code>"alt"</code> mode can be visualised as below :</p>
+<table class="markdownTable">
 <tr class="markdownTableHead">
-<th class="markdownTableHeadNone"></th><th class="markdownTableHeadNone"></th><th class="markdownTableHeadNone"></th></tr>
+<th class="markdownTableHeadNone"></th><th class="markdownTableHeadNone">crit0   </th><th class="markdownTableHeadNone">crit1   </th><th class="markdownTableHeadNone"></th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">category 0    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">crit0   </td><td class="markdownTableBodyNone">0.4   </td><td class="markdownTableBodyNone">0.6    </td></tr>
+<td class="markdownTableBodyNone">b0   </td><td class="markdownTableBodyNone">0.4   </td><td class="markdownTableBodyNone">0.5   </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">category 1    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">crit1   </td><td class="markdownTableBodyNone">0.5   </td><td class="markdownTableBodyNone">0.8    </td></tr>
+<td class="markdownTableBodyNone">b1   </td><td class="markdownTableBodyNone">0.6   </td><td class="markdownTableBodyNone">0.8   </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">category 0   </td><td class="markdownTableBodyNone">category 1   </td><td class="markdownTableBodyNone">category 2   </td></tr>
+<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">category 2   </td></tr>
 </table>
-<div class="fragment"><div class="line">Conceptually to pass from one mode to another, you can see it as a matrix transpose of the numerical values in the table.</div>
-<div class="line"> </div>
-<div class="line">An advised reader might have already intuited the ordered constraints of the ```Profiles``` object mentionned above.  </div>
-<div class="line"> </div>
-<div class="line">For the ```&quot;alt&quot;``` mode : </div>
-<div class="line"> - For each criterion ```j``` and category `i` : ```b[i+1,j] &gt;= b[i,j]```.  </div>
-<div class="line"> </div>
-<div class="line">For the ```&quot;crit&quot;``` mode (seen as a transpose matrix) : </div>
-<div class="line"> - For each category limit ```i``` (ie column) and criterion ```j``` : ```cat_limit[i,j+1] &gt;= cat_limit[i,j]```.</div>
-<div class="line"> </div>
-<div class="line">### Attributes</div>
-<div class="line"> </div>
-<div class="line">Same as a ```PerformanceTable``` object.</div>
-<div class="line"> </div>
-<div class="line">* mode : ```&quot;alt&quot;``` or ```&quot;crit&quot;```.</div>
-<div class="line">* sorted : set to ```1``` always since we have an ordered constraint.</div>
-<div class="line">* pt_ : a vector of a vector of ```Perf``` object meant to represent the problem.</div>
-<div class="line"> </div>
-<div class="line"> </div>
-<div class="line">### III Profile Initialization</div>
-<div class="line"> </div>
-<div class="line">The ```ProfileInitializer``` class computes a ```Profiles``` object with respect of a specific dataset.</div>
-<div class="line"> </div>
-<div class="line">### Attributes</div>
-<div class="line"> </div>
-<div class="line">* AlternativesPerformance - dataset of the global problem</div>
-<div class="line">* Config - Global config of the application</div>
-<div class="line"> </div>
-<div class="line">### Toy example</div>
-<div class="line"> </div>
-<div class="line">The following explanation is just an illustration of the thesis work. This example might help you understand better the heurisitc.</div>
-<div class="line"> </div>
-<div class="line">Let us suppose that we have a dataset of ```12``` alternative and only ```1``` criterion and ```4``` categories. Category rank ```0``` is considered as the worst and ```4``` the best. Visually, we can see the problem as such :</div>
-<div class="line"> </div>
-<div class="line"> </div>
-<div class="line">|&lt;img src=&quot;../images/toy_example.png&quot; width=&quot;600&quot;/&gt;|</div>
-<div class="line">| :--:|</div>
-<div class="line">| *Toy Dataset* </div>
-<div class="line"> </div>
-<div class="line"> </div>
-<div class="line">The first thing to do is to compute the category frequency. In our case, we see that for the category of rank ```0``` three alternatives belong to this category therefore the frequency is ```3/12=1/4```:   </div>
-<div class="line">- ```pi = [1/4,1/4,1/3,1/6]</div>
-</div><!-- fragment --><p>Let be <code>bi</code> the profile that delimits the category <code>i</code> and <code>i+1</code>. In our example we therefore need to compute <code>b0</code>, <code>b1</code> and <code>b2</code>.</p>
+<p>The "profile" <code>b0</code> separates the categories of rank <code>0</code> and <code>1</code> and <code>b1</code> the ones of rank <code>1</code> and <code>2</code>.</p>
+<p>On the contrary, a <code><a class="el" href="class_profiles.html" title="Profiles data structure.">Profiles</a></code> object in <code>"crit"</code> mode can be visualised as below :</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadCenter"></th><th class="markdownTableHeadNone"></th><th class="markdownTableHeadCenter"></th><th class="markdownTableHeadCenter">b0   </th><th class="markdownTableHeadCenter"></th><th class="markdownTableHeadCenter">b1    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyCenter">crit0   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyCenter">0.4   </td><td class="markdownTableBodyCenter"></td><td class="markdownTableBodyCenter">0.6   </td><td class="markdownTableBodyCenter"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyCenter">crit1   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyCenter">0.5   </td><td class="markdownTableBodyCenter"></td><td class="markdownTableBodyCenter">0.8   </td><td class="markdownTableBodyCenter"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyCenter">category 0   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyCenter">category 1   </td><td class="markdownTableBodyCenter"></td><td class="markdownTableBodyCenter">category 2   </td><td class="markdownTableBodyCenter"></td></tr>
+</table>
+<p>Conceptually to pass from one mode to another, you can see it as a matrix transpose of the numerical values in the table.</p>
+<p>An advised reader might have already intuited the ordered constraints of the <code><a class="el" href="class_profiles.html" title="Profiles data structure.">Profiles</a></code> object mentionned above. <br  />
+</p>
+<p>For the <code>"alt"</code> mode :</p><ul>
+<li>For each criterion <code>j</code> and category <code>i</code> : <code>b[i+1,j] &gt;= b[i,j]</code>. <br  />
+</li>
+</ul>
+<p>For the <code>"crit"</code> mode (seen as a transpose matrix) :</p><ul>
+<li>For each category limit <code>i</code> (ie column) and criterion <code>j</code> : <code>cat_limit[i,j+1] &gt;= cat_limit[i,j]</code>.</li>
+</ul>
+<h3><a class="anchor" id="autotoc_md36"></a>
+Attributes</h3>
+<p>Same as a <code><a class="el" href="class_performance_table.html" title="PerformanceTable data structure.">PerformanceTable</a></code> object.</p>
+<ul>
+<li>mode : <code>"alt"</code> or <code>"crit"</code>.</li>
+<li>sorted : set to <code>1</code> always since we have an ordered constraint.</li>
+<li>pt_ : a vector of a vector of <code><a class="el" href="class_perf.html" title="Perf (single performance) data structure.">Perf</a></code> object meant to represent the problem.</li>
+</ul>
+<h3><a class="anchor" id="autotoc_md37"></a>
+III Profile Initialization</h3>
+<p>The <code><a class="el" href="class_profile_initializer.html">ProfileInitializer</a></code> class computes a <code><a class="el" href="class_profiles.html" title="Profiles data structure.">Profiles</a></code> object with respect of a specific dataset.</p>
+<h3><a class="anchor" id="autotoc_md38"></a>
+Attributes</h3>
+<ul>
+<li><a class="el" href="class_alternatives_performance.html" title="Dataset datastructure.">AlternativesPerformance</a> - dataset of the global problem</li>
+<li><a class="el" href="struct_config.html" title="High level configuration of the app.">Config</a> - Global config of the application</li>
+</ul>
+<h3><a class="anchor" id="autotoc_md39"></a>
+Toy example</h3>
+<p>The following explanation is just an illustration of the thesis work. This example might help you understand better the heurisitc.</p>
+<p>Let us suppose that we have a dataset of <code>12</code> alternative and only <code>1</code> criterion and <code>4</code> categories. <a class="el" href="class_category.html" title="Category datastructure.">Category</a> rank <code>0</code> is considered as the worst and <code>4</code> the best. Visually, we can see the problem as such :</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadCenter"><img src="../images/toy_example.png" alt="" width="600" class="inline"/>    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyCenter"><em>Toy Dataset</em>   </td></tr>
+</table>
+<p>The first thing to do is to compute the category frequency. In our case, we see that for the category of rank <code>0</code> three alternatives belong to this category therefore the frequency is <code>3/12=1/4</code>: <br  />
+</p><ul>
+<li><code>pi = [1/4,1/4,1/3,1/6]</code> <br  />
+</li>
+</ul>
+<p>Let be <code>bi</code> the profile that delimits the category <code>i</code> and <code>i+1</code>. In our example we therefore need to compute <code>b0</code>, <code>b1</code> and <code>b2</code>.</p>
 <p>Computation of <code>b0</code> :</p>
 <p>As a reminder, <code>b0</code> separates the categories of rank <code>0</code> and <code>1</code>. The potential candidates for <code>b0</code> are the performance values of the alternatives that are either classfied in either categories of rank <code>0</code> or <code>1</code>. Hence, the potential candidates here are :</p><ul>
 <li><code>alt0</code>, <code>alt1</code>, <code>alt2</code>, <code>alt3</code>, <code>alt5</code> and <code>alt6</code>.</li>
@@ -172,9 +173,17 @@ II Profiles object</h2>
 <li><code>2/freq0 + 3/freq1</code></li>
 </ul>
 <p>For the candidate vector we have the following probabilities. <br  />
- </p><div class="fragment"><div class="line">```proba = [1/freq0 + 3/freq1,  2/freq0 + 3/freq1, 3/freq0 + 2/freq1, 3/freq0 + 1/freq1, 3/freq0]</div>
-</div><!-- fragment --> <div class="fragment"><div class="line">```proba_normalised = [0,19,0.24,0.24,0.19,0.14]</div>
-</div><!-- fragment --><p> <code>cum_sum_proba_normalised = [0.19,0.43,0.67,0.84,1]</code></p>
+</p><ul>
+<li><code>candidates = [alt0,alt1,alt2,alt3,alt5,alt6]</code> <br  />
+</li>
+<li><code>proba = [1/freq0 + 3/freq1, 2/freq0 + 3/freq1, 3/freq0 + 2/freq1, 3/freq0 + 1/freq1, 3/freq0]</code> <br  />
+</li>
+<li><code>proba = [16,20,20,16,12]</code> <br  />
+</li>
+<li><code>proba_normalised = [0,19,0.24,0.24,0.19,0.14]</code> <br  />
+</li>
+<li><code>cum_sum_proba_normalised = [0.19,0.43,0.67,0.84,1]</code></li>
+</ul>
 <p>With the probabilities computed, we sample from a uniform distribution U(1) and according to its value we assign a certain alternative performance value to <code>b0</code>. For example, it we sample <code>0.3</code>, <code>b0=alt1</code>.</p>
 <p>This reasoning is done for each profile performance <code>bi</code>. <br  />
  The same procedure is done for any criterion <code>j</code> and generalizes the problem of profile intialization. </p>
