@@ -34,10 +34,10 @@ In MCDA, a decision maker is often confronted to different solutions to a proble
 
 In MCDA, the alternatives are evaluated on multiple attributes, called criteria. A criterion is a function that assigns an evaluation to each alternative involved in the decision problem. The coding of a criterion is often made such that the preference either increases or decreases as a function of the criterion value. The preference scale associated with a criterion should be monotone and each criterion should have a preference direction: the value of the criterion should be either minimized or maximized. For instance, in the context of choosing a car, disregarding all other criteria, a DM usually prefers a cheap car to an expensive one. 
 
-*A **criterion** is a function $$g_j$$ assigning a value to each alternative of a decision problem such that it becomes possible for a DM to perform pairwise comparisons and express a preference in favor of one alternative based on this value.*
+*A **criterion** is a function \f$g_j\f$ assigning a value to each alternative of a decision problem such that it becomes possible for a DM to perform pairwise comparisons and express a preference in favor of one alternative based on this value.*
 
-The Cartesian product of criteria scales is denoted by  X = $$\prod_{j=1}^{n}$$ $$X_j$$ in which $$X_j$$ represents all the possible values of a criterion j. 
-We designate $$g_j$$ : $$A$$ $$\to$$ $$X_j$$ the function assigning a value to each alternative of the set $$A$$. $$A$$ represents a finite set of alternatives for which a ranking or a sorting has to be determined. Let $$a$$ $$\in$$ $$A$$ be an alternative $$a$$ contained in the set $$A$$. We denote by $$a_j$$ = $$g_j(a)$$ the performance of an alternative a on criterion $$j$$. The performance vector associated to each alternative a is denoted by $$a$$ = ($$a_1$$, ..., $$a_n$$);
+The Cartesian product of criteria scales is denoted by  X = \f$\prod_{j=1}^{n}\f$ \f$X_j\f$ in which \f$X_j\f$ represents all the possible values of a criterion j. 
+We designate \f$g_j\f$ : \f$A\f$ \f$\to\f$ \f$X_j\f$ the function assigning a value to each alternative of the set \f$A\f$. \f$A\f$ represents a finite set of alternatives for which a ranking or a sorting has to be determined. Let \f$a\f$ \f$\in\f$ \f$A\f$ be an alternative \f$a\f$ contained in the set \f$A\f$. We denote by \f$a_j\f$ = \f$g_j(a)\f$ the performance of an alternative a on criterion \f$j\f$. The performance vector associated to each alternative a is denoted by \f$a\f$ = (\f$a_1\f$, ..., \f$a_n\f$);
 
 There exist different **types of preference relation** between two alternatives. Roy and Bouyssou (1993) list four types of preferences:
 - *Indifference*: the two alternatives are considered equivalent;
@@ -49,36 +49,36 @@ the second;
 - *Incomparability*: two alternatives cannot be compared because their evaluations
 are very contrasted.
 
-According to the preference of the DM on the set of alternatives in $$A$$, those alternatives can be assigned into **categories**.
+According to the preference of the DM on the set of alternatives in \f$A\f$, those alternatives can be assigned into **categories**.
 ### ELECTRI TRI
 
 ELECTRI TRI is an outranking sorting procedure. The method aims at assigning each alternative of a set to a category selected among a set of pre-defined and ordered categories. Each alternative in the set is evaluated on a set of monotone criteria. The category in which an alternative is assigned to is chosen by comparing the alternative performances to the performances of profiles delimiting the categories.
 
-Formally we denote by A the set of alternatives that have to be assigned to a category selected among p ordered categories, $$C^p$$  $$\succ$$  $$C^{p-1}$$   $$\succ$$ ...   $$\succ$$ $$C^1$$ where $$\succ$$ indicates a binary outranking relation. Alternatives in the set are evaluated on multiple attributes which are known to have a monotone preference scale, i.e. the higher the value of an alternative on criterion j the better it is or the contrary. The set of criteria is denoted by N = $$\{1,..., n\}$$ and j denotes one of the criteria in the set N. To know in which category an alternative should be assigned, its performances are compared to the ones of the p-1 profiles delimiting the p categories. We denote by $$b_h$$ the profile delimiting the category $$C^h$$ from $$C^{h+1}$$. H = $$\{1,..., p-1\}$$ denotes the set of profile indices. Figure 2.1 illustrates the profiles and categories of an ELECTRE TRI model. Alternatives are compared to the profiles delimiting the categories according a specific schema given by the ELECTRE TRI parameter learning model. Formally, an outraking relation is given to ELECTRE TRI in order for alternatives to be assigned to specific categories. I encourage to check out the thesis page 13.
+Formally we denote by A the set of alternatives that have to be assigned to a category selected among p ordered categories, \f$C^p\f$  \f$\succ\f$  \f$C^{p-1}\f$   \f$\succ\f$ ...   \f$\succ\f$ \f$C^1\f$ where \f$\succ\f$ indicates a binary outranking relation. Alternatives in the set are evaluated on multiple attributes which are known to have a monotone preference scale, i.e. the higher the value of an alternative on criterion j the better it is or the contrary. The set of criteria is denoted by N = \f$\{1,..., n\}\f$ and j denotes one of the criteria in the set N. To know in which category an alternative should be assigned, its performances are compared to the ones of the p-1 profiles delimiting the p categories. We denote by \f$b_h\f$ the profile delimiting the category \f$C^h\f$ from \f$C^{h+1}\f$. H = \f$\{1,..., p-1\}\f$ denotes the set of profile indices. Figure 2.1 illustrates the profiles and categories of an ELECTRE TRI model. Alternatives are compared to the profiles delimiting the categories according a specific schema given by the ELECTRE TRI parameter learning model. Formally, an outraking relation is given to ELECTRE TRI in order for alternatives to be assigned to specific categories. I encourage to check out the thesis page 13.
 
 
 <!-- <!<img src="../images/Electre_Tri_model.png"  width="600"/> -->
 
 ## MR-Sort Model
 
-In this model, an alternative $$a$$ outranks a profile $$b_h$$ if the following two conditions are
+In this model, an alternative \f$a\f$ outranks a profile \f$b_h\f$ if the following two conditions are
 satisfied:
-1. $$a$$ has better performances than $$b^h$$ on a sufficiently large coalition of criteria;
-2. $$a$$ is not significantly worse than $$b^h$$ on any criterion $$j \in N$$.
+1. \f$a\f$ has better performances than \f$b^h\f$ on a sufficiently large coalition of criteria;
+2. \f$a\f$ is not significantly worse than \f$b^h\f$ on any criterion \f$j \in N\f$.
 
-With MR-Sort we assume that “sufficiently large coalitions of criteria” can be determined by a weight $$w_j$$ associated with each criterion and a majority threshold $$\lambda$$. A coalition of criteria $$J$$ is “sufficiently large” if   $$\sum_{j=1}^{n}$$ $$w_j$$ > $$\lambda$$ .Formally, the outranking relation of MR-Sort reads:
+With MR-Sort we assume that “sufficiently large coalitions of criteria” can be determined by a weight \f$w_j\f$ associated with each criterion and a majority threshold \f$\lambda\f$. A coalition of criteria \f$J\f$ is “sufficiently large” if   \f$\sum_{j=1}^{n}\f$ \f$w_j\f$ > \f$\lambda\f$ .Formally, the outranking relation of MR-Sort reads:
 
-$$a \succcurlyeq b^h \Leftrightarrow \sum_{j: a_j \geq b_j^h} w_j \geq \lambda$$ and $$\nexists j \in N : a_j< b_j^h - v_j^h$$
+\f$a \succcurlyeq b^h \Leftrightarrow \sum_{j: a_j \geq b_j^h} w_j \geq \lambda\f$ and \f$\nexists j \in N : a_j< b_j^h - v_j^h\f$
 
-with $$v_j^h$$ the veto profile associated to the profile $$b^h$$ on criterion $$j$$.
+with \f$v_j^h\f$ the veto profile associated to the profile \f$b^h\f$ on criterion \f$j\f$.
 
 However, the thesis and the metaheuristic only deals with **MRSort models without veto**. Therefore, the outranking relation boils down to : 
 
-$$a \succcurlyeq b^h \Leftrightarrow \sum_{j: a_j \geq b_j^h} w_j \geq \lambda$$ and $$\nexists j \in N : a_j< b_j^h$$
+\f$a \succcurlyeq b^h \Leftrightarrow \sum_{j: a_j \geq b_j^h} w_j \geq \lambda\f$ and \f$\nexists j \in N : a_j< b_j^h\f$
 
 Using the equation above, the asssignment rule given is as follows : 
 
-$$a \in C^h \Leftrightarrow \sum_{j: a_j \geq b_j^{h-1}} w_j \geq \lambda$$ and $$\sum_{j: a_j \geq b_j^h} w_j < \lambda$$
+\f$a \in C^h \Leftrightarrow \sum_{j: a_j \geq b_j^{h-1}} w_j \geq \lambda\f$ and \f$\sum_{j: a_j \geq b_j^h} w_j < \lambda\f$
 
 ### Traditional way of learning the parameters of MR-Sort models
 
