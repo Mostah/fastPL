@@ -161,7 +161,7 @@ randomCategoriesLimits(int nbCategories, unsigned long int seed = time(NULL)) {
 inline std::vector<std::string> getCriterionIds(std::vector<Perf> vectPerf) {
   std::vector<std::string> criterionIds;
   for (auto p : vectPerf) {
-    criterionIds.push_back(p.getCrit());
+    criterionIds.push_back(p.crit_);
   }
   return criterionIds;
 };
@@ -176,7 +176,7 @@ inline std::vector<std::string> getCriterionIds(std::vector<Perf> vectPerf) {
  */
 inline Perf getPerfOfCrit(std::vector<Perf> &vectPerf, std::string critId) {
   for (Perf p : vectPerf) {
-    if (p.getCrit() == critId) {
+    if (p.crit_ == critId) {
       return p;
     }
   }
@@ -193,7 +193,7 @@ inline Perf getPerfOfCrit(std::vector<Perf> &vectPerf, std::string critId) {
 inline std::vector<std::string> getNameIds(std::vector<Perf> vectPerf) {
   std::vector<std::string> NameIds;
   for (auto p : vectPerf) {
-    NameIds.push_back(p.getName());
+    NameIds.push_back(p.name_);
   }
   return NameIds;
 };
@@ -250,7 +250,7 @@ inline std::vector<Perf> createVectorPerfWithNoPerf(std::string id,
 inline std::vector<double> getPerfFromPerfVect(std::vector<Perf> &p) {
   std::vector<double> values;
   for (auto perf : p) {
-    values.push_back(static_cast<double>(perf.getValue()));
+    values.push_back(static_cast<double>(perf.value_));
   }
   return values;
 }
@@ -283,7 +283,7 @@ inline void plotGlobalData(AlternativesPerformance &ap) {
 
   std::set<int> cat_set;
   for (auto pair : map) {
-    cat_set.insert(pair.second.getCategoryRank());
+    cat_set.insert(pair.second.rank_);
   }
   // converting set to vector
   std::vector<int> ranks;
@@ -293,7 +293,7 @@ inline void plotGlobalData(AlternativesPerformance &ap) {
   std::unordered_map<int, int> index;
   int nbCriteria = 0;
   for (std::vector<Perf> p : ap.getPerformanceTable()) {
-    int rank = map[p[0].getName()].getCategoryRank();
+    int rank = map[p[0].name_].rank_;
     if (nbCriteria == 0)
       nbCriteria = p.size();
     // if we have already seen this category yet

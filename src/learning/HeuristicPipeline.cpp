@@ -197,7 +197,7 @@ void HeuristicPipeline::computeAccuracy(MRSortModel &model) {
       model_assignments.getAlternativesAssignments();
   int acc = 0;
   for (std::pair<std::string, Category> e : assignments) {
-    if (e.second.getCategoryRank() == truth[e.first].getCategoryRank()) {
+    if (e.second.rank_ == truth[e.first].rank_) {
       acc++;
     }
   }

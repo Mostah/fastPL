@@ -108,8 +108,7 @@ TEST(TestProfileUpdater, TestComputeAboveDesirability) {
       profUpdater.computeAboveDesirability(model, "crit0", b0_c0, b1_c0, cat,
                                            cat_above, ct_b0, altPerf_model);
   EXPECT_FLOAT_EQ(
-      above_des[altPerf_data.getPerf("alt1", "crit0").getValue() + epsilon],
-      0.5);
+      above_des[altPerf_data.getPerf("alt1", "crit0").value_ + epsilon], 0.5);
 
   Perf b0_c3 = Perf("b0", "crit3", 0.3);
   Perf b1_c3 = Perf("b1", "crit3", 0.6);
@@ -117,7 +116,7 @@ TEST(TestProfileUpdater, TestComputeAboveDesirability) {
       profUpdater.computeAboveDesirability(model, "crit3", b0_c3, b1_c3, cat,
                                            cat_above, ct_b0, altPerf_model);
   EXPECT_FLOAT_EQ(
-      above_des_bis[altPerf_data.getPerf("alt1", "crit3").getValue() + epsilon],
+      above_des_bis[altPerf_data.getPerf("alt1", "crit3").value_ + epsilon],
       0.25);
 }
 
@@ -142,7 +141,7 @@ TEST(TestProfileUpdater, TestComputeBelowDesirability) {
       profUpdater.computeBelowDesirability(model, "crit1", b0_c1, base, cat,
                                            cat_above, ct_b0, altPerf_model);
   EXPECT_FLOAT_EQ(
-      below_des[altPerf_data.getPerf("alt2", "crit1").getValue() - epsilon], 2);
+      below_des[altPerf_data.getPerf("alt2", "crit1").value_ - epsilon], 2);
 }
 
 TEST(TestProfileUpdater, TestChooseMaxDesirability) {
@@ -189,15 +188,15 @@ TEST(TestProfileUpdater, TestUpdateTables) {
   profUpdater.updateTables(model, "crit1", b0_c1_old, b0_c1_new, ct,
                            altPerf_model);
   std::string new_cat =
-      altPerf_model.getAlternativeAssignment("alt2").getCategoryId();
+      altPerf_model.getAlternativeAssignment("alt2").category_id_;
   EXPECT_EQ(new_cat, "cat1");
 
   // Test update score
   EXPECT_FLOAT_EQ(0.5, model.getScore());
 
   // Test update profiles
-  EXPECT_FLOAT_EQ(model.profiles.getPerf("b0", "crit0").getValue(), 0.39);
-  EXPECT_FLOAT_EQ(model.profiles.getPerf("b0", "crit1").getValue(), 0.18);
+  EXPECT_FLOAT_EQ(model.profiles.getPerf("b0", "crit0").value_, 0.39);
+  EXPECT_FLOAT_EQ(model.profiles.getPerf("b0", "crit1").value_, 0.18);
 }
 
 TEST(TestProfileUpdater, TestOptimizeProfile) {

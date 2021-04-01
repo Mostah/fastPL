@@ -53,20 +53,20 @@ TEST(TestProfileInitializer, TestGetProfileCandidates) {
       profInit.getProfilePerformanceCandidates(crit[0], cat0, 3);
   std::vector<std::string> altId;
   for (auto p : candidates)
-    altId.push_back(p.getName());
+    altId.push_back(p.name_);
   std::sort(altId.begin(), altId.end());
-  EXPECT_EQ(candidates[0].getName(), "alt0");
-  EXPECT_EQ(candidates[1].getName(), "alt2");
-  EXPECT_EQ(candidates[2].getName(), "alt3");
+  EXPECT_EQ(candidates[0].name_, "alt0");
+  EXPECT_EQ(candidates[1].name_, "alt2");
+  EXPECT_EQ(candidates[2].name_, "alt3");
 
   std::vector<std::string> altId2;
   std::vector<Perf> candidates2 =
       profInit.getProfilePerformanceCandidates(crit[0], cat2, 3);
   for (auto p : candidates2)
-    altId2.push_back(p.getName());
+    altId2.push_back(p.name_);
   std::sort(altId2.begin(), altId2.end());
-  EXPECT_EQ(candidates2[0].getName(), "alt1");
-  EXPECT_EQ(candidates2[1].getName(), "alt3");
+  EXPECT_EQ(candidates2[0].name_, "alt1");
+  EXPECT_EQ(candidates2[1].name_, "alt3");
 }
 
 TEST(TestProfileInitializer, TestWeightedProbability) {

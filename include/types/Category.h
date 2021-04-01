@@ -37,35 +37,6 @@ public:
   ~Category(){};
 
   /**
-   * Getter of category_id class attribute
-   *
-   * @return Category id
-   */
-  std::string getCategoryId() const;
-
-  /**
-   * Set a new value of category_id class attribute
-   *
-   * @param set_cat_id
-   *
-   */
-  void setCategoryId(std::string set_cat_id);
-
-  /**
-   * Getter of rank class attribute
-   * @return Category rank
-   */
-  int getCategoryRank() const;
-
-  /**
-   * Set a new value of rank class attribute
-   *
-   * @param set_rank
-   *
-   */
-  void setCategoryRank(int set_rank);
-
-  /**
    * Overloading << operator for Category class
    *
    * @param out ostream
@@ -83,7 +54,6 @@ public:
    */
   friend bool operator==(const Category &cat1, const Category &cat2);
 
-private:
   std::string category_id_;
   int rank_;
 };
