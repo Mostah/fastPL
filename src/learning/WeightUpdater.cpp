@@ -1,5 +1,6 @@
 #include "../../include/learning/WeightUpdater.h"
 #include "../../include/learning/LinearSolver.h"
+#include "../../include/utils.h"
 
 #include <sstream>
 
@@ -33,7 +34,7 @@ void WeightUpdater::updateWeightsAndLambda(MRSortModel &model) {
   for (int i = 0; i < res.second.size(); i++) {
     ss << " - w" << i << ": " << model.criteria[i].getWeight();
   }
-  conf.logger->info(ss.str());
+  conf.logger->debug(ss.str());
 }
 
 std::vector<std::vector<std::vector<bool>>>
@@ -48,8 +49,8 @@ WeightUpdater::computeXMatrix(MRSortModel &model) {
     for (auto alt : alts_pt) {
       std::vector<bool> x_h_alt;
       // if alt is assigned to category h (otherwise, append empty vector)
-      if (ap.getAlternativeAssignment(alt[0].getName()).getCategoryId() ==
-          profs_pt[h][0].getName()) {
+      if (ap.getAlternativeAssignment(alt[0].getName()).getCategoryRank() ==
+          h) {
         for (int j = 0; j < alt.size(); j++) {
           // condition: aj >= bj_h-1
           x_h_alt.push_back(alt[j].getValue() >= profs_pt[h - 1][j].getValue());
@@ -74,8 +75,8 @@ WeightUpdater::computeYMatrix(MRSortModel &model) {
     for (auto alt : alts_pt) {
       std::vector<bool> y_h_alt;
       // if alt is assigned to category h (otherwise, append empty vector)
-      if (ap.getAlternativeAssignment(alt[0].getName()).getCategoryId() ==
-          profs_pt[h][0].getName()) {
+      if (ap.getAlternativeAssignment(alt[0].getName()).getCategoryRank() ==
+          h) {
         for (int j = 0; j < alt.size(); j++) {
           // condition: aj >= bj_h
           y_h_alt.push_back(alt[j].getValue() >= profs_pt[h][j].getValue());
@@ -93,14 +94,15 @@ bool WeightUpdater::modelCheck(MRSortModel &model) {
     return false;
   }
   if (model.profiles.getMode() != "alt") {
-    std::invalid_argument("Model's profile should be in alt mode.");
+    throw std::invalid_argument("Model's profile should be in alt mode.");
   }
   if (ap.getMode() != "alt") {
-    std::invalid_argument(
+    throw std::invalid_argument(
         "AlternativesPerformance's profile should be in alt mode.");
   }
   // both are supposed to be in mode alt
-  auto profs = model.profiles.getPerformanceTable();
+
+  std::vector<std::vector<Perf>> profs = model.profiles.getPerformanceTable();
   auto ap_pt = ap.getPerformanceTable();
   for (int i = 0; i < ap.getNumberCrit(); i++) {
     if (profs[0][i].getCrit() != ap_pt[0][i].getCrit()) {

@@ -118,11 +118,16 @@ public:
    * profile. If given profile is the first or last, it will return itself
    *
    * @param profId id of the profile to get the above and below profiles
+   * @param worst_value worst value found in the dataset used to create the
+   * lower bound
+   * @param best_value best value found in the dataset used to create the higher
+   * bound
    *
    * @return profiles performances (below and above)
    */
   std::pair<std::vector<Perf>, std::vector<Perf>>
-  getBelowAndAboveProfile(std::string profName);
+  getBelowAndAboveProfile(std::string profName, float worst_value,
+                          float best_value);
 
   /**
    * setPerf set a Perf given the alt name, crit and value.

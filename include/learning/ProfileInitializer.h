@@ -1,12 +1,29 @@
 #ifndef PROFILEINITIALIZER_H
 #define PROFILEINITIALIZER_H
 
+/**
+ * @file ProfileInitializer.h
+ * @brief Profile initializer heuristic.
+ *
+ */
+
 #include "../app.h"
 #include "../types/AlternativesPerformance.h"
 #include "../types/Categories.h"
 #include "../types/MRSortModel.h"
 #include "../types/Perf.h"
 #include "../types/Profiles.h"
+
+/** @class ProfileInitializer ProfileInitializer.h
+ *  @brief Profile initializer heuristic.
+ *
+ * This class implements the profile initializer heuristic as described in the
+ * thesis. This algorithm is initialized with the dataset and can then be used
+ * to transform a model into an "initialized" one.
+ *
+ * A complete description of the heuristic can be found in @subpage
+ * init_profiles.
+ */
 
 class ProfileInitializer {
 public:

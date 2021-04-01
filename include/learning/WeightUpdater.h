@@ -1,12 +1,34 @@
 #ifndef WEIGHTUPDATER_H
 #define WEIGHTUPDATER_H
 
+/**
+ * @file WeightUpdater.h
+ * @brief Weight and Lambda update heuristic.
+ *
+ */
+
 #include "../app.h"
 #include "spdlog/spdlog.h"
 
 #include "../types/AlternativesPerformance.h"
 #include "../types/MRSortModel.h"
 #include "LinearSolver.h"
+
+/** @class WeightUpdater WeightUpdater.h
+ *  @brief Weight and Lambda update heuristic.
+ *
+ * This class implements the update of Criterion weight and the majority
+ * threshold lambda as described in the thesis. This algorithm is initialized
+ * with the dataset and can then be used to transform a model into an updated
+ * one.
+ *
+ * The solving of the linear problem is done externally by the LinearSolver. The
+ * WeightUpdater class is responsible for computing the constraint matrix given
+ * a specific model and passing them to the linear solver.
+ *
+ * A complete description of the heuristic can be found in @subpage
+ * weight_updater.
+ */
 
 class WeightUpdater {
 public:

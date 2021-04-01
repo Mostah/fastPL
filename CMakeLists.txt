@@ -29,7 +29,9 @@ set(Headers
     include/learning/ProfileUpdater.h
     include/learning/LinearSolver.h
     include/learning/WeightUpdater.h
+    include/learning/HeuristicPipeline.h
     include/app.h
+    include/config.h
     )
 
 set(Sources 
@@ -47,6 +49,7 @@ set(Sources
     src/learning/ProfileUpdater.cpp
     src/learning/LinearSolver.cpp
     src/learning/WeightUpdater.cpp
+    src/learning/HeuristicPipeline.cpp
     src/app.cpp
     )
 

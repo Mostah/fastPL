@@ -15,8 +15,10 @@
 #include <iostream>
 
 #include "../include/app.h"
+#include "../include/config.h"
 
 int main(int argc, char *argv[]) {
+  // yaml config that holds general config of the application
   YAML::Node yaml_config;
   try {
     yaml_config = YAML::LoadFile("../app-config.yaml");
@@ -28,23 +30,27 @@ int main(int argc, char *argv[]) {
   }
   App app = App();
 
+  // get all the data to set up the app
   int exec_code = app.parseArgs(argc, argv);
   if (exec_code != -1) {
     return exec_code;
   }
+  app.extractConfig(yaml_config);
 
-  app.initializeLogger(yaml_config);
   Config app_conf = app.getConf();
 
   std::string conf_info =
-      "Config loaded: { env: " + app_conf.env + ", log_level: " +
-      yaml_config["env"][app_conf.env]["log_level"].as<std::string>() +
-      ", log_path: " + yaml_config["log_file"].as<std::string>() +
-      ", data_dir: " + app_conf.data_dir + " }";
+      "Config loaded: { log_level: " +
+      yaml_config["log_level"].as<std::string>() +
+      ", log_path: " + app_conf.log_file + ", data_dir: " + app_conf.data_dir +
+      ", model_batch_size: " + std::to_string(app_conf.model_batch_size) +
+      ", max_iterations: " + std::to_string(app_conf.max_iterations) +
+      ", dataset: " + app_conf.dataset + ", output: " + app_conf.output + " }";
   app_conf.logger->info(conf_info.c_str());
 
-  app.run();
+  // launch the app
+  int app_status = app.run();
 
-  app_conf.logger->info("App terminated");
-  return 0;
+  // return status: success or failure
+  return app_status;
 }

@@ -251,13 +251,15 @@ void PerformanceTable::sort(std::string mode) {
 
 std::vector<Perf> PerformanceTable::getAltBetweenSorted(std::string critId,
                                                         float inf, float sup) {
-  if (inf >= sup) {
+  std::vector<Perf> v;
+  if (inf > sup) {
     throw std::invalid_argument("Sup must be greater (>) than inf");
+  } else if (inf == sup) {
+    return v;
   }
   if (!sorted_) {
     throw std::domain_error("The performance table must be sorted.");
   }
-  std::vector<Perf> v;
   if (mode_ != "crit") {
     throw std::invalid_argument("Performance table mode must be crit.");
   } else {
@@ -282,10 +284,12 @@ std::vector<Perf> PerformanceTable::getAltBetweenSorted(std::string critId,
 
 std::vector<Perf> PerformanceTable::getAltBetween(std::string critId, float inf,
                                                   float sup) {
-  if (inf >= sup) {
-    throw std::invalid_argument("Sup must be greater (>) than inf");
-  }
   std::vector<Perf> v;
+  if (inf > sup) {
+    throw std::invalid_argument("Sup must be greater (>) than inf");
+  } else if (inf == sup) {
+    return v;
+  }
   if (mode_ == "crit") {
     std::vector<Perf> pv = this->operator[](critId);
     for (Perf perf : pv) {

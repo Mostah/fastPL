@@ -120,6 +120,22 @@ public:
    */
   void setAlternativeAssignment(std::string altName, Category &cat);
 
+  /**
+   * getNumberCats compute the number of unique category in the dataset
+   *
+   * @return n_cats
+   */
+  int getNumberCats();
+
+  /**
+   * getBoundaries return the boundaries of the dataset: the minimal value and
+   * the maximal value found
+   *
+   * @return boudary_pair with first the minimal value, and second the maximal
+   * value
+   */
+  std::pair<float, float> getBoundaries();
+
 private:
   // TODO: Memory could be optimize here, there is no need to store the Category
   // object, we could use a reference instead.
