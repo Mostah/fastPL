@@ -18,8 +18,8 @@
  *  @brief Profile initializer heuristic.
  *
  * This class implements the profile initializer heuristic as described in the
- * thesis. This algorithms is initialized with the dataset and can then be used
- * to transform a model into an "initialized" on.
+ * thesis. This algorithm is initialized with the dataset and can then be used
+ * to transform a model into an "initialized" one.
  *
  * A complete description of the heuristic can be found in @subpage
  * init_profiles.
