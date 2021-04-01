@@ -8,11 +8,11 @@ To get started on Olivier's thesis, here is the documentation related to our imp
 
 # Fast Preference Learning
 
-# Abstract 
+## Abstract 
 
 This documentation will allow you to understand the main thread of Olivier Sobries' metaheuristic for majority rule sorting (MR-Sort) models. Traditional methods to learn MR-Sort model parameters tend to be computationally inefficient when datasets grow larger. The metaheurisitc enables us to learn a majority rule sorting model from large datasets. 
 
-# Introduction
+## Introduction
 
 Before going into the details of the algorithm let us frame the contextual and theorical landscape of the project. Any details of all the information that follows can be found in **Olivier Sobrie's thesis**. It is highly encouraged to go thoroughly through his work.
 
@@ -25,7 +25,7 @@ MCDA methods are generally classified in two families. The first family encompas
 They are many outranking methods but Roy and Bouyssou (1993) developed ELECTRE TRI which allows to deal with sorting problems.
 **As matter of fact, majority rule sorting models are a simplified version of ELECTRE TRI.**
 
-# MCDA Definition 
+## MCDA Definition 
 
 **Criterion** and **alternative** are two important notions in MCDA. We recall here their definitions.
 In MCDA, a decision maker is often confronted to different solutions to a problem. These solutions are also called alternatives or actions.
@@ -50,14 +50,14 @@ the second;
 are very contrasted.
 
 According to the preference of the DM on the set of alternatives in \f$A\f$, those alternatives can be assigned into **categories**.
-### ELECTRI TRI
+## ELECTRI TRI
 
 ELECTRI TRI is an outranking sorting procedure. The method aims at assigning each alternative of a set to a category selected among a set of pre-defined and ordered categories. Each alternative in the set is evaluated on a set of monotone criteria. The category in which an alternative is assigned to is chosen by comparing the alternative performances to the performances of profiles delimiting the categories.
 
 Formally we denote by A the set of alternatives that have to be assigned to a category selected among p ordered categories, \f$C^p\f$  \f$\succ\f$  \f$C^{p-1}\f$   \f$\succ\f$ ...   \f$\succ\f$ \f$C^1\f$ where \f$\succ\f$ indicates a binary outranking relation. Alternatives in the set are evaluated on multiple attributes which are known to have a monotone preference scale, i.e. the higher the value of an alternative on criterion j the better it is or the contrary. The set of criteria is denoted by N = \f$\{1,..., n\}\f$ and j denotes one of the criteria in the set N. To know in which category an alternative should be assigned, its performances are compared to the ones of the p-1 profiles delimiting the p categories. We denote by \f$b_h\f$ the profile delimiting the category \f$C^h\f$ from \f$C^{h+1}\f$. H = \f$\{1,..., p-1\}\f$ denotes the set of profile indices. Figure 2.1 illustrates the profiles and categories of an ELECTRE TRI model. Alternatives are compared to the profiles delimiting the categories according a specific schema given by the ELECTRE TRI parameter learning model. Formally, an outraking relation is given to ELECTRE TRI in order for alternatives to be assigned to specific categories. I encourage to check out the thesis page 13.
 
 
-<!-- <!<img src="../images/Electre_Tri_model.png"  width="600"/> -->
+<img src="../images/Electre_Tri_model.png"  width="600"/>
 
 ## MR-Sort Model
 
