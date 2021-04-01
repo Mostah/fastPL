@@ -63,18 +63,18 @@ Formally we denote by A the set of alternatives that have to be assigned to a ca
 
 In this model, an alternative \f$a\f$ outranks a profile \f$b_h\f$ if the following two conditions are
 satisfied:
-1. \f$a\f$ has better performances than \fb^h\f on a sufficiently large coalition of criteria;
+1. \f$a\f$ has better performances than \f$b^h\f$ on a sufficiently large coalition of criteria;
 2. \f$a\f$ is not significantly worse than \f$b^h\f$ on any criterion \f$j \in N\f$.
 
 With MR-Sort we assume that “sufficiently large coalitions of criteria” can be determined by a weight \f$w_j\f$ associated with each criterion and a majority threshold \f$\lambda\f$. A coalition of criteria \f$J\f$ is “sufficiently large” if   \f$\sum_{j=1}^{n}\f$ \f$w_j\f$ > \f$\lambda\f$ .Formally, the outranking relation of MR-Sort reads:
 
-\fa \succcurlyeq b^h \Leftrightarrow \sum_{j: a_j \geq b_j^h} w_j \geq \lambda\f and \f!\exists j \in N : a_j< b_j^h - v_j^h\f
+\f$a \succ b^h \Leftrightarrow \sum_{j: a_j \geq b_j^h} w_j \geq \lambda\f$ and \f$!\exists j \in N : a_j< b_j^h - v_j^h\f$
 
 with \f$v_j^h\f$ the veto profile associated to the profile \f$b^h\f$ on criterion \f$j\f$.
 
 However, the thesis and the metaheuristic only deals with **MRSort models without veto**. Therefore, the outranking relation boils down to : 
 
-\f$a \succcurlyeq b^h \Leftrightarrow \sum_{j: a_j \geq b_j^h} w_j \geq \lambda\f$ and \f$ !\exists j \in N : a_j< b_j^h\f$
+\f$a \succ b^h \Leftrightarrow \sum_{j: a_j \geq b_j^h} w_j \geq \lambda\f$ and \f$ !\exists j \in N : a_j< b_j^h\f$
 
 Using the equation above, the asssignment rule given is as follows : 
 

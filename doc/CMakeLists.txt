@@ -9,8 +9,8 @@ find_package(Doxygen
 set(DOXYGEN_IN_DIR ../include/)
 set(DOXYGEN_GENERATE_LATEX YES)
 set(DOXYGEN_USE_MATHJAX YES)
-set(DOXYGEN_MATHJAX_RELPATH  http://cdn.mathjax.org/mathjax/latest)
-#https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js
+set(DOXYGEN_MATHJAX_RELPATH http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML)
+
 doxygen_add_docs(Doxygen ALL
   COMMENT "Generating documentation"
   ../README.md
