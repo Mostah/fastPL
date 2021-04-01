@@ -43,43 +43,35 @@ std::unordered_map<float, float> ProfileUpdater::computeAboveDesirability(
   float numerator = 0;
   float denominator = 0;
 
-  std::ostringstream ss;
-  ss << "Computing above desirability for " << b.getName() << " on " << critId
-     << " : { ";
-
   for (Perf alt : alt_between) {
     // Checking if the move will not go above b_above
     if (alt.getValue() + epsilon < b_above.getValue()) {
-      ss << alt.getName() << " -> ";
       std::string altName = alt.getName();
       float conc = ct_prof[altName];
       float diff = conc - weight;
-      std::string aa_data =
-          altPerf_data.getAlternativeAssignment(altName).getCategoryId();
-      std::string aa_model =
-          altPerf_model.getAlternativeAssignment(altName).getCategoryId();
+      int aa_data =
+          altPerf_data.getAlternativeAssignment(altName).getCategoryRank();
+      int aa_model =
+          altPerf_model.getAlternativeAssignment(altName).getCategoryRank();
 
       // Here we are checking if the move of profile b right above/under the
       // performance of alt is going to help the model
-      if (aa_data == cat_above.getCategoryId()) {
+      if (aa_data == cat_above.getCategoryRank()) {
         // Correct classification
         // Moving the profile results in misclassification -> Q
-        if (aa_model == cat_above.getCategoryId() and diff < lambda) {
-          ss << "Q";
+        if (aa_model == cat_above.getCategoryRank() and diff < lambda) {
           denominator += 5;
         }
         // Wrong classification
         // Moving the profile is in favor of wrong classification -> R
-        else if (aa_model == cat.getCategoryId()) {
-          ss << "R ";
+        else if (aa_model == cat.getCategoryRank()) {
           denominator += 1;
         }
-      } else if (aa_data == cat.getCategoryId() and
-                 aa_model == cat_above.getCategoryId()) {
+      } else if (aa_data == cat.getCategoryRank() and
+                 aa_model == cat_above.getCategoryRank()) {
         // Wrong classification
         // Moving the profile is in favor of right classification -> W
         if (diff >= lambda) {
-          ss << "W";
           numerator += 0.5;
           denominator += 1;
           desirability_above[alt.getValue() + epsilon] =
@@ -88,7 +80,6 @@ std::unordered_map<float, float> ProfileUpdater::computeAboveDesirability(
         // Wrong classification
         // Moving the profile results in correct classification -> V
         else {
-          ss << "V";
           numerator += 2;
           denominator += 1;
           desirability_above[alt.getValue() + epsilon] =
@@ -102,16 +93,12 @@ std::unordered_map<float, float> ProfileUpdater::computeAboveDesirability(
                        .getCategoryRank() >= cat_above.getCategoryRank() and
                altPerf_data.getAlternativeAssignment(altName)
                        .getCategoryRank() < cat.getCategoryRank()) {
-        ss << "T";
         numerator += 0.1;
         denominator += 1;
         desirability_above[alt.getValue() + epsilon] = numerator / denominator;
       }
     }
-    ss << " ; ";
   }
-  ss << " }";
-  conf.logger->debug(ss.str());
   return desirability_above;
 }
 
@@ -136,32 +123,27 @@ std::unordered_map<float, float> ProfileUpdater::computeBelowDesirability(
   float numerator = 0;
   float denominator = 0;
 
-  std::ostringstream ss;
-  ss << "Computing below desirability for " << b.getName() << " on " << critId
-     << " : { ";
-
   // Going in reverse order as we are moving the profile down
   for (int i = alt_between.size() - 1; i >= 0; i--) {
     Perf alt = alt_between[i];
     // Checking if the move will not go below b_below
     if ((alt.getValue() - epsilon) > b_below.getValue()) {
       std::string altName = alt.getName();
-      ss << altName << " -> ";
       float conc = ct_prof[altName];
       float diff = conc + weight;
-      std::string aa_data =
-          altPerf_data.getAlternativeAssignment(altName).getCategoryId();
-      std::string aa_model =
-          altPerf_model.getAlternativeAssignment(altName).getCategoryId();
+
+      int aa_data =
+          altPerf_data.getAlternativeAssignment(altName).getCategoryRank();
+      int aa_model =
+          altPerf_model.getAlternativeAssignment(altName).getCategoryRank();
 
       // Here we are checking if the move of profile b at the level of the
       // performance of alt is going to help the model
-      if (aa_data == cat_above.getCategoryId() and
-          aa_model == cat.getCategoryId()) {
+      if (aa_data == cat_above.getCategoryRank() and
+          aa_model == cat.getCategoryRank()) {
         // Wrong classification
         // Moving the profile results in correct classification -> V
         if (diff >= lambda) {
-          ss << "V";
           numerator += 2;
           denominator += 1;
           desirability_below[alt.getValue() - epsilon] =
@@ -170,23 +152,20 @@ std::unordered_map<float, float> ProfileUpdater::computeBelowDesirability(
         // Wrong classification
         // Moving the profile is in favor of right classification -> W
         else {
-          ss << "W";
           numerator += 0.5;
           denominator += 1;
           desirability_below[alt.getValue() - epsilon] =
               numerator / denominator;
         }
-      } else if (aa_data == cat.getCategoryId()) {
+      } else if (aa_data == cat.getCategoryRank()) {
         // Correct classification
         // Moving the profile results in misclassification -> Q
-        if (aa_model == cat.getCategoryId() and diff >= lambda) {
-          ss << "Q";
+        if (aa_model == cat.getCategoryRank() and diff >= lambda) {
           denominator += 5;
         }
         // Wrong classification
         // Moving the profile is in favor of wrong classification -> R
-        else if (aa_model == cat_above.getCategoryId()) {
-          ss << "R";
+        else if (aa_model == cat_above.getCategoryRank()) {
           denominator += 1;
         }
       }
@@ -197,16 +176,12 @@ std::unordered_map<float, float> ProfileUpdater::computeBelowDesirability(
                        .getCategoryRank() > cat.getCategoryRank() and
                altPerf_data.getAlternativeAssignment(altName)
                        .getCategoryRank() > cat.getCategoryRank()) {
-        ss << "T";
         numerator += 0.1;
         denominator += 1;
         desirability_below[alt.getValue() - epsilon] = numerator / denominator;
       }
     }
-    ss << " ; ";
   }
-  ss << " }";
-  conf.logger->debug(ss.str());
   return desirability_below;
 }
 
@@ -297,13 +272,13 @@ void ProfileUpdater::optimizeProfile(
                                              bounds.second);
   std::vector<Perf> prof_below = below_above.first;
   std::vector<Perf> prof_above = below_above.second;
+
   for (Criterion crit : model.criteria.getCriterionVect()) {
     Perf b = getPerfOfCrit(prof, crit.getId());
     Perf b_below = getPerfOfCrit(prof_below, crit.getId());
     Perf b_above = getPerfOfCrit(prof_above, crit.getId());
 
     std::unordered_map<std::string, float> ct_prof = ct[b.getName()];
-
     std::unordered_map<float, float> below_des = this->computeBelowDesirability(
         model, crit.getId(), b, b_below, cat_below, cat_above, ct_prof,
         altPerf_model);
