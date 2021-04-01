@@ -60,6 +60,7 @@ logs/
 doc/*
 !doc/CMakeLists.txt
 !doc/doc_generation.sh
+!images/Electre_Tri_models.png
 
 #Dsstore
 .DS_Store
