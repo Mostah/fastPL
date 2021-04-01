@@ -52,8 +52,8 @@ void App::showUsage(std::string name) {
   std::cerr << "Usage: " << name << " <option(s)> SOURCES"
             << "Options:\n"
             << "\t-h,--help\t\tShow this help message\n"
-            << "\t-d,--dataset DATASET\tDataset path\n"
-            << "\t-o,--output OUTPUT\tModel output path" << std::endl;
+            << "\t-d,--dataset DATASET\tDataset file path\n"
+            << "\t-o,--output OUTPUT\tModel output file path" << std::endl;
 }
 
 int App::parseArgs(int argc, char *argv[]) {

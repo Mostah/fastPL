@@ -70,19 +70,26 @@ MRSortModel HeuristicPipeline::start() {
        << ", gain of: " << models[k].getScore() - acc_before << std::endl;
     conf.logger->debug(ss.str());
   }
-  const sec profile_duration = clock::now() - before_profile;
 
+  const sec profile_duration = clock::now() - before_profile;
+  auto total_time = init_duration.count() + weight_duration.count() +
+                    profile_duration.count();
   std::ostringstream ss0;
   ss0 << "Profile initialization of all models took: " << init_duration.count()
-      << "s" << std::endl;
+      << "s"
+      << " - " << int(100 * init_duration.count() / total_time) << "%"
+      << std::endl;
   conf.logger->debug(ss0.str());
   std::ostringstream ss1;
   ss1 << "Weight update of all models took: " << weight_duration.count() << "s"
+      << " - " << int(100 * weight_duration.count() / total_time) << "%"
       << std::endl;
   conf.logger->debug(ss1.str());
   std::ostringstream ss2;
   ss2 << "Profile update of all models took: " << profile_duration.count()
-      << "s" << std::endl;
+      << "s"
+      << " - " << int(100 * profile_duration.count() / total_time) << "%"
+      << std::endl;
   conf.logger->debug(ss2.str());
   this->orderModels();
   conf.logger->info("Iteration 1 done, best model has a score of: " +
