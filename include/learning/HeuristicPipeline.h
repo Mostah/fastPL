@@ -35,8 +35,9 @@ public:
    */
   HeuristicPipeline(Config &config, AlternativesPerformance &altPerfs);
 
-  /** Start run the heuristic pipeline
+  /** Start run the heuristic pipeline and return the best model learned.
    *
+   * @return best_model
    */
   MRSortModel start();
 
@@ -48,7 +49,6 @@ public:
   /**
    * customSort sort the model given their accuracy
    *
-   * @param model_vect vector of model to be sorted
    */
   void customSort();
 

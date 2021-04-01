@@ -148,11 +148,13 @@ TEST(TestDataGenerator, TestLoadModel) {
 TEST(TestDataGenerator, TestSaveModelWrongNumberCriteria) {
   Config conf = getTestConf();
   DataGenerator data = DataGenerator(conf);
-  Criteria crit = Criteria(2, "a");
+  Criteria crit2 = Criteria(2, "a");
+  Criteria crit3 = Criteria(3, "a");
+
   float lambda = 0.1;
-  PerformanceTable perf_table = PerformanceTable(3, crit, "test");
+  PerformanceTable perf_table = PerformanceTable(3, crit2, "test");
   try {
-    data.saveModel("test_save_model.xml", lambda, crit, perf_table, 1);
+    data.saveModel("test_save_model.xml", lambda, crit3, perf_table, 1);
     FAIL() << "should have throw invalid_argument error.";
   } catch (std::invalid_argument const &err) {
     EXPECT_EQ(err.what(),

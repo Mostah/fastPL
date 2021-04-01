@@ -1,4 +1,3 @@
-
 # log_level takes its value in { DEBUG, INFO, WARN, ERROR, CRITICAL }
 log_level: "INFO"
 log_file: ../logs/app_log.txt

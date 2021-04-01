@@ -49,8 +49,8 @@ WeightUpdater::computeXMatrix(MRSortModel &model) {
     for (auto alt : alts_pt) {
       std::vector<bool> x_h_alt;
       // if alt is assigned to category h (otherwise, append empty vector)
-      if (ap.getAlternativeAssignment(alt[0].getName()).getCategoryId() ==
-          profs_pt[h][0].getName()) {
+      if (ap.getAlternativeAssignment(alt[0].getName()).getCategoryRank() ==
+          h) {
         for (int j = 0; j < alt.size(); j++) {
           // condition: aj >= bj_h-1
           x_h_alt.push_back(alt[j].getValue() >= profs_pt[h - 1][j].getValue());
@@ -75,8 +75,8 @@ WeightUpdater::computeYMatrix(MRSortModel &model) {
     for (auto alt : alts_pt) {
       std::vector<bool> y_h_alt;
       // if alt is assigned to category h (otherwise, append empty vector)
-      if (ap.getAlternativeAssignment(alt[0].getName()).getCategoryId() ==
-          profs_pt[h][0].getName()) {
+      if (ap.getAlternativeAssignment(alt[0].getName()).getCategoryRank() ==
+          h) {
         for (int j = 0; j < alt.size(); j++) {
           // condition: aj >= bj_h
           y_h_alt.push_back(alt[j].getValue() >= profs_pt[h][j].getValue());
