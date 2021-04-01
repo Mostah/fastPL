@@ -11,6 +11,7 @@
 #include <iostream>
 
 void App::initializeLogger(YAML::Node &yml_conf) {
+
   std::string log_path;
   if (yml_conf["log_file"]) {
     conf.log_file = yml_conf["log_file"].as<std::string>();
@@ -31,6 +32,7 @@ void App::initializeLogger(YAML::Node &yml_conf) {
   } else {
     spdlog::set_level(spdlog::level::info);
   }
+  conf.logger->flush_on(spdlog::level::info);
 }
 
 void App::extractConfig(YAML::Node &yml_conf) {

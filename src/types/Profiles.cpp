@@ -122,10 +122,12 @@ Profiles::getBelowAndAboveProfile(std::string profName, float worst_value,
   for (int i = 0; i < n_crit; i++) {
     top.push_back(Perf("top", pt_[0][i].getCrit(), best_value));
   }
-
   std::vector<Perf> below;
   std::vector<Perf> above;
   if (mode_ == "alt") {
+    if (pt_.size() == 1) {
+      return std::make_pair(base, top);
+    }
     for (int h = 0; h < pt_.size(); h++) {
       if (pt_[h][0].getName() == profName) {
         if (h == 0) {

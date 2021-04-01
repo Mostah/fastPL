@@ -272,7 +272,6 @@ void ProfileUpdater::optimizeProfile(
                                              bounds.second);
   std::vector<Perf> prof_below = below_above.first;
   std::vector<Perf> prof_above = below_above.second;
-
   for (Criterion crit : model.criteria.getCriterionVect()) {
     Perf b = getPerfOfCrit(prof, crit.getId());
     Perf b_below = getPerfOfCrit(prof_below, crit.getId());
@@ -308,7 +307,7 @@ void ProfileUpdater::optimize(
     model.profiles.changeMode("alt");
   }
   if (!model.profiles.isProfileOrdered()) {
-    std::invalid_argument("Profile table is not ordered");
+    throw std::invalid_argument("Profile table is not ordered");
   }
   int i = 0;
   for (std::vector<Perf> profile : model.profiles.getPerformanceTable()) {
