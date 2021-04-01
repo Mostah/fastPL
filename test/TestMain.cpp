@@ -1,6 +1,7 @@
 #include "types/TestDataGenerator.cpp"
 
 #include "TestUtils.cpp"
+#include "learning/TestHeuristicPipeline.cpp"
 #include "learning/TestInitializeProfile.cpp"
 #include "learning/TestLinearSolver.cpp"
 #include "learning/TestProfileUpdater.cpp"

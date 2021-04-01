@@ -59,7 +59,7 @@ Formally we denote by A the set of alternatives that have to be assigned to a ca
 
 <img src="../images/Electre_Tri_model.png"  width="600"/>
 
-## MR-Sort Model
+### MR-Sort Model
 
 In this model, an alternative \f$a\f$ outranks a profile \f$b_h\f$ if the following two conditions are
 satisfied:

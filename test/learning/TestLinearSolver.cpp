@@ -1,4 +1,4 @@
-#include "../../include/app.h"
+#include "../../include/config.h"
 #include "../../include/learning/LinearSolver.h"
 #include "../../include/types/AlternativesPerformance.h"
 #include "../../include/types/Criteria.h"

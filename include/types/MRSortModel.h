@@ -46,7 +46,7 @@ public:
    * @param id optional name of the model
    */
   MRSortModel(Criteria &criteria, Profiles &profiles, Categories &categories,
-              float lambda, std::string id = "model", float score = 0);
+              float lambda, std::string id = "model");
 
   /**
    * MRSortModel generator constructor. This constructor initializes the
@@ -56,7 +56,7 @@ public:
    * @param n_crit number of criteria
    * @param id mrsort model's id
    */
-  MRSortModel(int n_cat, int n_crit, std::string id = "model", float score = 0);
+  MRSortModel(int n_cat, int n_crit, std::string id = "model");
 
   /**
    * MRSortModel constructor by copy
@@ -141,7 +141,7 @@ public:
   Criteria criteria;
   Profiles profiles;
   float lambda;
-  Categories &categories;
+  Categories categories;
 
 private:
   std::string id_;

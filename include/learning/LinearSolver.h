@@ -1,12 +1,36 @@
 #ifndef LINEARSOLVER_H
 #define LINEARSOLVER_H
 
+/**
+ * @file LinearSolver.h
+ * @brief External linear solver wrapper.
+ *
+ */
+
 #include "../app.h"
 #include "../types/AlternativesPerformance.h"
 #include "ortools/linear_solver/linear_solver.h"
 #include "spdlog/spdlog.h"
 
 #include <string>
+
+/** @class LinearSolver LinearSolver.h
+ *  @brief External linear solver wrapper
+ *
+ * The linear solver class is a wrapper that makes an abstraction between the
+ * weight updater and the resolution of the linear problem. Currently this
+ * wrapper uses ortools interface and only the ortools solver (GLOP) is
+ * implemented. Other solver could be used by following the instruction on how
+ * to install them for ortools and changing the initialisation of the solver to
+ * use the right one, however the implementation of the resolution shouldn't
+ * have to be changed.
+ *
+ * The abstraction was made by receiving the constraint matrices according to
+ * the equations described in the thesis and returning the solution found for
+ * the new weights and lambda.
+ *
+ * Link to ortools (google) : https://github.com/google/or-tools
+ */
 
 class LinearSolver {
 public:

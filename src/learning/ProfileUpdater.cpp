@@ -38,7 +38,6 @@ std::unordered_map<float, float> ProfileUpdater::computeAboveDesirability(
   altPerf_model.sort();
   std::vector<Perf> alt_between =
       altPerf_model.getAltBetween(critId, b.getValue(), b_above.getValue());
-
   // Initializing the map of desirability indexes
   std::unordered_map<float, float> desirability_above;
   float numerator = 0;
@@ -119,7 +118,6 @@ std::unordered_map<float, float> ProfileUpdater::computeBelowDesirability(
   altPerf_model.sort();
   std::vector<Perf> alt_between =
       altPerf_model.getAltBetween(critId, b_below.getValue(), b.getValue());
-
   // Initializing the map of desirability indexes
   std::unordered_map<float, float> desirability_below;
   float numerator = 0;
@@ -266,12 +264,14 @@ void ProfileUpdater::optimizeProfile(
     MRSortModel &model,
     std::unordered_map<std::string, std::unordered_map<std::string, float>> &ct,
     AlternativesPerformance &altPerf_model) {
-
+  // get the worst and best values in the dataset to compute the boundaries of
+  // the profile
+  std::pair<float, float> bounds = altPerf_model.getBoundaries();
   std::pair<std::vector<Perf>, std::vector<Perf>> below_above =
-      model.profiles.getBelowAndAboveProfile(prof[0].getName());
+      model.profiles.getBelowAndAboveProfile(prof[0].getName(), bounds.first,
+                                             bounds.second);
   std::vector<Perf> prof_below = below_above.first;
   std::vector<Perf> prof_above = below_above.second;
-
   for (Criterion crit : model.criteria.getCriterionVect()) {
     Perf b = getPerfOfCrit(prof, crit.getId());
     Perf b_below = getPerfOfCrit(prof_below, crit.getId());
@@ -307,7 +307,7 @@ void ProfileUpdater::optimize(
     model.profiles.changeMode("alt");
   }
   if (!model.profiles.isProfileOrdered()) {
-    std::invalid_argument("Profile table is not ordered");
+    throw std::invalid_argument("Profile table is not ordered");
   }
   int i = 0;
   for (std::vector<Perf> profile : model.profiles.getPerformanceTable()) {

@@ -1,4 +1,5 @@
 #include "../../include/types/AlternativesPerformance.h"
+#include "../../include/types/Category.h"
 #include "../../include/utils.h"
 #include <typeinfo>
 
@@ -141,4 +142,32 @@ void AlternativesPerformance::setAlternativeAssignment(std::string altName,
     throw std::invalid_argument("The alternatives in the map should be present "
                                 "in the performance table.");
   }
+}
+
+int AlternativesPerformance::getNumberCats() {
+  std::vector<std::string> cat_vector;
+  for (auto pair : alt_assignment_) {
+    if (!std::count(cat_vector.begin(), cat_vector.end(),
+                    pair.second.getCategoryId())) {
+      cat_vector.push_back(pair.second.getCategoryId());
+    }
+  }
+  return cat_vector.size();
+}
+
+std::pair<float, float> AlternativesPerformance::getBoundaries() {
+  float min = pt_[0][0].getValue();
+  float max = pt_[0][0].getValue();
+  for (int i = 0; i < pt_.size(); i++) {
+    for (int j = 0; j < pt_[i].size(); j++) {
+      if (pt_[i][j].getValue() < min) {
+        min = pt_[i][j].getValue();
+      }
+      if (pt_[i][j].getValue() > max) {
+        max = pt_[i][j].getValue();
+      }
+    }
+  }
+
+  return std::pair<float, float>(min, max);
 }

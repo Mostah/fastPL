@@ -269,3 +269,28 @@ TEST(TestAlternativesPerformance, TestSetAlternativeAssignmentError) {
     FAIL() << "should have thrown invalid argument.";
   }
 }
+
+TEST(TestAlternativesPerformance, TestGetNumberCats) {
+  Criteria crit = Criteria(2, "crit");
+  Category cat0 = Category("cat0", 0);
+  Category cat1 = Category("cat1", 1);
+  std::unordered_map<std::string, Category> map =
+      std::unordered_map<std::string, Category>{
+          {"a0", cat0}, {"a1", cat1}, {"a2", cat0}, {"a3", cat0}, {"a4", cat1}};
+  AlternativesPerformance alt_perf = AlternativesPerformance(5, crit, "a", map);
+  EXPECT_EQ(alt_perf.getNumberCats(), 2);
+}
+
+TEST(TestAlternativesPerformance, TestGetBoundaries) {
+  std::vector<std::vector<Perf>> perf_vect;
+  Criteria crit = Criteria(2, "crit");
+  std::vector<float> given_perf0 = {0.2, 0.9};
+  std::vector<float> given_perf1 = {0.8, 0.1};
+  perf_vect.push_back(createVectorPerf("a0", crit, given_perf0));
+  perf_vect.push_back(createVectorPerf("a1", crit, given_perf1));
+
+  AlternativesPerformance alt_perf = AlternativesPerformance(perf_vect);
+  std::pair<float, float> boundaries = alt_perf.getBoundaries();
+  EXPECT_FLOAT_EQ(boundaries.first, 0.1);
+  EXPECT_FLOAT_EQ(boundaries.second, 0.9);
+}

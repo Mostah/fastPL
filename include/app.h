@@ -4,29 +4,12 @@
 /**
  * @file app.h
  * @brief app container responsible of handling everything related to fastpl.
- *
- * The app file hold the Config structure as well as the App class.
  */
 
+#include "config.h"
 #include "spdlog/sinks/basic_file_sink.h"
 #include "spdlog/spdlog.h"
 #include "yaml-cpp/yaml.h"
-
-/**
- * @struct Config app.h
- * @brief High level configuration of the app.
- *
- * Config structure is responsible for holding the high level configuration
- * defined by the user to run the application and to apply over the whole
- * pipeline.
- */
-struct Config {
-  std::shared_ptr<spdlog::logger>
-      logger; /*!< Logger pointer when logging is requested. */
-  std::string data_dir = "../data/"; /*!< Directory where the data is stored */
-  std::string env =
-      "staging"; /*!< Environment (defining the set of config) to use */
-};
 
 /**
  * @class App app.h
@@ -58,16 +41,25 @@ public:
 
   /** Run start the application and run all subsequent processes
    *
+   * @return status_code
    */
-  void run();
+  int run();
 
   /** initializeLogger initialize the logger based on the yaml config and store
    * it into the app config
    *
    * @param yml_conf
-   * @param app_conf
    */
   void initializeLogger(YAML::Node &yml_conf);
+
+  /** extractConfig get the config from the yaml file and store it into the
+   * config datastructure of the app
+   *
+   * @param yml_conf
+   *
+   * @return config
+   */
+  void extractConfig(YAML::Node &yml_conf);
 
   /** showUsage print in the stderr the help information from the CLI command
    */

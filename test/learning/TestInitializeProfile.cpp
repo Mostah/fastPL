@@ -1,4 +1,4 @@
-#include "../../include/app.h"
+#include "../../include/config.h"
 #include "../../include/learning/ProfileInitializer.h"
 #include "../../include/types/DataGenerator.h"
 #include "../../include/types/MRSortModel.h"

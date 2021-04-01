@@ -11,7 +11,7 @@
 Categories default_cats;
 
 MRSortModel::MRSortModel(Criteria &crits, Profiles &profs, Categories &cats,
-                         float lbd, std::string id, float score)
+                         float lbd, std::string id)
     : criteria(crits), profiles(profs), categories(cats) {
   if (profiles.getPerformanceTable().size() !=
       cats.getIdCategories().size() - 1) {
@@ -20,23 +20,29 @@ MRSortModel::MRSortModel(Criteria &crits, Profiles &profs, Categories &cats,
   }
   lambda = lbd;
   id_ = id;
-  score_ = score;
+  score_ = 0;
 }
 
-MRSortModel::MRSortModel(int n_cat, int n_crit, std::string id, float score)
-    : criteria(n_crit), profiles(n_cat - 1, criteria, "crit", "prof"),
-      categories(default_cats) {
+MRSortModel::MRSortModel(int n_cat, int n_crit, std::string id)
+    : categories(n_cat), criteria(n_crit),
+      profiles(n_cat - 1, criteria, "crit", "prof") {
   if (n_cat < 2) {
     throw std::invalid_argument(
         "The number of categories (n_cat) must be >= 2");
   }
   id_ = id;
-  score_ = score;
-  categories = Categories(n_cat);
-
+  score_ = 0;
   lambda = getRandomUniformFloat(time(NULL), 0.5, 1);
   criteria.generateRandomCriteriaWeights();
   profiles.generateRandomPerfValues();
+}
+
+MRSortModel::MRSortModel(const MRSortModel &mrsort)
+    : criteria(mrsort.criteria), profiles(mrsort.profiles),
+      categories(mrsort.categories) {
+  lambda = mrsort.lambda;
+  score_ = mrsort.getScore();
+  id_ = mrsort.id_;
 }
 
 Category

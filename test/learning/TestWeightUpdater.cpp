@@ -1,4 +1,4 @@
-#include "../../include/app.h"
+#include "../../include/config.h"
 #include "../../include/learning/WeightUpdater.h"
 #include "../../include/types/AlternativesPerformance.h"
 #include "../../include/types/Categories.h"

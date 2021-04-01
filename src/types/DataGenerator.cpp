@@ -256,7 +256,7 @@ void DataGenerator::saveModel(std::string fileName, float lambda,
   int nb_categories = pt.getPerformanceTable().size();
   int nb_criteria = criteria.getCriterionVect().size();
 
-  if (nb_categories != pt.getPerformanceTable()[0].size()) {
+  if (nb_criteria != pt.getPerformanceTable()[0].size()) {
     throw std::invalid_argument(
         " Number of criteria and the number and the length of the "
         "performance "

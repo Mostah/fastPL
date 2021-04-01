@@ -7,8 +7,8 @@
 Config getHeuristicTestConf() {
   Config conf;
   conf.data_dir = "../data/tests/";
-  conf.model_batch_size = 50;
-  conf.max_iterations = 100;
+  conf.model_batch_size = 5;
+  conf.max_iterations = 10;
   try {
     conf.logger =
         spdlog::basic_logger_mt("test_logger", "../logs/test_logger.txt");
@@ -16,6 +16,7 @@ Config getHeuristicTestConf() {
     conf.logger = spdlog::get("test_logger");
   }
   spdlog::set_level(spdlog::level::debug);
+  conf.logger->flush_on(spdlog::level::info);
   return conf;
 }
 
@@ -119,9 +120,9 @@ TEST(TestHeuristicPipeline, TestOrderModels) {
   Criteria criteria = getHeuristicTestCriteria();
   Categories categories = getHeuristicTestCategories();
   MRSortModel mrsort0 =
-      MRSortModel(criteria, profile, categories, 0.4, "model0"); // acc of 1
+      MRSortModel(criteria, profile, categories, 0.6, "model0"); // acc of 1
   MRSortModel mrsort1 =
-      MRSortModel(criteria, profile, categories, 0.4, "model1"); // acc of 1
+      MRSortModel(criteria, profile, categories, 0.6, "model1"); // acc of 1
   MRSortModel mrsort2 =
       MRSortModel(criteria, profile, categories, 0.3, "model2"); // acc of 0.75
   MRSortModel mrsort3 =
@@ -151,13 +152,15 @@ TEST(TestHeuristicPipeline, TestOrderModels) {
   hp.models.push_back(mrsort2);
   hp.models.push_back(mrsort1);
   hp.orderModels();
-  EXPECT_FLOAT_EQ(hp.models[0].getScore(), 1);
-  EXPECT_FLOAT_EQ(hp.models[1].getScore(), 1);
-  EXPECT_FLOAT_EQ(hp.models[2].getScore(), 0.75);
-  EXPECT_FLOAT_EQ(hp.models[3].getScore(), 0.75);
+  EXPECT_FLOAT_EQ(hp.models[0].getScore(), 0.75);
+  EXPECT_FLOAT_EQ(hp.models[1].getScore(), 0.75);
+  EXPECT_FLOAT_EQ(hp.models[2].getScore(), 0.5);
+  EXPECT_FLOAT_EQ(hp.models[3].getScore(), 0.5);
 }
 
+// Accuracy might change after changing algorithms
 TEST(TestHeuristicPipeline, TestPipeline) {
+
   Criteria criteria = getHeuristicTestCriteria();
   Categories categories = getHeuristicTestCategories();
 
@@ -182,22 +185,6 @@ TEST(TestHeuristicPipeline, TestPipeline) {
 
   HeuristicPipeline hp = HeuristicPipeline(conf, ap);
   hp.start();
-  for (int i = 0; i < hp.models.size(); i++) {
-    std::cout << hp.models[i].getScore() << std::endl;
-  }
-  // EXPECT_EQ(hp.models[0].getScore(), 1);
-}
 
-TEST(TestHeuristicPipeline, TestPipeline2) {
-  Config conf = getTestConf();
-  DataGenerator data = DataGenerator(conf);
-  std::string filename = "in1dataset.xml";
-  AlternativesPerformance ap = data.loadDataset(filename);
-
-  HeuristicPipeline hp = HeuristicPipeline(conf, ap);
-  hp.start();
-  for (int i = 0; i < hp.models.size(); i++) {
-    std::cout << hp.models[i].getScore() << std::endl;
-  }
-  // EXPECT_EQ(hp.models[0].getScore(), 1);
+  EXPECT_EQ(hp.models[0].getScore(), 1);
 }
