@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Project: /Users/thibaultmonsel/Desktop/3a_cs/FastPL/fastPL/include/learning/LinearSolver.h Source File</title>
+<title>Project: /Users/ThomasVindard 1/Desktop/3A/Projet/fastPL/include/learning/LinearSolver.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -69,74 +69,74 @@ $(function() {
 <div class="title">LinearSolver.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef LINEARSOLVER_H</span></div>
+<a href="_linear_solver_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef LINEARSOLVER_H</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define LINEARSOLVER_H</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;../app.h&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;../types/AlternativesPerformance.h&quot;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;ortools/linear_solver/linear_solver.h&quot;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;spdlog/spdlog.h&quot;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="class_linear_solver.html">   11</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_linear_solver.html">LinearSolver</a> {</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="class_linear_solver.html#aa1030cd5be40397a8c26246433d042a5">   21</a></span>&#160;  <a class="code" href="class_linear_solver.html#aa1030cd5be40397a8c26246433d042a5">LinearSolver</a>(<a class="code" href="class_alternatives_performance.html">AlternativesPerformance</a> &amp;ap, <a class="code" href="struct_config.html">Config</a> &amp;conf,</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;               <span class="keywordtype">float</span> delta = 0.000001, std::string solver = <span class="stringliteral">&quot;GLOP&quot;</span>);</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  ~<a class="code" href="class_linear_solver.html">LinearSolver</a>();</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="class_linear_solver.html#ae3b61aafe2e861f96da4765114ab1f71">   31</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_linear_solver.html#ae3b61aafe2e861f96da4765114ab1f71">initializeSolver</a>();</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="class_linear_solver.html#a3e6bbbbbe219aac64631046bcd61fe5a">   42</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_linear_solver.html#a3e6bbbbbe219aac64631046bcd61fe5a">updateConstraints</a>(std::vector&lt;std::vector&lt;std::vector&lt;bool&gt;&gt;&gt; x_matrix,</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;                         std::vector&lt;std::vector&lt;std::vector&lt;bool&gt;&gt;&gt; y_matrix);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  std::pair&lt;float, std::vector&lt;float&gt;&gt;</div>
-<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="class_linear_solver.html#a7a44e509384dc52e95a37d6fb7f1ded1">   55</a></span>&#160;  <a class="code" href="class_linear_solver.html#a7a44e509384dc52e95a37d6fb7f1ded1">solve</a>(std::vector&lt;std::vector&lt;std::vector&lt;bool&gt;&gt;&gt; x_matrix,</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        std::vector&lt;std::vector&lt;std::vector&lt;bool&gt;&gt;&gt; y_matrix);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="class_linear_solver.html#ae2bbf0fbd87def0bc31dd34d995b44f9">   63</a></span>&#160;  <a class="code" href="class_alternatives_performance.html">AlternativesPerformance</a> &amp;<a class="code" href="class_linear_solver.html#ae2bbf0fbd87def0bc31dd34d995b44f9">getAlternativesPerformance</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="class_linear_solver.html#aac3d64c7bc0ce5ba2af8ff58ea2b3d14">   70</a></span>&#160;  operations_research::MPSolver *<a class="code" href="class_linear_solver.html#aac3d64c7bc0ce5ba2af8ff58ea2b3d14">getSolver</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="class_linear_solver.html#af628926738e6c1a433f23318be1ada9a">   77</a></span>&#160;  std::vector&lt;operations_research::MPVariable *&gt; <a class="code" href="class_linear_solver.html#af628926738e6c1a433f23318be1ada9a">getWeights</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
-<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="class_linear_solver.html#a9d74cfa4636869b70c7b36d654d97b57">   84</a></span>&#160;  std::vector&lt;operations_research::MPVariable *&gt; <a class="code" href="class_linear_solver.html#a9d74cfa4636869b70c7b36d654d97b57">getXa</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
-<div class="line"><a name="l00091"></a><span class="lineno"><a class="line" href="class_linear_solver.html#abf6582fb4a79d7b2844061b9991b98d8">   91</a></span>&#160;  std::vector&lt;operations_research::MPVariable *&gt; <a class="code" href="class_linear_solver.html#abf6582fb4a79d7b2844061b9991b98d8">getXap</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
-<div class="line"><a name="l00098"></a><span class="lineno"><a class="line" href="class_linear_solver.html#ac239de210e4b0f3a3c6385176149d318">   98</a></span>&#160;  std::vector&lt;operations_research::MPVariable *&gt; <a class="code" href="class_linear_solver.html#ac239de210e4b0f3a3c6385176149d318">getYa</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
-<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="class_linear_solver.html#af7e9512ef82f8f6dbaadf79405d14988">  105</a></span>&#160;  std::vector&lt;operations_research::MPVariable *&gt; <a class="code" href="class_linear_solver.html#af7e9512ef82f8f6dbaadf79405d14988">getYap</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
-<div class="line"><a name="l00112"></a><span class="lineno"><a class="line" href="class_linear_solver.html#a163e14b8416b4fc58609bcac3b1bf098">  112</a></span>&#160;  <a class="code" href="struct_config.html">Config</a> <a class="code" href="class_linear_solver.html#a163e14b8416b4fc58609bcac3b1bf098">getConf</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160; </div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;  <a class="code" href="class_alternatives_performance.html">AlternativesPerformance</a> &amp;ap;</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  operations_research::MPSolver *solver;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  std::string solver_name;</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  <a class="code" href="struct_config.html">Config</a> &amp;conf;</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160; </div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  <span class="comment">// value use to transform strict inequalities into non-strict ones</span></div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;  <span class="keywordtype">float</span> delta;</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;  <span class="comment">// variables</span></div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;  std::vector&lt;operations_research::MPVariable *&gt; x_a;</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;  std::vector&lt;operations_research::MPVariable *&gt; x_ap;</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  std::vector&lt;operations_research::MPVariable *&gt; y_a;</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;  std::vector&lt;operations_research::MPVariable *&gt; y_ap;</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;  std::vector&lt;operations_research::MPVariable *&gt; weights;</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;  operations_research::MPVariable *lambda;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;../app.h&quot;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;../types/AlternativesPerformance.h&quot;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;ortools/linear_solver/linear_solver.h&quot;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;spdlog/spdlog.h&quot;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="class_linear_solver.html">   35</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_linear_solver.html">LinearSolver</a> {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="class_linear_solver.html#aa1030cd5be40397a8c26246433d042a5">   45</a></span>&#160;  <a class="code" href="class_linear_solver.html#aa1030cd5be40397a8c26246433d042a5">LinearSolver</a>(<a class="code" href="class_alternatives_performance.html">AlternativesPerformance</a> &amp;ap, <a class="code" href="struct_config.html">Config</a> &amp;conf,</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;               <span class="keywordtype">float</span> delta = 0.000001, std::string solver = <span class="stringliteral">&quot;GLOP&quot;</span>);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  ~<a class="code" href="class_linear_solver.html">LinearSolver</a>();</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="class_linear_solver.html#ae3b61aafe2e861f96da4765114ab1f71">   55</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_linear_solver.html#ae3b61aafe2e861f96da4765114ab1f71">initializeSolver</a>();</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="class_linear_solver.html#a3e6bbbbbe219aac64631046bcd61fe5a">   66</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_linear_solver.html#a3e6bbbbbe219aac64631046bcd61fe5a">updateConstraints</a>(std::vector&lt;std::vector&lt;std::vector&lt;bool&gt;&gt;&gt; x_matrix,</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;                         std::vector&lt;std::vector&lt;std::vector&lt;bool&gt;&gt;&gt; y_matrix);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  std::pair&lt;float, std::vector&lt;float&gt;&gt;</div>
+<div class="line"><a name="l00079"></a><span class="lineno"><a class="line" href="class_linear_solver.html#a7a44e509384dc52e95a37d6fb7f1ded1">   79</a></span>&#160;  <a class="code" href="class_linear_solver.html#a7a44e509384dc52e95a37d6fb7f1ded1">solve</a>(std::vector&lt;std::vector&lt;std::vector&lt;bool&gt;&gt;&gt; x_matrix,</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        std::vector&lt;std::vector&lt;std::vector&lt;bool&gt;&gt;&gt; y_matrix);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
+<div class="line"><a name="l00087"></a><span class="lineno"><a class="line" href="class_linear_solver.html#ae2bbf0fbd87def0bc31dd34d995b44f9">   87</a></span>&#160;  <a class="code" href="class_alternatives_performance.html">AlternativesPerformance</a> &amp;<a class="code" href="class_linear_solver.html#ae2bbf0fbd87def0bc31dd34d995b44f9">getAlternativesPerformance</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
+<div class="line"><a name="l00094"></a><span class="lineno"><a class="line" href="class_linear_solver.html#aac3d64c7bc0ce5ba2af8ff58ea2b3d14">   94</a></span>&#160;  operations_research::MPSolver *<a class="code" href="class_linear_solver.html#aac3d64c7bc0ce5ba2af8ff58ea2b3d14">getSolver</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
+<div class="line"><a name="l00101"></a><span class="lineno"><a class="line" href="class_linear_solver.html#af628926738e6c1a433f23318be1ada9a">  101</a></span>&#160;  std::vector&lt;operations_research::MPVariable *&gt; <a class="code" href="class_linear_solver.html#af628926738e6c1a433f23318be1ada9a">getWeights</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
+<div class="line"><a name="l00108"></a><span class="lineno"><a class="line" href="class_linear_solver.html#a9d74cfa4636869b70c7b36d654d97b57">  108</a></span>&#160;  std::vector&lt;operations_research::MPVariable *&gt; <a class="code" href="class_linear_solver.html#a9d74cfa4636869b70c7b36d654d97b57">getXa</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
+<div class="line"><a name="l00115"></a><span class="lineno"><a class="line" href="class_linear_solver.html#abf6582fb4a79d7b2844061b9991b98d8">  115</a></span>&#160;  std::vector&lt;operations_research::MPVariable *&gt; <a class="code" href="class_linear_solver.html#abf6582fb4a79d7b2844061b9991b98d8">getXap</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
+<div class="line"><a name="l00122"></a><span class="lineno"><a class="line" href="class_linear_solver.html#ac239de210e4b0f3a3c6385176149d318">  122</a></span>&#160;  std::vector&lt;operations_research::MPVariable *&gt; <a class="code" href="class_linear_solver.html#ac239de210e4b0f3a3c6385176149d318">getYa</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
+<div class="line"><a name="l00129"></a><span class="lineno"><a class="line" href="class_linear_solver.html#af7e9512ef82f8f6dbaadf79405d14988">  129</a></span>&#160;  std::vector&lt;operations_research::MPVariable *&gt; <a class="code" href="class_linear_solver.html#af7e9512ef82f8f6dbaadf79405d14988">getYap</a>() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;  <span class="comment">// constraints</span></div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;  std::vector&lt;operations_research::MPConstraint *&gt; x_constraints;</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;  std::vector&lt;operations_research::MPConstraint *&gt; y_constraints;</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;  std::vector&lt;operations_research::MPConstraint *&gt; weights_constraint;</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;};</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160; </div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00136"></a><span class="lineno"><a class="line" href="class_linear_solver.html#a163e14b8416b4fc58609bcac3b1bf098">  136</a></span>&#160;  <a class="code" href="struct_config.html">Config</a> <a class="code" href="class_linear_solver.html#a163e14b8416b4fc58609bcac3b1bf098">getConf</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160; </div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;  <a class="code" href="class_alternatives_performance.html">AlternativesPerformance</a> &amp;ap;</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;  operations_research::MPSolver *solver;</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;  std::string solver_name;</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;  <a class="code" href="struct_config.html">Config</a> &amp;conf;</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160; </div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;  <span class="comment">// value use to transform strict inequalities into non-strict ones</span></div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;  <span class="keywordtype">float</span> delta;</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160; </div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;  <span class="comment">// variables</span></div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;  std::vector&lt;operations_research::MPVariable *&gt; x_a;</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;  std::vector&lt;operations_research::MPVariable *&gt; x_ap;</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;  std::vector&lt;operations_research::MPVariable *&gt; y_a;</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;  std::vector&lt;operations_research::MPVariable *&gt; y_ap;</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;  std::vector&lt;operations_research::MPVariable *&gt; weights;</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;  operations_research::MPVariable *lambda;</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160; </div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;  <span class="comment">// constraints</span></div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;  std::vector&lt;operations_research::MPConstraint *&gt; x_constraints;</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;  std::vector&lt;operations_research::MPConstraint *&gt; y_constraints;</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;  std::vector&lt;operations_research::MPConstraint *&gt; weights_constraint;</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;};</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160; </div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aclass_alternatives_performance_html"><div class="ttname"><a href="class_alternatives_performance.html">AlternativesPerformance</a></div><div class="ttdoc">Dataset datastructure.</div><div class="ttdef"><b>Definition:</b> AlternativesPerformance.h:35</div></div>
-<div class="ttc" id="aclass_linear_solver_html"><div class="ttname"><a href="class_linear_solver.html">LinearSolver</a></div><div class="ttdef"><b>Definition:</b> LinearSolver.h:11</div></div>
+<div class="ttc" id="aclass_linear_solver_html"><div class="ttname"><a href="class_linear_solver.html">LinearSolver</a></div><div class="ttdoc">External linear solver wrapper.</div><div class="ttdef"><b>Definition:</b> LinearSolver.h:35</div></div>
 <div class="ttc" id="aclass_linear_solver_html_a163e14b8416b4fc58609bcac3b1bf098"><div class="ttname"><a href="class_linear_solver.html#a163e14b8416b4fc58609bcac3b1bf098">LinearSolver::getConf</a></div><div class="ttdeci">Config getConf() const</div></div>
 <div class="ttc" id="aclass_linear_solver_html_a3e6bbbbbe219aac64631046bcd61fe5a"><div class="ttname"><a href="class_linear_solver.html#a3e6bbbbbe219aac64631046bcd61fe5a">LinearSolver::updateConstraints</a></div><div class="ttdeci">void updateConstraints(std::vector&lt; std::vector&lt; std::vector&lt; bool &gt;&gt;&gt; x_matrix, std::vector&lt; std::vector&lt; std::vector&lt; bool &gt;&gt;&gt; y_matrix)</div></div>
 <div class="ttc" id="aclass_linear_solver_html_a7a44e509384dc52e95a37d6fb7f1ded1"><div class="ttname"><a href="class_linear_solver.html#a7a44e509384dc52e95a37d6fb7f1ded1">LinearSolver::solve</a></div><div class="ttdeci">std::pair&lt; float, std::vector&lt; float &gt; &gt; solve(std::vector&lt; std::vector&lt; std::vector&lt; bool &gt;&gt;&gt; x_matrix, std::vector&lt; std::vector&lt; std::vector&lt; bool &gt;&gt;&gt; y_matrix)</div></div>
@@ -149,7 +149,7 @@ $(function() {
 <div class="ttc" id="aclass_linear_solver_html_ae3b61aafe2e861f96da4765114ab1f71"><div class="ttname"><a href="class_linear_solver.html#ae3b61aafe2e861f96da4765114ab1f71">LinearSolver::initializeSolver</a></div><div class="ttdeci">void initializeSolver()</div></div>
 <div class="ttc" id="aclass_linear_solver_html_af628926738e6c1a433f23318be1ada9a"><div class="ttname"><a href="class_linear_solver.html#af628926738e6c1a433f23318be1ada9a">LinearSolver::getWeights</a></div><div class="ttdeci">std::vector&lt; operations_research::MPVariable * &gt; getWeights() const</div></div>
 <div class="ttc" id="aclass_linear_solver_html_af7e9512ef82f8f6dbaadf79405d14988"><div class="ttname"><a href="class_linear_solver.html#af7e9512ef82f8f6dbaadf79405d14988">LinearSolver::getYap</a></div><div class="ttdeci">std::vector&lt; operations_research::MPVariable * &gt; getYap() const</div></div>
-<div class="ttc" id="astruct_config_html"><div class="ttname"><a href="struct_config.html">Config</a></div><div class="ttdoc">High level configuration of the app.</div><div class="ttdef"><b>Definition:</b> app.h:23</div></div>
+<div class="ttc" id="astruct_config_html"><div class="ttname"><a href="struct_config.html">Config</a></div><div class="ttdoc">High level configuration of the app.</div><div class="ttdef"><b>Definition:</b> config.h:20</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['linearsolver_175',['LinearSolver',['../class_linear_solver.html',1,'']]]
+  ['heuristicpipeline_189',['HeuristicPipeline',['../class_heuristic_pipeline.html',1,'']]]
 ];

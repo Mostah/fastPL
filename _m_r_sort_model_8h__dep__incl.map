@@ -1,5 +1,7 @@
 <map id="/Users/ThomasVindard 1/Desktop/3A/Projet/fastPL/include/types/MRSortModel.h" name="/Users/ThomasVindard 1/Desktop/3A/Projet/fastPL/include/types/MRSortModel.h">
-<area shape="rect" id="node1" title="Model datastructre that will learn from the problem." alt="" coords="97,5,253,76"/>
-<area shape="rect" id="node2" href="$_profile_initializer_8h_source.html" title=" " alt="" coords="5,124,164,195"/>
-<area shape="rect" id="node3" href="$_weight_updater_8h_source.html" title=" " alt="" coords="188,124,347,195"/>
+<area shape="rect" id="node1" title="Model datastructre that will learn from the problem." alt="" coords="189,5,345,76"/>
+<area shape="rect" id="node2" href="$_profile_initializer_8h.html" title="Profile initializer heuristic." alt="" coords="5,124,164,195"/>
+<area shape="rect" id="node4" href="$_profile_updater_8h.html" title="Third step of the heuristic, updates the profiles given fixed weight and lambda." alt="" coords="188,124,347,195"/>
+<area shape="rect" id="node5" href="$_weight_updater_8h.html" title="Weight and Lambda update heuristic." alt="" coords="371,124,529,195"/>
+<area shape="rect" id="node3" href="$_heuristic_pipeline_8h.html" title="Global heuristic to learn a model." alt="" coords="188,243,347,313"/>
 </map>

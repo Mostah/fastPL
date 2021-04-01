@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Project: /Users/thibaultmonsel/Desktop/3a_cs/FastPL/fastPL/include/learning/WeightUpdater.h Source File</title>
+<title>Project: /Users/ThomasVindard 1/Desktop/3A/Projet/fastPL/include/learning/WeightUpdater.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -69,52 +69,53 @@ $(function() {
 <div class="title">WeightUpdater.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef WEIGHTUPDATER_H</span></div>
+<a href="_weight_updater_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef WEIGHTUPDATER_H</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define WEIGHTUPDATER_H</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;../app.h&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;spdlog/spdlog.h&quot;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;../types/AlternativesPerformance.h&quot;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;../types/MRSortModel.h&quot;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;LinearSolver.h&quot;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="class_weight_updater.html">   11</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_weight_updater.html">WeightUpdater</a> {</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="class_weight_updater.html#a88908f09450d6dc25a97c28e0b34fdfa">   20</a></span>&#160;  <a class="code" href="class_weight_updater.html#a88908f09450d6dc25a97c28e0b34fdfa">WeightUpdater</a>(<a class="code" href="class_alternatives_performance.html">AlternativesPerformance</a> &amp;ap, <a class="code" href="struct_config.html">Config</a> &amp;conf);</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="class_weight_updater.html#a445c0370e3fdddc4191e5e9fc0261bbb">   27</a></span>&#160;  <a class="code" href="class_weight_updater.html#a445c0370e3fdddc4191e5e9fc0261bbb">WeightUpdater</a>(<span class="keyword">const</span> <a class="code" href="class_weight_updater.html">WeightUpdater</a> &amp;wu);</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  ~<a class="code" href="class_weight_updater.html">WeightUpdater</a>();</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="class_weight_updater.html#aeb6f6fe92f7c717e1d19c5741f634116">   37</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_weight_updater.html#aeb6f6fe92f7c717e1d19c5741f634116">updateWeightsAndLambda</a>(<a class="code" href="class_m_r_sort_model.html">MRSortModel</a> &amp;model);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  std::vector&lt;std::vector&lt;std::vector&lt;bool&gt;&gt;&gt;</div>
-<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="class_weight_updater.html#a8a8fa4c18c6570e7cea5bc80906b0908">   53</a></span>&#160;  <a class="code" href="class_weight_updater.html#a8a8fa4c18c6570e7cea5bc80906b0908">computeXMatrix</a>(<a class="code" href="class_m_r_sort_model.html">MRSortModel</a> &amp;model);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  std::vector&lt;std::vector&lt;std::vector&lt;bool&gt;&gt;&gt;</div>
-<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="class_weight_updater.html#ade5bdee4860cf83c9913114ef0adf756">   69</a></span>&#160;  <a class="code" href="class_weight_updater.html#ade5bdee4860cf83c9913114ef0adf756">computeYMatrix</a>(<a class="code" href="class_m_r_sort_model.html">MRSortModel</a> &amp;model);</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
-<div class="line"><a name="l00079"></a><span class="lineno"><a class="line" href="class_weight_updater.html#af6390ed689c5e3bb9049a99be6796025">   79</a></span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="class_weight_updater.html#af6390ed689c5e3bb9049a99be6796025">modelCheck</a>(<a class="code" href="class_m_r_sort_model.html">MRSortModel</a> &amp;model);</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  <a class="code" href="class_linear_solver.html">LinearSolver</a> solver;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  <a class="code" href="class_alternatives_performance.html">AlternativesPerformance</a> &amp;ap;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  <a class="code" href="struct_config.html">Config</a> &amp;conf;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;};</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;../app.h&quot;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;spdlog/spdlog.h&quot;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;../types/AlternativesPerformance.h&quot;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;../types/MRSortModel.h&quot;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_linear_solver_8h.html">LinearSolver.h</a>&quot;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="class_weight_updater.html">   33</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_weight_updater.html">WeightUpdater</a> {</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="class_weight_updater.html#a88908f09450d6dc25a97c28e0b34fdfa">   42</a></span>&#160;  <a class="code" href="class_weight_updater.html#a88908f09450d6dc25a97c28e0b34fdfa">WeightUpdater</a>(<a class="code" href="class_alternatives_performance.html">AlternativesPerformance</a> &amp;ap, <a class="code" href="struct_config.html">Config</a> &amp;conf);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="class_weight_updater.html#a445c0370e3fdddc4191e5e9fc0261bbb">   49</a></span>&#160;  <a class="code" href="class_weight_updater.html#a445c0370e3fdddc4191e5e9fc0261bbb">WeightUpdater</a>(<span class="keyword">const</span> <a class="code" href="class_weight_updater.html">WeightUpdater</a> &amp;wu);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  ~<a class="code" href="class_weight_updater.html">WeightUpdater</a>();</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="class_weight_updater.html#aeb6f6fe92f7c717e1d19c5741f634116">   59</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_weight_updater.html#aeb6f6fe92f7c717e1d19c5741f634116">updateWeightsAndLambda</a>(<a class="code" href="class_m_r_sort_model.html">MRSortModel</a> &amp;model);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  std::vector&lt;std::vector&lt;std::vector&lt;bool&gt;&gt;&gt;</div>
+<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="class_weight_updater.html#a8a8fa4c18c6570e7cea5bc80906b0908">   75</a></span>&#160;  <a class="code" href="class_weight_updater.html#a8a8fa4c18c6570e7cea5bc80906b0908">computeXMatrix</a>(<a class="code" href="class_m_r_sort_model.html">MRSortModel</a> &amp;model);</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  std::vector&lt;std::vector&lt;std::vector&lt;bool&gt;&gt;&gt;</div>
+<div class="line"><a name="l00091"></a><span class="lineno"><a class="line" href="class_weight_updater.html#ade5bdee4860cf83c9913114ef0adf756">   91</a></span>&#160;  <a class="code" href="class_weight_updater.html#ade5bdee4860cf83c9913114ef0adf756">computeYMatrix</a>(<a class="code" href="class_m_r_sort_model.html">MRSortModel</a> &amp;model);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
+<div class="line"><a name="l00101"></a><span class="lineno"><a class="line" href="class_weight_updater.html#af6390ed689c5e3bb9049a99be6796025">  101</a></span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="class_weight_updater.html#af6390ed689c5e3bb9049a99be6796025">modelCheck</a>(<a class="code" href="class_m_r_sort_model.html">MRSortModel</a> &amp;model);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  <a class="code" href="class_linear_solver.html">LinearSolver</a> solver;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  <a class="code" href="class_alternatives_performance.html">AlternativesPerformance</a> &amp;ap;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  <a class="code" href="struct_config.html">Config</a> &amp;conf;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;};</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="a_linear_solver_8h_html"><div class="ttname"><a href="_linear_solver_8h.html">LinearSolver.h</a></div><div class="ttdoc">External linear solver wrapper.</div></div>
 <div class="ttc" id="aclass_alternatives_performance_html"><div class="ttname"><a href="class_alternatives_performance.html">AlternativesPerformance</a></div><div class="ttdoc">Dataset datastructure.</div><div class="ttdef"><b>Definition:</b> AlternativesPerformance.h:35</div></div>
-<div class="ttc" id="aclass_linear_solver_html"><div class="ttname"><a href="class_linear_solver.html">LinearSolver</a></div><div class="ttdef"><b>Definition:</b> LinearSolver.h:11</div></div>
+<div class="ttc" id="aclass_linear_solver_html"><div class="ttname"><a href="class_linear_solver.html">LinearSolver</a></div><div class="ttdoc">External linear solver wrapper.</div><div class="ttdef"><b>Definition:</b> LinearSolver.h:35</div></div>
 <div class="ttc" id="aclass_m_r_sort_model_html"><div class="ttname"><a href="class_m_r_sort_model.html">MRSortModel</a></div><div class="ttdoc">Datastructure of the model to learn.</div><div class="ttdef"><b>Definition:</b> MRSortModel.h:37</div></div>
-<div class="ttc" id="aclass_weight_updater_html"><div class="ttname"><a href="class_weight_updater.html">WeightUpdater</a></div><div class="ttdef"><b>Definition:</b> WeightUpdater.h:11</div></div>
+<div class="ttc" id="aclass_weight_updater_html"><div class="ttname"><a href="class_weight_updater.html">WeightUpdater</a></div><div class="ttdoc">Weight and Lambda update heuristic.</div><div class="ttdef"><b>Definition:</b> WeightUpdater.h:33</div></div>
 <div class="ttc" id="aclass_weight_updater_html_a445c0370e3fdddc4191e5e9fc0261bbb"><div class="ttname"><a href="class_weight_updater.html#a445c0370e3fdddc4191e5e9fc0261bbb">WeightUpdater::WeightUpdater</a></div><div class="ttdeci">WeightUpdater(const WeightUpdater &amp;wu)</div></div>
 <div class="ttc" id="aclass_weight_updater_html_a88908f09450d6dc25a97c28e0b34fdfa"><div class="ttname"><a href="class_weight_updater.html#a88908f09450d6dc25a97c28e0b34fdfa">WeightUpdater::WeightUpdater</a></div><div class="ttdeci">WeightUpdater(AlternativesPerformance &amp;ap, Config &amp;conf)</div></div>
 <div class="ttc" id="aclass_weight_updater_html_a8a8fa4c18c6570e7cea5bc80906b0908"><div class="ttname"><a href="class_weight_updater.html#a8a8fa4c18c6570e7cea5bc80906b0908">WeightUpdater::computeXMatrix</a></div><div class="ttdeci">std::vector&lt; std::vector&lt; std::vector&lt; bool &gt; &gt; &gt; computeXMatrix(MRSortModel &amp;model)</div></div>
 <div class="ttc" id="aclass_weight_updater_html_ade5bdee4860cf83c9913114ef0adf756"><div class="ttname"><a href="class_weight_updater.html#ade5bdee4860cf83c9913114ef0adf756">WeightUpdater::computeYMatrix</a></div><div class="ttdeci">std::vector&lt; std::vector&lt; std::vector&lt; bool &gt; &gt; &gt; computeYMatrix(MRSortModel &amp;model)</div></div>
 <div class="ttc" id="aclass_weight_updater_html_aeb6f6fe92f7c717e1d19c5741f634116"><div class="ttname"><a href="class_weight_updater.html#aeb6f6fe92f7c717e1d19c5741f634116">WeightUpdater::updateWeightsAndLambda</a></div><div class="ttdeci">void updateWeightsAndLambda(MRSortModel &amp;model)</div></div>
 <div class="ttc" id="aclass_weight_updater_html_af6390ed689c5e3bb9049a99be6796025"><div class="ttname"><a href="class_weight_updater.html#af6390ed689c5e3bb9049a99be6796025">WeightUpdater::modelCheck</a></div><div class="ttdeci">bool modelCheck(MRSortModel &amp;model)</div></div>
-<div class="ttc" id="astruct_config_html"><div class="ttname"><a href="struct_config.html">Config</a></div><div class="ttdoc">High level configuration of the app.</div><div class="ttdef"><b>Definition:</b> app.h:23</div></div>
+<div class="ttc" id="astruct_config_html"><div class="ttname"><a href="struct_config.html">Config</a></div><div class="ttdoc">High level configuration of the app.</div><div class="ttdef"><b>Definition:</b> config.h:20</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

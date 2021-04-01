@@ -1,7 +1,9 @@
 <map id="/Users/ThomasVindard 1/Desktop/3A/Projet/fastPL/include/app.h" name="/Users/ThomasVindard 1/Desktop/3A/Projet/fastPL/include/app.h">
-<area shape="rect" id="node1" title="app container responsible of handling everything related to fastpl." alt="" coords="183,5,339,61"/>
-<area shape="rect" id="node2" href="$_linear_solver_8h_source.html" title=" " alt="" coords="5,109,164,180"/>
-<area shape="rect" id="node3" href="$_weight_updater_8h_source.html" title=" " alt="" coords="64,228,223,299"/>
-<area shape="rect" id="node4" href="$_profile_initializer_8h_source.html" title=" " alt="" coords="240,109,399,180"/>
-<area shape="rect" id="node5" href="$_data_generator_8h.html" title="Wrapper to generate, save and load xml files." alt="" coords="423,109,579,180"/>
+<area shape="rect" id="node1" title="app container responsible of handling everything related to fastpl." alt="" coords="197,5,353,61"/>
+<area shape="rect" id="node2" href="$_heuristic_pipeline_8h.html" title="Global heuristic to learn a model." alt="" coords="143,347,302,417"/>
+<area shape="rect" id="node3" href="$_linear_solver_8h.html" title="External linear solver wrapper." alt="" coords="53,109,211,180"/>
+<area shape="rect" id="node4" href="$_weight_updater_8h.html" title="Weight and Lambda update heuristic." alt="" coords="53,228,211,299"/>
+<area shape="rect" id="node5" href="$_profile_initializer_8h.html" title="Profile initializer heuristic." alt="" coords="235,228,394,299"/>
+<area shape="rect" id="node6" href="$_profile_updater_8h.html" title="Third step of the heuristic, updates the profiles given fixed weight and lambda." alt="" coords="418,228,577,299"/>
+<area shape="rect" id="node7" href="$_data_generator_8h.html" title="Wrapper to generate, save and load xml files." alt="" coords="389,109,545,180"/>
 </map>

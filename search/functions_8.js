@@ -1,9 +1,6 @@
 var searchData=
 [
-  ['openxmlfile_292',['openXmlFile',['../class_data_generator.html#ad2ca82fb563432bc59fca35652a7d7ce',1,'DataGenerator']]],
-  ['operator_3c_3c_293',['operator&lt;&lt;',['../_categories_8h.html#a9ed3925b3af87fcbebdf27990480b98b',1,'operator&lt;&lt;(std::ostream &amp;out, const std::vector&lt; T &gt; &amp;vec):&#160;utils.h'],['../utils_8h.html#a9ed3925b3af87fcbebdf27990480b98b',1,'operator&lt;&lt;(std::ostream &amp;out, const std::vector&lt; T &gt; &amp;vec):&#160;utils.h']]],
-  ['operator_3d_3d_294',['operator==',['../class_perf.html#ad0963ab6fca36ffca32871a561a07f79',1,'Perf::operator==()'],['../class_performance_table.html#a2b8c4152d1426dde59ccb55b25ff293d',1,'PerformanceTable::operator==()']]],
-  ['operator_5b_5d_295',['operator[]',['../class_categories.html#a91dee77547d0c7d4e4db3d24f863b69d',1,'Categories::operator[]()'],['../class_criteria.html#af638a81ff0bba3fa6bc65fac105d104b',1,'Criteria::operator[](std::string name) const'],['../class_criteria.html#a945f94a4195dc32a1f180d065329ba55',1,'Criteria::operator[](int index)'],['../class_performance_table.html#ac2716f4e601589f84d54d7bef9509030',1,'PerformanceTable::operator[]()']]],
-  ['optimize_296',['optimize',['../class_profile_updater.html#aaaf806645c3852e834411ce6ab9491f7',1,'ProfileUpdater']]],
-  ['optimizeprofile_297',['optimizeProfile',['../class_profile_updater.html#a48dbeb81193de30e512e444df1467545',1,'ProfileUpdater']]]
+  ['modelcheck_314',['modelCheck',['../class_weight_updater.html#af6390ed689c5e3bb9049a99be6796025',1,'WeightUpdater']]],
+  ['modelgenerator_315',['modelGenerator',['../class_data_generator.html#aa73d2fe3ce64ef23f5375215f50e17fc',1,'DataGenerator']]],
+  ['mrsortmodel_316',['MRSortModel',['../class_m_r_sort_model.html#a1869cfb55e8b06aabfaa72723d6c5929',1,'MRSortModel::MRSortModel(Criteria &amp;criteria, Profiles &amp;profiles, Categories &amp;categories, float lambda, std::string id=&quot;model&quot;)'],['../class_m_r_sort_model.html#a40986de8f6efdf116c4a3b7a65ba3a00',1,'MRSortModel::MRSortModel(int n_cat, int n_crit, std::string id=&quot;model&quot;)'],['../class_m_r_sort_model.html#af1f0f21d2fc8a2acbf5f5e3516715155',1,'MRSortModel::MRSortModel(const MRSortModel &amp;mrsort)']]]
 ];

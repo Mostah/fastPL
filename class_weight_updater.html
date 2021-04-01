@@ -68,6 +68,11 @@ $(function() {
 <div class="title">WeightUpdater Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Weight and Lambda update heuristic.  
+ <a href="class_weight_updater.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_weight_updater_8h_source.html">WeightUpdater.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -84,7 +89,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af6390ed689c5e3bb9049a99be6796025"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_weight_updater.html#af6390ed689c5e3bb9049a99be6796025">modelCheck</a> (<a class="el" href="class_m_r_sort_model.html">MRSortModel</a> &amp;model)</td></tr>
 <tr class="separator:af6390ed689c5e3bb9049a99be6796025"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Weight and Lambda update heuristic. </p>
+<p>This class implements the update of <a class="el" href="class_criterion.html" title="Criterion datastructure.">Criterion</a> weight and the majority threshold lambda as described in the thesis. This algorithm is initialized with the dataset and can then be used to transform a model into an updated one.</p>
+<p>The solving of the linear problem is done externally by the <a class="el" href="class_linear_solver.html" title="External linear solver wrapper.">LinearSolver</a>. The <a class="el" href="class_weight_updater.html" title="Weight and Lambda update heuristic.">WeightUpdater</a> class is responsible for computing the constraint matrix given a specific model and passing them to the linear solver.</p>
+<p>A complete description of the heuristic can be found in <a class="el" href="weight_updater.html">Lambda and Weight updater</a>. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a88908f09450d6dc25a97c28e0b34fdfa"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a88908f09450d6dc25a97c28e0b34fdfa">&#9670;&nbsp;</a></span>WeightUpdater() <span class="overload">[1/2]</span></h2>
 
@@ -110,7 +120,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p><a class="el" href="class_weight_updater.html">WeightUpdater</a> standard constructor.</p>
+<p><a class="el" href="class_weight_updater.html" title="Weight and Lambda update heuristic.">WeightUpdater</a> standard constructor.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ap</td><td><a class="el" href="class_alternatives_performance.html" title="Dataset datastructure.">AlternativesPerformance</a> objet that represents the dataset of the problem </td></tr>
@@ -136,10 +146,10 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p><a class="el" href="class_weight_updater.html">WeightUpdater</a> constructor by copy.</p>
+<p><a class="el" href="class_weight_updater.html" title="Weight and Lambda update heuristic.">WeightUpdater</a> constructor by copy.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">wu</td><td><a class="el" href="class_weight_updater.html">WeightUpdater</a> objet to copy. </td></tr>
+    <tr><td class="paramname">wu</td><td><a class="el" href="class_weight_updater.html" title="Weight and Lambda update heuristic.">WeightUpdater</a> objet to copy. </td></tr>
   </table>
   </dd>
 </dl>
@@ -251,7 +261,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/Users/thibaultmonsel/Desktop/3a_cs/FastPL/fastPL/include/learning/<a class="el" href="_weight_updater_8h_source.html">WeightUpdater.h</a></li>
+<li>/Users/ThomasVindard 1/Desktop/3A/Projet/fastPL/include/learning/<a class="el" href="_weight_updater_8h_source.html">WeightUpdater.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

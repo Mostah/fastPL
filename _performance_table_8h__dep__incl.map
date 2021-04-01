@@ -1,10 +1,13 @@
 <map id="/Users/ThomasVindard 1/Desktop/3A/Projet/fastPL/include/types/PerformanceTable.h" name="/Users/ThomasVindard 1/Desktop/3A/Projet/fastPL/include/types/PerformanceTable.h">
-<area shape="rect" id="node1" title="PerformanceTable data structure." alt="" coords="185,5,341,76"/>
-<area shape="rect" id="node2" href="$_alternatives_performance_8h.html" title="Dataset data structure." alt="" coords="237,124,417,195"/>
-<area shape="rect" id="node6" href="$_data_generator_8h.html" title="Wrapper to generate, save and load xml files." alt="" coords="548,243,704,313"/>
-<area shape="rect" id="node7" href="$_m_r_sort_model_8h.html" title="Model datastructre that will learn from the problem." alt="" coords="83,243,239,313"/>
-<area shape="rect" id="node8" href="$_profiles_8h.html" title="Profiles data structure." alt="" coords="5,124,161,195"/>
-<area shape="rect" id="node3" href="$_linear_solver_8h_source.html" title=" " alt="" coords="365,243,524,313"/>
-<area shape="rect" id="node4" href="$_weight_updater_8h_source.html" title=" " alt="" coords="256,361,415,432"/>
-<area shape="rect" id="node5" href="$_profile_initializer_8h_source.html" title=" " alt="" coords="73,361,232,432"/>
+<area shape="rect" id="node1" title="PerformanceTable data structure." alt="" coords="419,5,575,76"/>
+<area shape="rect" id="node2" href="$_alternatives_performance_8h.html" title="Dataset data structure." alt="" coords="254,124,434,195"/>
+<area shape="rect" id="node7" href="$_data_generator_8h.html" title="Wrapper to generate, save and load xml files." alt="" coords="266,243,422,313"/>
+<area shape="rect" id="node8" href="$_m_r_sort_model_8h.html" title="Model datastructre that will learn from the problem." alt="" coords="446,243,602,313"/>
+<area shape="rect" id="node11" href="$_profiles_8h.html" title="Profiles data structure." alt="" coords="592,124,748,195"/>
+<area shape="rect" id="node3" href="$_linear_solver_8h.html" title="External linear solver wrapper." alt="" coords="31,243,190,313"/>
+<area shape="rect" id="node4" href="$_weight_updater_8h.html" title="Weight and Lambda update heuristic." alt="" coords="55,361,214,432"/>
+<area shape="rect" id="node6" href="$_profile_initializer_8h.html" title="Profile initializer heuristic." alt="" coords="262,361,420,432"/>
+<area shape="rect" id="node10" href="$utils_8h.html" title="utility functions used by our programs." alt="" coords="626,250,782,306"/>
+<area shape="rect" id="node5" href="$_heuristic_pipeline_8h.html" title="Global heuristic to learn a model." alt="" coords="262,480,420,551"/>
+<area shape="rect" id="node9" href="$_profile_updater_8h.html" title="Third step of the heuristic, updates the profiles given fixed weight and lambda." alt="" coords="444,361,603,432"/>
 </map>

@@ -1,12 +1,14 @@
 <map id="/Users/ThomasVindard 1/Desktop/3A/Projet/fastPL/include/types/Category.h" name="/Users/ThomasVindard 1/Desktop/3A/Projet/fastPL/include/types/Category.h">
-<area shape="rect" id="node1" title="Datastructure representing a category." alt="" coords="548,5,704,76"/>
-<area shape="rect" id="node2" href="$_alternatives_performance_8h.html" title="Dataset data structure." alt="" coords="241,124,421,195"/>
-<area shape="rect" id="node8" href="$_categories_8h.html" title="Datastructure representing a set of category." alt="" coords="459,124,615,195"/>
-<area shape="rect" id="node9" href="$_profiles_8h.html" title="Profiles data structure." alt="" coords="639,124,795,195"/>
-<area shape="rect" id="node10" href="$utils_8h.html" title="utility functions used by our programs." alt="" coords="819,131,975,187"/>
-<area shape="rect" id="node3" href="$_linear_solver_8h_source.html" title=" " alt="" coords="5,243,164,313"/>
-<area shape="rect" id="node4" href="$_weight_updater_8h_source.html" title=" " alt="" coords="123,361,281,432"/>
-<area shape="rect" id="node5" href="$_profile_initializer_8h_source.html" title=" " alt="" coords="528,361,687,432"/>
-<area shape="rect" id="node6" href="$_data_generator_8h.html" title="Wrapper to generate, save and load xml files." alt="" coords="240,243,396,313"/>
-<area shape="rect" id="node7" href="$_m_r_sort_model_8h.html" title="Model datastructre that will learn from the problem." alt="" coords="472,243,628,313"/>
+<area shape="rect" id="node1" title="Datastructure representing a category." alt="" coords="535,5,691,76"/>
+<area shape="rect" id="node2" href="$_alternatives_performance_8h.html" title="Dataset data structure." alt="" coords="337,124,517,195"/>
+<area shape="rect" id="node10" href="$utils_8h.html" title="utility functions used by our programs." alt="" coords="472,250,628,306"/>
+<area shape="rect" id="node11" href="$_categories_8h.html" title="Datastructure representing a set of category." alt="" coords="773,124,929,195"/>
+<area shape="rect" id="node12" href="$_profiles_8h.html" title="Profiles data structure." alt="" coords="593,124,749,195"/>
+<area shape="rect" id="node3" href="$_linear_solver_8h.html" title="External linear solver wrapper." alt="" coords="5,243,164,313"/>
+<area shape="rect" id="node4" href="$_weight_updater_8h.html" title="Weight and Lambda update heuristic." alt="" coords="261,361,420,432"/>
+<area shape="rect" id="node6" href="$_profile_initializer_8h.html" title="Profile initializer heuristic." alt="" coords="708,361,867,432"/>
+<area shape="rect" id="node7" href="$_data_generator_8h.html" title="Wrapper to generate, save and load xml files." alt="" coords="240,243,396,313"/>
+<area shape="rect" id="node8" href="$_m_r_sort_model_8h.html" title="Model datastructre that will learn from the problem." alt="" coords="652,243,808,313"/>
+<area shape="rect" id="node5" href="$_heuristic_pipeline_8h.html" title="Global heuristic to learn a model." alt="" coords="525,480,684,551"/>
+<area shape="rect" id="node9" href="$_profile_updater_8h.html" title="Third step of the heuristic, updates the profiles given fixed weight and lambda." alt="" coords="525,361,684,432"/>
 </map>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Project: /Users/thibaultmonsel/Desktop/3a_cs/FastPL/fastPL/include/app.h Source File</title>
+<title>Project: /Users/ThomasVindard 1/Desktop/3A/Projet/fastPL/include/app.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -72,52 +72,46 @@ $(function() {
 <a href="app_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef APP_H</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define APP_H</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;spdlog/sinks/basic_file_sink.h&quot;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;spdlog/spdlog.h&quot;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;yaml-cpp/yaml.h&quot;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="struct_config.html">   23</a></span>&#160;<span class="keyword">struct </span><a class="code" href="struct_config.html">Config</a> {</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  std::shared_ptr&lt;spdlog::logger&gt;</div>
-<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="struct_config.html#ad414f004c3eedbcf5ae37d0a143a2e50">   25</a></span>&#160;      <a class="code" href="struct_config.html#ad414f004c3eedbcf5ae37d0a143a2e50">logger</a>; </div>
-<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="struct_config.html#aa3b0a91b5be1286277ae84b25399cf1c">   26</a></span>&#160;  std::string <a class="code" href="struct_config.html#aa3b0a91b5be1286277ae84b25399cf1c">data_dir</a> = <span class="stringliteral">&quot;../data/&quot;</span>; </div>
-<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="struct_config.html#a3e1c064adb54cb899e460ef4f8b50739">   27</a></span>&#160;  std::string <a class="code" href="struct_config.html#a3e1c064adb54cb899e460ef4f8b50739">env</a> =</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;      <span class="stringliteral">&quot;staging&quot;</span>; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;};</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="class_app.html">   40</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_app.html">App</a> {</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="config_8h.html">config.h</a>&quot;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;spdlog/sinks/basic_file_sink.h&quot;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;spdlog/spdlog.h&quot;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;yaml-cpp/yaml.h&quot;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="class_app.html">   23</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_app.html">App</a> {</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="class_app.html#acb8cbf3e285b91d0170ffe87df5989c5">   28</a></span>&#160;  <a class="code" href="class_app.html#acb8cbf3e285b91d0170ffe87df5989c5">App</a>();</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="class_app.html#a71b52c678ba575b299a6e24a9d0f9d5a">   34</a></span>&#160;  <a class="code" href="class_app.html#a71b52c678ba575b299a6e24a9d0f9d5a">App</a>(<a class="code" href="struct_config.html">Config</a> &amp;config);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="class_app.html#a4fee66e777734961e5ed375aa71aff24">   40</a></span>&#160;  <a class="code" href="struct_config.html">Config</a> <a class="code" href="class_app.html#a4fee66e777734961e5ed375aa71aff24">getConf</a>() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="class_app.html#acb8cbf3e285b91d0170ffe87df5989c5">   45</a></span>&#160;  <a class="code" href="class_app.html#acb8cbf3e285b91d0170ffe87df5989c5">App</a>();</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="class_app.html#a71b52c678ba575b299a6e24a9d0f9d5a">   51</a></span>&#160;  <a class="code" href="class_app.html#a71b52c678ba575b299a6e24a9d0f9d5a">App</a>(<a class="code" href="struct_config.html">Config</a> &amp;config);</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="class_app.html#a4fee66e777734961e5ed375aa71aff24">   57</a></span>&#160;  <a class="code" href="struct_config.html">Config</a> <a class="code" href="class_app.html#a4fee66e777734961e5ed375aa71aff24">getConf</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="class_app.html#ae09dc71078b64c56c673b1ad1d25b5d1">   62</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_app.html#ae09dc71078b64c56c673b1ad1d25b5d1">run</a>();</div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="class_app.html#a8d27eeb51b813760dc39425d7a9a37e2">   46</a></span>&#160;  <span class="keywordtype">int</span> <a class="code" href="class_app.html#a8d27eeb51b813760dc39425d7a9a37e2">run</a>();</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="class_app.html#a36d5c31bad2d83cf8d73569f44b268f1">   53</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_app.html#a36d5c31bad2d83cf8d73569f44b268f1">initializeLogger</a>(YAML::Node &amp;yml_conf);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="class_app.html#a20cfa961c42ed2e5a4bdf70f018d3f7d">   62</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_app.html#a20cfa961c42ed2e5a4bdf70f018d3f7d">extractConfig</a>(YAML::Node &amp;yml_conf);</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="class_app.html#a36d5c31bad2d83cf8d73569f44b268f1">   70</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_app.html#a36d5c31bad2d83cf8d73569f44b268f1">initializeLogger</a>(YAML::Node &amp;yml_conf);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="class_app.html#a1bb0bd317c770c92ea4865837dcec767">   74</a></span>&#160;  <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="class_app.html#a1bb0bd317c770c92ea4865837dcec767">showUsage</a>(std::string name);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
-<div class="line"><a name="l00083"></a><span class="lineno"><a class="line" href="class_app.html#aa5e1bb0bfa2d2e968f8a6f9e27ec8383">   83</a></span>&#160;  <span class="keywordtype">int</span> <a class="code" href="class_app.html#aa5e1bb0bfa2d2e968f8a6f9e27ec8383">parseArgs</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]);</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  <a class="code" href="struct_config.html">Config</a> conf;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;};</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aclass_app_html"><div class="ttname"><a href="class_app.html">App</a></div><div class="ttdoc">App container of the fastpl project.</div><div class="ttdef"><b>Definition:</b> app.h:40</div></div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="class_app.html#a1bb0bd317c770c92ea4865837dcec767">   66</a></span>&#160;  <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="class_app.html#a1bb0bd317c770c92ea4865837dcec767">showUsage</a>(std::string name);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
+<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="class_app.html#aa5e1bb0bfa2d2e968f8a6f9e27ec8383">   75</a></span>&#160;  <span class="keywordtype">int</span> <a class="code" href="class_app.html#aa5e1bb0bfa2d2e968f8a6f9e27ec8383">parseArgs</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]);</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <a class="code" href="struct_config.html">Config</a> conf;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;};</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aclass_app_html"><div class="ttname"><a href="class_app.html">App</a></div><div class="ttdoc">App container of the fastpl project.</div><div class="ttdef"><b>Definition:</b> app.h:23</div></div>
 <div class="ttc" id="aclass_app_html_a1bb0bd317c770c92ea4865837dcec767"><div class="ttname"><a href="class_app.html#a1bb0bd317c770c92ea4865837dcec767">App::showUsage</a></div><div class="ttdeci">static void showUsage(std::string name)</div></div>
+<div class="ttc" id="aclass_app_html_a20cfa961c42ed2e5a4bdf70f018d3f7d"><div class="ttname"><a href="class_app.html#a20cfa961c42ed2e5a4bdf70f018d3f7d">App::extractConfig</a></div><div class="ttdeci">void extractConfig(YAML::Node &amp;yml_conf)</div></div>
 <div class="ttc" id="aclass_app_html_a36d5c31bad2d83cf8d73569f44b268f1"><div class="ttname"><a href="class_app.html#a36d5c31bad2d83cf8d73569f44b268f1">App::initializeLogger</a></div><div class="ttdeci">void initializeLogger(YAML::Node &amp;yml_conf)</div></div>
 <div class="ttc" id="aclass_app_html_a4fee66e777734961e5ed375aa71aff24"><div class="ttname"><a href="class_app.html#a4fee66e777734961e5ed375aa71aff24">App::getConf</a></div><div class="ttdeci">Config getConf() const</div></div>
 <div class="ttc" id="aclass_app_html_a71b52c678ba575b299a6e24a9d0f9d5a"><div class="ttname"><a href="class_app.html#a71b52c678ba575b299a6e24a9d0f9d5a">App::App</a></div><div class="ttdeci">App(Config &amp;config)</div></div>
+<div class="ttc" id="aclass_app_html_a8d27eeb51b813760dc39425d7a9a37e2"><div class="ttname"><a href="class_app.html#a8d27eeb51b813760dc39425d7a9a37e2">App::run</a></div><div class="ttdeci">int run()</div></div>
 <div class="ttc" id="aclass_app_html_aa5e1bb0bfa2d2e968f8a6f9e27ec8383"><div class="ttname"><a href="class_app.html#aa5e1bb0bfa2d2e968f8a6f9e27ec8383">App::parseArgs</a></div><div class="ttdeci">int parseArgs(int argc, char *argv[])</div></div>
 <div class="ttc" id="aclass_app_html_acb8cbf3e285b91d0170ffe87df5989c5"><div class="ttname"><a href="class_app.html#acb8cbf3e285b91d0170ffe87df5989c5">App::App</a></div><div class="ttdeci">App()</div></div>
-<div class="ttc" id="aclass_app_html_ae09dc71078b64c56c673b1ad1d25b5d1"><div class="ttname"><a href="class_app.html#ae09dc71078b64c56c673b1ad1d25b5d1">App::run</a></div><div class="ttdeci">void run()</div></div>
-<div class="ttc" id="astruct_config_html"><div class="ttname"><a href="struct_config.html">Config</a></div><div class="ttdoc">High level configuration of the app.</div><div class="ttdef"><b>Definition:</b> app.h:23</div></div>
-<div class="ttc" id="astruct_config_html_a3e1c064adb54cb899e460ef4f8b50739"><div class="ttname"><a href="struct_config.html#a3e1c064adb54cb899e460ef4f8b50739">Config::env</a></div><div class="ttdeci">std::string env</div><div class="ttdef"><b>Definition:</b> app.h:27</div></div>
-<div class="ttc" id="astruct_config_html_aa3b0a91b5be1286277ae84b25399cf1c"><div class="ttname"><a href="struct_config.html#aa3b0a91b5be1286277ae84b25399cf1c">Config::data_dir</a></div><div class="ttdeci">std::string data_dir</div><div class="ttdef"><b>Definition:</b> app.h:26</div></div>
-<div class="ttc" id="astruct_config_html_ad414f004c3eedbcf5ae37d0a143a2e50"><div class="ttname"><a href="struct_config.html#ad414f004c3eedbcf5ae37d0a143a2e50">Config::logger</a></div><div class="ttdeci">std::shared_ptr&lt; spdlog::logger &gt; logger</div><div class="ttdef"><b>Definition:</b> app.h:25</div></div>
+<div class="ttc" id="aconfig_8h_html"><div class="ttname"><a href="config_8h.html">config.h</a></div><div class="ttdoc">Config datastructure of the app.</div></div>
+<div class="ttc" id="astruct_config_html"><div class="ttname"><a href="struct_config.html">Config</a></div><div class="ttdoc">High level configuration of the app.</div><div class="ttdef"><b>Definition:</b> config.h:20</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

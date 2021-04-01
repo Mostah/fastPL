@@ -80,8 +80,19 @@ Public Attributes</h2></td></tr>
 <tr class="separator:ad414f004c3eedbcf5ae37d0a143a2e50"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa3b0a91b5be1286277ae84b25399cf1c"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_config.html#aa3b0a91b5be1286277ae84b25399cf1c">data_dir</a> = &quot;../data/&quot;</td></tr>
 <tr class="separator:aa3b0a91b5be1286277ae84b25399cf1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e1c064adb54cb899e460ef4f8b50739"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_config.html#a3e1c064adb54cb899e460ef4f8b50739">env</a></td></tr>
-<tr class="separator:a3e1c064adb54cb899e460ef4f8b50739"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6275611f631f6987a2fcf8471783c63"><td class="memItemLeft" align="right" valign="top"><a id="af6275611f631f6987a2fcf8471783c63"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>log_file</b> = &quot;../logs/app_log.txt&quot;</td></tr>
+<tr class="separator:af6275611f631f6987a2fcf8471783c63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0cab28ac3a73d49240f2a8ce88a7ec84"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_config.html#a0cab28ac3a73d49240f2a8ce88a7ec84">model_batch_size</a> = 50</td></tr>
+<tr class="separator:a0cab28ac3a73d49240f2a8ce88a7ec84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a243a727578064a9448339c171d2f74ff"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_config.html#a243a727578064a9448339c171d2f74ff">max_iterations</a></td></tr>
+<tr class="separator:a243a727578064a9448339c171d2f74ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae518884ba03a1989b3a1e501e6b36fcf"><td class="memItemLeft" align="right" valign="top"><a id="ae518884ba03a1989b3a1e501e6b36fcf"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>dataset</b> = &quot;&quot;</td></tr>
+<tr class="separator:ae518884ba03a1989b3a1e501e6b36fcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa24ee7ab37585d4cc325cb77180eba4"><td class="memItemLeft" align="right" valign="top"><a id="afa24ee7ab37585d4cc325cb77180eba4"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>output</b> = &quot;&quot;</td></tr>
+<tr class="separator:afa24ee7ab37585d4cc325cb77180eba4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>High level configuration of the app. </p>
@@ -102,23 +113,6 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a3e1c064adb54cb899e460ef4f8b50739"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3e1c064adb54cb899e460ef4f8b50739">&#9670;&nbsp;</a></span>env</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string Config::env</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=</div>
-<div class="line">      <span class="stringliteral">&quot;staging&quot;</span></div>
-</div><!-- fragment --><p>Environment (defining the set of config) to use </p>
-
-</div>
-</div>
 <a id="ad414f004c3eedbcf5ae37d0a143a2e50"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad414f004c3eedbcf5ae37d0a143a2e50">&#9670;&nbsp;</a></span>logger</h2>
 
@@ -134,8 +128,40 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a243a727578064a9448339c171d2f74ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a243a727578064a9448339c171d2f74ff">&#9670;&nbsp;</a></span>max_iterations</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Config::max_iterations</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">=</div>
+<div class="line">      100</div>
+</div><!-- fragment --><p>Max iteration before terminating the learning algo </p>
+
+</div>
+</div>
+<a id="a0cab28ac3a73d49240f2a8ce88a7ec84"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0cab28ac3a73d49240f2a8ce88a7ec84">&#9670;&nbsp;</a></span>model_batch_size</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Config::model_batch_size = 50</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Batch size of model for the learning algo </p>
+
+</div>
+</div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>/Users/thibaultmonsel/Desktop/3a_cs/FastPL/fastPL/include/<a class="el" href="app_8h_source.html">app.h</a></li>
+<li>/Users/ThomasVindard 1/Desktop/3A/Projet/fastPL/include/<a class="el" href="config_8h_source.html">config.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

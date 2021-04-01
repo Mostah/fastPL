@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Project: /Users/thibaultmonsel/Desktop/3a_cs/FastPL/fastPL/include/types/Profiles.h Source File</title>
+<title>Project: /Users/ThomasVindard 1/Desktop/3A/Projet/fastPL/include/types/Profiles.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -100,13 +100,14 @@ $(function() {
 <div class="line"><a name="l00113"></a><span class="lineno"><a class="line" href="class_profiles.html#a3ab3b90267abca89c26aadd8b6b6e511">  113</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_profiles.html#a3ab3b90267abca89c26aadd8b6b6e511">generateRandomPerfValues</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <span class="keywordtype">int</span> seed = time(NULL),</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;                                <span class="keywordtype">int</span> lower_bound = 0, <span class="keywordtype">int</span> upper_bound = 1);</div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;  std::pair&lt;std::vector&lt;Perf&gt;, std::vector&lt;Perf&gt;&gt;</div>
-<div class="line"><a name="l00125"></a><span class="lineno"><a class="line" href="class_profiles.html#aa26014b4d85bb4b90060e26d428f07c0">  125</a></span>&#160;  <a class="code" href="class_profiles.html#aa26014b4d85bb4b90060e26d428f07c0">getBelowAndAboveProfile</a>(std::string profName);</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160; </div>
-<div class="line"><a name="l00135"></a><span class="lineno"><a class="line" href="class_profiles.html#a8e327ff472267741eb9a589d68dff2a2">  135</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_profiles.html#a8e327ff472267741eb9a589d68dff2a2">setPerf</a>(std::string name, std::string crit, <span class="keywordtype">float</span> value);</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;};</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160; </div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;  std::pair&lt;std::vector&lt;Perf&gt;, std::vector&lt;Perf&gt;&gt;</div>
+<div class="line"><a name="l00129"></a><span class="lineno"><a class="line" href="class_profiles.html#a7c2e4ed116087b2df543686d51ae9564">  129</a></span>&#160;  <a class="code" href="class_profiles.html#a7c2e4ed116087b2df543686d51ae9564">getBelowAndAboveProfile</a>(std::string profName, <span class="keywordtype">float</span> worst_value,</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;                          <span class="keywordtype">float</span> best_value);</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160; </div>
+<div class="line"><a name="l00140"></a><span class="lineno"><a class="line" href="class_profiles.html#a8e327ff472267741eb9a589d68dff2a2">  140</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_profiles.html#a8e327ff472267741eb9a589d68dff2a2">setPerf</a>(std::string name, std::string crit, <span class="keywordtype">float</span> value);</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;};</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160; </div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="a_category_8h_html"><div class="ttname"><a href="_category_8h.html">Category.h</a></div><div class="ttdoc">Datastructure representing a category.</div></div>
 <div class="ttc" id="a_criteria_8h_html"><div class="ttname"><a href="_criteria_8h.html">Criteria.h</a></div><div class="ttdoc">Datastructure representing a set of criterion.</div></div>
 <div class="ttc" id="a_perf_8h_html"><div class="ttname"><a href="_perf_8h.html">Perf.h</a></div><div class="ttdoc">Perf (single performance) data structure.</div></div>
@@ -119,9 +120,9 @@ $(function() {
 <div class="ttc" id="aclass_profiles_html_a3ab3b90267abca89c26aadd8b6b6e511"><div class="ttname"><a href="class_profiles.html#a3ab3b90267abca89c26aadd8b6b6e511">Profiles::generateRandomPerfValues</a></div><div class="ttdeci">void generateRandomPerfValues(unsigned long int seed=time(NULL), int lower_bound=0, int upper_bound=1)</div></div>
 <div class="ttc" id="aclass_profiles_html_a420176f45d4ee47b8fb93209399e767b"><div class="ttname"><a href="class_profiles.html#a420176f45d4ee47b8fb93209399e767b">Profiles::Profiles</a></div><div class="ttdeci">Profiles(const Profiles &amp;profiles)</div></div>
 <div class="ttc" id="aclass_profiles_html_a42336cccc5cfb00b5d36723d1063e233"><div class="ttname"><a href="class_profiles.html#a42336cccc5cfb00b5d36723d1063e233">Profiles::isProfileOrdered</a></div><div class="ttdeci">bool isProfileOrdered()</div></div>
+<div class="ttc" id="aclass_profiles_html_a7c2e4ed116087b2df543686d51ae9564"><div class="ttname"><a href="class_profiles.html#a7c2e4ed116087b2df543686d51ae9564">Profiles::getBelowAndAboveProfile</a></div><div class="ttdeci">std::pair&lt; std::vector&lt; Perf &gt;, std::vector&lt; Perf &gt; &gt; getBelowAndAboveProfile(std::string profName, float worst_value, float best_value)</div></div>
 <div class="ttc" id="aclass_profiles_html_a81f9988e919098eaa7969e3849acf543"><div class="ttname"><a href="class_profiles.html#a81f9988e919098eaa7969e3849acf543">Profiles::Profiles</a></div><div class="ttdeci">Profiles(int nb_of_prof, Criteria &amp;crits, std::string mode=&quot;crit&quot;, std::string prefix=&quot;prof&quot;)</div></div>
 <div class="ttc" id="aclass_profiles_html_a8e327ff472267741eb9a589d68dff2a2"><div class="ttname"><a href="class_profiles.html#a8e327ff472267741eb9a589d68dff2a2">Profiles::setPerf</a></div><div class="ttdeci">void setPerf(std::string name, std::string crit, float value)</div></div>
-<div class="ttc" id="aclass_profiles_html_aa26014b4d85bb4b90060e26d428f07c0"><div class="ttname"><a href="class_profiles.html#aa26014b4d85bb4b90060e26d428f07c0">Profiles::getBelowAndAboveProfile</a></div><div class="ttdeci">std::pair&lt; std::vector&lt; Perf &gt;, std::vector&lt; Perf &gt; &gt; getBelowAndAboveProfile(std::string profName)</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

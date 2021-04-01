@@ -73,7 +73,7 @@ $(function() {
 Lambda and Weight updater algorithm</h1>
 <h2><a class="anchor" id="autotoc_md57"></a>
 I - Context</h2>
-<p>The weight updater algorithm is responsible for updating the weight associated to each <a class="el" href="class_criterion.html" title="Criterion datastructure.">Criterion</a> and the lambda (majority threshold) of the problem. The weight updater algorithm is divided in two main components (C++ classes): the <a class="el" href="class_linear_solver.html">LinearSolver</a> and the <a class="el" href="class_weight_updater.html">WeightUpdater</a>.</p>
+<p>The weight updater algorithm is responsible for updating the weight associated to each <a class="el" href="class_criterion.html" title="Criterion datastructure.">Criterion</a> and the lambda (majority threshold) of the problem. The weight updater algorithm is divided in two main components (C++ classes): the <a class="el" href="class_linear_solver.html" title="External linear solver wrapper.">LinearSolver</a> and the <a class="el" href="class_weight_updater.html" title="Weight and Lambda update heuristic.">WeightUpdater</a>.</p>
 <h2><a class="anchor" id="autotoc_md58"></a>
 II - WeightUpdater</h2>
 <p>The weightUpdater is responsible of computing the constraint matrix and pass it to the linear solver before updating the <a class="el" href="class_m_r_sort_model.html" title="Datastructure of the model to learn.">MRSortModel</a> with the new weights and lambda.</p>
@@ -81,7 +81,7 @@ II - WeightUpdater</h2>
 Attributes</h3>
 <ul>
 <li><a class="el" href="struct_config.html" title="High level configuration of the app.">Config</a> - Global config of the application</li>
-<li><a class="el" href="class_linear_solver.html">LinearSolver</a> - abstraction between the algorithm and the way we solve the linear problem</li>
+<li><a class="el" href="class_linear_solver.html" title="External linear solver wrapper.">LinearSolver</a> - abstraction between the algorithm and the way we solve the linear problem</li>
 <li><a class="el" href="class_alternatives_performance.html" title="Dataset datastructure.">AlternativesPerformance</a> - dataset of the global problem</li>
 </ul>
 <h3><a class="anchor" id="autotoc_md60"></a>
@@ -92,7 +92,7 @@ Matrix constraint representation</h3>
 </div><!-- fragment --><p> is represented by </p><div class="fragment"><div class="line">[true, false, false, true, true]</div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md61"></a>
 III - LinearSolver</h2>
-<p>The linear solver makes an interface between our algorithm and the way we solve the linear problem. Therefore, if at some point the way of solving the linear problem is changed (changing the library for example), no modification in the <a class="el" href="class_weight_updater.html">WeightUpdater</a> class will be needed.</p>
+<p>The linear solver makes an interface between our algorithm and the way we solve the linear problem. Therefore, if at some point the way of solving the linear problem is changed (changing the library for example), no modification in the <a class="el" href="class_weight_updater.html" title="Weight and Lambda update heuristic.">WeightUpdater</a> class will be needed.</p>
 <p>The linear solver takes as input the constraint matrix and the variables of the problem to solve, instantiates a model solver and computes the new weights and lambda.</p>
 <h3><a class="anchor" id="autotoc_md62"></a>
 Attributes</h3>

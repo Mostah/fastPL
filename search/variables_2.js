@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['logger_340',['logger',['../struct_config.html#ad414f004c3eedbcf5ae37d0a143a2e50',1,'Config']]]
+  ['max_5fiterations_368',['max_iterations',['../struct_config.html#a243a727578064a9448339c171d2f74ff',1,'Config']]],
+  ['model_5fbatch_5fsize_369',['model_batch_size',['../struct_config.html#a0cab28ac3a73d49240f2a8ce88a7ec84',1,'Config']]]
 ];

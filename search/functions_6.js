@@ -1,6 +1,10 @@
 var searchData=
 [
-  ['modelcheck_288',['modelCheck',['../class_weight_updater.html#af6390ed689c5e3bb9049a99be6796025',1,'WeightUpdater']]],
-  ['modelgenerator_289',['modelGenerator',['../class_data_generator.html#aa73d2fe3ce64ef23f5375215f50e17fc',1,'DataGenerator']]],
-  ['mrsortmodel_290',['MRSortModel',['../class_m_r_sort_model.html#a62788f4463fc45637e662ad87ab9207b',1,'MRSortModel::MRSortModel(Criteria &amp;criteria, Profiles &amp;profiles, Categories &amp;categories, float lambda, std::string id=&quot;model&quot;, float score=0)'],['../class_m_r_sort_model.html#a61e9c29028ac173ebcee89743e638dee',1,'MRSortModel::MRSortModel(int n_cat, int n_crit, std::string id=&quot;model&quot;, float score=0)'],['../class_m_r_sort_model.html#af1f0f21d2fc8a2acbf5f5e3516715155',1,'MRSortModel::MRSortModel(const MRSortModel &amp;mrsort)']]]
+  ['initializelogger_304',['initializeLogger',['../class_app.html#a36d5c31bad2d83cf8d73569f44b268f1',1,'App']]],
+  ['initializeprofileperformance_305',['initializeProfilePerformance',['../class_profile_initializer.html#a187ed63092fff0ad41b4428cf90b6c4d',1,'ProfileInitializer']]],
+  ['initializeprofiles_306',['initializeProfiles',['../class_profile_initializer.html#a554f9c8b24ed103258b4c397803a4528',1,'ProfileInitializer']]],
+  ['initializesolver_307',['initializeSolver',['../class_linear_solver.html#ae3b61aafe2e861f96da4765114ab1f71',1,'LinearSolver']]],
+  ['isaltintable_308',['isAltInTable',['../class_performance_table.html#a6299d88ea47fc4694829bd33df9525a0',1,'PerformanceTable']]],
+  ['isprofileordered_309',['isProfileOrdered',['../class_profiles.html#a42336cccc5cfb00b5d36723d1063e233',1,'Profiles']]],
+  ['issorted_310',['isSorted',['../class_performance_table.html#a84e1e56df8d652fdf3aef953d47be508',1,'PerformanceTable']]]
 ];

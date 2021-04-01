@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['weightupdater_183',['WeightUpdater',['../class_weight_updater.html',1,'']]]
+  ['simple_5fwalker_197',['simple_walker',['../structsimple__walker.html',1,'']]]
 ];

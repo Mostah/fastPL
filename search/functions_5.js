@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['linearsolver_285',['LinearSolver',['../class_linear_solver.html#aa1030cd5be40397a8c26246433d042a5',1,'LinearSolver']]],
-  ['loaddataset_286',['loadDataset',['../class_data_generator.html#a75d3251816d994c7a8f03f78aec2553a',1,'DataGenerator']]],
-  ['loadmodel_287',['loadModel',['../class_data_generator.html#abfc9b2dcfcff68efedadf3e0cb2b9a4f',1,'DataGenerator']]]
+  ['heuristicpipeline_303',['HeuristicPipeline',['../class_heuristic_pipeline.html#a8bac18bdd71b5731c1e14fb17429d53b',1,'HeuristicPipeline']]]
 ];
