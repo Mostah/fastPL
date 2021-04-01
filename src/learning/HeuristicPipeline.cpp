@@ -31,12 +31,13 @@ MRSortModel HeuristicPipeline::start() {
 
     // change back to alt mode
     model.profiles.changeMode("alt");
+    float acc_before = model.getScore();
     this->computeAccuracy(model);
     models.push_back(model);
 
     std::ostringstream ss;
     ss << "accuracy of model " << k << " after init: " << model.getScore()
-       << std::endl;
+       << ", gain of: " << model.getScore() - acc_before << std::endl;
     conf.logger->debug(ss.str());
   }
   const sec init_duration = clock::now() - before_init;
@@ -45,11 +46,13 @@ MRSortModel HeuristicPipeline::start() {
   // Update weight and lambda
   for (int k = 0; k < conf.model_batch_size; k++) {
     weightUpdater.updateWeightsAndLambda(models[k]);
+    float acc_before = models[k].getScore();
     this->computeAccuracy(models[k]);
 
     std::ostringstream ss;
     ss << "accuracy of model " << k
-       << " after weight update: " << models[k].getScore() << std::endl;
+       << " after weight update: " << models[k].getScore()
+       << ", gain of: " << models[k].getScore() - acc_before << std::endl;
     conf.logger->debug(ss.str());
   }
   const sec weight_duration = clock::now() - before_weight;
@@ -58,10 +61,13 @@ MRSortModel HeuristicPipeline::start() {
   // Update profiles
   for (int k = 0; k < conf.model_batch_size; k++) {
     profileUpdater.updateProfiles(models[k]);
+    float acc_before = models[k].getScore();
     this->computeAccuracy(models[k]);
+
     std::ostringstream ss;
     ss << "accuracy of model " << k
-       << " after profile update: " << models[k].getScore() << std::endl;
+       << " after profile update: " << models[k].getScore()
+       << ", gain of: " << models[k].getScore() - acc_before << std::endl;
     conf.logger->debug(ss.str());
   }
   const sec profile_duration = clock::now() - before_profile;
@@ -93,31 +99,37 @@ MRSortModel HeuristicPipeline::start() {
       models[k].criteria.generateRandomCriteriaWeights();
       profileInitializer.initializeProfiles(models[k]);
       models[k].profiles.changeMode("alt");
+      float acc_before = models[k].getScore();
       this->computeAccuracy(models[k]);
 
       std::ostringstream ss;
       ss << "accuracy of model " << k
-         << " after re-init: " << models[k].getScore() << std::endl;
+         << " after re-init: " << models[k].getScore()
+         << ", gain of: " << models[k].getScore() - acc_before << std::endl;
       conf.logger->debug(ss.str());
     }
     // ** Weight and lambda update **
     for (int k = 0; k < conf.model_batch_size; k++) {
       weightUpdater.updateWeightsAndLambda(models[k]);
+      float acc_before = models[k].getScore();
       this->computeAccuracy(models[k]);
 
       std::ostringstream ss;
       ss << "accuracy of model " << k
-         << " after weight update: " << models[k].getScore() << std::endl;
+         << " after weight update: " << models[k].getScore()
+         << ", gain of: " << models[k].getScore() - acc_before << std::endl;
       conf.logger->debug(ss.str());
     }
     // ** Profiles update **
     for (int k = 0; k < conf.model_batch_size; k++) {
       profileUpdater.updateProfiles(models[k]);
+      float acc_before = models[k].getScore();
       this->computeAccuracy(models[k]);
 
       std::ostringstream ss;
       ss << "accuracy of model " << k
-         << " after profile update: " << models[k].getScore() << std::endl;
+         << " after profile update: " << models[k].getScore()
+         << ", gain of: " << models[k].getScore() - acc_before << std::endl;
       conf.logger->debug(ss.str());
     }
     this->orderModels();
