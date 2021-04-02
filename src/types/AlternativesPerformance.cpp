@@ -16,7 +16,7 @@ AlternativesPerformance::AlternativesPerformance(
   }
   if (alt_assignment.empty()) {
     for (std::vector<Perf> pv : pt_) {
-      std::string altName = pv[0].getName();
+      std::string altName = pv[0].name_;
       alt_assignment_[altName] = default_cat;
     }
   } else {
@@ -41,7 +41,7 @@ AlternativesPerformance::AlternativesPerformance(
   }
   if (alt_assignment.empty()) {
     for (std::vector<Perf> pv : pt_) {
-      std::string altName = pv[0].getName();
+      std::string altName = pv[0].name_;
       alt_assignment_[altName] = default_cat;
     }
   } else {
@@ -66,7 +66,7 @@ AlternativesPerformance::AlternativesPerformance(
                               "assign default categories.");
     }
     for (std::vector<Perf> pv : pt_) {
-      std::string altName = pv[0].getName();
+      std::string altName = pv[0].name_;
       alt_assignment_[altName] = default_cat;
     }
   } else {
@@ -148,23 +148,23 @@ int AlternativesPerformance::getNumberCats() {
   std::vector<std::string> cat_vector;
   for (auto pair : alt_assignment_) {
     if (!std::count(cat_vector.begin(), cat_vector.end(),
-                    pair.second.getCategoryId())) {
-      cat_vector.push_back(pair.second.getCategoryId());
+                    pair.second.category_id_)) {
+      cat_vector.push_back(pair.second.category_id_);
     }
   }
   return cat_vector.size();
 }
 
 std::pair<float, float> AlternativesPerformance::getBoundaries() {
-  float min = pt_[0][0].getValue();
-  float max = pt_[0][0].getValue();
+  float min = pt_[0][0].value_;
+  float max = pt_[0][0].value_;
   for (int i = 0; i < pt_.size(); i++) {
     for (int j = 0; j < pt_[i].size(); j++) {
-      if (pt_[i][j].getValue() < min) {
-        min = pt_[i][j].getValue();
+      if (pt_[i][j].value_ < min) {
+        min = pt_[i][j].value_;
       }
-      if (pt_[i][j].getValue() > max) {
-        max = pt_[i][j].getValue();
+      if (pt_[i][j].value_ > max) {
+        max = pt_[i][j].value_;
       }
     }
   }

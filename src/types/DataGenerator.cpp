@@ -68,15 +68,15 @@ void DataGenerator::datasetGenerator(int nb_criteria, int nb_alternative,
 
     // getting alternative id
     alternative_node.append_child(pugi::node_pcdata)
-        .set_value(alternative[0].getName().c_str());
+        .set_value(alternative[0].name_.c_str());
 
     for (Perf perf : alternative) {
       // for each criteria give its correspondant performace
       pugi::xml_node alternative_criteria_node =
-          alternative_node.append_child(perf.getCrit().c_str());
+          alternative_node.append_child(perf.crit_.c_str());
 
       alternative_criteria_node.append_child(pugi::node_pcdata)
-          .set_value(std::to_string(perf.getValue()).c_str());
+          .set_value(std::to_string(perf.value_).c_str());
     }
 
     // Give the category assignemnt to the alternative
@@ -307,7 +307,7 @@ void DataGenerator::saveModel(std::string fileName, float lambda,
       profile_node.append_child(pugi::node_pcdata)
           .set_value(
               std::to_string(
-                  pt.getPerformanceTable()[nb_categories - j - 1][i].getValue())
+                  pt.getPerformanceTable()[nb_categories - j - 1][i].value_)
                   .c_str());
     }
 
@@ -434,16 +434,16 @@ void DataGenerator::saveDataset(std::string fileName,
     pugi::xml_node alternative_node = dataset_node.append_child("alternative");
     // getting alternative id
     alternative_node.append_child(pugi::node_pcdata)
-        .set_value(p[0].getName().c_str());
+        .set_value(p[0].name_.c_str());
 
     // looping over performance values of specific alternative
     for (Perf perf : p) {
       // for each criteria give its correspondant performace
       pugi::xml_node alternative_criteria_node =
-          alternative_node.append_child(perf.getCrit().c_str());
+          alternative_node.append_child(perf.crit_.c_str());
 
       alternative_criteria_node.append_child(pugi::node_pcdata)
-          .set_value(std::to_string(perf.getValue()).c_str());
+          .set_value(std::to_string(perf.value_).c_str());
     }
 
     // Get the category assignemnt of the alternative from altPerf
@@ -452,8 +452,7 @@ void DataGenerator::saveDataset(std::string fileName,
 
     alternative_assignment.append_child(pugi::node_pcdata)
         .set_value(
-            std::to_string(altPerf.getAlternativeAssignment(p[0].getName())
-                               .getCategoryRank())
+            std::to_string(altPerf.getAlternativeAssignment(p[0].name_).rank_)
                 .c_str());
   }
 

@@ -50,9 +50,7 @@ std::vector<float> ProfileInitializer::categoryFrequency() {
       altPerformance_.getAlternativesAssignments();
   std::vector<int> values(map.size());
 
-  auto cat_value_selector = [](auto pair) {
-    return pair.second.getCategoryRank();
-  };
+  auto cat_value_selector = [](auto pair) { return pair.second.rank_; };
 
   std::transform(map.begin(), map.end(), values.begin(), cat_value_selector);
 
@@ -89,21 +87,21 @@ std::vector<Perf> ProfileInitializer::getProfilePerformanceCandidates(
   std::vector<Perf> candidates;
 
   // Category rank starts at 0, worst category is 0
-  if (cat.getCategoryRank() == nbCategories - 1) {
-    catAbove = cat.getCategoryRank();
+  if (cat.rank_ == nbCategories - 1) {
+    catAbove = cat.rank_;
     catBelow = catAbove - 1;
   } else {
-    catBelow = cat.getCategoryRank();
+    catBelow = cat.rank_;
     catAbove = catBelow + 1;
   }
 
   for (std::vector<Perf> vPerf : altPerformance_.getPerformanceTable()) {
-    if (altPerformance_.getAlternativeAssignment(vPerf[0].getName())
-                .getCategoryRank() == catBelow ||
-        altPerformance_.getAlternativeAssignment(vPerf[0].getName())
-                .getCategoryRank() == catAbove) {
+    if (altPerformance_.getAlternativeAssignment(vPerf[0].name_).rank_ ==
+            catBelow ||
+        altPerformance_.getAlternativeAssignment(vPerf[0].name_).rank_ ==
+            catAbove) {
       for (Perf p : vPerf) {
-        if (p.getCrit() == crit.getId()) {
+        if (p.crit_ == crit.getId()) {
           candidates.push_back(p);
           break;
         }
@@ -120,7 +118,7 @@ float ProfileInitializer::weightedProbability(
     float delta) {
   // creating imaginary profile performance for criterion crit
   std::string critId = crit.getId();
-  float imaginaryProfilePerformance = perfAlt.getValue() + delta;
+  float imaginaryProfilePerformance = perfAlt.value_ + delta;
   // Creating 2 int that will count the number of correctly classified
   // alternatives for criterion crit for a profile performance of
   // imaginaryProfilePerformance.
@@ -130,26 +128,31 @@ float ProfileInitializer::weightedProbability(
   // candidates are computed thanks to the method
   // ProfileInitializer::getProfilePerformanceCandidates(crit, catBelow,
   // nbCategories);
-  for (Perf can : candidates) {
+
+  // TODO-OPTI this is creating new Perf that should ne be re-created, change
+  // with index
+  for (Perf &can : candidates) {
     // if the performance of the candidate is higher than the profile
     // performance and that the alternatives category is catAbove then we have
     // correctly classified it
-    if (can.getValue() > imaginaryProfilePerformance and
-        altPerformance_.getAlternativeAssignment(can.getName())
-                .getCategoryRank() == catAbove.getCategoryRank()) {
+
+    // TODO-OPTI getAlternativeAssignment should not be used
+    if (can.value_ > imaginaryProfilePerformance and
+        altPerformance_.getAlternativeAssignment(can.name_).rank_ ==
+            catAbove.rank_) {
       ++catAboveCounter;
       // if the performance of the candidate is lower than the profile
       // performance and that the alternatives category is catBelow then we
       //  have correctly classified it
-    } else if (can.getValue() < imaginaryProfilePerformance and
-               altPerformance_.getAlternativeAssignment(can.getName())
-                       .getCategoryRank() == catBelow.getCategoryRank()) {
+    } else if (can.value_ < imaginaryProfilePerformance and
+               altPerformance_.getAlternativeAssignment(can.name_).rank_ ==
+                   catBelow.rank_) {
       ++catBelowCounter;
     }
   }
   float proba;
-  proba = catAboveCounter / catFrequency[catAbove.getCategoryRank()] +
-          catBelowCounter / catFrequency[catBelow.getCategoryRank()];
+  proba = catAboveCounter / catFrequency[catAbove.rank_] +
+          catBelowCounter / catFrequency[catBelow.rank_];
   return proba;
 }
 
@@ -187,7 +190,7 @@ std::vector<Perf> ProfileInitializer::initializeProfilePerformance(
           break;
         }
       }
-      categoryLimits.push_back(candidates[index].getValue());
+      categoryLimits.push_back(candidates[index].value_);
     }
     if (std::is_sorted(categoryLimits.begin(), categoryLimits.end())) {
       OrderedProfilePerformance = 1;

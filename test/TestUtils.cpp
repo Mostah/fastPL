@@ -39,7 +39,7 @@ TEST(TestUtils, TestUtilsGetPerfOfCrit) {
   std::vector<float> givenPerf = {1, 3, 4};
   std::vector<Perf> vecp = createVectorPerf(id, crit, givenPerf);
   Perf p = getPerfOfCrit(vecp, "crit1");
-  EXPECT_EQ(p.getValue(), 3);
+  EXPECT_EQ(p.value_, 3);
   try {
     Perf p = getPerfOfCrit(vecp, "crit6");
     FAIL() << "should have thrown invalid argument.";

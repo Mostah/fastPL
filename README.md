@@ -204,6 +204,7 @@ Open the documentation on your browser, from `/doc/html` directory:
 ```bash
 open index.html
 ```
+
 ---
 
 ## Profiling

@@ -6,19 +6,9 @@ Category::Category(std::string cat_id, int cat_rank) {
 }
 
 Category::Category(const Category &cat) {
-  category_id_ = cat.getCategoryId();
-  rank_ = cat.getCategoryRank();
+  category_id_ = cat.category_id_;
+  rank_ = cat.rank_;
 }
-
-std::string Category::getCategoryId() const { return category_id_; }
-
-void Category::setCategoryId(std::string set_cat_id) {
-  category_id_ = set_cat_id;
-}
-
-int Category::getCategoryRank() const { return rank_; }
-
-void Category::setCategoryRank(int set_rank) { rank_ = set_rank; }
 
 std::ostream &operator<<(std::ostream &out, const Category &cat) {
 

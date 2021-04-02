@@ -43,7 +43,7 @@ Categories::~Categories() {
 std::vector<int> Categories::getRankCategories() {
   std::vector<int> rank_categories;
   for (int i = 0; i < categories_vector_.size(); i++) {
-    rank_categories.push_back(categories_vector_[i].getCategoryRank());
+    rank_categories.push_back(categories_vector_[i].rank_);
   }
   return rank_categories;
 }
@@ -54,27 +54,27 @@ void Categories::setRankCategories(std::vector<int> &set_ranks) {
         "RankCategories setter object is not the same size as Categories.");
   }
   for (int i = 0; i < set_ranks.size(); i++) {
-    categories_vector_[i].setCategoryRank(set_ranks[i]);
+    categories_vector_[i].rank_ = set_ranks[i];
   }
 }
 
 void Categories::setRankCategories() {
   for (int i = 0; i < categories_vector_.size(); i++) {
-    categories_vector_[i].setCategoryRank(i);
+    categories_vector_[i].rank_ = i;
   }
 }
 
 std::vector<std::string> Categories::getIdCategories() {
   std::vector<std::string> categories_ids;
   for (int i = 0; i < categories_vector_.size(); i++) {
-    categories_ids.push_back(categories_vector_[i].getCategoryId());
+    categories_ids.push_back(categories_vector_[i].category_id_);
   }
   return categories_ids;
 }
 
 void Categories::setIdCategories(std::string prefix) {
   for (int i = 0; i < categories_vector_.size(); i++) {
-    categories_vector_[i].setCategoryId(prefix + std::to_string(i));
+    categories_vector_[i].category_id_ = prefix + std::to_string(i);
   }
 }
 
@@ -84,13 +84,13 @@ void Categories::setIdCategories(std::vector<std::string> &set_category_ids) {
         "IdCategories setter object is not the same size as Categories.");
   }
   for (int i = 0; i < set_category_ids.size(); i++) {
-    categories_vector_[i].setCategoryId(set_category_ids[i]);
+    categories_vector_[i].category_id_ = set_category_ids[i];
   }
 }
 
 Category Categories::getCategoryOfRank(int rank) {
   for (Category cat : categories_vector_) {
-    if (cat.getCategoryRank() == rank) {
+    if (cat.rank_ == rank) {
       return cat;
     }
   }
