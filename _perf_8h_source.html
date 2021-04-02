@@ -12,6 +12,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -87,38 +94,19 @@ $(function() {
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <span class="keyword">friend</span> std::ostream &amp;operator&lt;&lt;(std::ostream &amp;out, <span class="keyword">const</span> <a class="code" href="class_perf.html">Perf</a> &amp;p);</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="class_perf.html#a4a2525918d73ab0c91983d406c8b3dae">   57</a></span>&#160;  std::string <a class="code" href="class_perf.html#a4a2525918d73ab0c91983d406c8b3dae">getName</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="class_perf.html#ad0963ab6fca36ffca32871a561a07f79">   57</a></span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="class_perf.html#ad0963ab6fca36ffca32871a561a07f79">operator==</a>(<span class="keyword">const</span> <a class="code" href="class_perf.html">Perf</a> &amp;perf2) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="class_perf.html#ad0e9f15b5b7f2efb4cd6a20467ca19ef">   64</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_perf.html#ad0e9f15b5b7f2efb4cd6a20467ca19ef">setName</a>(std::string name);</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
-<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="class_perf.html#ae59414e699d7b2f2ebbd6764ca38fb55">   71</a></span>&#160;  <span class="keywordtype">float</span> <a class="code" href="class_perf.html#ae59414e699d7b2f2ebbd6764ca38fb55">getValue</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
-<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="class_perf.html#a3e130cb94dc3ff028a16a29921f08721">   78</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_perf.html#a3e130cb94dc3ff028a16a29921f08721">setValue</a>(<span class="keywordtype">float</span> value);</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
-<div class="line"><a name="l00085"></a><span class="lineno"><a class="line" href="class_perf.html#ac284e9735a0a88a167f98e2887c1204c">   85</a></span>&#160;  std::string <a class="code" href="class_perf.html#ac284e9735a0a88a167f98e2887c1204c">getCrit</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
-<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="class_perf.html#a72cd7d3d48ac5bdae74190d9449b04fa">   92</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_perf.html#a72cd7d3d48ac5bdae74190d9449b04fa">setCrit</a>(std::string crit);</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
-<div class="line"><a name="l00099"></a><span class="lineno"><a class="line" href="class_perf.html#ad0963ab6fca36ffca32871a561a07f79">   99</a></span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="class_perf.html#ad0963ab6fca36ffca32871a561a07f79">operator==</a>(<span class="keyword">const</span> <a class="code" href="class_perf.html">Perf</a> &amp;perf2) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  std::string crit_;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  <span class="keywordtype">float</span> value_;</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  std::string name_;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;};</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  std::string crit_;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  <span class="keywordtype">float</span> value_;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  std::string name_;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;};</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aclass_perf_html"><div class="ttname"><a href="class_perf.html">Perf</a></div><div class="ttdoc">Perf (single performance) data structure.</div><div class="ttdef"><b>Definition:</b> Perf.h:22</div></div>
 <div class="ttc" id="aclass_perf_html_a0efceae7ce1007e5d9ed27d5a666a1b9"><div class="ttname"><a href="class_perf.html#a0efceae7ce1007e5d9ed27d5a666a1b9">Perf::Perf</a></div><div class="ttdeci">Perf(std::string name, std::string criterion)</div></div>
 <div class="ttc" id="aclass_perf_html_a3ba55374ae1e2ab25f1ff9fd43ec79fa"><div class="ttname"><a href="class_perf.html#a3ba55374ae1e2ab25f1ff9fd43ec79fa">Perf::Perf</a></div><div class="ttdeci">Perf(std::string name, std::string criterion, float value)</div></div>
-<div class="ttc" id="aclass_perf_html_a3e130cb94dc3ff028a16a29921f08721"><div class="ttname"><a href="class_perf.html#a3e130cb94dc3ff028a16a29921f08721">Perf::setValue</a></div><div class="ttdeci">void setValue(float value)</div></div>
-<div class="ttc" id="aclass_perf_html_a4a2525918d73ab0c91983d406c8b3dae"><div class="ttname"><a href="class_perf.html#a4a2525918d73ab0c91983d406c8b3dae">Perf::getName</a></div><div class="ttdeci">std::string getName() const</div></div>
-<div class="ttc" id="aclass_perf_html_a72cd7d3d48ac5bdae74190d9449b04fa"><div class="ttname"><a href="class_perf.html#a72cd7d3d48ac5bdae74190d9449b04fa">Perf::setCrit</a></div><div class="ttdeci">void setCrit(std::string crit)</div></div>
 <div class="ttc" id="aclass_perf_html_a9cbc3b922ddf1c4ec43e4dcca26ab72f"><div class="ttname"><a href="class_perf.html#a9cbc3b922ddf1c4ec43e4dcca26ab72f">Perf::Perf</a></div><div class="ttdeci">Perf(const Perf &amp;perf)</div></div>
-<div class="ttc" id="aclass_perf_html_ac284e9735a0a88a167f98e2887c1204c"><div class="ttname"><a href="class_perf.html#ac284e9735a0a88a167f98e2887c1204c">Perf::getCrit</a></div><div class="ttdeci">std::string getCrit() const</div></div>
 <div class="ttc" id="aclass_perf_html_ad0963ab6fca36ffca32871a561a07f79"><div class="ttname"><a href="class_perf.html#ad0963ab6fca36ffca32871a561a07f79">Perf::operator==</a></div><div class="ttdeci">bool operator==(const Perf &amp;perf2) const</div></div>
-<div class="ttc" id="aclass_perf_html_ad0e9f15b5b7f2efb4cd6a20467ca19ef"><div class="ttname"><a href="class_perf.html#ad0e9f15b5b7f2efb4cd6a20467ca19ef">Perf::setName</a></div><div class="ttdeci">void setName(std::string name)</div></div>
-<div class="ttc" id="aclass_perf_html_ae59414e699d7b2f2ebbd6764ca38fb55"><div class="ttname"><a href="class_perf.html#ae59414e699d7b2f2ebbd6764ca38fb55">Perf::getValue</a></div><div class="ttdeci">float getValue() const</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

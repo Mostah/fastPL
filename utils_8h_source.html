@@ -12,6 +12,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -169,14 +176,14 @@ $(function() {
 <div class="line"><a name="l00161"></a><span class="lineno"><a class="line" href="utils_8h.html#aaec50cd83b7346a052addf6550ad96e9">  161</a></span>&#160;<span class="keyword">inline</span> std::vector&lt;std::string&gt; <a class="code" href="utils_8h.html#aaec50cd83b7346a052addf6550ad96e9">getCriterionIds</a>(std::vector&lt;Perf&gt; vectPerf) {</div>
 <div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;  std::vector&lt;std::string&gt; criterionIds;</div>
 <div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span> p : vectPerf) {</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    criterionIds.push_back(p.getCrit());</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    criterionIds.push_back(p.crit_);</div>
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;  }</div>
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;  <span class="keywordflow">return</span> criterionIds;</div>
 <div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;};</div>
 <div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160; </div>
 <div class="line"><a name="l00177"></a><span class="lineno"><a class="line" href="utils_8h.html#a878e3a271953cb9cd2aee7d93342a90c">  177</a></span>&#160;<span class="keyword">inline</span> <a class="code" href="class_perf.html">Perf</a> <a class="code" href="utils_8h.html#a878e3a271953cb9cd2aee7d93342a90c">getPerfOfCrit</a>(std::vector&lt;Perf&gt; &amp;vectPerf, std::string critId) {</div>
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;  <span class="keywordflow">for</span> (<a class="code" href="class_perf.html">Perf</a> p : vectPerf) {</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    <span class="keywordflow">if</span> (p.getCrit() == critId) {</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    <span class="keywordflow">if</span> (p.crit_ == critId) {</div>
 <div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;      <span class="keywordflow">return</span> p;</div>
 <div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    }</div>
 <div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;  }</div>
@@ -186,7 +193,7 @@ $(function() {
 <div class="line"><a name="l00193"></a><span class="lineno"><a class="line" href="utils_8h.html#ae577a0d7fb534493ee477e3908c64462">  193</a></span>&#160;<span class="keyword">inline</span> std::vector&lt;std::string&gt; <a class="code" href="utils_8h.html#ae577a0d7fb534493ee477e3908c64462">getNameIds</a>(std::vector&lt;Perf&gt; vectPerf) {</div>
 <div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;  std::vector&lt;std::string&gt; NameIds;</div>
 <div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span> p : vectPerf) {</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    NameIds.push_back(p.getName());</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    NameIds.push_back(p.name_);</div>
 <div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;  }</div>
 <div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;  <span class="keywordflow">return</span> NameIds;</div>
 <div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;};</div>
@@ -219,7 +226,7 @@ $(function() {
 <div class="line"><a name="l00250"></a><span class="lineno"><a class="line" href="utils_8h.html#afca854126dead4aeb303664467faf272">  250</a></span>&#160;<span class="keyword">inline</span> std::vector&lt;double&gt; <a class="code" href="utils_8h.html#afca854126dead4aeb303664467faf272">getPerfFromPerfVect</a>(std::vector&lt;Perf&gt; &amp;p) {</div>
 <div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;  std::vector&lt;double&gt; values;</div>
 <div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span> perf : p) {</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    values.push_back(<span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(perf.getValue()));</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    values.push_back(<span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(perf.value_));</div>
 <div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;  }</div>
 <div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;  <span class="keywordflow">return</span> values;</div>
 <div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;}</div>
@@ -239,7 +246,7 @@ $(function() {
 <div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160; </div>
 <div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;  std::set&lt;int&gt; cat_set;</div>
 <div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span> pair : map) {</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;    cat_set.insert(pair.second.getCategoryRank());</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;    cat_set.insert(pair.second.rank_);</div>
 <div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;  }</div>
 <div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;  <span class="comment">// converting set to vector</span></div>
 <div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;  std::vector&lt;int&gt; ranks;</div>
@@ -249,7 +256,7 @@ $(function() {
 <div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;  std::unordered_map&lt;int, int&gt; index;</div>
 <div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;  <span class="keywordtype">int</span> nbCriteria = 0;</div>
 <div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;  <span class="keywordflow">for</span> (std::vector&lt;Perf&gt; p : ap.<a class="code" href="class_performance_table.html#a9860972fb6f5ac707766bafcb110ce94">getPerformanceTable</a>()) {</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;    <span class="keywordtype">int</span> rank = map[p[0].getName()].getCategoryRank();</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;    <span class="keywordtype">int</span> rank = map[p[0].name_].rank_;</div>
 <div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;    <span class="keywordflow">if</span> (nbCriteria == 0)</div>
 <div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;      nbCriteria = p.size();</div>
 <div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;    <span class="comment">// if we have already seen this category yet</span></div>

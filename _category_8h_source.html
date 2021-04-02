@@ -12,6 +12,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -82,32 +89,19 @@ $(function() {
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  ~<a class="code" href="class_category.html">Category</a>(){};</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="class_category.html#aa8d141994a1ff445237a792b922ab7fd">   44</a></span>&#160;  std::string <a class="code" href="class_category.html#aa8d141994a1ff445237a792b922ab7fd">getCategoryId</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="class_category.html#ae2086ccd4382c75e62d470fc1744fd8a">   52</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_category.html#ae2086ccd4382c75e62d470fc1744fd8a">setCategoryId</a>(std::string set_cat_id);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="class_category.html#adce0b1fe53c78adad4f38275a8130c59">   58</a></span>&#160;  <span class="keywordtype">int</span> <a class="code" href="class_category.html#adce0b1fe53c78adad4f38275a8130c59">getCategoryRank</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="class_category.html#acaa180101a3319e788ad78a7f52d5d1b">   66</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_category.html#acaa180101a3319e788ad78a7f52d5d1b">setCategoryRank</a>(<span class="keywordtype">int</span> set_rank);</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="class_category.html#a0d0bbfe5b21f3fd4bd26d8ddc50f0a1c">   75</a></span>&#160;  <span class="keyword">friend</span> std::ostream &amp;<a class="code" href="class_category.html#a0d0bbfe5b21f3fd4bd26d8ddc50f0a1c">operator&lt;&lt;</a>(std::ostream &amp;out, <span class="keyword">const</span> <a class="code" href="class_category.html">Category</a> &amp;category);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
-<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="class_category.html#ac614503d2322a0109f065819497e75b9">   84</a></span>&#160;  <span class="keyword">friend</span> <span class="keywordtype">bool</span> <a class="code" href="class_category.html#ac614503d2322a0109f065819497e75b9">operator==</a>(<span class="keyword">const</span> <a class="code" href="class_category.html">Category</a> &amp;cat1, <span class="keyword">const</span> <a class="code" href="class_category.html">Category</a> &amp;cat2);</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  std::string category_id_;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  <span class="keywordtype">int</span> rank_;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;};</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="class_category.html#a0d0bbfe5b21f3fd4bd26d8ddc50f0a1c">   46</a></span>&#160;  <span class="keyword">friend</span> std::ostream &amp;<a class="code" href="class_category.html#a0d0bbfe5b21f3fd4bd26d8ddc50f0a1c">operator&lt;&lt;</a>(std::ostream &amp;out, <span class="keyword">const</span> <a class="code" href="class_category.html">Category</a> &amp;category);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="class_category.html#ac614503d2322a0109f065819497e75b9">   55</a></span>&#160;  <span class="keyword">friend</span> <span class="keywordtype">bool</span> <a class="code" href="class_category.html#ac614503d2322a0109f065819497e75b9">operator==</a>(<span class="keyword">const</span> <a class="code" href="class_category.html">Category</a> &amp;cat1, <span class="keyword">const</span> <a class="code" href="class_category.html">Category</a> &amp;cat2);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  std::string category_id_;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  <span class="keywordtype">int</span> rank_;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;};</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aclass_category_html"><div class="ttname"><a href="class_category.html">Category</a></div><div class="ttdoc">Category datastructure.</div><div class="ttdef"><b>Definition:</b> Category.h:20</div></div>
 <div class="ttc" id="aclass_category_html_a0d0bbfe5b21f3fd4bd26d8ddc50f0a1c"><div class="ttname"><a href="class_category.html#a0d0bbfe5b21f3fd4bd26d8ddc50f0a1c">Category::operator&lt;&lt;</a></div><div class="ttdeci">friend std::ostream &amp; operator&lt;&lt;(std::ostream &amp;out, const Category &amp;category)</div></div>
-<div class="ttc" id="aclass_category_html_aa8d141994a1ff445237a792b922ab7fd"><div class="ttname"><a href="class_category.html#aa8d141994a1ff445237a792b922ab7fd">Category::getCategoryId</a></div><div class="ttdeci">std::string getCategoryId() const</div></div>
 <div class="ttc" id="aclass_category_html_aac54217c121933fb1ed3fd0076b4817b"><div class="ttname"><a href="class_category.html#aac54217c121933fb1ed3fd0076b4817b">Category::Category</a></div><div class="ttdeci">Category(std::string category_id=&quot;&quot;, int cat_rank=-1)</div></div>
 <div class="ttc" id="aclass_category_html_ac614503d2322a0109f065819497e75b9"><div class="ttname"><a href="class_category.html#ac614503d2322a0109f065819497e75b9">Category::operator==</a></div><div class="ttdeci">friend bool operator==(const Category &amp;cat1, const Category &amp;cat2)</div></div>
-<div class="ttc" id="aclass_category_html_acaa180101a3319e788ad78a7f52d5d1b"><div class="ttname"><a href="class_category.html#acaa180101a3319e788ad78a7f52d5d1b">Category::setCategoryRank</a></div><div class="ttdeci">void setCategoryRank(int set_rank)</div></div>
-<div class="ttc" id="aclass_category_html_adce0b1fe53c78adad4f38275a8130c59"><div class="ttname"><a href="class_category.html#adce0b1fe53c78adad4f38275a8130c59">Category::getCategoryRank</a></div><div class="ttdeci">int getCategoryRank() const</div></div>
-<div class="ttc" id="aclass_category_html_ae2086ccd4382c75e62d470fc1744fd8a"><div class="ttname"><a href="class_category.html#ae2086ccd4382c75e62d470fc1744fd8a">Category::setCategoryId</a></div><div class="ttdeci">void setCategoryId(std::string set_cat_id)</div></div>
 <div class="ttc" id="aclass_category_html_afb9345aa84650e1c3bc5a6639b2f23e2"><div class="ttname"><a href="class_category.html#afb9345aa84650e1c3bc5a6639b2f23e2">Category::Category</a></div><div class="ttdeci">Category(const Category &amp;category)</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

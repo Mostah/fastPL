@@ -12,6 +12,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -185,9 +192,8 @@ Generate documentation locally</h2>
 <p>From <code>/doc</code> directory:</p>
 <div class="fragment"><div class="line">cmake . &amp;&amp; doxygen Doxyfile.Doxigen</div>
 </div><!-- fragment --><p>Open the documentation on your browser, from <code>/doc/html</code> directory:</p>
-<h1><a class="anchor" id="autotoc_md25"></a>
-@code{bash}</h1>
-<p>open index.html </p>
+<div class="fragment"><div class="line">open index.html</div>
+</div><!-- fragment --><hr  />
 <h1><a class="anchor" id="autotoc_md26"></a>
 Profiling</h1>
 <p>Profiling requires the app to be run on a Docker container. The following assumes the fastpl app has already been built by docker.</p>
