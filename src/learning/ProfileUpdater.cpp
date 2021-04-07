@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <map>
+#include <random>
 #include <string>
 #include <typeinfo>
 
@@ -293,7 +294,8 @@ void ProfileUpdater::optimizeProfile(
     float value_max = max.second;
 
     if (value_max != 0) {
-      float r = getRandomUniformFloat();
+      std::random_device rd;
+      float r = getRandomUniformFloat(rd());
       if (r <= value_max) {
         Perf b_new = Perf(b);
         b_new.setValue(key_max);

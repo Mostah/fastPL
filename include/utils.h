@@ -124,8 +124,8 @@ inline int getRandomUniformInt(unsigned long int seed = 0, int min = 0,
  *
  * @return random float number between min and max
  */
-inline float getRandomUniformFloat(unsigned long int seed = 0, float min = 0,
-                                   float max = 1) {
+inline float getRandomUniformFloat(unsigned long int seed = time(NULL),
+                                   float min = 0, float max = 1) {
 
   std::mt19937 gen(seed);
   std::uniform_real_distribution<> dis(min, max);
