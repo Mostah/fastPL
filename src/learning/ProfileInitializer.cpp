@@ -158,6 +158,14 @@ float ProfileInitializer::weightedProbability(
 }
 
 std::vector<Perf> ProfileInitializer::initializeProfilePerformance(
+    /*
+    To optimize this function we would need to remove the while condition because
+    the method loops through it too many times. One solution to this is to filter out 
+    progressively candidates that have a smaller performance than the chosen performance for the
+    profile at the time step before. For example if the value of profile of cat0 for crit0 is 0.3,
+    then for cat0 crit1 you could only chose candidate values that are over 0.3. If there are no such candidate 
+    you would have the start from scratch the elicitation of b0.
+    */
     const Criterion &crit, Categories &categories,
     const std::vector<float> &catFre) {
   int nbCategories = categories.getNumberCategories();
