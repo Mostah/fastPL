@@ -95,10 +95,11 @@ std::vector<Perf> ProfileInitializer::getProfilePerformanceCandidates(
     catAbove = catBelow + 1;
   }
 
+  std::unordered_map<std::string, Category> assig = altPerformance_.getAlternativesAssignments();
   for (std::vector<Perf> vPerf : altPerformance_.getPerformanceTable()) {
-    if (altPerformance_.getAlternativeAssignment(vPerf[0].name_).rank_ ==
+    if (assig[vPerf[0].name_].rank_ ==
             catBelow ||
-        altPerformance_.getAlternativeAssignment(vPerf[0].name_).rank_ ==
+        assig[vPerf[0].name_].rank_ ==
             catAbove) {
       for (Perf p : vPerf) {
         if (p.crit_ == crit.getId()) {
