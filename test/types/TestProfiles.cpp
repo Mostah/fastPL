@@ -91,24 +91,24 @@ TEST(TestProfiles, TestGetBelowAndAbove) {
   std::vector<Perf> below1 = profiles1.first;
   std::vector<Perf> above1 = profiles1.second;
 
-  EXPECT_EQ(below1[0].getName(), "b0");
-  EXPECT_EQ(above1[0].getName(), "b2");
+  EXPECT_EQ(below1[0].name_, "b0");
+  EXPECT_EQ(above1[0].name_, "b2");
 
   std::pair<std::vector<Perf>, std::vector<Perf>> profiles2 =
       profile.getBelowAndAboveProfile("b0", 0, 1);
   std::vector<Perf> below2 = profiles2.first;
   std::vector<Perf> above2 = profiles2.second;
 
-  EXPECT_EQ(below2[0].getName(), "base");
-  EXPECT_EQ(above2[0].getName(), "b1");
+  EXPECT_EQ(below2[0].name_, "base");
+  EXPECT_EQ(above2[0].name_, "b1");
 
   std::pair<std::vector<Perf>, std::vector<Perf>> profiles3 =
       profile.getBelowAndAboveProfile("b2", 0, 1);
   std::vector<Perf> below3 = profiles3.first;
   std::vector<Perf> above3 = profiles3.second;
 
-  EXPECT_EQ(below3[0].getName(), "b1");
-  EXPECT_EQ(above3[0].getName(), "top");
+  EXPECT_EQ(below3[0].name_, "b1");
+  EXPECT_EQ(above3[0].name_, "top");
 }
 
 TEST(TestProfiles, TestGetBelowAndAboveErrors) {
@@ -170,7 +170,7 @@ TEST(TestProfiles, TestSetPerfAndErrors) {
 
   profile.setPerf("b0", "crit1", 0.98);
 
-  EXPECT_FLOAT_EQ(profile.getPerf("b0", "crit1").getValue(), 0.98);
+  EXPECT_FLOAT_EQ(profile.getPerf("b0", "crit1").value_, 0.98);
 
   // TEST ERRORS
   try {

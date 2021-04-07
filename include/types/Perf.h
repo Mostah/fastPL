@@ -50,55 +50,12 @@ public:
   friend std::ostream &operator<<(std::ostream &out, const Perf &p);
 
   /**
-   * getName getter of name parameter
-   *
-   * @return name
-   */
-  std::string getName() const;
-
-  /**
-   * setName setter of name parameter
-   *
-   * @param name
-   */
-  void setName(std::string name);
-
-  /**
-   * getValue getter of value parameter
-   *
-   * @return value
-   */
-  float getValue() const;
-
-  /**
-   * setValue setter of value parameter
-   *
-   * @param value
-   */
-  void setValue(float value);
-
-  /**
-   * getCrit getter of crit parameter
-   *
-   * @return crit
-   */
-  std::string getCrit() const;
-
-  /**
-   * setCrit setter of crit parameter
-   *
-   * @param crit
-   */
-  void setCrit(std::string crit);
-
-  /**
    * Overload of == operator for Perf object
    *
    * @param perf2 Perf object to compare it with
    */
   bool operator==(const Perf &perf2) const;
 
-private:
   std::string crit_;
   float value_;
   std::string name_;

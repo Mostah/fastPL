@@ -15,32 +15,20 @@ Perf::Perf(std::string name, std::string criterion) {
 }
 
 Perf::Perf(const Perf &perf) {
-  name_ = perf.getName();
-  crit_ = perf.getCrit();
-  value_ = perf.getValue();
+  name_ = perf.name_;
+  crit_ = perf.crit_;
+  value_ = perf.value_;
 }
 
 Perf::~Perf() {}
 
 std::ostream &operator<<(std::ostream &out, const Perf &p) {
-  out << "Perf( name : " << p.getName() << ", crit : " << p.getCrit()
-      << ", value : " << p.getValue() << " )";
+  out << "Perf( name : " << p.name_ << ", crit : " << p.crit_
+      << ", value : " << p.value_ << " )";
   return out;
 }
 
-std::string Perf::getName() const { return name_; }
-
-void Perf::setName(std::string name) { name_ = name; }
-
-float Perf::getValue() const { return value_; }
-
-void Perf::setValue(float value) { value_ = value; }
-
-std::string Perf::getCrit() const { return crit_; }
-
-void Perf::setCrit(std::string crit) { crit_ = crit; }
-
 bool Perf::operator==(const Perf &perf2) const {
-  return (this->crit_ == perf2.getCrit() && this->value_ == perf2.getValue() &&
-          this->name_ == perf2.getName());
+  return (this->crit_ == perf2.crit_ && this->value_ == perf2.value_ &&
+          this->name_ == perf2.name_);
 }

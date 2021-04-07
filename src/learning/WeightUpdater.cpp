@@ -49,11 +49,10 @@ WeightUpdater::computeXMatrix(MRSortModel &model) {
     for (auto alt : alts_pt) {
       std::vector<bool> x_h_alt;
       // if alt is assigned to category h (otherwise, append empty vector)
-      if (ap.getAlternativeAssignment(alt[0].getName()).getCategoryRank() ==
-          h) {
+      if (ap.getAlternativeAssignment(alt[0].name_).rank_ == h) {
         for (int j = 0; j < alt.size(); j++) {
           // condition: aj >= bj_h-1
-          x_h_alt.push_back(alt[j].getValue() >= profs_pt[h - 1][j].getValue());
+          x_h_alt.push_back(alt[j].value_ >= profs_pt[h - 1][j].value_);
         }
       }
       x_h.push_back(x_h_alt);
@@ -75,11 +74,10 @@ WeightUpdater::computeYMatrix(MRSortModel &model) {
     for (auto alt : alts_pt) {
       std::vector<bool> y_h_alt;
       // if alt is assigned to category h (otherwise, append empty vector)
-      if (ap.getAlternativeAssignment(alt[0].getName()).getCategoryRank() ==
-          h) {
+      if (ap.getAlternativeAssignment(alt[0].name_).rank_ == h) {
         for (int j = 0; j < alt.size(); j++) {
           // condition: aj >= bj_h
-          y_h_alt.push_back(alt[j].getValue() >= profs_pt[h][j].getValue());
+          y_h_alt.push_back(alt[j].value_ >= profs_pt[h][j].value_);
         }
       }
       y_h.push_back(y_h_alt);
@@ -105,7 +103,7 @@ bool WeightUpdater::modelCheck(MRSortModel &model) {
   std::vector<std::vector<Perf>> profs = model.profiles.getPerformanceTable();
   auto ap_pt = ap.getPerformanceTable();
   for (int i = 0; i < ap.getNumberCrit(); i++) {
-    if (profs[0][i].getCrit() != ap_pt[0][i].getCrit()) {
+    if (profs[0][i].crit_ != ap_pt[0][i].crit_) {
       return false;
     }
   }

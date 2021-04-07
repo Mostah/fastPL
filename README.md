@@ -1,5 +1,7 @@
 # Fast Preference Learning README
 
+@page readme FastPL README
+
 ## Introduction
 
 This work is based on Olivier Sobrie's work on preference learning algorithms (python code : <https://github.com/oso/pymcda>, thesis: <https://tel.archives-ouvertes.fr/tel-01370555/document>).
@@ -202,6 +204,7 @@ Open the documentation on your browser, from `/doc/html` directory:
 ```bash
 open index.html
 ```
+
 ---
 
 ## Profiling
@@ -245,7 +248,3 @@ docker cp $ID:/home/fastPL/build/analysis.{txt or png} $YOUR_PATH
 ```
 
 The profiling data should now be in $YOUR_PATH in your machine.
-
----
-
-@page readme FastPL README

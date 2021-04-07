@@ -66,7 +66,7 @@ void Profiles::generateRandomPerfValues(unsigned long int seed, int lower_bound,
       std::sort(r_vect.begin(), r_vect.end());
       std::reverse(r_vect.begin(), r_vect.end());
       for (int k = 0; k < nbProfiles; k++) {
-        pt_[nbProfiles - 1 - k][j].setValue(r_vect[k]);
+        pt_[nbProfiles - 1 - k][j].value_ = r_vect[k];
       }
     }
   } else {
@@ -80,7 +80,7 @@ void Profiles::generateRandomPerfValues(unsigned long int seed, int lower_bound,
       }
       std::sort(r_vect.begin(), r_vect.end());
       for (int k = 0; k < nbCat; k++) {
-        pt_[j][k].setValue(r_vect[k]);
+        pt_[j][k].value_ = r_vect[k];
       }
     }
   }
@@ -90,8 +90,7 @@ bool Profiles::isProfileOrdered() {
   if (mode_ == "crit") {
     for (int crit = 0; crit < pt_.size(); crit++) {
       for (int catLimit = 0; catLimit < pt_[crit].size() - 1; catLimit++) {
-        if (pt_[crit][catLimit].getValue() >
-            pt_[crit][catLimit + 1].getValue()) {
+        if (pt_[crit][catLimit].value_ > pt_[crit][catLimit + 1].value_) {
           return false;
         }
       }
@@ -100,7 +99,7 @@ bool Profiles::isProfileOrdered() {
   } else {
     for (int profile = 0; profile < pt_.size() - 1; profile++) {
       for (int crit = 0; crit < pt_[profile].size(); crit++) {
-        if (pt_[profile][crit].getValue() > pt_[profile + 1][crit].getValue()) {
+        if (pt_[profile][crit].value_ > pt_[profile + 1][crit].value_) {
           return false;
         }
       }
@@ -116,11 +115,11 @@ Profiles::getBelowAndAboveProfile(std::string profName, float worst_value,
   int n_crit = this->getNumberCrit();
   std::vector<Perf> base;
   for (int i = 0; i < n_crit; i++) {
-    base.push_back(Perf("base", pt_[0][i].getCrit(), worst_value));
+    base.push_back(Perf("base", pt_[0][i].crit_, worst_value));
   }
   std::vector<Perf> top;
   for (int i = 0; i < n_crit; i++) {
-    top.push_back(Perf("top", pt_[0][i].getCrit(), best_value));
+    top.push_back(Perf("top", pt_[0][i].crit_, best_value));
   }
   std::vector<Perf> below;
   std::vector<Perf> above;
@@ -129,7 +128,7 @@ Profiles::getBelowAndAboveProfile(std::string profName, float worst_value,
       return std::make_pair(base, top);
     }
     for (int h = 0; h < pt_.size(); h++) {
-      if (pt_[h][0].getName() == profName) {
+      if (pt_[h][0].name_ == profName) {
         if (h == 0) {
           below = base;
           above = pt_[h + 1];
@@ -157,10 +156,10 @@ void Profiles::setPerf(std::string name, std::string crit, float value) {
   // if in mode crit, each row contains 1 and only 1 criterion
   if (mode_ == "alt") {
     for (std::vector<Perf> &p : pt_) {
-      if (p[0].getName() == name) {
+      if (p[0].name_ == name) {
         for (Perf &perf : p) {
-          if (perf.getCrit() == crit) {
-            perf.setValue(value);
+          if (perf.crit_ == crit) {
+            perf.value_ = value;
             return;
           }
         }
@@ -170,10 +169,10 @@ void Profiles::setPerf(std::string name, std::string crit, float value) {
     throw std::invalid_argument("Name not found in performance table");
   } else if (mode_ == "crit") {
     for (std::vector<Perf> &p : pt_) {
-      if (p[0].getCrit() == crit) {
+      if (p[0].crit_ == crit) {
         for (Perf &perf : p) {
-          if (perf.getName() == name) {
-            perf.setValue(value);
+          if (perf.name_ == name) {
+            perf.value_ = value;
             return;
           }
         }
