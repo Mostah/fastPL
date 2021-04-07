@@ -50,26 +50,23 @@ std::unordered_map<float, float> ProfileUpdater::computeAboveDesirability(
       std::string altName = alt.name_;
       float conc = ct_prof[altName];
       float diff = conc - weight;
-      int aa_data =
-          altPerf_data.getAlternativeAssignment(altName).getCategoryRank();
-      int aa_model =
-          altPerf_model.getAlternativeAssignment(altName).getCategoryRank();
+      int aa_data = altPerf_data.getAlternativeAssignment(altName).rank_;
+      int aa_model = altPerf_model.getAlternativeAssignment(altName).rank_;
 
       // Here we are checking if the move of profile b right above/under the
       // performance of alt is going to help the model
-      if (aa_data == cat_above.getCategoryRank()) {
+      if (aa_data == cat_above.rank_) {
         // Correct classification
         // Moving the profile results in misclassification -> Q
-        if (aa_model == cat_above.getCategoryRank() and diff < lambda) {
+        if (aa_model == cat_above.rank_ and diff < lambda) {
           denominator += 5;
         }
         // Wrong classification
         // Moving the profile is in favor of wrong classification -> R
-        else if (aa_model == cat.getCategoryRank()) {
+        else if (aa_model == cat.rank_) {
           denominator += 1;
         }
-      } else if (aa_data == cat.getCategoryRank() and
-                 aa_model == cat_above.getCategoryRank()) {
+      } else if (aa_data == cat.rank_ and aa_model == cat_above.rank_) {
         // Wrong classification
         // Moving the profile is in favor of right classification -> W
         if (diff >= lambda) {
@@ -131,15 +128,12 @@ std::unordered_map<float, float> ProfileUpdater::computeBelowDesirability(
       float conc = ct_prof[altName];
       float diff = conc + weight;
 
-      int aa_data =
-          altPerf_data.getAlternativeAssignment(altName).getCategoryRank();
-      int aa_model =
-          altPerf_model.getAlternativeAssignment(altName).getCategoryRank();
+      int aa_data = altPerf_data.getAlternativeAssignment(altName).rank_;
+      int aa_model = altPerf_model.getAlternativeAssignment(altName).rank_;
 
       // Here we are checking if the move of profile b at the level of the
       // performance of alt is going to help the model
-      if (aa_data == cat_above.getCategoryRank() and
-          aa_model == cat.getCategoryRank()) {
+      if (aa_data == cat_above.rank_ and aa_model == cat.rank_) {
         // Wrong classification
         // Moving the profile results in correct classification -> V
         if (diff >= lambda) {
@@ -154,15 +148,15 @@ std::unordered_map<float, float> ProfileUpdater::computeBelowDesirability(
           denominator += 1;
           desirability_below[alt.value_ - epsilon] = numerator / denominator;
         }
-      } else if (aa_data == cat.getCategoryRank()) {
+      } else if (aa_data == cat.rank_) {
         // Correct classification
         // Moving the profile results in misclassification -> Q
-        if (aa_model == cat.getCategoryRank() and diff >= lambda) {
+        if (aa_model == cat.rank_ and diff >= lambda) {
           denominator += 5;
         }
         // Wrong classification
         // Moving the profile is in favor of wrong classification -> R
-        else if (aa_model == cat_above.getCategoryRank()) {
+        else if (aa_model == cat_above.rank_) {
           denominator += 1;
         }
       }
@@ -294,7 +288,7 @@ void ProfileUpdater::optimizeProfile(
       float r = getRandomUniformFloat(rd());
       if (r <= value_max) {
         Perf b_new = Perf(b);
-        b_new.setValue(key_max);
+        b_new.value_ = key_max;
         this->updateTables(model, crit.getId(), b, b_new, ct, altPerf_model);
       }
     }
