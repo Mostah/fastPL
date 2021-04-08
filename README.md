@@ -36,13 +36,13 @@ The full description and documentation of the project can be found at <https://m
 
 ### Build Docker image
 
-First thing first, build the docker image
+First thing first, build the docker image. You can find [here](<https://docs.docker.com/>) some documentation on docker.
 
 ```bash
 docker build . -t fastpl
 ```
 
-Currently, the built of all dependencies requires ~1h
+Currently, the build of all dependencies requires ~1h
 
 ### Run the main app in Docker
 
@@ -88,7 +88,7 @@ cd /home/fastpl/logs
 
 ## Run project locally
 
-The following requires CMake to be installed in your machine.
+The following requires [CMake](<https://cmake.org/>) to be installed in your machine.
 
 From the root of the project directory:
 
@@ -106,7 +106,7 @@ mkdir build && cd build
 cmake .. -DBUILD_DEPS:BOOL=ON -DUSE_SCIP=OFF && make
 ```
 
-Currently, the built of all dependencies requires ~1h
+Currently, the build of all dependencies requires ~1h
 
 ### Run the main app locally
 
@@ -237,7 +237,7 @@ gprof $PROGRAM | python3 gprof2dot/gprof2dot.py | dot -Tpng -o analysis.png
 gprof $PROGRAM > analysis.txt
 ```
 
-#### copy the analysis from the docker container into your machine
+#### Copy the analysis from the docker container into your machine
 
 Keep this terminal open, and open a new one
 
