@@ -157,8 +157,12 @@ TEST(TestProfileUpdater, TestChooseMaxDesirability) {
 
   Perf b = Perf("b0", "crit1", 0.3);
 
-  float max = profUpdater.chooseMaxDesirability(desirability, b);
-  EXPECT_FLOAT_EQ(max, 0.34);
+  std::pair<float, float> max =
+      profUpdater.chooseMaxDesirability(desirability, b);
+  float key_max = max.first;
+  float value_max = max.second;
+  EXPECT_FLOAT_EQ(key_max, 0.34);
+  EXPECT_FLOAT_EQ(value_max, 12);
 }
 
 TEST(TestProfileUpdater, TestUpdateTables) {

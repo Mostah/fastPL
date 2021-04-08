@@ -98,9 +98,11 @@ public:
    * @param desirability map of desirability
    * @param b profile to move
    *
+   * @returns profile value and associate desirability (max)
    */
-  float chooseMaxDesirability(std::unordered_map<float, float> &desirability,
-                              Perf &b);
+  std::pair<float, float>
+  chooseMaxDesirability(std::unordered_map<float, float> &desirability,
+                        Perf &b);
 
   /**
    * updateTables updates model tables with new profile value
