@@ -291,6 +291,6 @@ TEST(TestAlternativesPerformance, TestGetBoundaries) {
 
   AlternativesPerformance alt_perf = AlternativesPerformance(perf_vect);
   std::pair<float, float> boundaries = alt_perf.getBoundaries();
-  EXPECT_FLOAT_EQ(boundaries.first, 0.1);
-  EXPECT_FLOAT_EQ(boundaries.second, 0.9);
+  EXPECT_FLOAT_EQ(boundaries.first, given_perf1[1] - 0.1);
+  EXPECT_FLOAT_EQ(boundaries.second, given_perf0[1] + 0.1);
 }
