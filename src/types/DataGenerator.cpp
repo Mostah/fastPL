@@ -70,7 +70,7 @@ void DataGenerator::datasetGenerator(int nb_criteria, int nb_alternative,
     alternative_node.append_child(pugi::node_pcdata)
         .set_value(alternative[0].name_.c_str());
 
-    for (Perf perf : alternative) {
+    for (Perf &perf : alternative) {
       // for each criteria give its correspondant performace
       pugi::xml_node alternative_criteria_node =
           alternative_node.append_child(perf.crit_.c_str());
@@ -430,14 +430,14 @@ void DataGenerator::saveDataset(std::string fileName,
       .set_value(std::to_string(nb_alternatives).c_str());
 
   // looping over alternatives
-  for (std::vector<Perf> p : altPerf.getPerformanceTable()) {
+  for (std::vector<Perf> &p : altPerf.getPerformanceTable()) {
     pugi::xml_node alternative_node = dataset_node.append_child("alternative");
     // getting alternative id
     alternative_node.append_child(pugi::node_pcdata)
         .set_value(p[0].name_.c_str());
 
     // looping over performance values of specific alternative
-    for (Perf perf : p) {
+    for (Perf &perf : p) {
       // for each criteria give its correspondant performace
       pugi::xml_node alternative_criteria_node =
           alternative_node.append_child(perf.crit_.c_str());

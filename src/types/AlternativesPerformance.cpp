@@ -15,7 +15,7 @@ AlternativesPerformance::AlternativesPerformance(
         "Performance table mode should be alt to assign default categories.");
   }
   if (alt_assignment.empty()) {
-    for (std::vector<Perf> pv : pt_) {
+    for (std::vector<Perf> &pv : pt_) {
       std::string altName = pv[0].name_;
       alt_assignment_[altName] = default_cat;
     }
@@ -40,7 +40,7 @@ AlternativesPerformance::AlternativesPerformance(
         "Performance table mode should be alt to assign default categories.");
   }
   if (alt_assignment.empty()) {
-    for (std::vector<Perf> pv : pt_) {
+    for (std::vector<Perf> &pv : pt_) {
       std::string altName = pv[0].name_;
       alt_assignment_[altName] = default_cat;
     }
@@ -65,7 +65,7 @@ AlternativesPerformance::AlternativesPerformance(
       throw std::domain_error("Performance table mode should be alt to "
                               "assign default categories.");
     }
-    for (std::vector<Perf> pv : pt_) {
+    for (std::vector<Perf> &pv : pt_) {
       std::string altName = pv[0].name_;
       alt_assignment_[altName] = default_cat;
     }

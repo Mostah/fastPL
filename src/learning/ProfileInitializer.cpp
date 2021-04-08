@@ -95,12 +95,12 @@ std::vector<Perf> ProfileInitializer::getProfilePerformanceCandidates(
     catAbove = catBelow + 1;
   }
 
-  for (std::vector<Perf> vPerf : altPerformance_.getPerformanceTable()) {
+  for (std::vector<Perf> &vPerf : altPerformance_.getPerformanceTable()) {
     if (altPerformance_.getAlternativeAssignment(vPerf[0].name_).rank_ ==
             catBelow ||
         altPerformance_.getAlternativeAssignment(vPerf[0].name_).rank_ ==
             catAbove) {
-      for (Perf p : vPerf) {
+      for (Perf &p : vPerf) {
         if (p.crit_ == crit.getId()) {
           candidates.push_back(p);
           break;
@@ -170,7 +170,7 @@ std::vector<Perf> ProfileInitializer::initializeProfilePerformance(
           ProfileInitializer::getProfilePerformanceCandidates(
               crit, categories[i], nbCategories);
       // OPTIM : POSSIBILITY parallelization synchrone
-      for (Perf cand : candidates) {
+      for (Perf &cand : candidates) {
         float proba = ProfileInitializer::weightedProbability(
             cand, crit, categories[i], categories[i + 1], nbCategories, catFre,
             candidates);

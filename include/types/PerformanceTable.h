@@ -111,7 +111,7 @@ public:
    *
    *@return Performance object with associated criterion
    */
-  std::vector<Perf> operator[](std::string name) const;
+  std::vector<Perf> operator[](std::string name);
 
   /**
    * getPerf getter of a specific Perf in the performance table
@@ -119,7 +119,7 @@ public:
    * @param name name of the alt or profile we want
    * @param crit name of the crit we want
    */
-  Perf getPerf(std::string name, std::string crit) const;
+  Perf getPerf(std::string name, std::string crit);
 
   /**
    * sort Sort the performance table given the selected mode: alt or crit.

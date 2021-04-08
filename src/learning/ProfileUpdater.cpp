@@ -216,7 +216,7 @@ void ProfileUpdater::updateTables(
         altPerf_model.getAltBetween(critId, b_old.value_, b_new.value_);
   }
 
-  for (Perf alt : alt_between) {
+  for (Perf &alt : alt_between) {
     // Data assignment
     std::string aa_data =
         altPerf_data.getAlternativeAssignment(alt.name_).category_id_;
@@ -310,7 +310,7 @@ void ProfileUpdater::optimize(
     throw std::invalid_argument("Profile table is not ordered");
   }
   int i = 0;
-  for (std::vector<Perf> profile : model.profiles.getPerformanceTable()) {
+  for (std::vector<Perf> &profile : model.profiles.getPerformanceTable()) {
     Category cat_below = model.categories.getCategoryOfRank(i);
     Category cat_above = model.categories.getCategoryOfRank(i + 1);
     this->optimizeProfile(profile, cat_below, cat_above, model, ct,

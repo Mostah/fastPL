@@ -26,7 +26,7 @@ PerformanceTable::PerformanceTable(std::vector<std::vector<Perf>> &perf_vect,
     std::vector<std::string> perf_id_vect;
     std::vector<std::string> crit_vect = getCriterionIds(perf_vect[0]);
 
-    for (std::vector<Perf> p : perf_vect) {
+    for (std::vector<Perf> &p : perf_vect) {
       // ensure there is no performance with dupplicated name
 
       if (std::find(perf_id_vect.begin(), perf_id_vect.end(), p[0].name_) !=
@@ -48,7 +48,7 @@ PerformanceTable::PerformanceTable(std::vector<std::vector<Perf>> &perf_vect,
     std::vector<std::string> crit_id_vect;
     std::vector<std::string> altIdVec = getNameIds(perf_vect[0]);
 
-    for (std::vector<Perf> p : perf_vect) {
+    for (std::vector<Perf> &p : perf_vect) {
       // ensure there is no criteria id with duplicated name
 
       if (std::find(crit_id_vect.begin(), crit_id_vect.end(), p[0].crit_) !=
@@ -107,19 +107,19 @@ std::ostream &operator<<(std::ostream &out, const PerformanceTable &perfs) {
   return out;
 }
 
-std::vector<Perf> PerformanceTable::operator[](std::string name) const {
+std::vector<Perf> PerformanceTable::operator[](std::string name) {
   // supposing the pt is consistent:
   // if in mode alt, each row contains 1 and only 1 (alternative or profile)
   // if in mode crit, each row contains 1 and only 1 criterion
   if (mode_ == "alt") {
-    for (std::vector<Perf> p : pt_) {
+    for (std::vector<Perf> &p : pt_) {
       if (p[0].name_ == name) {
         return p;
       }
     }
     throw std::invalid_argument("Row not found in performance table");
   } else if (mode_ == "crit") {
-    for (std::vector<Perf> p : pt_) {
+    for (std::vector<Perf> &p : pt_) {
       if (p[0].crit_ == name) {
         return p;
       }
@@ -146,14 +146,14 @@ void PerformanceTable::generateRandomPerfValues(unsigned long int seed,
   sorted_ = false;
 }
 
-Perf PerformanceTable::getPerf(std::string name, std::string crit) const {
+Perf PerformanceTable::getPerf(std::string name, std::string crit) {
   // supposing the pt is consistent:
   // if in mode alt, each row contains 1 and only 1 (alternative or profile)
   // if in mode crit, each row contains 1 and only 1 criterion
   if (mode_ == "alt") {
-    for (std::vector<Perf> p : pt_) {
+    for (std::vector<Perf> &p : pt_) {
       if (p[0].name_ == name) {
-        for (Perf perf : p) {
+        for (Perf &perf : p) {
           if (perf.crit_ == crit) {
             return perf;
           }
@@ -164,9 +164,9 @@ Perf PerformanceTable::getPerf(std::string name, std::string crit) const {
     throw std::invalid_argument("Name not found in performance table");
   }
   if (mode_ == "crit") {
-    for (std::vector<Perf> p : pt_) {
+    for (std::vector<Perf> &p : pt_) {
       if (p[0].crit_ == crit) {
-        for (Perf perf : p) {
+        for (Perf &perf : p) {
           if (perf.name_ == name) {
             return perf;
           }
@@ -201,8 +201,8 @@ void PerformanceTable::changeMode(std::string mode) {
   std::vector<std::vector<Perf>> new_pt;
   std::map<std::string, int> index;
   if (mode == "crit") {
-    for (std::vector<Perf> pv : pt_) {
-      for (Perf p : pv) {
+    for (std::vector<Perf> &pv : pt_) {
+      for (Perf &p : pv) {
         if (index.count(p.crit_) > 0) {
           // if criterion already seen, add Perf to the right row
           new_pt[index[p.crit_]].push_back(p);
@@ -215,8 +215,8 @@ void PerformanceTable::changeMode(std::string mode) {
       }
     }
   } else {
-    for (std::vector<Perf> pv : pt_) {
-      for (Perf p : pv) {
+    for (std::vector<Perf> &pv : pt_) {
+      for (Perf &p : pv) {
         if (index.count(p.name_) > 0) {
           // if alternative (or profile) already seen, add Perf to the right
           // row
@@ -314,7 +314,7 @@ std::vector<Perf> PerformanceTable::getBestPerfByCrit(Criteria &crits) {
   this->changeMode("crit");
   std::vector<Perf> best_pv;
   if (sorted_) {
-    for (std::vector<Perf> pv : pt_) {
+    for (std::vector<Perf> &pv : pt_) {
       if (crits[pv[0].crit_].getDirection() == 1) {
         // sorted in increasing way
         best_pv.push_back(Perf(pv[pv.size() - 1]));
@@ -323,9 +323,9 @@ std::vector<Perf> PerformanceTable::getBestPerfByCrit(Criteria &crits) {
       }
     }
   } else {
-    for (std::vector<Perf> pv : pt_) {
+    for (std::vector<Perf> &pv : pt_) {
       Perf bp = pv[0];
-      for (Perf p : pv) {
+      for (Perf &p : pv) {
         if (crits[pv[0].crit_].getDirection() == 1) {
           if (p.value_ > bp.value_) {
             bp = p;
@@ -347,7 +347,7 @@ std::vector<Perf> PerformanceTable::getWorstPerfByCrit(Criteria &crits) {
   this->changeMode("crit");
   std::vector<Perf> worst_pv;
   if (sorted_) {
-    for (std::vector<Perf> pv : pt_) {
+    for (std::vector<Perf> &pv : pt_) {
       if (crits[pv[0].crit_].getDirection() == -1) {
         // sorted in increasing way
         worst_pv.push_back(Perf(pv[pv.size() - 1]));
@@ -356,9 +356,9 @@ std::vector<Perf> PerformanceTable::getWorstPerfByCrit(Criteria &crits) {
       }
     }
   } else {
-    for (std::vector<Perf> pv : pt_) {
+    for (std::vector<Perf> &pv : pt_) {
       Perf bp = pv[0];
-      for (Perf p : pv) {
+      for (Perf &p : pv) {
         if (crits[pv[0].crit_].getDirection() == -1) {
           if (p.value_ > bp.value_) {
             bp = p;
