@@ -146,7 +146,9 @@ MRSortModel HeuristicPipeline::start() {
       }
     }
     this->orderModels();
-    best_model = models[0];
+    if (best_model.getScore() > models[0].getScore()) {
+      best_model = models[0];
+    }
     conf.logger->info("Iteration " + std::to_string(i) +
                       " done, best model encountered has a score of: " +
                       std::to_string(best_model.getScore()));
