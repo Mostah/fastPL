@@ -291,14 +291,14 @@ std::vector<Perf> PerformanceTable::getAltBetween(std::string critId, float inf,
   }
   if (mode_ == "crit") {
     std::vector<Perf> pv = this->operator[](critId);
-    for (Perf perf : pv) {
+    for (Perf &perf : pv) {
       if (perf.value_ >= inf and perf.value_ <= sup) {
         v.push_back(perf);
       }
     }
   } else if (mode_ == "alt") {
-    for (std::vector<Perf> p : pt_) {
-      for (Perf perf : p) {
+    for (std::vector<Perf> &p : pt_) {
+      for (Perf &perf : p) {
         if (perf.crit_ == critId and perf.value_ >= inf and
             perf.value_ <= sup) {
           v.push_back(perf);
