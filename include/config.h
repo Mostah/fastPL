@@ -25,6 +25,8 @@ struct Config {
   int model_batch_size = 50; /*!< Batch size of model for the learning algo */
   int max_iterations =
       100; /*!< Max iteration before terminating the learning algo */
+  int n_profile_update =
+      20; /*!< Number of iteration of profile update for one weight update */
   std::string dataset = "";
   std::string output = "";
 };

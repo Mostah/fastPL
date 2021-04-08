@@ -1,6 +1,7 @@
 # log_level takes its value in { DEBUG, INFO, WARN, ERROR, CRITICAL }
-log_level: "INFO"
+log_level: "DEBUG"
 log_file: ../logs/app_log.txt
 data_dir: ../data/
 model_batch_size: 5
-max_iterations: 10
+max_iterations: 1
+n_profile_update: 10

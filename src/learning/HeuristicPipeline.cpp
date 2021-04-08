@@ -60,15 +60,17 @@ MRSortModel HeuristicPipeline::start() {
 
   // Update profiles
   for (int k = 0; k < conf.model_batch_size; k++) {
-    profileUpdater.updateProfiles(models[k]);
-    float acc_before = models[k].getScore();
-    this->computeAccuracy(models[k]);
+    for (int i = 0; i < conf.n_profile_update; i++) {
+      profileUpdater.updateProfiles(models[k]);
+      float acc_before = models[k].getScore();
+      this->computeAccuracy(models[k]);
 
-    std::ostringstream ss;
-    ss << "accuracy of model " << k
-       << " after profile update: " << models[k].getScore()
-       << ", gain of: " << models[k].getScore() - acc_before << std::endl;
-    conf.logger->debug(ss.str());
+      std::ostringstream ss;
+      ss << "accuracy of model " << k
+         << " after profile update: " << models[k].getScore()
+         << ", gain of: " << models[k].getScore() - acc_before << std::endl;
+      conf.logger->debug(ss.str());
+    }
   }
 
   const sec profile_duration = clock::now() - before_profile;

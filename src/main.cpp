@@ -45,6 +45,7 @@ int main(int argc, char *argv[]) {
       ", log_path: " + app_conf.log_file + ", data_dir: " + app_conf.data_dir +
       ", model_batch_size: " + std::to_string(app_conf.model_batch_size) +
       ", max_iterations: " + std::to_string(app_conf.max_iterations) +
+      ", n_profile_update: " + std::to_string(app_conf.n_profile_update) +
       ", dataset: " + app_conf.dataset + ", output: " + app_conf.output + " }";
   app_conf.logger->info(conf_info.c_str());
 
