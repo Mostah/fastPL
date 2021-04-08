@@ -18,9 +18,9 @@ MRSortModel HeuristicPipeline::start() {
   int n_cat = altPerfs.getNumberCats();
   int n_crit = altPerfs.getNumberCrit();
 
-  // First itteration outside the loop: run every algorithm on all models
+  // First iteration outside the loop: run every algorithm on all models
   // Creation of models and profile initialization
-  conf.logger->info("Running 1st itteration on all models");
+  conf.logger->info("Running 1st iteration on all models");
 
   using clock = std::chrono::system_clock;
   using sec = std::chrono::duration<double>;
