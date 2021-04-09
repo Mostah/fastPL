@@ -175,7 +175,7 @@ inline std::vector<std::string> getCriterionIds(std::vector<Perf> vectPerf) {
  * @return Perf for given critId
  */
 inline Perf getPerfOfCrit(std::vector<Perf> &vectPerf, std::string critId) {
-  for (Perf p : vectPerf) {
+  for (Perf &p : vectPerf) {
     if (p.crit_ == critId) {
       return p;
     }
@@ -292,7 +292,7 @@ inline void plotGlobalData(AlternativesPerformance &ap) {
   std::vector<std::vector<double>> performances;
   std::unordered_map<int, int> index;
   int nbCriteria = 0;
-  for (std::vector<Perf> p : ap.getPerformanceTable()) {
+  for (std::vector<Perf> &p : ap.getPerformanceTable()) {
     int rank = map[p[0].name_].rank_;
     if (nbCriteria == 0)
       nbCriteria = p.size();
@@ -357,7 +357,7 @@ inline void plotProfile(Profiles &p) {
   // }
 
   std::vector<std::vector<double>> prof_performances;
-  for (std::vector<Perf> perf : p.getPerformanceTable()) {
+  for (std::vector<Perf> &perf : p.getPerformanceTable()) {
     prof_performances.push_back(getPerfFromPerfVect(perf));
   }
   std::vector<double> x(prof_performances[0].size());

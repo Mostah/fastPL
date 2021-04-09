@@ -36,15 +36,17 @@ std::unordered_map<float, float> ProfileUpdater::computeAboveDesirability(
 
   // Alternatives between given profile and above profile. AltPerf_model needs
   // to be sorted and in mode crit to have a meaniful iteration in the loop
-  altPerf_model.sort();
+  if (!altPerf_model.isSorted()) {
+    altPerf_model.sort();
+  }
   std::vector<Perf> alt_between =
-      altPerf_model.getAltBetween(critId, b.value_, b_above.value_);
+      altPerf_model.getAltBetweenSorted(critId, b.value_, b_above.value_);
   // Initializing the map of desirability indexes
   std::unordered_map<float, float> desirability_above;
   float numerator = 0;
   float denominator = 0;
 
-  for (Perf alt : alt_between) {
+  for (Perf &alt : alt_between) {
     // Checking if the move will not go above b_above
     if (alt.value_ + epsilon < b_above.value_) {
       std::string altName = alt.name_;
@@ -111,9 +113,11 @@ std::unordered_map<float, float> ProfileUpdater::computeBelowDesirability(
 
   // Alternatives between given profile and above profile. AltPerf_model needs
   // to be sorted and in mode crit to have a meaniful iteration in the loop
-  altPerf_model.sort();
+  if (!altPerf_model.isSorted()) {
+    altPerf_model.sort();
+  }
   std::vector<Perf> alt_between =
-      altPerf_model.getAltBetween(critId, b_below.value_, b.value_);
+      altPerf_model.getAltBetweenSorted(critId, b_below.value_, b.value_);
   // Initializing the map of desirability indexes
   std::unordered_map<float, float> desirability_below;
   float numerator = 0;
@@ -212,7 +216,7 @@ void ProfileUpdater::updateTables(
         altPerf_model.getAltBetween(critId, b_old.value_, b_new.value_);
   }
 
-  for (Perf alt : alt_between) {
+  for (Perf &alt : alt_between) {
     // Data assignment
     std::string aa_data =
         altPerf_data.getAlternativeAssignment(alt.name_).category_id_;
@@ -306,7 +310,7 @@ void ProfileUpdater::optimize(
     throw std::invalid_argument("Profile table is not ordered");
   }
   int i = 0;
-  for (std::vector<Perf> profile : model.profiles.getPerformanceTable()) {
+  for (std::vector<Perf> &profile : model.profiles.getPerformanceTable()) {
     Category cat_below = model.categories.getCategoryOfRank(i);
     Category cat_above = model.categories.getCategoryOfRank(i + 1);
     this->optimizeProfile(profile, cat_below, cat_above, model, ct,

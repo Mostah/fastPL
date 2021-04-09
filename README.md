@@ -158,6 +158,7 @@ The application configuration holds the general config of the learning algorithm
 * `data_dir`: data directory path. When changed, the args -d and -o passed along with ./Main program is set relatively to the data directory path configured here
 * `model_batch_size`: model population size used in the metaheuristic
 * `max_iterations`: max iteration of the metaheuristic before terminating the application
+* `n_profile_update`: number of iteration of profile update for one weight update
 
 ---
 

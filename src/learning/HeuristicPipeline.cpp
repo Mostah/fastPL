@@ -60,15 +60,17 @@ MRSortModel HeuristicPipeline::start() {
 
   // Update profiles
   for (int k = 0; k < conf.model_batch_size; k++) {
-    profileUpdater.updateProfiles(models[k]);
-    float acc_before = models[k].getScore();
-    this->computeAccuracy(models[k]);
+    for (int i = 0; i < conf.n_profile_update; i++) {
+      profileUpdater.updateProfiles(models[k]);
+      float acc_before = models[k].getScore();
+      this->computeAccuracy(models[k]);
 
-    std::ostringstream ss;
-    ss << "accuracy of model " << k
-       << " after profile update: " << models[k].getScore()
-       << ", gain of: " << models[k].getScore() - acc_before << std::endl;
-    conf.logger->debug(ss.str());
+      std::ostringstream ss;
+      ss << "accuracy of model " << k
+         << " after profile update: " << models[k].getScore()
+         << ", gain of: " << models[k].getScore() - acc_before << std::endl;
+      conf.logger->debug(ss.str());
+    }
   }
 
   const sec profile_duration = clock::now() - before_profile;
@@ -94,6 +96,8 @@ MRSortModel HeuristicPipeline::start() {
   this->orderModels();
   conf.logger->info("Iteration 1 done, best model has a score of: " +
                     std::to_string(models[0].getScore()));
+
+  MRSortModel best_model = models[0];
 
   // iterating until convergence or reaching the max iteration
   for (int i = 1; i < conf.max_iterations; i++) {
@@ -129,35 +133,34 @@ MRSortModel HeuristicPipeline::start() {
     }
     // ** Profiles update **
     for (int k = 0; k < conf.model_batch_size; k++) {
-      profileUpdater.updateProfiles(models[k]);
-      float acc_before = models[k].getScore();
-      this->computeAccuracy(models[k]);
+      for (int i = 0; i < conf.n_profile_update; i++) {
+        profileUpdater.updateProfiles(models[k]);
+        float acc_before = models[k].getScore();
+        this->computeAccuracy(models[k]);
 
-      std::ostringstream ss;
-      ss << "accuracy of model " << k
-         << " after profile update: " << models[k].getScore()
-         << ", gain of: " << models[k].getScore() - acc_before << std::endl;
-      conf.logger->debug(ss.str());
+        std::ostringstream ss;
+        ss << "accuracy of model " << k
+           << " after profile update: " << models[k].getScore()
+           << ", gain of: " << models[k].getScore() - acc_before << std::endl;
+        conf.logger->debug(ss.str());
+      }
     }
     this->orderModels();
+    if (best_model.getScore() > models[0].getScore()) {
+      best_model = models[0];
+    }
     conf.logger->info("Iteration " + std::to_string(i) +
-                      " done, best model has a score of: " +
-                      std::to_string(models[0].getScore()));
+                      " done, best model encountered has a score of: " +
+                      std::to_string(best_model.getScore()));
     // if one model is accurately representing the dataset, stop the learning
-    if (models[0].getScore() == 1) {
+    if (best_model.getScore() == 1) {
       conf.logger->info(
           "Model with an accuracy of 1 found, stopping algorithm");
-      return models[0];
+      return best_model;
     }
   }
   conf.logger->info("Reaching max iteration, terminating the pipeline");
-  for (int k = 0; k < std::max(int(models.size()), 5); k++) {
-    std::ostringstream ss;
-    ss << "accuracy of model " << k << ": " << models[k].getScore()
-       << std::endl;
-    conf.logger->debug(ss.str());
-  }
-  return models[0];
+  return best_model;
 }
 
 void HeuristicPipeline::customSort() {

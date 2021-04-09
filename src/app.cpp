@@ -45,6 +45,9 @@ void App::extractConfig(YAML::Node &yml_conf) {
   if (yml_conf["max_iterations"]) {
     conf.max_iterations = yml_conf["max_iterations"].as<int>();
   }
+  if (yml_conf["n_profile_update"]) {
+    conf.n_profile_update = yml_conf["n_profile_update"].as<int>();
+  }
   this->initializeLogger(yml_conf);
 }
 

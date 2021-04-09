@@ -81,7 +81,7 @@ AlternativesPerformance MRSortModel::categoryAssignments(PerformanceTable &pt) {
   std::unordered_map<std::string, Category> cat_assignments;
   std::vector<std::vector<Perf>> profiles_pt = profiles.getPerformanceTable();
   // Looping over all alternatives
-  for (std::vector<Perf> alt : pt.getPerformanceTable()) {
+  for (std::vector<Perf> &alt : pt.getPerformanceTable()) {
     cat_assignments[alt[0].name_] = categoryAssignment(alt, profiles_pt);
   }
   return AlternativesPerformance(pt, cat_assignments);
@@ -90,8 +90,8 @@ AlternativesPerformance MRSortModel::categoryAssignments(PerformanceTable &pt) {
 float MRSortModel::computeConcordance(std::vector<Perf> &prof,
                                       std::vector<Perf> &alt) {
   float c = 0;
-  for (Perf perf_j : alt) {
-    for (Perf prof_i : prof) {
+  for (Perf &perf_j : alt) {
+    for (Perf &prof_i : prof) {
       // If the value of the alt on criterion j is greater than the one of
       // the profile h, add the weight of the criterion j to the concordance
       // value.
@@ -115,7 +115,7 @@ MRSortModel::computeConcordanceTable(PerformanceTable &pt) {
   for (int h = 0; h < profiles_pt.size(); h++) {
     std::unordered_map<std::string, float> prof_concordances;
     // Looping over all alternatives
-    for (std::vector<Perf> alt : pt.getPerformanceTable()) {
+    for (std::vector<Perf> &alt : pt.getPerformanceTable()) {
       prof_concordances[alt[0].name_] = computeConcordance(profiles_pt[h], alt);
     }
     ct[profiles_pt[h][0].name_] = prof_concordances;
