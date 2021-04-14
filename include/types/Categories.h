@@ -51,6 +51,7 @@ public:
   Categories(const Categories &categories);
   ~Categories();
 
+  // TODO looks like this could be removed as it is never used
   /**
    * Getter all the ranks from Categories object
    *
@@ -58,6 +59,7 @@ public:
    */
   std::vector<int> getRankCategories();
 
+  // TODO looks like this could be removed as it is never used
   /**
    * Setter all the ranks from Categories object
    *
@@ -66,6 +68,7 @@ public:
    */
   void setRankCategories(std::vector<int> &set_ranks);
 
+  // TODO looks like this could be removed as it is never used
   /**
    * Setter all the ranks from Categories object
    * Ranks start at 0 and end until length of Categories vector.
@@ -81,6 +84,7 @@ public:
    */
   std::vector<std::string> getIdCategories();
 
+  // TODO looks like this could be removed as it is never used
   /**
    * Set a new values of Category ids from Categories object
    *
@@ -89,6 +93,7 @@ public:
    */
   void setIdCategories(std::string prefix);
 
+  // TODO looks like this could be removed as it is never used
   /**
    * Set a new values of Category ids from Categories object
    *

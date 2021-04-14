@@ -68,6 +68,10 @@ public:
 
   friend std::ostream &operator<<(std::ostream &out, const MRSortModel &mrsort);
 
+  // TODO Remove getter and setter
+  // Performance wise after some profiling we found that getter and setter can
+  // loose a lot of time compared to access directly the variable. Therefore in
+  // order to optimize the code, they should be removed.
   /**
    * getId getter of id parameter
    *
