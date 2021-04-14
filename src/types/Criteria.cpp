@@ -120,8 +120,8 @@ void Criteria::normalizeWeights() {
   }
 }
 
-// Generation is not completely uniform here,
-// would need to see Oliver's email to adapt
+// TODO Generation is not completely uniform here, might need to find an other
+// method
 void Criteria::generateRandomCriteriaWeights(unsigned long int seed) {
   std::vector<float> weights;
   for (int i = 0; i < criterion_vect_.size(); i++) {

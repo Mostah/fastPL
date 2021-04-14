@@ -168,5 +168,7 @@ std::pair<float, float> AlternativesPerformance::getBoundaries() {
       }
     }
   }
+  // return upper (resp. lower) bound which is a bit higher (resp. lower) than
+  // the max (resp. min)
   return std::pair<float, float>(min - 0.1, max + 0.1);
 }

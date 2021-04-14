@@ -376,8 +376,6 @@ std::vector<Perf> PerformanceTable::getWorstPerfByCrit(Criteria &crits) {
 }
 
 bool PerformanceTable::isAltInTable(std::string altName) {
-  // TODO-OPTI this is creating new Perf that should ne be re-created, change
-  // with index
   for (std::vector<Perf> &p : pt_) {
     if (p[0].name_ == altName) {
       return (true);

@@ -96,6 +96,10 @@ public:
    */
   std::unordered_map<std::string, Category> getAlternativesAssignments() const;
 
+  // TODO Remove getter and setter
+  // Performance wise after some profiling we found that getter and setter can
+  // loose a lot of time compared to access directly the variable. Therefore in
+  // order to optimize the code, they should be removed.
   /**
    * setAlternativesPerformanceMap getter of the alternatives assignments
    *

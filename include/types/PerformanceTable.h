@@ -80,6 +80,10 @@ public:
   friend std::ostream &operator<<(std::ostream &out,
                                   const PerformanceTable &perfs);
 
+  // TODO Remove getter and setter
+  // Performance wise after some profiling we found that getter and setter can
+  // loose a lot of time compared to access directly the variable. Therefore in
+  // order to optimize the code, they should be removed.
   /**
    * getPerformanceTable getter of performance table parameter
    *
@@ -114,7 +118,8 @@ public:
   std::vector<Perf> operator[](std::string name);
 
   /**
-   * getPerf getter of a specific Perf in the performance table
+   * getPerf getter of a specific Perf in the performance table. This is highly
+   * inneficient and should not be used except for tests or exceptionnal checks.
    *
    * @param name name of the alt or profile we want
    * @param crit name of the crit we want
@@ -141,6 +146,9 @@ public:
    */
   void changeMode(std::string mode);
 
+  // TODO compare performance of sort + getAltBetweenSorted vs getAltBetween in
+  // the long run. This might be interesting to compare and could save some time
+  // in the overall pipeline.
   /**
    * getAltBetween return all the alternatives / profiles that have a
    * performance (value) between inf and sup on criterion crit. The performance
@@ -168,6 +176,7 @@ public:
    */
   std::vector<Perf> getAltBetween(std::string critId, float inf, float sup);
 
+  // TODO looks like this could be removed as it is never used
   /**
    * getBestPerfByRow return a perf vector with the best
    * performance of the alternatives on each criteria
@@ -178,6 +187,7 @@ public:
    */
   std::vector<Perf> getBestPerfByCrit(Criteria &crits);
 
+  // TODO looks like this could be removed as it is never used
   /**
    * getWorstPerfByRow return a perf vector with the worst
    * performance of the alternatives on each criteria
@@ -231,8 +241,15 @@ public:
 protected:
   std::vector<std::vector<Perf>> pt_;
 
-  // indicates what is represented by rows: (alt or profiles) or criterias
+  // mode_ indicates what is represented by rows: (alt or profiles) or criterias
+
+  // TODO the mode_ attribute could be moved to the Profiles structure, as we
+  // didn't find use of it for the alternativesPerformance (datasets).
   std::string mode_ = "alt"; // takes its value in {"crit", "alt"}
+
+  // TODO the sorted_ parameter could be mode to the alternativesPerformance
+  // structure, as we didn't find use of it (and can be confusing) for Profiles
+  // objects.
   bool sorted_ = false;
 };
 

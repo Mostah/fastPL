@@ -50,6 +50,10 @@ public:
 
   friend std::ostream &operator<<(std::ostream &out, const Criteria &crits);
 
+  // TODO Remove getter and setter
+  // Performance wise after some profiling we found that getter and setter can
+  // loose a lot of time compared to access directly the variable. Therefore in
+  // order to optimize the code, they should be removed.
   /**
    * setCriterionVect setter of criterion vector parameter
    *
@@ -64,6 +68,7 @@ public:
    */
   std::vector<Criterion> getCriterionVect() const;
 
+  // TODO looks like this could be removed as it is never used
   /**
    * getMinWeight return the min criterion weight of this Criteria structure
    *
@@ -71,6 +76,7 @@ public:
    */
   float getMinWeight();
 
+  // TODO looks like this could be removed as it is never used
   /**
    * getMaxWeight return the max criterion weight of this Criteria structure
    *
@@ -78,6 +84,7 @@ public:
    */
   float getMaxWeight();
 
+  // TODO looks like this could be removed as it is never used
   /**
    * getSumWeight return the sum of criterion weight of this Criteria structure
    *
@@ -97,6 +104,8 @@ public:
    *
    */
   void setWeights(std::vector<float> newWeights);
+
+  // TODO looks like this could be removed as it is never used
   /**
    * normalizeWeights normalizes the weights of each criterion in the Criteria
    * object

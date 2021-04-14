@@ -52,6 +52,8 @@ public:
    */
   void customSort();
 
+  // TODO This could be moved to the utils class, it doesn't really make sens to
+  // bound it to this class.
   /** computeAccuracy compute the accuracy of the model given the dataset and
    * store it into the model
    *

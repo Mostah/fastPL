@@ -61,6 +61,12 @@ public:
    */
   void generateWeight(unsigned long int seed = 0);
 
+  // TODO Remove getter and setter
+  // Performance wise after some profiling we found that getter and setter,
+  // especially for elementary classes can loose a lot of time compared to
+  // access directly the variable. Therefore in order to optimize the code, they
+  // should be removed.
+
   /**
    * getId getter of id parameter
    *
@@ -105,6 +111,12 @@ public:
 
 private:
   std::string id_;
+  // TODO remove direction_ attribute
+  // Originally, the direction_ attribute has a signification in the thesis of
+  // Sobrie, it informs if we should maximize or minimize the specific
+  // criterion. In the current implementation, we did not implement this
+  // feature, therefore this arguments is obesolete and should be removed during
+  // a code clean.
   int direction_;
   float weight_;
 };

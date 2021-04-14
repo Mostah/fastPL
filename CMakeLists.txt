@@ -55,6 +55,9 @@ set(Sources
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17" )
 
+# TODO Enable profiling only when requested, it is slower when in profiling 
+# mode and thus the software is always slowdown on linux.
+
 # enable profiling on linux machines
 if(UNIX AND NOT APPLE)
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pg" )
@@ -63,6 +66,7 @@ endif()
 
 add_library(Core ${Headers} ${Sources})   # build a library with our header and source files
 
+# TODO target_link_libraries could be optimized, there is too many calls
 target_link_libraries(Core spdlog::spdlog_header_only)
 target_link_libraries(Core yaml-cpp)
 target_link_libraries(Core pugixml)
