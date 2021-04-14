@@ -97,20 +97,22 @@ $(function() {
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
 <div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="class_heuristic_pipeline.html#a72215535175adb5847379415a3e29db9">   53</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_heuristic_pipeline.html#a72215535175adb5847379415a3e29db9">customSort</a>();</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="class_heuristic_pipeline.html#a57b50143f8a257a892e381f0986b587a">   61</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_heuristic_pipeline.html#a57b50143f8a257a892e381f0986b587a">computeAccuracy</a>(<a class="code" href="class_m_r_sort_model.html">MRSortModel</a> &amp;model);</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  std::vector&lt;MRSortModel&gt; models;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  <span class="comment">// TODO This could be moved to the utils class, it doesn&#39;t really make sens to</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <span class="comment">// bound it to this class.</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="class_heuristic_pipeline.html#a57b50143f8a257a892e381f0986b587a">   63</a></span>&#160;<span class="comment"></span>  <span class="keywordtype">void</span> <a class="code" href="class_heuristic_pipeline.html#a57b50143f8a257a892e381f0986b587a">computeAccuracy</a>(<a class="code" href="class_m_r_sort_model.html">MRSortModel</a> &amp;model);</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  <a class="code" href="struct_config.html">Config</a> &amp;conf;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  <a class="code" href="class_alternatives_performance.html">AlternativesPerformance</a> &amp;altPerfs;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  <a class="code" href="class_weight_updater.html">WeightUpdater</a> weightUpdater;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  <a class="code" href="class_profile_initializer.html">ProfileInitializer</a> profileInitializer;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  <a class="code" href="class_profile_updater.html">ProfileUpdater</a> profileUpdater;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;};</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  std::vector&lt;MRSortModel&gt; models;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  <a class="code" href="struct_config.html">Config</a> &amp;conf;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  <a class="code" href="class_alternatives_performance.html">AlternativesPerformance</a> &amp;altPerfs;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  <a class="code" href="class_weight_updater.html">WeightUpdater</a> weightUpdater;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  <a class="code" href="class_profile_initializer.html">ProfileInitializer</a> profileInitializer;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  <a class="code" href="class_profile_updater.html">ProfileUpdater</a> profileUpdater;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;};</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="a_profile_initializer_8h_html"><div class="ttname"><a href="_profile_initializer_8h.html">ProfileInitializer.h</a></div><div class="ttdoc">Profile initializer heuristic.</div></div>
 <div class="ttc" id="a_profile_updater_8h_html"><div class="ttname"><a href="_profile_updater_8h.html">ProfileUpdater.h</a></div><div class="ttdoc">Third step of the heuristic, updates the profiles given fixed weight and lambda.</div></div>
 <div class="ttc" id="a_weight_updater_8h_html"><div class="ttname"><a href="_weight_updater_8h.html">WeightUpdater.h</a></div><div class="ttdoc">Weight and Lambda update heuristic.</div></div>

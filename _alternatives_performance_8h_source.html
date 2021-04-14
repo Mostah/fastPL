@@ -115,26 +115,30 @@ $(function() {
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
 <div class="line"><a name="l00097"></a><span class="lineno"><a class="line" href="class_alternatives_performance.html#a373dafb99d058bef3aaac6fcc390bb9d">   97</a></span>&#160;  std::unordered_map&lt;std::string, Category&gt; <a class="code" href="class_alternatives_performance.html#a373dafb99d058bef3aaac6fcc390bb9d">getAlternativesAssignments</a>() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
-<div class="line"><a name="l00104"></a><span class="lineno"><a class="line" href="class_alternatives_performance.html#aa9d28d7b25cfedd3834853f0e59d8a99">  104</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_alternatives_performance.html#aa9d28d7b25cfedd3834853f0e59d8a99">setAlternativesAssignments</a>(</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;      std::unordered_map&lt;std::string, Category&gt; &amp;alt_assignment);</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
-<div class="line"><a name="l00113"></a><span class="lineno"><a class="line" href="class_alternatives_performance.html#a9599f48bf3020d486ce1c346c3304d71">  113</a></span>&#160;  <a class="code" href="class_category.html">Category</a> <a class="code" href="class_alternatives_performance.html#a9599f48bf3020d486ce1c346c3304d71">getAlternativeAssignment</a>(std::string altName) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
-<div class="line"><a name="l00121"></a><span class="lineno"><a class="line" href="class_alternatives_performance.html#a0a752821baaa30489ad2dd218f8267f6">  121</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_alternatives_performance.html#a0a752821baaa30489ad2dd218f8267f6">setAlternativeAssignment</a>(std::string altName, <a class="code" href="class_category.html">Category</a> &amp;cat);</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
-<div class="line"><a name="l00128"></a><span class="lineno"><a class="line" href="class_alternatives_performance.html#af45f24dad882f41fec4055d4e1ea0ddd">  128</a></span>&#160;  <span class="keywordtype">int</span> <a class="code" href="class_alternatives_performance.html#af45f24dad882f41fec4055d4e1ea0ddd">getNumberCats</a>();</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160; </div>
-<div class="line"><a name="l00137"></a><span class="lineno"><a class="line" href="class_alternatives_performance.html#ae6adae3c8c2e9460cc356f5bef290801">  137</a></span>&#160;  std::pair&lt;float, float&gt; <a class="code" href="class_alternatives_performance.html#ae6adae3c8c2e9460cc356f5bef290801">getBoundaries</a>();</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160; </div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;  <span class="comment">// TODO: Memory could be optimize here, there is no need to store the Category</span></div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;  <span class="comment">// object, we could use a reference instead.</span></div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  <span class="comment">// TODO Remove getter and setter</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  <span class="comment">// Performance wise after some profiling we found that getter and setter can</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  <span class="comment">// loose a lot of time compared to access directly the variable. Therefore in</span></div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  <span class="comment">// order to optimize the code, they should be removed.</span></div>
+<div class="line"><a name="l00108"></a><span class="lineno"><a class="line" href="class_alternatives_performance.html#aa9d28d7b25cfedd3834853f0e59d8a99">  108</a></span>&#160;<span class="comment"></span>  <span class="keywordtype">void</span> <a class="code" href="class_alternatives_performance.html#aa9d28d7b25cfedd3834853f0e59d8a99">setAlternativesAssignments</a>(</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;      std::unordered_map&lt;std::string, Category&gt; &amp;alt_assignment);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
+<div class="line"><a name="l00117"></a><span class="lineno"><a class="line" href="class_alternatives_performance.html#a9599f48bf3020d486ce1c346c3304d71">  117</a></span>&#160;  <a class="code" href="class_category.html">Category</a> <a class="code" href="class_alternatives_performance.html#a9599f48bf3020d486ce1c346c3304d71">getAlternativeAssignment</a>(std::string altName) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
+<div class="line"><a name="l00125"></a><span class="lineno"><a class="line" href="class_alternatives_performance.html#a0a752821baaa30489ad2dd218f8267f6">  125</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_alternatives_performance.html#a0a752821baaa30489ad2dd218f8267f6">setAlternativeAssignment</a>(std::string altName, <a class="code" href="class_category.html">Category</a> &amp;cat);</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160; </div>
+<div class="line"><a name="l00132"></a><span class="lineno"><a class="line" href="class_alternatives_performance.html#af45f24dad882f41fec4055d4e1ea0ddd">  132</a></span>&#160;  <span class="keywordtype">int</span> <a class="code" href="class_alternatives_performance.html#af45f24dad882f41fec4055d4e1ea0ddd">getNumberCats</a>();</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160; </div>
+<div class="line"><a name="l00141"></a><span class="lineno"><a class="line" href="class_alternatives_performance.html#ae6adae3c8c2e9460cc356f5bef290801">  141</a></span>&#160;  std::pair&lt;float, float&gt; <a class="code" href="class_alternatives_performance.html#ae6adae3c8c2e9460cc356f5bef290801">getBoundaries</a>();</div>
 <div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160; </div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;  <span class="comment">// Hashmap: key = Alternative Name, value = Category</span></div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;  std::unordered_map&lt;std::string, Category&gt; alt_assignment_;</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;};</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;  <span class="comment">// TODO: Memory could be optimize here, there is no need to store the Category</span></div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;  <span class="comment">// object, we could use a reference instead.</span></div>
 <div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160; </div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;  <span class="comment">// Hashmap: key = Alternative Name, value = Category</span></div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;  std::unordered_map&lt;std::string, Category&gt; alt_assignment_;</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;};</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160; </div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="a_category_8h_html"><div class="ttname"><a href="_category_8h.html">Category.h</a></div><div class="ttdoc">Datastructure representing a category.</div></div>
 <div class="ttc" id="a_criteria_8h_html"><div class="ttname"><a href="_criteria_8h.html">Criteria.h</a></div><div class="ttdoc">Datastructure representing a set of criterion.</div></div>
 <div class="ttc" id="a_performance_table_8h_html"><div class="ttname"><a href="_performance_table_8h.html">PerformanceTable.h</a></div><div class="ttdoc">PerformanceTable data structure.</div></div>

@@ -10,7 +10,7 @@ var searchData=
   ['changemode_11',['changeMode',['../class_performance_table.html#a1d13b0d5565652a87d03ea9877c83912',1,'PerformanceTable']]],
   ['checkdatacompatability_12',['checkDataCompatability',['../class_data_generator.html#ad856bc52e3f50fbe64ee4c06bb9c12e8',1,'DataGenerator']]],
   ['checkkey_13',['checkKey',['../utils_8h.html#a75b17ce351de803ecfca2dc0ef5cfc2f',1,'utils.h']]],
-  ['choosemaxdesirability_14',['chooseMaxDesirability',['../class_profile_updater.html#ada15543e8fef736d2c3873336b603326',1,'ProfileUpdater']]],
+  ['choosemaxdesirability_14',['chooseMaxDesirability',['../class_profile_updater.html#a3b3e1bab61f31438dea04cbc09ea0a7a',1,'ProfileUpdater']]],
   ['computeabovedesirability_15',['computeAboveDesirability',['../class_profile_updater.html#ad03fd73fbe8021f6033bc2e6c9e27d1a',1,'ProfileUpdater']]],
   ['computeaccuracy_16',['computeAccuracy',['../class_heuristic_pipeline.html#a57b50143f8a257a892e381f0986b587a',1,'HeuristicPipeline']]],
   ['computebelowdesirability_17',['computeBelowDesirability',['../class_profile_updater.html#a12ff9327935ee9276bd5068f4afa72be',1,'ProfileUpdater']]],

@@ -155,8 +155,8 @@ $(function() {
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;  <span class="keywordflow">return</span> dis(gen);</div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;}</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
-<div class="line"><a name="l00127"></a><span class="lineno"><a class="line" href="utils_8h.html#a5f49996e596ccd4b4adc707f504015e9">  127</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">float</span> <a class="code" href="utils_8h.html#a5f49996e596ccd4b4adc707f504015e9">getRandomUniformFloat</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <span class="keywordtype">int</span> seed = 0, <span class="keywordtype">float</span> min = 0,</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;                                   <span class="keywordtype">float</span> max = 1) {</div>
+<div class="line"><a name="l00127"></a><span class="lineno"><a class="line" href="utils_8h.html#a67eb16f3cf8b912d10a548fc0bce5704">  127</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">float</span> <a class="code" href="utils_8h.html#a67eb16f3cf8b912d10a548fc0bce5704">getRandomUniformFloat</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <span class="keywordtype">int</span> seed = time(NULL),</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;                                   <span class="keywordtype">float</span> min = 0, <span class="keywordtype">float</span> max = 1) {</div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160; </div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;  std::mt19937 gen(seed);</div>
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;  std::uniform_real_distribution&lt;&gt; dis(min, max);</div>
@@ -167,7 +167,7 @@ $(function() {
 <div class="line"><a name="l00145"></a><span class="lineno"><a class="line" href="utils_8h.html#af4a36123310960c99defa5ff6cd46bba">  145</a></span>&#160;<a class="code" href="utils_8h.html#af4a36123310960c99defa5ff6cd46bba">randomCategoriesLimits</a>(<span class="keywordtype">int</span> nbCategories, <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <span class="keywordtype">int</span> seed = time(NULL)) {</div>
 <div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;  std::vector&lt;float&gt; catLimits;</div>
 <div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; nbCategories; i++) {</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    catLimits.push_back(<a class="code" href="utils_8h.html#a5f49996e596ccd4b4adc707f504015e9">getRandomUniformFloat</a>(seed));</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    catLimits.push_back(<a class="code" href="utils_8h.html#a67eb16f3cf8b912d10a548fc0bce5704">getRandomUniformFloat</a>(seed));</div>
 <div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;  }</div>
 <div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;  sort(catLimits.begin(), catLimits.end());</div>
 <div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;  <span class="keywordflow">return</span> catLimits;</div>
@@ -182,7 +182,7 @@ $(function() {
 <div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;};</div>
 <div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160; </div>
 <div class="line"><a name="l00177"></a><span class="lineno"><a class="line" href="utils_8h.html#a878e3a271953cb9cd2aee7d93342a90c">  177</a></span>&#160;<span class="keyword">inline</span> <a class="code" href="class_perf.html">Perf</a> <a class="code" href="utils_8h.html#a878e3a271953cb9cd2aee7d93342a90c">getPerfOfCrit</a>(std::vector&lt;Perf&gt; &amp;vectPerf, std::string critId) {</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;  <span class="keywordflow">for</span> (<a class="code" href="class_perf.html">Perf</a> p : vectPerf) {</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;  <span class="keywordflow">for</span> (<a class="code" href="class_perf.html">Perf</a> &amp;p : vectPerf) {</div>
 <div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    <span class="keywordflow">if</span> (p.crit_ == critId) {</div>
 <div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;      <span class="keywordflow">return</span> p;</div>
 <div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    }</div>
@@ -255,7 +255,7 @@ $(function() {
 <div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;  std::vector&lt;std::vector&lt;double&gt;&gt; performances;</div>
 <div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;  std::unordered_map&lt;int, int&gt; index;</div>
 <div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;  <span class="keywordtype">int</span> nbCriteria = 0;</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;  <span class="keywordflow">for</span> (std::vector&lt;Perf&gt; p : ap.<a class="code" href="class_performance_table.html#a9860972fb6f5ac707766bafcb110ce94">getPerformanceTable</a>()) {</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;  <span class="keywordflow">for</span> (std::vector&lt;Perf&gt; &amp;p : ap.<a class="code" href="class_performance_table.html#a9860972fb6f5ac707766bafcb110ce94">getPerformanceTable</a>()) {</div>
 <div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;    <span class="keywordtype">int</span> rank = map[p[0].name_].rank_;</div>
 <div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;    <span class="keywordflow">if</span> (nbCriteria == 0)</div>
 <div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;      nbCriteria = p.size();</div>
@@ -313,7 +313,7 @@ $(function() {
 <div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;  <span class="comment">// }</span></div>
 <div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160; </div>
 <div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;  std::vector&lt;std::vector&lt;double&gt;&gt; prof_performances;</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;  <span class="keywordflow">for</span> (std::vector&lt;Perf&gt; perf : p.<a class="code" href="class_performance_table.html#a9860972fb6f5ac707766bafcb110ce94">getPerformanceTable</a>()) {</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;  <span class="keywordflow">for</span> (std::vector&lt;Perf&gt; &amp;perf : p.<a class="code" href="class_performance_table.html#a9860972fb6f5ac707766bafcb110ce94">getPerformanceTable</a>()) {</div>
 <div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;    prof_performances.push_back(<a class="code" href="utils_8h.html#afca854126dead4aeb303664467faf272">getPerfFromPerfVect</a>(perf));</div>
 <div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;  }</div>
 <div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;  std::vector&lt;double&gt; x(prof_performances[0].size());</div>
@@ -349,8 +349,8 @@ $(function() {
 <div class="ttc" id="aclass_profiles_html"><div class="ttname"><a href="class_profiles.html">Profiles</a></div><div class="ttdoc">Profiles data structure.</div><div class="ttdef"><b>Definition:</b> Profiles.h:41</div></div>
 <div class="ttc" id="astructsimple__walker_html"><div class="ttname"><a href="structsimple__walker.html">simple_walker</a></div><div class="ttdef"><b>Definition:</b> utils.h:78</div></div>
 <div class="ttc" id="autils_8h_html_a581d002032a0c24eb80f58cdd4d542ce"><div class="ttname"><a href="utils_8h.html#a581d002032a0c24eb80f58cdd4d542ce">createVectorPerf</a></div><div class="ttdeci">std::vector&lt; Perf &gt; createVectorPerf(std::string id, Criteria &amp;criteria, std::vector&lt; float &gt; &amp;given_perf)</div><div class="ttdef"><b>Definition:</b> utils.h:211</div></div>
-<div class="ttc" id="autils_8h_html_a5f49996e596ccd4b4adc707f504015e9"><div class="ttname"><a href="utils_8h.html#a5f49996e596ccd4b4adc707f504015e9">getRandomUniformFloat</a></div><div class="ttdeci">float getRandomUniformFloat(unsigned long int seed=0, float min=0, float max=1)</div><div class="ttdef"><b>Definition:</b> utils.h:127</div></div>
 <div class="ttc" id="autils_8h_html_a61d16c000c454dbe9b46da86249cdec3"><div class="ttname"><a href="utils_8h.html#a61d16c000c454dbe9b46da86249cdec3">plotProfile</a></div><div class="ttdeci">void plotProfile(Profiles &amp;p)</div><div class="ttdef"><b>Definition:</b> utils.h:353</div></div>
+<div class="ttc" id="autils_8h_html_a67eb16f3cf8b912d10a548fc0bce5704"><div class="ttname"><a href="utils_8h.html#a67eb16f3cf8b912d10a548fc0bce5704">getRandomUniformFloat</a></div><div class="ttdeci">float getRandomUniformFloat(unsigned long int seed=time(NULL), float min=0, float max=1)</div><div class="ttdef"><b>Definition:</b> utils.h:127</div></div>
 <div class="ttc" id="autils_8h_html_a75b17ce351de803ecfca2dc0ef5cfc2f"><div class="ttname"><a href="utils_8h.html#a75b17ce351de803ecfca2dc0ef5cfc2f">checkKey</a></div><div class="ttdeci">bool checkKey(std::unordered_map&lt; int, int &gt; &amp;map, int key)</div><div class="ttdef"><b>Definition:</b> utils.h:263</div></div>
 <div class="ttc" id="autils_8h_html_a878e3a271953cb9cd2aee7d93342a90c"><div class="ttname"><a href="utils_8h.html#a878e3a271953cb9cd2aee7d93342a90c">getPerfOfCrit</a></div><div class="ttdeci">Perf getPerfOfCrit(std::vector&lt; Perf &gt; &amp;vectPerf, std::string critId)</div><div class="ttdef"><b>Definition:</b> utils.h:177</div></div>
 <div class="ttc" id="autils_8h_html_a8d01c5b453ae7cd9f4bd68c27c3c5101"><div class="ttname"><a href="utils_8h.html#a8d01c5b453ae7cd9f4bd68c27c3c5101">plotGlobalData</a></div><div class="ttdeci">void plotGlobalData(AlternativesPerformance &amp;ap)</div><div class="ttdef"><b>Definition:</b> utils.h:278</div></div>

@@ -109,10 +109,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae76665fa3b67855b5ce5a9bbb77a6870"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a84e1e56df8d652fdf3aef953d47be508"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_performance_table.html#a84e1e56df8d652fdf3aef953d47be508">isSorted</a> () const</td></tr>
 <tr class="separator:a84e1e56df8d652fdf3aef953d47be508"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac2716f4e601589f84d54d7bef9509030"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_perf.html">Perf</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_performance_table.html#ac2716f4e601589f84d54d7bef9509030">operator[]</a> (std::string name) const</td></tr>
-<tr class="separator:ac2716f4e601589f84d54d7bef9509030"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaa78651bb81a2d4f8f3127a21cc83a6c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_perf.html">Perf</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_performance_table.html#aaa78651bb81a2d4f8f3127a21cc83a6c">getPerf</a> (std::string name, std::string crit) const</td></tr>
-<tr class="separator:aaa78651bb81a2d4f8f3127a21cc83a6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af353fa64537fe3abcae9a952ed932ebd"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_perf.html">Perf</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_performance_table.html#af353fa64537fe3abcae9a952ed932ebd">operator[]</a> (std::string name)</td></tr>
+<tr class="separator:af353fa64537fe3abcae9a952ed932ebd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94e06a28184d85bdc818bda13f29d829"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_perf.html">Perf</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_performance_table.html#a94e06a28184d85bdc818bda13f29d829">getPerf</a> (std::string name, std::string crit)</td></tr>
+<tr class="separator:a94e06a28184d85bdc818bda13f29d829"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a67e2bbf699f50b62ca01c857c08a2c90"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_performance_table.html#a67e2bbf699f50b62ca01c857c08a2c90">sort</a> (std::string mode=&quot;crit&quot;)</td></tr>
 <tr class="separator:a67e2bbf699f50b62ca01c857c08a2c90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d13b0d5565652a87d03ea9877c83912"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_performance_table.html#a1d13b0d5565652a87d03ea9877c83912">changeMode</a> (std::string mode)</td></tr>
@@ -525,8 +525,8 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
 
 </div>
 </div>
-<a id="aaa78651bb81a2d4f8f3127a21cc83a6c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaa78651bb81a2d4f8f3127a21cc83a6c">&#9670;&nbsp;</a></span>getPerf()</h2>
+<a id="a94e06a28184d85bdc818bda13f29d829"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94e06a28184d85bdc818bda13f29d829">&#9670;&nbsp;</a></span>getPerf()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -546,11 +546,11 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td> const</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>getPerf getter of a specific <a class="el" href="class_perf.html" title="Perf (single performance) data structure.">Perf</a> in the performance table</p>
+<p>getPerf getter of a specific <a class="el" href="class_perf.html" title="Perf (single performance) data structure.">Perf</a> in the performance table. This is highly inneficient and should not be used except for tests or exceptionnal checks.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">name</td><td>name of the alt or profile we want </td></tr>
@@ -676,8 +676,8 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
 
 </div>
 </div>
-<a id="ac2716f4e601589f84d54d7bef9509030"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac2716f4e601589f84d54d7bef9509030">&#9670;&nbsp;</a></span>operator[]()</h2>
+<a id="af353fa64537fe3abcae9a952ed932ebd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af353fa64537fe3abcae9a952ed932ebd">&#9670;&nbsp;</a></span>operator[]()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -687,7 +687,7 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
           <td>(</td>
           <td class="paramtype">std::string&#160;</td>
           <td class="paramname"><em>name</em></td><td>)</td>
-          <td> const</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">

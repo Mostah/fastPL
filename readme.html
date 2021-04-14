@@ -99,9 +99,9 @@ Repository structure</h1>
 Run project in Docker (Recommended)</h1>
 <h2><a class="anchor" id="autotoc_md6"></a>
 Build Docker image</h2>
-<p>First thing first, build the docker image</p>
+<p>First thing first, build the docker image. You can find <a href="https://docs.docker.com/">here</a> some documentation on docker.</p>
 <div class="fragment"><div class="line">docker build . -t fastpl</div>
-</div><!-- fragment --><p>Currently, the built of all dependencies requires ~1h</p>
+</div><!-- fragment --><p>Currently, the build of all dependencies requires ~1h</p>
 <h2><a class="anchor" id="autotoc_md7"></a>
 Run the main app in Docker</h2>
 <p>The following command will show the run config options (helper):</p>
@@ -124,7 +124,7 @@ Check the logs</h2>
 </div><!-- fragment --><hr  />
 <h1><a class="anchor" id="autotoc_md11"></a>
 Run project locally</h1>
-<p>The following requires CMake to be installed in your machine.</p>
+<p>The following requires <a href="https://cmake.org/">CMake</a> to be installed in your machine.</p>
 <p>From the root of the project directory:</p>
 <h2><a class="anchor" id="autotoc_md12"></a>
 Download dependencies</h2>
@@ -134,7 +134,7 @@ Download dependencies</h2>
 Build C++ files</h2>
 <div class="fragment"><div class="line">mkdir build &amp;&amp; cd build</div>
 <div class="line">cmake .. -DBUILD_DEPS:BOOL=ON -DUSE_SCIP=OFF &amp;&amp; make</div>
-</div><!-- fragment --><p>Currently, the built of all dependencies requires ~1h</p>
+</div><!-- fragment --><p>Currently, the build of all dependencies requires ~1h</p>
 <h2><a class="anchor" id="autotoc_md14"></a>
 Run the main app locally</h2>
 <p>From the <code>build</code> directory:</p>
@@ -164,6 +164,7 @@ Parameters</h2>
 <li><code>data_dir</code>: data directory path. When changed, the args -d and -o passed along with ./Main program is set relatively to the data directory path configured here</li>
 <li><code>model_batch_size</code>: model population size used in the metaheuristic</li>
 <li><code>max_iterations</code>: max iteration of the metaheuristic before terminating the application</li>
+<li><code>n_profile_update</code>: number of iteration of profile update for one weight update</li>
 </ul>
 <hr  />
 <h1><a class="anchor" id="autotoc_md20"></a>
@@ -212,7 +213,7 @@ Creating the profiling data as a callgraph image (Recommended)</h3>
 Creating the profiling data as a text file</h3>
 <div class="fragment"><div class="line">gprof $PROGRAM &gt; analysis.txt</div>
 </div><!-- fragment --><h3><a class="anchor" id="autotoc_md32"></a>
-copy the analysis from the docker container into your machine</h3>
+Copy the analysis from the docker container into your machine</h3>
 <p>Keep this terminal open, and open a new one</p>
 <p>Get the $ID of the fastpl container running with <code>docker ps</code></p>
 <div class="fragment"><div class="line">docker cp $ID:/home/fastPL/build/analysis.{txt or png} $YOUR_PATH</div>

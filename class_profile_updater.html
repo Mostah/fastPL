@@ -91,8 +91,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ad03fd73fbe8021f6033bc2e6c9e27d1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a12ff9327935ee9276bd5068f4afa72be"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; float, float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profile_updater.html#a12ff9327935ee9276bd5068f4afa72be">computeBelowDesirability</a> (<a class="el" href="class_m_r_sort_model.html">MRSortModel</a> &amp;model, std::string critId, <a class="el" href="class_perf.html">Perf</a> &amp;b, <a class="el" href="class_perf.html">Perf</a> &amp;b_below, <a class="el" href="class_category.html">Category</a> &amp;cat, <a class="el" href="class_category.html">Category</a> &amp;cat_above, std::unordered_map&lt; std::string, float &gt; &amp;ct_prof, <a class="el" href="class_alternatives_performance.html">AlternativesPerformance</a> &amp;altPerf_model)</td></tr>
 <tr class="separator:a12ff9327935ee9276bd5068f4afa72be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ada15543e8fef736d2c3873336b603326"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profile_updater.html#ada15543e8fef736d2c3873336b603326">chooseMaxDesirability</a> (std::unordered_map&lt; float, float &gt; &amp;desirability, <a class="el" href="class_perf.html">Perf</a> &amp;b)</td></tr>
-<tr class="separator:ada15543e8fef736d2c3873336b603326"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b3e1bab61f31438dea04cbc09ea0a7a"><td class="memItemLeft" align="right" valign="top">std::pair&lt; float, float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profile_updater.html#a3b3e1bab61f31438dea04cbc09ea0a7a">chooseMaxDesirability</a> (std::unordered_map&lt; float, float &gt; &amp;desirability, <a class="el" href="class_perf.html">Perf</a> &amp;b)</td></tr>
+<tr class="separator:a3b3e1bab61f31438dea04cbc09ea0a7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac35c4cb35fa6adec5ff3ad6868b80712"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profile_updater.html#ac35c4cb35fa6adec5ff3ad6868b80712">updateTables</a> (<a class="el" href="class_m_r_sort_model.html">MRSortModel</a> &amp;model, std::string critId, <a class="el" href="class_perf.html">Perf</a> &amp;b_old, <a class="el" href="class_perf.html">Perf</a> &amp;b_new, std::unordered_map&lt; std::string, std::unordered_map&lt; std::string, float &gt;&gt; &amp;ct, <a class="el" href="class_alternatives_performance.html">AlternativesPerformance</a> &amp;altPerf_model)</td></tr>
 <tr class="separator:ac35c4cb35fa6adec5ff3ad6868b80712"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a48dbeb81193de30e512e444df1467545"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_profile_updater.html#a48dbeb81193de30e512e444df1467545">optimizeProfile</a> (std::vector&lt; <a class="el" href="class_perf.html">Perf</a> &gt; &amp;prof, <a class="el" href="class_category.html">Category</a> &amp;cat_below, <a class="el" href="class_category.html">Category</a> &amp;cat_above, <a class="el" href="class_m_r_sort_model.html">MRSortModel</a> &amp;model, std::unordered_map&lt; std::string, std::unordered_map&lt; std::string, float &gt;&gt; &amp;ct, <a class="el" href="class_alternatives_performance.html">AlternativesPerformance</a> &amp;altPerf_model)</td></tr>
@@ -175,14 +175,14 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ada15543e8fef736d2c3873336b603326"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ada15543e8fef736d2c3873336b603326">&#9670;&nbsp;</a></span>chooseMaxDesirability()</h2>
+<a id="a3b3e1bab61f31438dea04cbc09ea0a7a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b3e1bab61f31438dea04cbc09ea0a7a">&#9670;&nbsp;</a></span>chooseMaxDesirability()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">float ProfileUpdater::chooseMaxDesirability </td>
+          <td class="memname">std::pair&lt;float, float&gt; ProfileUpdater::chooseMaxDesirability </td>
           <td>(</td>
           <td class="paramtype">std::unordered_map&lt; float, float &gt; &amp;&#160;</td>
           <td class="paramname"><em>desirability</em>, </td>
@@ -204,10 +204,11 @@ Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">desirability</td><td>map of desirability </td></tr>
-    <tr><td class="paramname">b</td><td>profile to move </td></tr>
+    <tr><td class="paramname">b</td><td>profile to move</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>profile value and associate desirability (max) </dd></dl>
 
 </div>
 </div>

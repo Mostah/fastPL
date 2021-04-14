@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['weightupdater_187',['WeightUpdater',['../class_weight_updater.html',1,'']]]
+  ['weightupdater_188',['WeightUpdater',['../class_weight_updater.html',1,'']]]
 ];
